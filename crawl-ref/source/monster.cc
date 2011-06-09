@@ -3592,7 +3592,6 @@ bool monster::rot(actor *agent, int amount, int immediate, bool quiet)
 int monster::hurt(const actor *agent, int amount, beam_type flavour,
                    bool cleanup_dead)
 {
-    const int initial_damage = amount;
     if (mons_is_projectile(type) || mindex() == ANON_FRIENDLY_MONSTER)
         return (0);
 
@@ -3647,7 +3646,7 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
 
         if (has_ench(ENCH_MIRROR_DAMAGE))
             add_final_effect(FINEFF_MIRROR_DAMAGE, agent, this,
-                             coord_def(0, 0), initial_damage);
+                             coord_def(0, 0), amount);
 
         blame_damage(agent, amount);
     }
