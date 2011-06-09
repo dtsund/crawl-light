@@ -22,6 +22,7 @@ enum tag_minor_version
     TAG_MINOR_ASH_PENANCE,         // Ashenzari's wrath counter.
     TAG_MINOR_BOOK_ZOOLOGY,        // Addition of the book of zoology.
     TAG_MINOR_64_MB,               // More than 64 monster info flags.
+    TAG_MINOR_SEEN_MISC,           // Record misc items seen.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
