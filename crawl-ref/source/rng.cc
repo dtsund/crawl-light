@@ -21,10 +21,9 @@
 // for getpid()
 #include <sys/types.h>
 #ifndef TARGET_COMPILER_VC
-#include <unistd.h>
-#endif
-#ifdef TARGET_COMPILER_VC
-#include <process.h>
+# include <unistd.h>
+#else
+# include <process.h>
 #endif
 
 #endif
