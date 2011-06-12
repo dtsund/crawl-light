@@ -712,7 +712,7 @@ static void _show_startup_menu(newgame_def* ng_choice,
             // handle the non-action keys by hand to poll input
             // Only consider alphanumeric keys and -_ .
             bool changed_name = false;
-            if (std::iswalnum(keyn) || keyn == '-' || keyn == '.'
+            if (iswalnum(keyn) || keyn == '-' || keyn == '.'
                 || keyn == '_' || keyn == ' ')
             {
                 if (full_name)
