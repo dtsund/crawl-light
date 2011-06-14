@@ -5383,6 +5383,7 @@ void player::init()
     beholders.clear();
     fearmongers.clear();
     dactions.clear();
+    level_stack.clear();
 
     zotdef_wave_name.clear();
     last_mid = 0;
