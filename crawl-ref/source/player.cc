@@ -2558,6 +2558,9 @@ int player_sust_abil(bool calc_unid)
 
     sa += player_equip(EQ_RINGS, RING_SUSTAIN_ABILITIES, calc_unid);
 
+    if (sa > 2)
+        sa = 2;
+
     return (sa);
 }
 
