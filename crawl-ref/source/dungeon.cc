@@ -1454,7 +1454,7 @@ static void _fixup_branch_stairs()
     if (player_in_branch(BRANCH_MAIN_DUNGEON))
         feat = DNGN_ENTER_ZOT;
 
-    if (at_branch_bottom() && you.level_type == LEVEL_DUNGEON)
+    if (at_branch_bottom())
     {
         for (rectangle_iterator ri(1); ri; ++ri)
         {
