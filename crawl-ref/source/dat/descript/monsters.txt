@@ -411,10 +411,6 @@ Balrug
 
 A huge and very powerful demon, wreathed in fire and shadows.
 %%%%
-beast
-
-A weird and hideous cross between beast and human.
-%%%%
 big fish
 
 A fish of unusual size.
@@ -1025,6 +1021,10 @@ A heavily armoured warrior, in league with the powers of Hell, usually accompani
 hell hog
 
 A large, fat and very ugly pig, suckled in the pits of Hell. Roast suckling pig technology will never be the same.
+%%%%
+hell beast
+
+A weird and hideous cross between beast and human.
 %%%%
 hellephant
 
