@@ -4602,7 +4602,7 @@ static deck_rarity_type _rarity_string_to_rarity(const std::string& s) {
     if (s == "ornate")    return DECK_RARITY_RARE; // synonym
     if (s == "legendary") return DECK_RARITY_LEGENDARY;
     // FIXME: log an error here.
-    return DECK_RARITY_COMMON;
+    return DECK_RARITY_RANDOM;
 }
 
 static misc_item_type _deck_type_string_to_subtype(const std::string& s) {
@@ -4657,12 +4657,12 @@ void item_list::build_deck_spec(std::string s, item_spec* spec)
     // just "deck".
     if (word != "deck")
     {
-        spec->item_special = _rarity_string_to_rarity(word);
+        spec->ego = _rarity_string_to_rarity(word);
         word = _get_and_discard_word(&s);
     }
     else
     {
-        spec->item_special = random_deck_rarity();
+        spec->ego = DECK_RARITY_RANDOM;
     }
 
     // Error checking.
