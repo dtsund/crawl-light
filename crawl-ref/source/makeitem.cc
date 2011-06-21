@@ -3283,6 +3283,7 @@ int items(int allow_uniques,       // not just true-false,
 
     if (mundane)
     {
+        ASSERT(!is_deck(item));
         item.plus    = 0;
         item.plus2   = 0;
         item.special = 0;
