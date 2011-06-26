@@ -258,8 +258,8 @@ function TroveMarker:item_name(do_grammar)
   if item.base_type == "jewellery" and
      util.contains(jwith_pluses, item.sub_type) then
     s = s .. " +" .. item.plus1
-    if item.sub_type == "ring of slaying" and item.plus2 ~= item.plus1 then
-      s = s .. ", +" .. item.plus2
+    if item.sub_type == "ring of slaying" then
+      s = s .. ",+" .. item.plus2
     end
   end
 
@@ -364,9 +364,16 @@ function TroveMarker:check_item(marker, pname, position, dry_run)
       iplus2 = nil
     end
 
-    if iplus1 == nil or iplus2 == nil then
-      if item.plus1 ~= false or item.plus2 ~= false then
-        if dry_run ~= nil then crawl.mpr("Nil pluses when we want pluses.") end
+    if iplus1 == nil then
+      if item.plus1 ~= false then
+        if dry_run ~= nil then crawl.mpr("Nil plus1 when we want plus1.") end
+        this_item = false
+      end
+    end
+
+    if iplus2 == nil then
+      if item.plus2 ~= false then
+        if dry_run ~= nil then crawl.mpr("Nil plus2 when we want plus2.") end
         this_item = false
       end
     end
