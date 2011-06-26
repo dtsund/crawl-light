@@ -6586,7 +6586,7 @@ static const char *enchant_names[] =
     "withdrawn", "attached", "guardian_timer", "levitation",
     "helpless", "liquefying", "perm_tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "buggy",
+    "inner flame", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)

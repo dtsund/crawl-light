@@ -4941,6 +4941,19 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         return (MON_AFFECTED);
     }
 
+    case BEAM_INNER_FLAME:
+        if (!mon->has_ench(ENCH_INNER_FLAME)
+            && !mon->is_summoned()
+            && mon->add_ench(mon_enchant(ENCH_INNER_FLAME, 0, agent())))
+        {
+            if (simple_monster_message(mon,
+                                       (mon->body_size(PSIZE_BODY) > SIZE_BIG)
+                                        ? " is filled with an intense inner flame!"
+                                        : " is filled with an inner flame."))
+                obvious_effect = true;
+        }
+        return (MON_AFFECTED);
+
     default:
         break;
     }
@@ -5641,6 +5654,10 @@ actor* bolt::agent() const
 
 bool bolt::is_enchantment() const
 {
+#if TAG_MAJOR_VERSION == 32
+    if (flavour == BEAM_INNER_FLAME)
+        return (true);
+#endif
     return (flavour >= BEAM_FIRST_ENCHANTMENT
             && flavour <= BEAM_LAST_ENCHANTMENT);
 }
@@ -5765,6 +5782,7 @@ static std::string _beam_type_name(beam_type type)
     case BEAM_HOLY_FLAME:            return ("cleansing flame");
     case BEAM_HOLY_LIGHT:            return ("holy light");
     case BEAM_AIR:                   return ("air");
+    case BEAM_INNER_FLAME:           return ("inner flame");
 
     case NUM_BEAMS:                  die("invalid beam type");
     }

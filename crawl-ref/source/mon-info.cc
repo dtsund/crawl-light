@@ -128,6 +128,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_DUMB;
     case ENCH_MAD:
         return MB_MAD;
+    case ENCH_INNER_FLAME:
+        return MB_INNER_FLAME;
     default:
         return NUM_MB_FLAGS;
     }
@@ -922,6 +924,8 @@ static std::string _verbose_info0(const monster_info& mi)
         return ("mute");
     if (mi.is(MB_BLIND))
         return ("blind");
+    if (mi.is(MB_INNER_FLAME))
+        return ("inner flame");
 
     return ("");
 }
