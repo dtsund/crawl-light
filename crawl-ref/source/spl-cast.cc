@@ -2151,6 +2151,7 @@ std::string spell_noise_string(spell_type spell)
     case SPELL_LIGHTNING_BOLT:
     case SPELL_CHAIN_LIGHTNING:
     case SPELL_CONJURE_BALL_LIGHTNING:
+    case SPELL_TORNADO:
         effect_noise = 25;
         break;
 
