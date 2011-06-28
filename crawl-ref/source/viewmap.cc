@@ -1241,22 +1241,14 @@ bool show_map(level_pos &lpos,
             if (!map_alive)
                 break;
 
-#ifdef USE_TILE
-            {
-                const coord_def oldp = lpos.pos;
-                lpos.pos.x += move_x;
-                lpos.pos.y += move_y;
-                lpos.pos.x = std::min(std::max(lpos.pos.x, 1), GXM);
-                lpos.pos.y = std::min(std::max(lpos.pos.y, 1), GYM);
-                curs_x += lpos.pos.x - oldp.x;
-                curs_y += lpos.pos.y - oldp.y;
-            }
-#else
-            if (curs_x + move_x < 1 || curs_x + move_x > crawl_view.termsz.x)
-                move_x = 0;
-
-            curs_x += move_x;
-
+            const coord_def oldp = lpos.pos;
+            lpos.pos.x += move_x;
+            lpos.pos.y += move_y;
+            lpos.pos.x = std::min(std::max(lpos.pos.x, min_x), max_x);
+            lpos.pos.y = std::min(std::max(lpos.pos.y, min_y), max_y);
+            move_x = lpos.pos.x - oldp.x;
+            move_y = lpos.pos.y - oldp.y;
+#ifndef USE_TILE
             if (num_lines < map_lines)
             {
                 // Scrolling only happens when we don't have a large enough
@@ -1272,43 +1264,16 @@ bool show_map(level_pos &lpos,
                     curs_y -= (screen_y - old_screen_y);
                     scroll_y = 0;
                 }
-
-                if (curs_y + move_y < 1)
+                if (curs_y + move_y < 1 || curs_y + move_y > num_lines)
                 {
                     screen_y += move_y;
-
-                    if (screen_y < min_y + half_screen)
-                    {
-                        move_y   = screen_y - (min_y + half_screen);
-                        screen_y = min_y + half_screen;
-                    }
-                    else
-                        move_y = 0;
-                }
-
-                if (curs_y + move_y > num_lines)
-                {
-                    screen_y += move_y;
-
-                    if (screen_y > max_y - half_screen)
-                    {
-                        move_y   = screen_y - (max_y - half_screen);
-                        screen_y = max_y - half_screen;
-                    }
-                    else
-                        move_y = 0;
+                    curs_y -= move_y;
                 }
             }
             start_y = screen_y - half_screen;
-
-            if (curs_y + move_y < 1 || curs_y + move_y > num_lines)
-                move_y = 0;
-
-            curs_y += move_y;
-
-            lpos.pos.x = start_x + curs_x - 1;
-            lpos.pos.y = start_y + curs_y - 1;
 #endif
+            curs_x += move_x;
+            curs_y += move_y;
         }
     }
 
