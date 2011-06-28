@@ -1430,20 +1430,21 @@ int launcher_final_speed(const item_def &launcher, const item_def *shield)
     return (speed);
 }
 
-// Determines if the end result of the combined launcher + ammo brands a
-// fire/frost beam.
-// positive: frost, negative: flame, zero: neither
+// Determines if the combined launcher + ammo brands produce a
+// fire/frost/chaos beam.
 bool elemental_missile_beam(int launcher_brand, int ammo_brand)
 {
-    if (launcher_brand == SPWPN_CHAOS || ammo_brand == SPMSL_CHAOS)
+    if (launcher_brand == SPWPN_FLAME && ammo_brand == SPMSL_FROST ||
+        launcher_brand == SPWPN_FROST && ammo_brand == SPMSL_FLAME)
+    {
+        return (false);
+    }
+    if (ammo_brand == SPMSL_CHAOS || ammo_brand == SPMSL_FROST || ammo_brand == SPMSL_FLAME)
         return (true);
-
-    int element = (launcher_brand == SPWPN_FROST
-                   + ammo_brand == SPMSL_FROST
-                   - launcher_brand == SPWPN_FLAME
-                   - ammo_brand == SPMSL_FLAME);
-
-    return (element != 0);
+    if (ammo_brand != SPMSL_NORMAL)
+        return (false);
+    return (launcher_brand == SPWPN_CHAOS || launcher_brand == SPWPN_FROST ||
+            launcher_brand == SPWPN_FLAME);
 }
 
 static bool _poison_hit_victim(bolt& beam, actor* victim, int dmg, int corpse)
@@ -1862,11 +1863,18 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     int ammo_brand = get_ammo_brand(item);
 
-    // Launcher brand does not override ammunition.
+    // Launcher brand does not override ammunition except when elemental
+    // opposites (which cancel).
     if (ammo_brand != SPMSL_NORMAL && bow_brand != SPWPN_NORMAL)
     {
-        // But not for Nessos.
-        if (agent->atype() == ACT_MONSTER)
+        if (bow_brand == SPWPN_FLAME && ammo_brand == SPMSL_FROST ||
+            bow_brand == SPWPN_FROST && ammo_brand == SPMSL_FLAME)
+        {
+            bow_brand = SPWPN_NORMAL;
+            ammo_brand = SPMSL_NORMAL;
+        }
+        // Nessos gets to cheat.
+        else if (agent->atype() == ACT_MONSTER)
         {
             const monster* mon = static_cast<const monster* >(agent);
             if (mon->type != MONS_NESSOS)
@@ -1962,14 +1970,10 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     beam.name = item.name(DESC_PLAIN, false, false, false);
 
-    // The chief advantage here is the extra damage this does
-    // against susceptible creatures.
-
     // Note that bow_brand is known since the bow is equipped.
 
     bool beam_changed = false;
 
-    // Chaos overides flame and frost/ice.
     if (bow_brand == SPWPN_CHAOS || ammo_brand == SPMSL_CHAOS)
     {
         // Chaos can't be poisoned, since that might conflict with
@@ -2699,11 +2703,9 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
         if (bow_brand == SPWPN_VORPAL)
         {
-            // Vorpal brand adds 30% damage bonus. Increased from 25%
-            // because at 25%, vorpal brand is completely inferior to
-            // speed. At 30% it's marginally better than speed when
-            // fighting monsters with very heavy armour.
-            dice_mult = dice_mult * 130 / 100;
+            // Vorpal brand adds 20% damage bonus. Decreased from 30% to
+            // keep it more comparable with speed brand after the speed nerf.
+            dice_mult = dice_mult * 120 / 100;
         }
 
         // Note that branded missile damage goes through defender
@@ -2711,7 +2713,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         if (ammo_brand == SPMSL_STEEL
             || elemental_missile_beam(bow_brand, ammo_brand))
         {
-            dice_mult = dice_mult * 150 / 100;
+            dice_mult = dice_mult * 140 / 100;
         }
 
         // ID check. Can't ID off teleported projectiles, uh, because
@@ -2911,7 +2913,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             }
 
             if (ammo_brand == SPMSL_STEEL)
-                dice_mult = dice_mult * 150 / 100;
+                dice_mult = dice_mult * 130 / 100;
 
             practise(EX_WILL_THROW_MSL, wepType);
         }
