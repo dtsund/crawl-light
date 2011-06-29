@@ -156,7 +156,7 @@ static bool _mons_is_unmovable(const monster *mons)
 }
 
 static coord_def _rotate(coord_def org, coord_def from,
-                         std::vector<coord_def> &avail, int dur)
+                         std::vector<coord_def> &avail, int rdur)
 {
     if (avail.empty())
         return from;
@@ -165,7 +165,7 @@ static coord_def _rotate(coord_def org, coord_def from,
     double hiscore = 1e38;
 
     double dist0 = sqrt((from - org).abs());
-    double ang0 = atan2(from.x - org.x, from.y - org.y) + dur * 0.1;
+    double ang0 = atan2(from.x - org.x, from.y - org.y) + rdur * 0.01;
     if (ang0 > PI)
         ang0 -= 2 * PI;
     for (unsigned int i = 0; i < avail.size(); i++)
@@ -226,6 +226,7 @@ void tornado_damage(actor *caster, int dur)
     std::vector<actor*>        move_act;   // victims to move
     std::vector<coord_def>     move_avail; // legal destinations
     std::map<mid_t, coord_def> move_dest;  // chosen destination
+    int rdurs[TORNADO_RADIUS+1];           // durations at radii
     int cnt_open = 0;
     int cnt_all  = 0;
 
@@ -252,6 +253,7 @@ void tornado_damage(actor *caster, int dur)
         */
         // effective duration at the radius
         int rdur = _rdam(rage + abs(dur)) - _rdam(rage);
+        rdurs[r] = rdur;
         // power at the radius
         int rpow = div_rand_round(pow * cnt_open * rdur, cnt_all * 100);
         dprf("at dist %d dur is %d%%, pow is %d", r, rdur, rpow);
