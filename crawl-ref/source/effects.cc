@@ -2440,7 +2440,7 @@ static void _catchup_monster_moves(monster* mon, int turns)
     const int moves = (range > 50) ? 50 : range;
 
     const bool ranged_attack = (mons_has_ranged_spell(mon, true)
-                                || mons_has_ranged_attack(mon));
+                                || mons_has_ranged_weapon(mon));
 
 #ifdef DEBUG_DIAGNOSTICS
     // probably too annoying even for DEBUG_DIAGNOSTICS
