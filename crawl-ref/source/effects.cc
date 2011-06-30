@@ -2439,9 +2439,6 @@ static void _catchup_monster_moves(monster* mon, int turns)
     const int range = (turns * mon->speed) / 10;
     const int moves = (range > 50) ? 50 : range;
 
-    const bool ranged_attack = (mons_has_ranged_spell(mon, true)
-                                || mons_has_ranged_weapon(mon));
-
 #ifdef DEBUG_DIAGNOSTICS
     // probably too annoying even for DEBUG_DIAGNOSTICS
     mprf(MSGCH_DIAGNOSTICS,
@@ -2496,7 +2493,7 @@ static void _catchup_monster_moves(monster* mon, int turns)
         }
     }
 
-    if (ranged_attack && !changed)
+    if (mons_has_ranged_attack(mon) && !changed)
     {
         // If we're doing short time movement and the monster has a
         // ranged attack (missile or spell), then the monster will
