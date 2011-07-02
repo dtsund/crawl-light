@@ -859,6 +859,7 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     // Multi-turn commands
     case CMD_PICKUP:
     case CMD_DROP:
+    case CMD_DROP_LAST:
     case CMD_BUTCHER:
     case CMD_GO_UPSTAIRS:
     case CMD_GO_DOWNSTAIRS:
@@ -1860,6 +1861,12 @@ void process_command(command_type cmd)
 
     case CMD_DROP:
         drop();
+        if (Options.stash_tracking >= STM_DROPPED)
+            StashTrack.add_stash();
+        break;
+
+    case CMD_DROP_LAST:
+        drop_last();
         if (Options.stash_tracking >= STM_DROPPED)
             StashTrack.add_stash();
         break;
