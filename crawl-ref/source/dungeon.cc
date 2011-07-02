@@ -4066,6 +4066,8 @@ retry:
         }
         if (item.base_type == OBJ_WANDS && props.exists("charges"))
             item.plus = props["charges"].get_int();
+        if (props.exists("unobtainable"))
+            item.flags |= ISFLAG_UNOBTAINABLE;
 
         return (item_made);
     }
