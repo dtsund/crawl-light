@@ -1140,7 +1140,8 @@ SUBST:  T : t.TTTTT
 SUBST:  T = t:66 .:33 >:1 
 COLOUR: . = brown
 COLOUR: t = w:2 darkgrey / w:1 brown
-MAP 
+TILE:   t = dngn_tree_dead
+MAP
 xxxxxxxx@xxxxxxxx
 xttttttT.TTtttxxx
 xttttttTT.Ttttttx
@@ -1183,4 +1184,26 @@ MAP
   ..xx...xx..
   ..x.....x..
    .........
+ENDMAP
+
+##############################################################################
+NAME:   roderic_chinese_lattice_entry
+TAGS:   entry no_monster_gen
+ORIENT: float
+MAP
+    x.xxx.x 
+    x.....x
+  xxx.x.x.xxx
+  x.........x
+xxx.x.x.x.x.xxx
+......x.x......
+x.x.xxx.xxx.x.x
+x......(......x
+x.x.xxx.xxx.x.x
+......x.x......
+xxx.x.x.x.x.xxx
+  x.........x
+  xxx.x.x.xxx
+    x.....x
+    x.xxx.x
 ENDMAP
