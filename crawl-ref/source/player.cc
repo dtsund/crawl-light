@@ -5576,7 +5576,7 @@ void player::init()
     }
 }
 
-player_save_info player_save_info::operator=(const player& rhs)
+player_save_info& player_save_info::operator=(const player& rhs)
 {
     name             = rhs.your_name;
     experience       = rhs.experience;

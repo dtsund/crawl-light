@@ -59,6 +59,8 @@ struct map_cell
 
     map_cell& operator=(const map_cell& c)
     {
+        if (&c == this)
+            return (*this);
         if (_mons)
             delete _mons;
         if (_item)
