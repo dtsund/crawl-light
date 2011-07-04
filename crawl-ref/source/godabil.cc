@@ -2781,7 +2781,7 @@ bool fedhas_plant_ring_from_fruit()
     // no squares to place plants on).
     if (max_use == 0)
     {
-        if (adjacent.size() == 0)
+        if (adjacent.empty())
             mprf("No empty adjacent squares.");
         else
             mprf("No fruit available.");

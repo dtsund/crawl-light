@@ -2797,7 +2797,7 @@ void ShoppingList::display()
             }
 
             del_thing_at_index(index);
-            if (list->size() == 0)
+            if (list->empty())
                 break;
 
             shopmenu.clear();

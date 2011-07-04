@@ -371,7 +371,7 @@ int Menu::post_process(int k)
 
 bool Menu::process_key(int keyin)
 {
-    if (items.size() == 0)
+    if (items.empty())
     {
         lastch = keyin;
         return (false);
@@ -1918,7 +1918,7 @@ void PrecisionMenu::set_select_type(SelectType flag)
 void PrecisionMenu::clear()
 {
     // release all the data reserved
-    if (m_attached_objects.size() == 0)
+    if (m_attached_objects.empty())
     {
         return;
     }
@@ -1946,7 +1946,7 @@ bool PrecisionMenu::process_key(int key)
 {
     if (m_active_object == NULL)
     {
-        if (m_attached_objects.size() == 0)
+        if (m_attached_objects.empty())
         {
             // nothing to process
             return true;
@@ -2233,7 +2233,7 @@ std::vector<MenuItem*> PrecisionMenu::get_selected_items()
     for (it = m_attached_objects.begin(); it != m_attached_objects.end(); ++it)
     {
         std::vector<MenuItem*> object_selected = (*it)->get_selected_items();
-        if (object_selected.size() > 0)
+        if (!object_selected.empty())
         {
             std::vector<MenuItem*>::iterator object_it;
             for (object_it = object_selected.begin();
@@ -2304,7 +2304,7 @@ void PrecisionMenu::set_active_object(MenuObject* object)
 
 void PrecisionMenu::draw_menu()
 {
-    if (m_attached_objects.size() > 0)
+    if (!m_attached_objects.empty())
     {
         std::vector<MenuObject*>::iterator it;
         for (it = m_attached_objects.begin(); it != m_attached_objects.end();
@@ -2741,7 +2741,7 @@ void TextTileItem::render()
         }
         // center the text
         // TODO wrap / chop the text
-        const int tile_offset = (m_tiles.size() > 0) ? 32 : 0;
+        const int tile_offset = m_tiles.empty() ? 0 : 32;
         m_font_buf.add(m_text, term_colours[m_fg_colour],
                        m_min_coord.x + tile_offset,
                        m_min_coord.y + get_vertical_offset());
@@ -3051,7 +3051,7 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
 
     if (m_active_item == NULL)
     {
-        if (m_entries.size() == 0)
+        if (m_entries.empty())
         {
             // nothing to process
             return MenuObject::INPUT_NO_ACTION;
@@ -3342,7 +3342,7 @@ void MenuFreeform::set_active_item(MenuItem* item)
 
 void MenuFreeform::activate_first_item()
 {
-    if (m_entries.size() > 0)
+    if (!m_entries.empty())
     {
         // find the first activeable item
         for (int i = 0; i < static_cast<int> (m_entries.size()); ++i)
@@ -3358,7 +3358,7 @@ void MenuFreeform::activate_first_item()
 
 void MenuFreeform::activate_last_item()
 {
-    if (m_entries.size() > 0)
+    if (!m_entries.empty())
     {
         // find the last activeable item
         for (int i = m_entries.size() -1; i >= 0; --i)
@@ -3568,7 +3568,7 @@ MenuObject::InputReturnValue MenuScroller::process_input(int key)
 
     if (m_currently_active < 0)
     {
-        if (m_entries.size() == 0)
+        if (m_entries.empty())
         {
             // nothing to process
             return MenuObject::INPUT_NO_ACTION;
@@ -3838,7 +3838,7 @@ void MenuScroller::set_active_item(MenuItem* item)
 
 void MenuScroller::activate_first_item()
 {
-    if (m_entries.size() > 0)
+    if (!m_entries.empty())
     {
         // find the first activeable item
         for (int i = 0; i < static_cast<int> (m_entries.size()); ++i)
@@ -3854,7 +3854,7 @@ void MenuScroller::activate_first_item()
 
 void MenuScroller::activate_last_item()
 {
-    if (m_entries.size() > 0)
+    if (!m_entries.empty())
     {
         // find the last activeable item
         for (int i = m_entries.size() -1; i >= 0; --i)

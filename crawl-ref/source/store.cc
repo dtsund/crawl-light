@@ -720,7 +720,7 @@ CrawlVector &CrawlStoreValue::new_vector(store_val_type _type,
     ASSERT(flags & SFLAG_UNSET);
     ASSERT(type == SV_NONE
            || (type == SV_VEC
-               && old_vector->size() == 0
+               && old_vector->empty()
                && old_vector->get_type() == SV_NONE
                && old_vector->get_default_flags() == 0
                && old_vector->get_max_size() == VEC_MAX_SIZE));
@@ -1782,7 +1782,7 @@ bool CrawlVector::empty() const
 CrawlStoreValue& CrawlVector::pop_back()
 {
     assert_validity();
-    ASSERT(vector.size() > 0);
+    ASSERT(!vector.empty());
 
     CrawlStoreValue& val = vector[vector.size() - 1];
     vector.pop_back();

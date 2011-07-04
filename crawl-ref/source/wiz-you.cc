@@ -594,7 +594,7 @@ bool wizard_add_mutation()
     {
         crawl_state.cancel_cmd_repeat();
 
-        if (partial_matches.size() == 0)
+        if (partial_matches.empty())
             mpr("No matching mutation names.");
         else
         {
@@ -803,7 +803,7 @@ void wizard_edit_durations(void)
         durs.push_back(i);
     }
 
-    if (durs.size() > 0)
+    if (!durs.empty())
     {
         for (unsigned int i = 0; i < durs.size(); ++i)
         {
@@ -835,7 +835,7 @@ void wizard_edit_durations(void)
 
     if (strlen(buf) == 1)
     {
-        if (durs.size() == 0)
+        if (durs.empty())
         {
             mpr("No existing durations to choose from.", MSGCH_PROMPT);
             return;
@@ -872,7 +872,7 @@ void wizard_edit_durations(void)
             ;
         else if (matches.size() == 1)
             choice = matches[0];
-        else if (matches.size() == 0)
+        else if (matches.empty())
         {
             mprf(MSGCH_PROMPT, "No durations matching '%s'.", buf);
             return;
