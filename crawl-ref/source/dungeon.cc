@@ -2753,8 +2753,8 @@ static void _slime_connectivity_fixup()
         if (target_components == present.end())
             continue;
 
-        map_component * base_component = target_components->second;;
-        target_components++;
+        map_component * base_component = target_components->second;
+        ++target_components;
 
         adjacent_costs connection_costs;
         connection_costs.adjacency = &adjacent_check.adjacency;
@@ -2766,7 +2766,7 @@ static void _slime_connectivity_fixup()
 
         // Now search from our base component to the other components, and
         // clear out the path found
-        for ( ; target_components != present.end(); target_components++)
+        for ( ; target_components != present.end(); ++target_components)
         {
             valid_label.target_label = target_components->second->label;
 
