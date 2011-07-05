@@ -1261,7 +1261,7 @@ bool mons_enslaved_soul(const monster* mon)
     return (testbits(mon->flags, MF_ENSLAVED_SOUL));
 }
 
-bool name_zombie(monster* mon, int mc, const std::string mon_name)
+bool name_zombie(monster* mon, int mc, const std::string &mon_name)
 {
     mon->mname = mon_name;
 
