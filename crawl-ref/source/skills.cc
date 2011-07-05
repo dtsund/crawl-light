@@ -223,13 +223,13 @@ static void _change_skill_level(skill_type exsk, int n)
         mprf(MSGCH_INTRINSIC_GAIN, "You have gained %s skill!", skill_name(exsk));
         hints_gained_new_skill(exsk);
     }
-    else if (abs(n) == 1)
+    else if (abs(n) == 1 && you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, "Your %s skill %s to level %d!",
              skill_name(exsk), (n > 0) ? "increases" : "decreases",
              you.skills[exsk]);
     }
-    else
+    else if (you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, "Your %s skill %s %d levels and is now at "
              "level %d!", skill_name(exsk), (n > 0) ? "gained" : "lost",
