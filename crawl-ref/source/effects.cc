@@ -1644,10 +1644,7 @@ void change_labyrinth(bool msg)
     {
         mprf(MSGCH_DIAGNOSTICS, "Changing labyrinth from (%d, %d) to (%d, %d)",
              c1.x, c1.y, c2.x, c2.y);
-    }
 
-    if (msg)
-    {
         std::string path_str = "";
         mpr("Here's the list of targets: ", MSGCH_DIAGNOSTICS);
         for (unsigned int i = 0; i < targets.size(); i++)
@@ -1656,7 +1653,7 @@ void change_labyrinth(bool msg)
             path_str += info;
         }
         mpr(path_str.c_str(), MSGCH_DIAGNOSTICS);
-        mprf(MSGCH_DIAGNOSTICS, "-> #targets = %d", targets.size());
+        mprf(MSGCH_DIAGNOSTICS, "-> #targets = %u", (unsigned int)targets.size());
     }
 
 #ifdef WIZARD

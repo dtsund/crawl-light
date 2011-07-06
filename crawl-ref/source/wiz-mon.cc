@@ -1115,7 +1115,7 @@ void debug_pathfind(int mid)
             path_str += info;
         }
         mpr(path_str.c_str());
-        mprf("-> path length: %d", path.size());
+        mprf("-> path length: %u", (unsigned int)path.size());
 
         mpr("");
         path = mp.calc_waypoints();
@@ -1128,7 +1128,7 @@ void debug_pathfind(int mid)
             path_str += info;
         }
         mpr(path_str.c_str());
-        mprf("-> #waypoints: %d", path.size());
+        mprf("-> #waypoints: %u", (unsigned int)path.size());
     }
 }
 

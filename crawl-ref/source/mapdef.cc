@@ -2939,11 +2939,8 @@ coord_def map_def::float_aligned_place() const
     const point_vector our_anchors = anchor_points();
     const coord_def fail(-1, -1);
 
-#ifdef DEBUG_DIAGNOSTICS
-    mprf(MSGCH_DIAGNOSTICS,
-         "Aligning floating vault with %u points vs %u reference points",
-         our_anchors.size(), map_anchor_points.size());
-#endif
+    dprf("Aligning floating vault with %u points vs %u reference points",
+         (unsigned int)our_anchors.size(), (unsigned int)map_anchor_points.size());
 
     // Mismatch in the number of points we have to align, bail.
     if (our_anchors.size() != map_anchor_points.size())
