@@ -793,6 +793,7 @@ static const char* dur_names[] =
     "lifesaving",
     "paralysis immunity",
     "darkness",
+    "tornado cooldown",
 };
 
 void wizard_edit_durations(void)

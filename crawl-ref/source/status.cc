@@ -135,6 +135,8 @@ static duration_def duration_data[] =
       LIGHTGREY, "Prot", "protection", "You ask for being saved." },
     { DUR_DARKNESS, true,
       BLUE, "Dark", "darkness", "You emit darkness." },
+    { DUR_TORNADO_COOLDOWN, false,
+      YELLOW, "Tornado", "", "" ,},
 };
 
 static int duration_index[NUM_DURATIONS];
