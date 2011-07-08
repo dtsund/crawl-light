@@ -82,9 +82,8 @@ bool zin_sustenance(bool actual)
 
 std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
 {
-
-    //'prayertype':
-    //This is in enum.h; there are currently five prayers.
+    // 'prayertype':
+    // This is in enum.h; there are currently five prayers.
 
     //'step':
     //-1: We're either starting or stopping, so we just want the passage name.

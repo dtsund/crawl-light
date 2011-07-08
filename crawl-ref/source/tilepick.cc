@@ -2675,7 +2675,6 @@ tileidx_t tileidx_draco_base(const monster* mon)
 
 tileidx_t tileidx_draco_job(const monster* mon)
 {
-
     switch (mon->type)
     {
         case MONS_DRACONIAN_CALLER:      return (TILEP_DRACO_CALLER);

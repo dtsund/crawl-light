@@ -1406,7 +1406,6 @@ std::vector<SelItem> prompt_invent_items(
 
 static int _digit_to_index(char digit, operation_types oper)
 {
-
     const char iletter = static_cast<char>(oper);
 
     for (int i = 0; i < ENDOFPACK; ++i)

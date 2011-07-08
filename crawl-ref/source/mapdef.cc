@@ -4175,7 +4175,6 @@ mons_spec mons_list::mons_by_name(std::string name) const
 item_spec::item_spec(const item_spec &other)
     : _corpse_monster_spec(NULL)
 {
-
     *this = other;
 }
 

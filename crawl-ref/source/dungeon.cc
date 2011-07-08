@@ -320,7 +320,8 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
     if (player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
         _setup_temple_altars(you.props);
 
-    try {
+    try
+    {
         _build_dungeon_level(level_number, level_type);
     }
     catch (dgn_veto_exception& e)
@@ -1080,7 +1081,6 @@ static coord_def _find_level_feature(int feat)
 
 static bool _has_connected_stone_stairs_from(const coord_def &c)
 {
-
     flood_find<feature_grid, coord_predicate> ff(env.grid, in_bounds);
     ff.add_feat(DNGN_STONE_STAIRS_DOWN_I);
     ff.add_feat(DNGN_STONE_STAIRS_DOWN_II);
@@ -2696,7 +2696,6 @@ static void _slime_connectivity_fixup()
 
     for (rectangle_iterator ri(1); ri; ++ri)
     {
-
         int count = 0;
         if (!_passable_square(*ri))
         {
