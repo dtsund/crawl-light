@@ -2,6 +2,7 @@
 #define TARGET_H
 
 #include "beam.h"
+#include "mon-info.h"
 
 enum aff_type // sign and non-zeroness matters
 {
@@ -71,4 +72,5 @@ public:
     aff_type is_affected(coord_def loc);
 };
 
+typedef std::vector<std::string> (*desc_filter) (const monster_info& mi);
 #endif
