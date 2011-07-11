@@ -1267,7 +1267,9 @@ static bool _autoswitch_to_ranged()
     for (;iter!=you.inv.end(); ++iter)
        if(iter->launched_by(launcher))
        {
-          wield_weapon(true, item_slot);
+          if (!wield_weapon(true, item_slot))
+              return false;
+
           you.turn_is_over = true;
           //XXX Hacky. Should use a delay instead.
           macro_buf_add(command_to_key(CMD_FIRE));
