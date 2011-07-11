@@ -5391,9 +5391,6 @@ void player::init()
     is_undead       = US_ALIVE;
 
     friendly_pickup = 0;
-#if defined(WIZARD) || defined(DEBUG)
-    never_die = false;
-#endif
     dead = false;
     lives = 0;
     deaths = 0;
