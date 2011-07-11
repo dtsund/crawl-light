@@ -923,6 +923,7 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             || death_type == KILLED_BY_DISINT
             || death_type == KILLED_BY_SPORE
             || death_type == KILLED_BY_CLOUD
+            || death_type == KILLED_BY_ROTTING
             || death_type == KILLED_BY_REFLECTION)
         && !invalid_monster_index(death_source)
         && menv[death_source].type != -1)
@@ -1896,6 +1897,10 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
 
     case KILLED_BY_ROTTING:
         desc += terse? "rotting" : "Rotted away";
+        if (!auxkilldata.empty())
+            desc += " (" + auxkilldata + ")";
+        if (!death_source_desc().empty())
+            desc += " (" + death_source_desc() + ")";
         break;
 
     case KILLED_BY_TARGETING:
