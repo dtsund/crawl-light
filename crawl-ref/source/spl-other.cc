@@ -498,10 +498,13 @@ void remove_condensation_shield()
     you.redraw_armour_class = true;
 }
 
-void cast_condensation_shield(int pow)
+bool cast_condensation_shield(int pow)
 {
     if (you.shield() || you.duration[DUR_FIRE_SHIELD])
+    {
         canned_msg(MSG_SPELL_FIZZLES);
+        return (false);
+    }
     else
     {
         if (you.duration[DUR_CONDENSATION_SHIELD] > 0)
@@ -517,30 +520,25 @@ void cast_condensation_shield(int pow)
                                   10 + roll_dice(2, pow / 5), 30);
             you.redraw_armour_class = true;
         }
+
+        return (true);
     }
 }
 
-void cast_stoneskin(int pow)
+bool cast_stoneskin(int pow)
 {
-    if (you.is_undead
-        && (you.species != SP_VAMPIRE || you.hunger_state < HS_SATIATED))
-    {
-        mpr("This spell does not affect your undead flesh.");
-        return;
-    }
-
     if (you.form != TRAN_NONE
         && you.form != TRAN_STATUE
         && you.form != TRAN_BLADE_HANDS)
     {
         mpr("This spell does not affect your current form.");
-        return;
+        return (false);
     }
 
     if (you.duration[DUR_ICY_ARMOUR])
     {
         mpr("This spell conflicts with another spell still in effect.");
-        return;
+        return (false);
     }
 
     if (you.duration[DUR_STONESKIN])
@@ -556,6 +554,8 @@ void cast_stoneskin(int pow)
     }
 
     you.increase_duration(DUR_STONESKIN, 10 + random2(pow) + random2(pow), 50);
+
+    return (true);
 }
 
 bool cast_darkness(int pow)
