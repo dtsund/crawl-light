@@ -436,4 +436,5 @@ void cancel_tornado()
         // kill you.
     }
     you.duration[DUR_TORNADO] = 0;
+    you.duration[DUR_TORNADO_COOLDOWN] = 0;
 }
