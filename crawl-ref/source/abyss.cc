@@ -642,14 +642,14 @@ public:
             || rune_was_near && !rune_is_near
             && you.attribute[ATTR_ABYSSAL_RUNES] == 0)
         {
-            xom_is_stimulated(255, "Xom snickers loudly.", true);
+            xom_is_stimulated(200, "Xom snickers loudly.", true);
         }
 
         if (!rune_was_near && rune_is_near
             && you.attribute[ATTR_ABYSSAL_RUNES] == 0
             || !exit_was_near && exit_is_near)
         {
-            xom_is_stimulated(255);
+            xom_is_stimulated(200);
         }
     }
 };

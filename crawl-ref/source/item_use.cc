@@ -3933,7 +3933,7 @@ void zap_wand(int slot)
     {
         // Xom loves it when you use a Wand of Random Effects and
         // there is a dangerous monster nearby...
-        xom_is_stimulated(255);
+        xom_is_stimulated(200);
     }
 
     // Reset range.
@@ -3997,7 +3997,7 @@ void zap_wand(int slot)
     {
         // Xom loves it when you use an unknown wand and there is a
         // dangerous monster nearby...
-        xom_is_stimulated(255);
+        xom_is_stimulated(200);
     }
 
     you.turn_is_over = true;
@@ -4135,7 +4135,7 @@ void drink(int slot)
     {
         // Xom loves it when you drink an unknown potion and there is
         // a dangerous monster nearby...
-        xom_is_stimulated(255);
+        xom_is_stimulated(200);
     }
 
     if (is_blood_potion(potion))
@@ -4226,7 +4226,7 @@ static bool _drink_fountain()
     }
 
     if (fountain_effect != POT_WATER && fountain_effect != POT_BLOOD)
-        xom_is_stimulated(64);
+        xom_is_stimulated(50);
 
     // Good gods do not punish for bad random effects. However, they do
     // punish drinking from a fountain of blood.
@@ -4425,7 +4425,7 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
 
             // Xom thinks it's funny if enchantment is possible but fails.
             if (is_enchantable_weapon(wpn, false, to_hit))
-                xom_is_stimulated(32);
+                xom_is_stimulated(25);
 
             return (false);
         }
@@ -5327,7 +5327,7 @@ void read_scroll(int slot)
         // Xom loves it when you read an unknown scroll and there is a
         // dangerous monster nearby... (though not as much as potions
         // since there are no *really* bad scrolls, merely useless ones).
-        xom_is_stimulated(bad_effect ? 128 : 64);
+        xom_is_stimulated(bad_effect ? 100 : 50);
     }
 }
 
