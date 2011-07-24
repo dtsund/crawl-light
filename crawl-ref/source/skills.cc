@@ -236,7 +236,7 @@ static void _change_skill_level(skill_type exsk, int n)
              abs(n), you.skills[exsk]);
     }
 
-    if (n > 0)
+    if (n > 0 && you.num_turns)
         learned_something_new(HINT_SKILL_RAISE);
 
     // Recalculate this skill's order for tie breaking skills
