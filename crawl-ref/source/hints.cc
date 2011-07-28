@@ -4303,6 +4303,7 @@ static bool _hints_feat_interesting(dungeon_feature_type feat)
 
 void hints_describe_pos(int x, int y)
 {
+    cgotoxy(1, wherey());
     _hints_describe_disturbance(x, y);
     _hints_describe_cloud(x, y);
     _hints_describe_feature(x, y);
@@ -4670,6 +4671,7 @@ bool hints_monster_interesting(const monster* mons)
 
 void hints_describe_monster(const monster_info& mi, bool has_stat_desc)
 {
+    cgotoxy(1, wherey());
     std::ostringstream ostr;
     ostr << "\n\n<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
