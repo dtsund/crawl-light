@@ -72,7 +72,7 @@
 
 /*
     _tetrahedral_number: returns the nth tetrahedral number.
-    Called only by _get_true_fail_rate.
+    Called only by get_true_fail_rate.
     Written by dtsund.
     Inline functions?  What's inline functions, precious?
 */
@@ -82,14 +82,14 @@ static int _tetrahedral_number(int n)
 }
 
 /*
-    _get_true_fail_rate: Takes the raw failure to-beat number
+    get_true_fail_rate: Takes the raw failure to-beat number
     and converts it to actual failure rate percentage for display.
     Should probably use more constants, though I doubt the spell
     success algorithms will really change *that* much.
     Written by dtsund.
     May be slightly off in places, will need to give it a second look.
 */
-static int _get_true_fail_rate(int badfail)
+static int get_true_fail_rate(int badfail)
 {
     //Three d100 rolls.  Need average to be less than badfail.
     //Fun with tetrahedral numbers!
@@ -1241,7 +1241,7 @@ spret_type your_spells(spell_type spell, int powc,
 
         //A player who has nominally trained up to 98% success
         //deserves to be able to rely on the spell. -dtsund
-        if(_get_true_fail_rate(spfail_chance) <= 2)
+        if(get_true_fail_rate(spfail_chance) <= 2)
         {
             spfl = spfail_chance + 1;
         }
@@ -2040,7 +2040,7 @@ char* failure_rate_to_string(int fail)
     //Because of multiple die shenanigans, need to convert
     //this raw fail number into the actual fail percentage
     //before displaying it.
-    int failPercent = _get_true_fail_rate(fail);
+    int failPercent = get_true_fail_rate(fail);
     char *buffer = new char[5];
     if(failPercent <= 2)
     {

@@ -1689,9 +1689,14 @@ static bool _activate_talent(const talent& tal)
         crawl_state.zero_turns_taken();
         return (false);
     }
+    
+    //Abilities, like spells, get 98% success rounded up.
+    int failure = tal.fail;
+    if(get_true_fail_rate(tal.fail) <= 2)
+        failure = 0;
 
     // No turning back now... {dlb}
-    if (random2avg(100, 3) < tal.fail)
+    if (random2avg(100, 3) < failure)
     {
         mpr("You fail to use your ability.");
         you.turn_is_over = true;
