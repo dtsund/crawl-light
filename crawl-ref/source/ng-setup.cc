@@ -746,7 +746,7 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[range_skill(you.inv[1])] = 2;
         you.skills[SK_DODGING]              = 1;
         you.skills[SK_SPELLCASTING]         = 2;
-        you.skills[SK_ENCHANTMENTS]         = 2;
+        you.skills[SK_POISON_MAGIC]         = 2;
         break;
 
     case JOB_WIZARD:
@@ -793,7 +793,7 @@ static void _give_items_skills(const newgame_def& ng)
 
         weap_skill = 1;
         you.skills[SK_THROWING]     = 1;
-        you.skills[SK_ENCHANTMENTS] = 3;
+        you.skills[SK_POISON_MAGIC] = 3;
         you.skills[SK_SPELLCASTING] = 1;
         you.skills[SK_DODGING]      = 2;
         you.skills[SK_STEALTH]      = 2;
@@ -917,9 +917,10 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_FIGHTING]       = 1;
         you.skills[SK_DODGING]        = 2;
         you.skills[SK_STEALTH]        = 2;
-        you.skills[SK_STABBING]       = 2;
-        you.skills[SK_SPELLCASTING]   = 1;
-        you.skills[SK_TRANSMUTATIONS] = 2;
+        you.skills[SK_SPELLCASTING]   = 2;
+        you.skills[SK_TRANSMUTATIONS] = 1;
+        you.skills[SK_TRANSLOCATIONS] = 1;
+        you.skills[SK_POISON_MAGIC]   = 1;
         break;
 
     case JOB_ASSASSIN:
