@@ -1238,6 +1238,14 @@ spret_type your_spells(spell_type spell, int powc,
         }
 
         const int spfail_chance = spell_fail(spell);
+
+        //A player who has nominally trained up to 98% success
+        //deserves to be able to rely on the spell. -dtsund
+        if(_get_true_fail_rate(spfail_chance) <= 2)
+        {
+            spfl = spfail_chance + 1;
+        }
+
         // Divination mappings backfire in Labyrinths and the Abyss.
         if (testbits(env.level_flags, LFLAG_NO_MAGIC_MAP)
             && testbits(flags, SPFLAG_MAPPING))
