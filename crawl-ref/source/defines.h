@@ -223,8 +223,8 @@ const int ANTITRAIN_PENALTY = 2;
 #define MAX_UNRANDARTS 100
 
 // Haste/slow boost.
-#define haste_mul(x) div_rand_round((x) * 3, 2)
-#define haste_div(x) div_rand_round((x) * 2, 3)
+#define haste_mul(x) div_rand_round((x) * 4, 2)
+#define haste_div(x) div_rand_round((x) * 2, 4)
 
 #define MAX_MONSTER_HP 10000
 
