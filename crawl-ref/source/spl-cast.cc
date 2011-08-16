@@ -89,7 +89,7 @@ static int _tetrahedral_number(int n)
     Written by dtsund.
     May be slightly off in places, will need to give it a second look.
 */
-static int get_true_fail_rate(int badfail)
+int get_true_fail_rate(int badfail)
 {
     //Three d100 rolls.  Need average to be less than badfail.
     //Fun with tetrahedral numbers!
@@ -1900,6 +1900,13 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     case SPELL_SILENCE:
         cast_silence(powc);
+        break;
+        
+    case SPELL_SELECTIVE_AMNESIA:
+        crawl_state.cant_cmd_repeat("You can't repeat selective amnesia.");
+
+        if (!cast_selective_amnesia())
+            return (SPRET_ABORT);
         break;
 
     // other

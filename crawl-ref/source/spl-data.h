@@ -404,6 +404,19 @@ struct spell_desc
 },
 
 {
+    SPELL_SELECTIVE_AMNESIA, "Selective Amnesia",
+     SPTYP_ENCHANTMENT,
+     SPFLAG_NONE,
+     4,
+     0,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
     SPELL_MASS_CONFUSION, "Mass Confusion",
      SPTYP_ENCHANTMENT,
      SPFLAG_AREA,

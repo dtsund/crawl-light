@@ -65,6 +65,7 @@ see_invisible SEE_INVISIBLE
 slow SLOW
 sure_blade SURE_BLADE
 tukimas_dance TUKIMAS_DANCE
+selective_amnesia SELECTIVE_AMNESIA
 
 %sdir gui/spells/fire
 bolt_of_fire BOLT_OF_FIRE

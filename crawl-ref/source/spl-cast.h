@@ -52,7 +52,7 @@ enum spret_type
 
 typedef bool (*spell_selector)(spell_type spell);
 
-static int get_true_fail_rate(int badfail);
+int get_true_fail_rate(int badfail);
 
 int list_spells(bool toggle_with_I = true, bool viewing = false,
                 bool allow_preselect = true, int minRange = -1,
