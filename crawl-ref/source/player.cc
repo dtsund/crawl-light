@@ -2736,6 +2736,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
     }
 
     you.exp_available += exp_gained;
+    autotrain();
 
     level_change();
 
@@ -5386,6 +5387,8 @@ void player::init()
     skills.init(0);
     // In Zot def we turn off all skills with non-zero skill level later
     practise_skill.init(true);
+    autotrain_skill.init(false);
+    num_autotrained_skills = 0;
     skill_points.init(0);
     ct_skill_points.init(0);
     skill_order.init(MAX_SKILL_ORDER);

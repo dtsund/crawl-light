@@ -17,6 +17,7 @@
 #include "beam.h"
 #include "effects.h"
 #include "env.h"
+#include "exercise.h"
 #include "food.h"
 #include "godconduct.h"
 #include "godwrath.h"
@@ -369,6 +370,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
             mpr("A flood of memories washes over you.");
         you.exp_available += 750 * you.experience_level
                            - ash_reduce_xp(750 * you.experience_level);
+        autotrain();
         break;
 
     case POT_MAGIC:
