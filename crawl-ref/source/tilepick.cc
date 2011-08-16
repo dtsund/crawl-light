@@ -4516,7 +4516,7 @@ tileidx_t tileidx_skill(skill_type skill, bool active)
     case SK_ICE_MAGIC:      ch = TILEG_ICE_MAGIC_ON; break;
     case SK_AIR_MAGIC:      ch = TILEG_AIR_MAGIC_ON; break;
     case SK_EARTH_MAGIC:    ch = TILEG_EARTH_MAGIC_ON; break;
-    case SK_POISON_MAGIC:   ch = TILEG_POISON_MAGIC_ON; break;
+    case SK_POISON_MAGIC:   ch = TILEG_HEXES_ON; break;
     case SK_INVOCATIONS:    ch = TILEG_INVOCATIONS_ON; break;
     case SK_EVOCATIONS:     ch = TILEG_EVOCATIONS_ON; break;
     default:                return TILEG_TODO;
