@@ -71,7 +71,7 @@ void do_cast_spell_cmd(bool force);
 spret_type your_spells(spell_type spell, int powc = 0, bool allow_fail = true,
                        bool check_range = true, int range_power = 0);
 
-const char* failure_rate_to_string(int fail);
+char* failure_rate_to_string(int fail);
 
 int spell_power_colour(spell_type spell);
 int spell_power_bars(spell_type spell, bool rod);

@@ -2919,12 +2919,14 @@ static void _append_spell_stats(const spell_type spell,
     else
     {
         const std::string schools = spell_schools_string(spell);
+        char* temp = failure_rate_to_string(spell_fail(spell));
         snprintf(info, INFO_SIZE,
                  "\nLevel: %d        School%s:  %s    (%s)",
                  spell_difficulty(spell),
                  schools.find("/") != std::string::npos ? "s" : "",
                  schools.c_str(),
-                 failure_rate_to_string(spell_fail(spell)));
+                 temp);
+        free(temp);
     }
     description += info;
     description += "\n\nPower : ";

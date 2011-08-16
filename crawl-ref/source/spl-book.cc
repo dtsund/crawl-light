@@ -1049,8 +1049,10 @@ static spell_type _choose_mem_spell(spell_list &spells,
         if (so_far < 60)
             desc << std::string(60 - so_far, ' ');
 
-        desc << chop_string(failure_rate_to_string(spell_fail(spell)), 12)
+        char* temp = failure_rate_to_string(spell_fail(spell));
+        desc << chop_string(temp, 12)
              << spell_difficulty(spell);
+        free(temp);
 
         desc << "</" << colour_to_str(colour) << ">";
 

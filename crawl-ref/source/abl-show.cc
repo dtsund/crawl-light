@@ -2928,12 +2928,15 @@ int choose_ability_menu(const std::vector<talent>& talents)
 static std::string _describe_talent(const talent& tal)
 {
     ASSERT(tal.which != ABIL_NON_ABILITY);
+    
+    char* temp = failure_rate_to_string(tal.fail);
 
     std::ostringstream desc;
     desc << std::left
          << chop_string(ability_name(tal.which), 32)
          << chop_string(make_cost_description(tal.which), 27)
-         << chop_string(failure_rate_to_string(tal.fail), 10);
+         << chop_string(temp, 10);
+    free(temp);
     return desc.str();
 }
 

@@ -70,6 +70,52 @@
 #include "transform.h"
 #include "view.h"
 
+/*
+    _tetrahedral_number: returns the nth tetrahedral number.
+    Called only by _get_true_fail_rate.
+    Written by dtsund.
+    Inline functions?  What's inline functions, precious?
+*/
+static int _tetrahedral_number(int n)
+{
+    return n * (n+1) * (n+2) / 6;
+}
+
+/*
+    _get_true_fail_rate: Takes the raw failure to-beat number
+    and converts it to actual failure rate percentage for display.
+    Should probably use more constants, though I doubt the spell
+    success algorithms will really change *that* much.
+    Written by dtsund.
+    May be slightly off in places, will need to give it a second look.
+*/
+static int _get_true_fail_rate(int badfail)
+{
+    //Three d100 rolls.  Need average to be less than badfail.
+    //Fun with tetrahedral numbers!
+    
+    int target = badfail * 3;
+    
+    if(target <= 100)
+    {
+        //should be 10303.01, but WHATEVER.
+        return _tetrahedral_number(target)/10303;
+    }
+    if(target < 200)
+    {
+        //PIE: the negative term takes the maximum of 100 into
+        //consideration.  Note that only one term can exceed 100 in this case,
+        //which is why this works.
+        return (_tetrahedral_number(target) - 3*_tetrahedral_number(target-100))/10303;
+    }
+    //Target is between 201 and 300 inclusive.  Note that finding the number of ways
+    //you can go below, say, 207 is equivalent to finding the number of ways you
+    //can go >= 208... which is equal to the number of ways to go below
+    //300 - 207 = 93.
+    return (1030301 - _tetrahedral_number(300 - target))/10303;
+    
+}
+
 static bool _surge_identify_boosters(spell_type spell)
 {
     const unsigned int typeflags = get_spell_disciplines(spell);
@@ -160,8 +206,10 @@ static std::string _spell_base_description(spell_type spell)
         desc << std::string(60 - so_far, ' ');
 
     // spell fail rate, level
-    desc << chop_string(failure_rate_to_string(spell_fail(spell)), 12)
+    char* temp = failure_rate_to_string(spell_fail(spell));
+    desc << chop_string(temp, 12)
          << spell_difficulty(spell);
+    free(temp);
     desc << "</" << colour_to_str(highlight) <<">";
 
     return desc.str();
@@ -1976,8 +2024,28 @@ static spret_type _do_cast(spell_type spell, int powc,
     return (SPRET_SUCCESS);
 }
 
-const char* failure_rate_to_string(int fail)
+//Converts the to-beat fail number into an intuitive string
+//representing the success rate. Used to use adjectives, now
+//uses actual percentage numbers!
+char* failure_rate_to_string(int fail)
 {
+    //Because of multiple die shenanigans, need to convert
+    //this raw fail number into the actual fail percentage
+    //before displaying it.
+    int failPercent = _get_true_fail_rate(fail);
+    char *buffer = new char[5];
+    if(failPercent <= 2)
+    {
+        sprintf(buffer, "%d%%", 100);
+        return buffer;
+    }
+
+    int success = 100 - failPercent;
+    sprintf(buffer, "%d%%", success);
+    return buffer;
+
+/*
+    //Here are the old adjectives for posterity.
     return (fail == 100) ? "Useless"   : // 0% success chance
            (fail > 77)   ? "Terrible"  : // 0-5%
            (fail > 59)   ? "Very Poor" : // 5-30%
@@ -1988,6 +2056,7 @@ const char* failure_rate_to_string(int fail)
            (fail > 22)   ? "Great"     : // 90-95%
            (fail >  0)   ? "Excellent"   // 95-100%
                          : "Perfect";    // 100%
+*/
 }
 
 static unsigned int _breakpoint_rank(int val, const int breakpoints[],
