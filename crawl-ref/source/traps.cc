@@ -757,6 +757,10 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             // Zot traps are out to get *the player*! Hostile monsters
             // benefit and friendly monsters suffer. Such is life.
 
+            // dtsund - Hostile monsters triggering these against the player
+            // is one of the most retarded mechanics ever to appear in any
+            // game.  As such, it has been removed.
+
             // The old code rehid the trap, but that's pure interface screw
             // in 99% of cases - a player can just watch who stepped where
             // and mark the trap on an external paper map.  Not good.
@@ -764,8 +768,6 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             actor* targ = NULL;
             if (m->wont_attack() || crawl_state.game_is_arena())
                 targ = m;
-            else if (in_sight && one_chance_in(5))
-                targ = &you;
 
             // Give the player a chance to figure out what happened
             // to their friend.
