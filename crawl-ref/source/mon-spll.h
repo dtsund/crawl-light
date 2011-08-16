@@ -1577,7 +1577,7 @@
       {
        SPELL_NO_SPELL,
        SPELL_CONFUSE,
-       SPELL_SILENCE,
+       SPELL_NO_SPELL,
        SPELL_NO_SPELL,
        SPELL_MINOR_HEALING,
        SPELL_MINOR_HEALING
@@ -1690,6 +1690,17 @@
        SPELL_NO_SPELL,
        SPELL_CAUSE_FEAR,
        SPELL_NO_SPELL,
+       SPELL_NO_SPELL,
+      }
+    },
+    
+    {  MST_SILENT,
+      {
+       SPELL_NO_SPELL,
+       SPELL_NO_SPELL,
+       SPELL_SILENCE,
+       SPELL_SILENCE,
+       SPELL_SILENCE,
        SPELL_NO_SPELL,
       }
     },

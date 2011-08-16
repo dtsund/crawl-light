@@ -1560,6 +1560,9 @@ static int _place_monster_aux(const mgen_data &mg,
     // Mennas belongs to Zin.
     else if (mg.cls == MONS_MENNAS)
         mon->god = GOD_ZIN;
+    // Silent disciples follow Zin too.
+    else if (mg.cls == MONS_SILENT_DISCIPLE)
+        mon->god = GOD_ZIN;
     // Ignacio belongs to Makhleb.
     else if (mg.cls == MONS_IGNACIO)
         mon->god = GOD_MAKHLEB;
@@ -2709,6 +2712,12 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
         band = BAND_PIKEL;
         band_size = 4;
         break;
+    
+    case MONS_MENNAS:
+        natural_leader = true;
+        band = BAND_MENNAS;
+        band_size = 4;
+        break;
 
     case MONS_MERFOLK_AQUAMANCER:
         band = BAND_MERFOLK_AQUAMANCER;
@@ -3019,6 +3028,8 @@ static monster_type _band_member(band_type band, int power)
         break;
     case BAND_SKELETAL_WARRIORS:
         mon_type = MONS_SKELETAL_WARRIOR;
+        if(one_chance_in(10))
+            mon_type = MONS_SILENT_SPECTRE;
         break;
     case BAND_DRACONIAN:
     {
@@ -3073,6 +3084,10 @@ static monster_type _band_member(band_type band, int power)
 
     case BAND_PIKEL:
         mon_type = MONS_SLAVE;
+        break;
+        
+    case BAND_MENNAS:
+        mon_type = MONS_SILENT_DISCIPLE;
         break;
 
     case BAND_MERFOLK_AQUAMANCER:
