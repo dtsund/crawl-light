@@ -933,6 +933,12 @@ static void _give_items_skills(const newgame_def& ng)
         set_item_ego_type(you.inv[4], OBJ_MISSILES, SPMSL_POISONED);
         newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 3);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_CURARE);
+        newgame_make_item(6, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        set_item_ego_type(you.inv[6], OBJ_MISSILES, SPMSL_SLEEP);
+        newgame_make_item(7, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        set_item_ego_type(you.inv[7], OBJ_MISSILES, SPMSL_SLOW);
+        newgame_make_item(8, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        set_item_ego_type(you.inv[8], OBJ_MISSILES, SPMSL_CONFUSION);        
 
         if (you.species == SP_OGRE || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
