@@ -196,8 +196,8 @@ ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
     { ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
       ABIL_NON_ABILITY },
     // Okawaru
-    { ABIL_OKAWARU_HEROISM, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
-      ABIL_NON_ABILITY, ABIL_OKAWARU_FINESSE },
+    { ABIL_OKAWARU_MIGHT, ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
+      ABIL_OKAWARU_HASTE },
     // Makhleb
     { ABIL_NON_ABILITY, ABIL_MAKHLEB_MINOR_DESTRUCTION,
       ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, ABIL_MAKHLEB_MAJOR_DESTRUCTION,
@@ -337,8 +337,8 @@ static const ability_def Ability_List[] =
       2, 0, 100, 0, ABFLAG_NONE },
 
     // Okawaru
-    { ABIL_OKAWARU_HEROISM, "Heroism", 2, 0, 50, 1, ABFLAG_NONE },
-    { ABIL_OKAWARU_FINESSE, "Finesse", 5, 0, 100, 4, ABFLAG_NONE },
+    { ABIL_OKAWARU_MIGHT, "Might", 2, 0, 50, 1, ABFLAG_NONE },
+    { ABIL_OKAWARU_HASTE, "Haste", 5, 0, 100, 4, ABFLAG_NONE },
 
     // Makhleb
     { ABIL_MAKHLEB_MINOR_DESTRUCTION, "Minor Destruction",
@@ -1115,7 +1115,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
 
     case ABIL_ZIN_RECITE:
     case ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS:
-    case ABIL_OKAWARU_HEROISM:
+    case ABIL_OKAWARU_MIGHT:
     case ABIL_ELYVILON_LESSER_HEALING_SELF:
     case ABIL_ELYVILON_LESSER_HEALING_OTHERS:
     case ABIL_LUGONU_ABYSS_EXIT:
@@ -1213,7 +1213,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
     case ABIL_FEDHAS_SPAWN_SPORES:
     case ABIL_YRED_DRAIN_LIFE:
     case ABIL_CHEIBRIADOS_SLOUCH:
-    case ABIL_OKAWARU_FINESSE:
+    case ABIL_OKAWARU_HASTE:
         invoc = true;
         failure = 60 - (you.piety / 25) - (you.skill(SK_INVOCATIONS) * 4);
         break;
@@ -1689,14 +1689,9 @@ static bool _activate_talent(const talent& tal)
         crawl_state.zero_turns_taken();
         return (false);
     }
-    
-    //Abilities, like spells, get 98% success rounded up.
-    int failure = tal.fail;
-    if(get_true_fail_rate(tal.fail) <= 2)
-        failure = 0;
 
     // No turning back now... {dlb}
-    if (random2avg(100, 3) < failure)
+    if (random2avg(100, 3) < tal.fail)
     {
         mpr("You fail to use your ability.");
         you.turn_is_over = true;
@@ -1733,8 +1728,6 @@ static int _calc_breath_ability_range(ability_type ability)
     }
     return (-2);
 }
-
-#define random_mons(...) static_cast<monster_type>(random_choose(__VA_ARGS__))
 
 static bool _do_ability(const ability_def& abil)
 {
@@ -2194,57 +2187,43 @@ static bool _do_ability(const ability_def& abil)
         mpr("You feel almost normal.");
         you.set_duration(DUR_TRANSFORMATION, 2);
         break;
+    
+    //The vampire specific stuff:
+    
+    case ABIL_TRAN_BAT:
+        if (!transform(100, TRAN_BAT))
+        {
+            crawl_state.zero_turns_taken();
+            return (false);
+        }
+        break;
+
+    case ABIL_BOTTLE_BLOOD:
+        if (!butchery(-1, true))
+            return (false);
+        break;
 
     // INVOCATIONS:
-
+    // The code handling the effects for all of these, except for Nemelex's card invocations,
+    // is found in godabil.cc.
     case ABIL_ZIN_SUSTENANCE:
         // Activated via prayer elsewhere.
         break;
 
     case ABIL_ZIN_RECITE:
-    {
-        recite_type prayertype;
-        if (zin_check_recite_to_monsters(&prayertype))
-            start_delay(DELAY_RECITE, 3, prayertype, you.hp);
-        else
-        {
-            mpr("That recitation seems somehow inappropriate.");
-            return (false);
-        }
+        if(!zin_recite())
+            return false;
         break;
-    }
+        
     case ABIL_ZIN_VITALISATION:
         zin_vitalisation();
         break;
 
     case ABIL_ZIN_IMPRISON:
-    {
-        beam.range = LOS_RADIUS;
-        if (!spell_direction(spd, beam))
-            return (false);
-
-        if (beam.target == you.pos())
-        {
-            mpr("You cannot imprison yourself!");
-            return (false);
-        }
-
-        monster* mons = monster_at(beam.target);
-
-        if (mons == NULL || !you.can_see(mons))
-        {
-            mpr("There is no monster there to imprison!");
-            return (false);
-        }
-
-        power = 3 + roll_dice(3, 10 * (3 + you.skill(SK_INVOCATIONS))
-                                    / (3 + mons->hit_dice)) / 3;
-
-        if (!cast_imprison(power, mons, -GOD_ZIN))
-            return (false);
+        if(!zin_imprison())
+            return false;
         break;
-    }
-
+    
     case ABIL_ZIN_SANCTUARY:
         if (!zin_sanctuary())
             return (false);
@@ -2259,12 +2238,11 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_TSO_CLEANSING_FLAME:
-        cleansing_flame(10 + (you.skill(SK_INVOCATIONS) * 7) / 6,
-                        CLEANSING_FLAME_INVOCATION, you.pos(), &you);
+        tso_cleansing_flame();
         break;
 
     case ABIL_TSO_SUMMON_DIVINE_WARRIOR:
-        summon_holy_warrior(you.skill(SK_INVOCATIONS) * 4, GOD_SHINING_ONE);
+        tso_summon_divine_warrior();
         break;
 
     case ABIL_KIKU_RECEIVE_CORPSES:
@@ -2272,32 +2250,12 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_KIKU_TORMENT:
-        if (!kiku_take_corpse())
-        {
-            mpr("There are no corpses to sacrifice!");
+        if(!kiku_torment())
             return false;
-        }
-        simple_god_message(" torments the living!");
-        torment(TORMENT_KIKUBAAQUDGHA, you.pos());
         break;
 
     case ABIL_YRED_INJURY_MIRROR:
-        if (yred_injury_mirror())
-        {
-            // Strictly speaking, since it is random, it is possible it
-            // actually decreases.  The player doesn't know this, and this
-            // way smart-asses won't re-roll it several times before charging.
-            mpr("Your dark aura grows in power.");
-        }
-        else
-        {
-            mprf("You %s in prayer and are bathed in unholy energy.",
-                 you.species == SP_NAGA ? "coil" :
-                 you.species == SP_CAT  ? "sit"
-                                        : "kneel");
-        }
-        you.duration[DUR_MIRROR_DAMAGE] = 9 * BASELINE_DELAY
-                     + random2avg(you.piety * BASELINE_DELAY, 2) / 10;
+        yred_request_injury_mirror();
         break;
 
     case ABIL_YRED_ANIMATE_REMAINS:
@@ -2306,7 +2264,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_YRED_RECALL_UNDEAD_SLAVES:
-        recall(1);
+        yred_recall_undead_slaves();
         break;
 
     case ABIL_YRED_DRAIN_LIFE:
@@ -2314,115 +2272,38 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_YRED_ENSLAVE_SOUL:
-    {
-        god_acting gdact;
-        power = you.skill(SK_INVOCATIONS) * 4;
-        beam.range = LOS_RADIUS;
-
-        if (!spell_direction(spd, beam))
-            return (false);
-
-        if (!zapping(ZAP_ENSLAVE_SOUL, power, beam))
-            return (false);
+        if(!yred_enslave_soul())
+            return false;
         break;
-    }
 
     case ABIL_SIF_MUNA_CHANNEL_ENERGY:
-        mpr("You channel some magical energy.");
-
-        inc_mp(1 + random2(you.skill(SK_INVOCATIONS) / 4 + 2), false);
+        sif_muna_channel_energy();
         break;
 
-    case ABIL_OKAWARU_HEROISM:
-        mprf(MSGCH_DURATION, you.duration[DUR_HEROISM]
-             ? "You feel more confident with your borrowed prowess."
-             : "You gain the combat prowess of a mighty hero.");
-
-        you.increase_duration(DUR_HEROISM,
-            35 + random2(you.skill(SK_INVOCATIONS) * 8), 80);
-        you.redraw_evasion      = true;
-        you.redraw_armour_class = true;
+    case ABIL_OKAWARU_MIGHT:
+        okawaru_might();
         break;
 
-    case ABIL_OKAWARU_FINESSE:
-        if (stasis_blocks_effect(true, true, "%s emits a piercing whistle.",
-                                 20, "%s makes your neck tingle."))
-        {
-            return (false);
-        }
-
-        mprf(MSGCH_DURATION, you.duration[DUR_FINESSE]
-             ? "Your hands get new energy."
-             : "You can now deal lightning-fast blows.");
-
-        you.increase_duration(DUR_FINESSE,
-            40 + random2(you.skill(SK_INVOCATIONS) * 8), 80);
-
-        did_god_conduct(DID_HASTY, 8); // Currently irrelevant.
+    case ABIL_OKAWARU_HASTE:
+        okawaru_haste();
         break;
 
     case ABIL_MAKHLEB_MINOR_DESTRUCTION:
-        if (!spell_direction(spd, beam))
-            return (false);
-
-        power = you.skill(SK_INVOCATIONS)
-                + random2(1 + you.skill(SK_INVOCATIONS))
-                + random2(1 + you.skill(SK_INVOCATIONS));
-
-        // Since the actual beam is random, check with BEAM_MMISSILE and the
-        // highest range possible (electricity).
-        if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 13))
-            return (false);
-
-        switch (random2(5))
-        {
-        case 0: beam.range =  7; zapping(ZAP_FLAME, power, beam); break;
-        case 1: beam.range =  8; zapping(ZAP_PAIN,  power, beam); break;
-        case 2: beam.range =  5; zapping(ZAP_STONE_ARROW, power, beam); break;
-        case 3: beam.range = 13; zapping(ZAP_ELECTRICITY, power, beam); break;
-        case 4: beam.range =  8; zapping(ZAP_BREATHE_ACID, power/2, beam); break;
-        }
+        if (!makhleb_minor_destruction())
+            return false;
         break;
 
     case ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB:
-        summon_demon_type(random_mons(MONS_HELLWING, MONS_NEQOXEC,
-                          MONS_ORANGE_DEMON, MONS_SMOKE_DEMON, MONS_YNOXINUL, -1),
-                          20 + you.skill(SK_INVOCATIONS) * 3, GOD_MAKHLEB);
+        makhleb_lesser_servant_of_makhleb();
         break;
 
     case ABIL_MAKHLEB_MAJOR_DESTRUCTION:
-        if (!spell_direction(spd, beam))
+        if (!makhleb_major_destruction())
             return (false);
-
-        power = you.skill(SK_INVOCATIONS) * 3
-                + random2(1 + you.skill(SK_INVOCATIONS))
-                + random2(1 + you.skill(SK_INVOCATIONS));
-
-        // Since the actual beam is random, check with BEAM_MMISSILE and the
-        // highest range possible (orb of electricity).
-        if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 20))
-            return (false);
-
-        {
-            zap_type ztype = ZAP_DEBUGGING_RAY;
-            switch (random2(7))
-            {
-            case 0: beam.range =  6; ztype = ZAP_FIRE;               break;
-            case 1: beam.range =  6; ztype = ZAP_FIREBALL;           break;
-            case 2: beam.range = 10; ztype = ZAP_LIGHTNING;          break;
-            case 3: beam.range =  5; ztype = ZAP_STICKY_FLAME;       break;
-            case 4: beam.range =  5; ztype = ZAP_IRON_SHOT;          break;
-            case 5: beam.range =  6; ztype = ZAP_NEGATIVE_ENERGY;    break;
-            case 6: beam.range = 20; ztype = ZAP_ORB_OF_ELECTRICITY; break;
-            }
-            zapping(ztype, power, beam);
-        }
         break;
 
     case ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB:
-        summon_demon_type(random_mons(MONS_EXECUTIONER, MONS_GREEN_DEATH,
-                          MONS_BLUE_DEATH, MONS_BALRUG, MONS_CACODEMON, -1),
-                          20 + you.skill(SK_INVOCATIONS) * 3, GOD_MAKHLEB);
+        makhleb_greater_servant_of_makhleb();
         break;
 
     case ABIL_TROG_BURN_SPELLBOOKS:
@@ -2431,54 +2312,32 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_TROG_BERSERK:
-        // Trog abilities don't use or train invocations.
-        go_berserk(true);
+        trog_berserk();
         break;
 
     case ABIL_TROG_REGEN_MR:
-        // Trog abilities don't use or train invocations.
-        cast_regen(you.piety / 2, true);
+        trog_trogs_hand();
         break;
 
     case ABIL_TROG_BROTHERS_IN_ARMS:
-        // Trog abilities don't use or train invocations.
-        summon_berserker(you.piety +
-                         random2(you.piety/4) - random2(you.piety/4),
-                         &you);
+        trog_brothers_in_arms();
         break;
 
     case ABIL_SIF_MUNA_FORGET_SPELL:
-        if (!cast_selective_amnesia())
+        if(!sif_muna_forget_spell())
             return (false);
         break;
 
     case ABIL_ELYVILON_LIFESAVING:
-        if (you.duration[DUR_LIFESAVING])
-            mpr("You renew your call for help.");
-        else
-        {
-            mprf("You beseech %s to protect your life.",
-                 god_name(you.religion).c_str());
-        }
-        // Might be a decrease, this is intentional (like Yred).
-        you.duration[DUR_LIFESAVING] = 9 * BASELINE_DELAY
-                     + random2avg(you.piety * BASELINE_DELAY, 2) / 10;
+        elyvilon_request_lifesaving();
         break;
 
     case ABIL_ELYVILON_LESSER_HEALING_SELF:
     case ABIL_ELYVILON_LESSER_HEALING_OTHERS:
-    {
-        const bool self = (abil.ability == ABIL_ELYVILON_LESSER_HEALING_SELF);
-
-        if (cast_healing(3 + (you.skill(SK_INVOCATIONS) / 6), true,
-                         self ? you.pos() : coord_def(0, 0), !self,
-                         self ? TARG_NUM_MODES : TARG_HOSTILE) < 0)
-        {
-            return (false);
-        }
-
+        if(!elyvilon_lesser_healing((abil.ability == ABIL_ELYVILON_LESSER_HEALING_SELF)))
+            return false;
         break;
-    }
+
 
     case ABIL_ELYVILON_PURIFICATION:
         elyvilon_purification();
@@ -2486,21 +2345,12 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_ELYVILON_GREATER_HEALING_SELF:
     case ABIL_ELYVILON_GREATER_HEALING_OTHERS:
-    {
-        const bool self = (abil.ability == ABIL_ELYVILON_GREATER_HEALING_SELF);
-
-        if (cast_healing(10 + (you.skill(SK_INVOCATIONS) / 3), true,
-                         self ? you.pos() : coord_def(0, 0), !self,
-                         self ? TARG_NUM_MODES : TARG_HOSTILE) < 0)
-        {
-            return (false);
-        }
+        if(!elyvilon_greater_healing(abil.ability))
+            return false;
         break;
-    }
 
     case ABIL_ELYVILON_RESTORATION:
-        restore_stat(STAT_ALL, 0, false);
-        unrot_hp(100);
+        elyvilon_restoration();
         break;
 
     case ABIL_ELYVILON_DIVINE_VIGOUR:
@@ -2509,7 +2359,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_LUGONU_ABYSS_EXIT:
-        banished(DNGN_EXIT_ABYSS);
+        lugonu_abyss_exit();
         break;
 
     case ABIL_LUGONU_BEND_SPACE:
@@ -2517,56 +2367,21 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_LUGONU_BANISH:
-        beam.range = LOS_RADIUS;
-
-        if (!spell_direction(spd, beam))
-            return (false);
-
-        if (beam.target == you.pos())
-        {
-            mpr("You cannot banish yourself!");
-            return (false);
-        }
-
-        if (!zapping(ZAP_BANISHMENT, 16 + you.skill(SK_INVOCATIONS) * 8, beam,
-                     true))
-        {
-            return (false);
-        }
+        if(!lugonu_banish())
+            return false;
         break;
 
     case ABIL_LUGONU_CORRUPT:
-        if (!lugonu_corrupt_level(300 + you.skill(SK_INVOCATIONS) * 15))
+        if (!lugonu_corrupt())
             return (false);
         break;
 
     case ABIL_LUGONU_ABYSS_ENTER:
-    {
-        // Move permanent hp/mp loss from leaving to entering the Abyss. (jpeg)
-        const int maxloss = std::max(2, div_rand_round(you.hp_max, 30));
-        // Lose permanent HP
-        dec_max_hp(random_range(1, maxloss));
-
-        // Paranoia.
-        if (you.hp_max < 1)
-            you.hp_max = 1;
-
-        // Deflate HP.
-        set_hp(1 + random2(you.hp), false);
-
-        // Lose 1d2 permanent MP.
-        rot_mp(coinflip() ? 2 : 1);
-
-        // Deflate MP.
-        if (you.magic_points)
-            set_mp(random2(you.magic_points), false);
-
-        bool note_status = notes_are_active();
-        activate_notes(false);  // This banishment shouldn't be noted.
-        banished(DNGN_ENTER_ABYSS);
-        activate_notes(note_status);
+        lugonu_abyss_enter();
         break;
-    }
+
+    //Nemelex Xobeh's abilities aren't found in godabil.cc!  They're in
+    //decks.cc.
     case ABIL_NEMELEX_DRAW_ONE:
         if (!choose_deck_and_draw())
             return (false);
@@ -2593,15 +2408,12 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_BEOGH_SMITING:
-        if (your_spells(SPELL_SMITING, (2 + skill_bump(SK_INVOCATIONS)) * 6,
-                        false) == SPRET_ABORT)
-        {
-            return (false);
-        }
+        if (!beogh_smiting())
+            return false;
         break;
 
     case ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS:
-        recall(2);
+        beogh_recall_orcish_followers();
         break;
 
     case ABIL_FEDHAS_SUNLIGHT:
@@ -2626,64 +2438,27 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_FEDHAS_SPAWN_SPORES:
-    {
-        const int retval = fedhas_corpse_spores();
-        if (retval <= 0)
-        {
-            if (retval == 0)
-                mprf("No corpses are in range.");
-            else
-                canned_msg(MSG_OK);
-            return (false);
-        }
+        if(!fedhas_spawn_spores())
+            return false;
         break;
-    }
 
     case ABIL_FEDHAS_EVOLUTION:
         if (!fedhas_evolve_flora())
             return (false);
         break;
 
-    case ABIL_TRAN_BAT:
-        if (!transform(100, TRAN_BAT))
-        {
-            crawl_state.zero_turns_taken();
-            return (false);
-        }
-        break;
-
-    case ABIL_BOTTLE_BLOOD:
-        if (!butchery(-1, true))
-            return (false);
-        break;
-
     case ABIL_JIYVA_CALL_JELLY:
-    {
-        mgen_data mg(MONS_JELLY, BEH_STRICT_NEUTRAL, 0, 0, 0, you.pos(),
-                     MHITNOT, 0, GOD_JIYVA);
-
-        mg.non_actor_summoner = "Jiyva";
-
-        if (create_monster(mg) == -1)
-            return (false);
+        if(!jiyva_call_jelly())
+            return false;
         break;
-    }
 
     case ABIL_JIYVA_JELLY_PARALYSE:
         // Activated via prayer elsewhere.
         break;
 
     case ABIL_JIYVA_SLIMIFY:
-    {
-        const item_def* const weapon = you.weapon();
-        const std::string msg = (weapon) ? weapon->name(DESC_NOCAP_YOUR)
-                                         : ("your " + you.hand_name(true));
-        mprf(MSGCH_DURATION, "A thick mucus forms on %s.", msg.c_str());
-        you.increase_duration(DUR_SLIMIFY,
-                              you.skill(SK_INVOCATIONS) * 3 / 2 + 3,
-                              100);
+        jiyva_slimify();
         break;
-    }
 
     case ABIL_JIYVA_CURE_BAD_MUTATION:
         jiyva_remove_bad_mutation();
@@ -2703,18 +2478,11 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_CHEIBRIADOS_SLOUCH:
-        mpr("You can feel time thicken.");
-        dprf("your speed is %d", player_movement_speed());
         cheibriados_slouch(0);
         break;
 
     case ABIL_ASHENZARI_SCRYING:
-        if (you.duration[DUR_SCRYING])
-            mpr("You extend your astral sight.");
-        else
-            mpr("You gain astral sight.");
-        you.duration[DUR_SCRYING] = 100 + random2avg(you.piety * 2, 2);
-        you.xray_vision = true;
+        ashenzari_scrying();
         break;
 
     case ABIL_ASHENZARI_TRANSFER_KNOWLEDGE:
@@ -2933,15 +2701,12 @@ int choose_ability_menu(const std::vector<talent>& talents)
 static std::string _describe_talent(const talent& tal)
 {
     ASSERT(tal.which != ABIL_NON_ABILITY);
-    
-    char* temp = failure_rate_to_string(tal.fail);
 
     std::ostringstream desc;
     desc << std::left
          << chop_string(ability_name(tal.which), 32)
          << chop_string(make_cost_description(tal.which), 27)
-         << chop_string(temp, 10);
-    free(temp);
+         << chop_string(failure_rate_to_string(tal.fail), 10);
     return desc.str();
 }
 

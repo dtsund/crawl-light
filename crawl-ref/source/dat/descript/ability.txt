@@ -215,6 +215,14 @@ Finesse
 
 Greatly increase your combat speed, with no loss of accuracy. This unnatural effect causes small amounts of magic contamination, prolonged exposure to which may be bad for your health.
 %%%%
+Might
+
+Temporarily increase your strength and damage-dealing capabilities.
+%%%%
+Haste
+
+Greatly but temporarily increase your speed.
+%%%%
 # Makhleb
 Minor Destruction
 
