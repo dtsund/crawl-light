@@ -1042,7 +1042,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
             "Warrior-mage",    // XXX: Arcane Marksmen are temporarily disabled
             coord_def(35, 0), 20,
             {JOB_CRUSADER, JOB_ENCHANTER, JOB_TRANSMUTER, JOB_STALKER,
-             JOB_WARPER, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
+             JOB_WARPER, JOB_ARCANE_MARKSMAN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
             "Mage",
