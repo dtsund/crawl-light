@@ -255,7 +255,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "Vehumet is reducing the cost of your expensive destructive magics.",
       "" },
     // Okawaru
-    { "gain great but temporary speed",
+    { "gain great but temporary strength",
       "",
       "",
       "",
