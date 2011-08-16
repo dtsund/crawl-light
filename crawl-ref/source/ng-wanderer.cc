@@ -225,7 +225,7 @@ static skill_type _wanderer_role_weapon_select(stat_type role)
     const skill_type casting_schools[] =
         { SK_SUMMONINGS, SK_NECROMANCY, SK_TRANSLOCATIONS,
           SK_TRANSMUTATIONS, SK_POISON_MAGIC, SK_CONJURATIONS,
-          SK_HEXES, SK_CHARMS, SK_FIRE_MAGIC, SK_ICE_MAGIC,
+          SK_ENCHANTMENTS, SK_FIRE_MAGIC, SK_ICE_MAGIC,
           SK_AIR_MAGIC, SK_EARTH_MAGIC };
 
     int casting_size = sizeof(casting_schools) / sizeof(skill_type);
@@ -386,13 +386,18 @@ static void _give_wanderer_book(skill_type skill, int & slot)
         book_type = BOOK_YOUNG_POISONERS;
         break;
 
-    case SK_HEXES:
-        book_type = BOOK_MALEDICT;
+    case SK_ENCHANTMENTS:
+        switch (random2(2))
+        {
+        case 0:
+            book_type = BOOK_WAR_CHANTS;
+            break;
+        case 1:
+            book_type = BOOK_MALEDICT;
+            break;
+        }
         break;
 
-    case SK_CHARMS:
-        book_type = BOOK_WAR_CHANTS;
-        break;
     }
 
     newgame_make_item(slot, EQ_NONE, OBJ_BOOKS, book_type);
@@ -570,8 +575,7 @@ static void _wanderer_good_equipment(skill_type & skill, int & slot)
     case SK_AIR_MAGIC:
     case SK_EARTH_MAGIC:
     case SK_POISON_MAGIC:
-    case SK_HEXES:
-    case SK_CHARMS:
+    case SK_ENCHANTMENTS:
         _give_wanderer_book(skill, slot);
         slot++;
         break;
@@ -603,7 +607,7 @@ static void _give_wanderer_spell(skill_type skill)
     spell_type spell = SPELL_NO_SPELL;
 
     // Doing a rejection loop for this because I am lazy.
-    while (skill == SK_SPELLCASTING || skill == SK_CHARMS)
+    while (skill == SK_SPELLCASTING)
     {
         int value = SK_POISON_MAGIC-SK_CONJURATIONS + 1;
         skill = skill_type(SK_CONJURATIONS + random2(value));
@@ -651,7 +655,7 @@ static void _give_wanderer_spell(skill_type skill)
         spell = SPELL_STING;
         break;
 
-    case SK_HEXES:
+    case SK_ENCHANTMENTS:
         spell = SPELL_CORONA;
         break;
     }

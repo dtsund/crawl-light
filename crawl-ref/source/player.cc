@@ -6242,7 +6242,7 @@ int player_res_magic(bool calc_unid, bool temp)
 
     // Enchantment skill through staff of enchantment (up to 90).
     if (player_equip(EQ_STAFF, STAFF_ENCHANTMENT, calc_unid))
-        rm += 3 * (3 + std::max(you.skill(SK_CHARMS), you.skill(SK_HEXES)));
+        rm += 3 * (3 + you.skill(SK_ENCHANTMENTS));
 
     // Mutations
     rm += 30 * player_mutation_level(MUT_MAGIC_RESISTANCE);

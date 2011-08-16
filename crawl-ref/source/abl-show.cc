@@ -2807,7 +2807,7 @@ static void _pay_ability_costs(const ability_def& abil, int xpcost)
 
     if (abil.flags & ABFLAG_HEX_MISCAST)
     {
-        MiscastEffect(&you, NON_MONSTER, SPTYP_HEXES, 10, 90,
+        MiscastEffect(&you, NON_MONSTER, SPTYP_ENCHANTMENT, 10, 90,
                       "power out of control", NH_DEFAULT);
     }
     if (abil.flags & ABFLAG_NECRO_MISCAST)
