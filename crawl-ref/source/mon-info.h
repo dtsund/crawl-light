@@ -38,6 +38,7 @@ enum monster_info_flags
     MB_ENSLAVED,
     MB_SWIFT,
     MB_INSANE,
+    MB_DUMMY, //Some 32-bit compiles have problems without this
     MB_SILENCING,
     MB_MESMERIZING,
     MB_EVIL_ATTACK,
@@ -57,8 +58,8 @@ enum monster_info_flags
     MB_NAME_REPLACE, // [art] foo does
     MB_NAME_UNQUALIFIED, // Foo does...
     MB_NAME_THE, // The foo does....
-    MB_FADING_AWAY,
-    MB_MOSTLY_FADED,
+    //MB_FADING_AWAY,
+    //MB_MOSTLY_FADED,  These two aren't used.
     MB_FEAR_INSPIRING,
     MB_WITHDRAWN,
     MB_ATTACHED,

@@ -103,11 +103,13 @@ static uint64_t ench_to_mb(const monster& mons, enchant_type ench)
         return ULL1 << MB_POSSESSABLE;
     case ENCH_PREPARING_RESURRECT:
         return ULL1 << MB_PREP_RESURRECT;
+/* Unimplemented feature, and needed to make space
     case ENCH_FADING_AWAY:
         if ((mons.get_ench(ENCH_FADING_AWAY)).duration < 400) // min dur is 180*20, max dur 230*10
             return ULL1 << MB_MOSTLY_FADED;
 
         return ULL1 << MB_FADING_AWAY;
+*/
     case ENCH_REGENERATION:
         return ULL1 << MB_REGENERATION;
     case ENCH_RAISED_MR:
@@ -1085,10 +1087,12 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("deflecting missiles");
     if (is(MB_PREP_RESURRECT))
         v.push_back("quietly preparing");
+/* Unimplemented feature, and needed to make space
     if (is(MB_FADING_AWAY))
         v.push_back("slowly fading away");
     if (is(MB_MOSTLY_FADED))
         v.push_back("mostly faded away");
+*/
     if (is(MB_FEAR_INSPIRING))
         v.push_back("inspiring fear");
     if (is(MB_WITHDRAWN))
