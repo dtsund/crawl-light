@@ -676,18 +676,26 @@ void print_stats(void)
         cprintf("%d/%d (%d) ",
                 you.skill_cost_level, you.exp_available, you.experience);
 #else
-        cprintf("XL: ");
-        textcolor(HUD_VALUE_COLOUR);
-        cprintf("%2d ", you.experience_level);
-        textcolor(Options.status_caption_colour);
-        cprintf("Exp: ");
-        textcolor(HUD_VALUE_COLOUR);
-        if (you.exp_available < 100000)
-            cprintf("%-5d", you.exp_available);
-        else if (you.exp_available < 10000000)
-            cprintf("%4dK", you.exp_available / 1000);
+        if(!you.num_autotrained_skills)
+        {
+            cprintf("XL: ");
+            textcolor(HUD_VALUE_COLOUR);
+            cprintf("%2d ", you.experience_level);
+            textcolor(Options.status_caption_colour);
+            cprintf("Exp: ");
+            textcolor(HUD_VALUE_COLOUR);
+            if (you.exp_available < 100000)
+                cprintf("%-5d", you.exp_available);
+            else if (you.exp_available < 10000000)
+                cprintf("%4dK", you.exp_available / 1000);
+            else
+                cprintf("%4dM", you.exp_available / 1000000);
+        }
         else
-            cprintf("%4dM", you.exp_available / 1000000);
+        {
+            textcolor(BLUE);
+            cprintf("  AUTO    ");
+        }
 #endif
         you.redraw_experience = false;
     }
