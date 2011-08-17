@@ -75,7 +75,9 @@ bool ends_with(const std::string &s, const std::string &suffix);
 #ifdef UNIX
 extern "C" int stricmp(const char *str1, const char *str2);
 #endif
+#ifndef __UCLIBC__
 size_t strlcpy(char *dst, const char *src, size_t n);
+#endif
 
 int strwidth(const char *s);
 int strwidth(const std::string &s);
