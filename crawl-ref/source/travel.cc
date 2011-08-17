@@ -4476,7 +4476,7 @@ bool check_for_interesting_features()
 //Gets rid of the default autotravel target.  Call this whenever the
 //player dies or forfeits; otherwise, it's preserved between games,
 //which can lead to crashes.
-void reset_level_target();
+void reset_level_target()
 {
     level_target.clear();
 }
