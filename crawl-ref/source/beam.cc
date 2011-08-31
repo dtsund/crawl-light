@@ -470,6 +470,14 @@ static void _zappy(zap_type z_type, int power, bolt &pbolt)
         //used for the tracer; overwritten for the actual explosion
         pbolt.ex_size = 3;
     }
+    
+    //Okay, two special cases.  Used by Makhleb's Major Destruction
+    //to inform players of the dangers of Orb of Electrocution.
+    if (z_type == ZAP_ORB_OF_ELECTRICITY)
+    {
+        //Used by the tracer.
+        pbolt.ex_size = 3;
+    } 
         
 
     if (pbolt.loudness == 0)
