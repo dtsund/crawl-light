@@ -676,11 +676,11 @@ void print_stats(void)
         cprintf("%d/%d (%d) ",
                 you.skill_cost_level, you.exp_available, you.experience);
 #else
+        cprintf("XL: ");
+        textcolor(HUD_VALUE_COLOUR);
+        cprintf("%2d ", you.experience_level);
         if(!you.num_autotrained_skills)
         {
-            cprintf("XL: ");
-            textcolor(HUD_VALUE_COLOUR);
-            cprintf("%2d ", you.experience_level);
             textcolor(Options.status_caption_colour);
             cprintf("Exp: ");
             textcolor(HUD_VALUE_COLOUR);
