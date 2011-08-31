@@ -39,16 +39,16 @@ General skills, Experience   Melee and Ranged Combat     Spellcasting and Magic
 Arm - Armour                 Fgt - Fighting              Spc - Spellcasting
 Ddg - Dodging                SBl - Short Blades          Coj - Conjurations
 Sth - Stealth                LBl - Long Blades           Enc - Enchantments
-Stb - Stabbing               M&F - Maces & Flails        Sum - Summonings
-Shd - Shields                Axs - Axes                  Nec - Necromancy
-T&D - Traps & Doors          Pla - Polearms              Trl - Translocations
-                             Stv - Staves                Trm - Transmutations
-Inv - Invocations            UC  - Unarmed Combat        
-Evo - Evocations                                         Fir - Fire Magic
-                             Thr - Throwing              Ice - Ice Magic
-                             Slg - Slings                Air - Air Magic
-Exp - Experience             Bws - Bows                  Ear - Earth Magic
-                             Crb - Crossbows             Poi - Poison Magic
+Stb - Stabbing               M&F - Maces & Flails        Sor - Sorcery
+Shd - Shields                Axs - Axes                  Sum - Summonings
+T&D - Traps & Doors          Pla - Polearms              Nec - Necromancy
+                             Stv - Staves                Trl - Translocations
+Inv - Invocations            UC  - Unarmed Combat        Trm - Transmutations
+Evo - Evocations                                         
+                             Thr - Throwing              Fir - Fire Magic
+                             Slg - Slings                Ice - Ice Magic
+Exp - Experience             Bws - Bows                  Air - Air Magic
+                             Crb - Crossbows             Ear - Earth Magic
                                                          
 
 Please do not edit this table directly in docs/aptitudes.txt -- make
@@ -63,5 +63,5 @@ changes to the template in docs/template/apt-tmpl.txt.
 ----------------------------------------------------------------------
 
 
-                 Spc Coj Enc Sum Nec Trl Trm       Fir Ice Air Ear Poi
+                 Spc Coj Enc Sor Sum Nec Trl Trm       Fir Ice Air Ear
 ----------------------------------------------------------------------

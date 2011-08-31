@@ -22,7 +22,7 @@ enum spschool_flag_type
   SPTYP_SUMMONING      = 1<<6,
   SPTYP_DIVINATION     = 1<<7,
   SPTYP_TRANSLOCATION  = 1<<8,
-  SPTYP_POISON         = 1<<9,
+  SPTYP_SORCERY        = 1<<9,
   SPTYP_EARTH          = 1<<10,
   SPTYP_AIR            = 1<<11,
   SPTYP_HOLY           = 1<<12, //jmf: moved to accommodate "random" miscast f/x

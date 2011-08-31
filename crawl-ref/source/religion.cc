@@ -3642,7 +3642,7 @@ bool god_hates_spell(spell_type spell, god_type god)
     case GOD_SHINING_ONE:
         // TSO hates using poison, but is fine with curing it, resisting
         // it, or destroying it.
-        if ((disciplines & SPTYP_POISON) && spell != SPELL_CURE_POISON
+        if ((disciplines & SPTYP_SORCERY) && spell != SPELL_CURE_POISON
             && spell != SPELL_RESIST_POISON && spell != SPELL_IGNITE_POISON)
         {
             return (true);

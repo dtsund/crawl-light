@@ -906,7 +906,7 @@ static void _sdump_spells(dump_params &par)
     const int spell_type_index[] =
     {
         SPTYP_HOLY,
-        SPTYP_POISON,
+        SPTYP_SORCERY,
         SPTYP_FIRE,
         SPTYP_ICE,
         SPTYP_EARTH,

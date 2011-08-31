@@ -894,7 +894,7 @@ const char* spelltype_short_name(int which_spelltype)
         return ("Divn");
     case SPTYP_TRANSLOCATION:
         return ("Tloc");
-    case SPTYP_POISON:
+    case SPTYP_SORCERY:
         return ("Sorc");
     case SPTYP_EARTH:
         return ("Erth");
@@ -931,7 +931,7 @@ const char* spelltype_long_name(int which_spelltype)
         return ("Divination");
     case SPTYP_TRANSLOCATION:
         return ("Translocation");
-    case SPTYP_POISON:
+    case SPTYP_SORCERY:
         return ("Sorcery");
     case SPTYP_EARTH:
         return ("Earth");
@@ -956,7 +956,7 @@ skill_type spell_type2skill(unsigned int spelltype)
     case SPTYP_NECROMANCY:     return (SK_NECROMANCY);
     case SPTYP_SUMMONING:      return (SK_SUMMONINGS);
     case SPTYP_TRANSLOCATION:  return (SK_TRANSLOCATIONS);
-    case SPTYP_POISON:         return (SK_POISON_MAGIC);
+    case SPTYP_SORCERY:         return (SK_SORCERY);
     case SPTYP_EARTH:          return (SK_EARTH_MAGIC);
     case SPTYP_AIR:            return (SK_AIR_MAGIC);
 
@@ -1120,7 +1120,7 @@ int spell_noise(unsigned int disciplines, int level)
         return (0);
     else if (disciplines & SPTYP_CONJURATION)
         return (level);
-    else if (disciplines && !(disciplines & (SPTYP_POISON | SPTYP_AIR)))
+    else if (disciplines && !(disciplines & (SPTYP_SORCERY | SPTYP_AIR)))
         return div_round_up(level * 3, 4);
     else
         return div_round_up(level, 2);

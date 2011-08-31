@@ -38,7 +38,7 @@ struct spell_desc
 
 {
     SPELL_CAUSE_FEAR, "Cause Fear",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_AREA,
      5,
      200,
@@ -194,7 +194,7 @@ struct spell_desc
 
 {
     SPELL_POLYMORPH_OTHER, "Polymorph Other",
-     SPTYP_TRANSMUTATION | SPTYP_POISON,
+     SPTYP_TRANSMUTATION | SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF | SPFLAG_CHAOTIC,
      4,
      200,
@@ -207,7 +207,7 @@ struct spell_desc
 
 {
     SPELL_SLOW, "Slow",
-     SPTYP_ENCHANTMENT | SPTYP_POISON,
+     SPTYP_ENCHANTMENT | SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET,
      2,
      200,
@@ -248,7 +248,7 @@ struct spell_desc
 
 {
     SPELL_CONFUSE, "Confuse",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET,
      3,
      200,
@@ -261,7 +261,7 @@ struct spell_desc
 
 {
     SPELL_INVISIBILITY, "Invisibility",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_HELPFUL,
      6,
      200,
@@ -327,7 +327,7 @@ struct spell_desc
 
 {
     SPELL_MEPHITIC_CLOUD, "Mephitic Cloud",
-     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
+     SPTYP_CONJURATION | SPTYP_SORCERY | SPTYP_AIR,
      SPFLAG_DIR_OR_TARGET | SPFLAG_AREA | SPFLAG_ALLOW_SELF,
      3,
      200,
@@ -353,7 +353,7 @@ struct spell_desc
 
 {
     SPELL_VENOM_BOLT, "Venom Bolt",
-     SPTYP_CONJURATION | SPTYP_POISON,
+     SPTYP_CONJURATION | SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET,
      5,
      200,
@@ -366,7 +366,7 @@ struct spell_desc
 
 {
     SPELL_OLGREBS_TOXIC_RADIANCE, "Olgreb's Toxic Radiance",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_AREA | SPFLAG_BATTLE,
      4,
      0,
@@ -418,7 +418,7 @@ struct spell_desc
 
 {
     SPELL_MASS_CONFUSION, "Mass Confusion",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_AREA,
      6,
      200,
@@ -470,7 +470,7 @@ struct spell_desc
 
 {
     SPELL_SUMMON_SCORPIONS, "Summon Scorpions",
-     SPTYP_SUMMONING | SPTYP_POISON,
+     SPTYP_SUMMONING | SPTYP_SORCERY,
      SPFLAG_BATTLE,
      4,
      200,
@@ -548,7 +548,7 @@ struct spell_desc
 
 {
     SPELL_POISONOUS_CLOUD, "Poisonous Cloud",
-     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
+     SPTYP_CONJURATION | SPTYP_SORCERY | SPTYP_AIR,
      SPFLAG_GRID | SPFLAG_AREA | SPFLAG_ALLOW_SELF,
      5,
      200,
@@ -706,7 +706,7 @@ struct spell_desc
 
 {
     SPELL_ENSLAVEMENT, "Enslavement",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
      4,
      200,
@@ -760,7 +760,7 @@ struct spell_desc
 
 {
     SPELL_CONTROL_UNDEAD, "Control Undead",
-     SPTYP_POISON | SPTYP_NECROMANCY,
+     SPTYP_SORCERY | SPTYP_NECROMANCY,
      SPFLAG_NONE,
      5,
      200,
@@ -980,7 +980,7 @@ struct spell_desc
 
 {
     SPELL_POISON_ARROW, "Poison Arrow",
-     SPTYP_CONJURATION | SPTYP_POISON,
+     SPTYP_CONJURATION | SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET,
      6,
      200,
@@ -1047,7 +1047,7 @@ struct spell_desc
 
 {
     SPELL_STING, "Sting",
-     SPTYP_CONJURATION | SPTYP_POISON,
+     SPTYP_CONJURATION | SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET,
      1,
      25,
@@ -1296,7 +1296,7 @@ struct spell_desc
 
 {
     SPELL_CURE_POISON, "Cure Poison",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_RECOVERY | SPFLAG_HELPFUL,
      2,
      200,
@@ -1322,7 +1322,7 @@ struct spell_desc
 
 {
     SPELL_POISON_WEAPON, "Poison Weapon",
-     SPTYP_ENCHANTMENT | SPTYP_POISON,
+     SPTYP_ENCHANTMENT | SPTYP_SORCERY,
      SPFLAG_HELPFUL | SPFLAG_BATTLE,
      3,
      0,
@@ -1335,7 +1335,7 @@ struct spell_desc
 
 {
     SPELL_RESIST_POISON, "Resist Poison",
-     SPTYP_ENCHANTMENT | SPTYP_POISON,
+     SPTYP_ENCHANTMENT | SPTYP_SORCERY,
      SPFLAG_HELPFUL,
      4,
      200,
@@ -1348,7 +1348,7 @@ struct spell_desc
 
 {
     SPELL_PROJECTED_NOISE, "Projected Noise",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_NONE,
      2,
      0,
@@ -1415,7 +1415,7 @@ struct spell_desc
 
 {
     SPELL_SPIDER_FORM, "Spider Form",
-     SPTYP_TRANSMUTATION | SPTYP_POISON,
+     SPTYP_TRANSMUTATION | SPTYP_SORCERY,
      SPFLAG_HELPFUL | SPFLAG_CHAOTIC,
      3,
      200,
@@ -1598,7 +1598,7 @@ struct spell_desc
 
 {
     SPELL_CONFUSING_TOUCH, "Confusing Touch",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_NONE,
      1,
      200,
@@ -1702,7 +1702,7 @@ struct spell_desc
 
 {
     SPELL_HIBERNATION, "Ensorcelled Hibernation",
-     SPTYP_POISON | SPTYP_ICE,
+     SPTYP_SORCERY | SPTYP_ICE,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
      2,
      56,
@@ -1715,7 +1715,7 @@ struct spell_desc
 
 {
     SPELL_ENGLACIATION, "Metabolic Englaciation",
-     SPTYP_POISON | SPTYP_ICE,
+     SPTYP_SORCERY | SPTYP_ICE,
      SPFLAG_AREA,
      7,
      200,
@@ -1793,7 +1793,7 @@ struct spell_desc
 
 {
     SPELL_SILENCE, "Silence",
-     SPTYP_POISON | SPTYP_AIR,
+     SPTYP_SORCERY | SPTYP_AIR,
      SPFLAG_AREA,
      5,
      200,
@@ -1845,7 +1845,7 @@ struct spell_desc
 
 {
     SPELL_CORONA, "Corona",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
      1,
      200,
@@ -1858,7 +1858,7 @@ struct spell_desc
 
 {
     SPELL_INTOXICATE, "Alistair's Intoxication",
-     SPTYP_TRANSMUTATION | SPTYP_POISON,
+     SPTYP_TRANSMUTATION | SPTYP_SORCERY,
      SPFLAG_NONE,
      4,
      0,
@@ -2134,7 +2134,7 @@ struct spell_desc
 
 {
     SPELL_NOXIOUS_CLOUD, "Noxious Cloud",
-     SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
+     SPTYP_CONJURATION | SPTYP_SORCERY | SPTYP_AIR,
      SPFLAG_GRID | SPFLAG_AREA | SPFLAG_MONSTER,
      5,
      200,
@@ -2199,7 +2199,7 @@ struct spell_desc
 
 {
     SPELL_POISON_SPLASH, "Poison Splash",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_INNATE | SPFLAG_NOISY,
      2,
      0,
@@ -2889,7 +2889,7 @@ struct spell_desc
 
 {
     SPELL_LEDAS_LIQUEFACTION, "Leda's Liquefaction",
-     SPTYP_EARTH | SPTYP_POISON,
+     SPTYP_EARTH | SPTYP_SORCERY,
      SPFLAG_AREA,
      4,
      200,
@@ -2915,7 +2915,7 @@ struct spell_desc
 
 {
     SPELL_DARKNESS, "Darkness",
-     SPTYP_POISON,
+     SPTYP_SORCERY,
      SPFLAG_NONE,
      7,
      200,

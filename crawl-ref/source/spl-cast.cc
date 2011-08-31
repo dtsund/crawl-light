@@ -569,7 +569,7 @@ int spell_enhancement(unsigned int typeflags)
     if (typeflags & SPTYP_SUMMONING)
         enhanced += player_spec_summ();
 
-    if (typeflags & SPTYP_POISON)
+    if (typeflags & SPTYP_SORCERY)
         enhanced += player_spec_poison();
 
     if (typeflags & SPTYP_NECROMANCY)

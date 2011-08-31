@@ -764,7 +764,7 @@ bool god_dislikes_spell_discipline(int discipline, god_type god)
     switch (god)
     {
     case GOD_SHINING_ONE:
-        return (discipline & SPTYP_POISON);
+        return (discipline & SPTYP_SORCERY);
 
     case GOD_YREDELEMNUL:
         return (is_holy_discipline(discipline));
