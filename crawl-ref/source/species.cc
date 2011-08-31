@@ -32,12 +32,13 @@ static species_type species_order[] = {
     SP_MINOTAUR,       SP_KENKU,
     SP_BASE_DRACONIAN,
     // celestial species
-    SP_DEMIGOD,        SP_DEMONSPAWN,
+    //SP_DEMIGOD,
+    SP_DEMONSPAWN,
     // undead species
     SP_MUMMY,          SP_GHOUL,
     SP_VAMPIRE,
     // not humanoid at all
-    SP_CAT
+    //SP_CAT
 };
 
 species_type random_draconian_player_species()
