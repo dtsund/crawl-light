@@ -47,11 +47,11 @@ bool fireball(int pow, bolt &beam)
 void setup_fire_storm(const actor *source, int pow, bolt &beam)
 {
     beam.name         = "great blast of fire";
-    beam.ex_size      = 2 + (random2(pow) > 75);
+    beam.ex_size      = 3;
     beam.flavour      = BEAM_LAVA;
     beam.real_flavour = beam.flavour;
-    beam.glyph        = dchar_glyph(DCHAR_FIRED_ZAP);
     beam.colour       = RED;
+    beam.glyph        = dchar_glyph(DCHAR_FIRED_ZAP);
     beam.beam_source  = source->mindex();
     // XXX: Should this be KILL_MON_MISSILE?
     beam.thrower      =
@@ -59,7 +59,7 @@ void setup_fire_storm(const actor *source, int pow, bolt &beam)
     beam.aux_source.clear();
     beam.obvious_effect = false;
     beam.is_beam      = false;
-    beam.is_tracer    = false;
+    beam.is_tracer    = true;
     beam.is_explosion = true;
     beam.ench_power   = pow;      // used for radius
     beam.hit          = 20 + pow / 10;
@@ -72,6 +72,23 @@ bool cast_fire_storm(int pow, bolt &beam)
         return (false);
 
     setup_fire_storm(&you, pow, beam);
+    
+    beam.explode(false);
+    
+    if(beam.beam_cancelled)
+    {
+        //Player aborted the casting.
+        canned_msg(MSG_OK);
+        return(false);
+    }
+    
+    //Reset the parameters.  beam.ex_size was 3 before to make
+    //*absolutely* sure the player doesn't hit him/herself;
+    //Fire Storm *hurts*.
+    beam.ex_size            = 2 + (random2(pow) > 75);
+    beam.is_tracer          = false;
+    //Failure to reset in_explosion_phase means failing an assert.
+    beam.in_explosion_phase = false;
 
     mpr("A raging storm of fire appears!");
 
