@@ -1582,17 +1582,11 @@ static void _flight_card(int power, deck_rarity_type rarity)
 
     if (power_level == 2) // Stacks with the above.
     {
-        if (is_valid_shaft_level() && grd(you.pos()) == DNGN_FLOOR)
-        {
-            if (place_specific_trap(you.pos(), TRAP_SHAFT))
-            {
-                find_trap(you.pos())->reveal();
-                mpr("A shaft materialises beneath you!");
-            }
-        }
-    }
-    if (one_chance_in(4 - power_level))
+        //Removed the shaft trap because it was exploitable.
+        //Invisibility is now guaranteed at power level 2, will
+        //never happen otherwise.
         potion_effect(POT_INVISIBILITY, random2(power)/4);
+    }
     else if (!success)
         canned_msg(MSG_NOTHING_HAPPENS);
 }
@@ -1612,7 +1606,7 @@ static void _minefield_card(int power, deck_rarity_type rarity)
             if (you.level_type == LEVEL_ABYSS)
                 grd(*ri) = coinflip() ? DNGN_DEEP_WATER : DNGN_LAVA;
             else
-                place_specific_trap(*ri, TRAP_RANDOM);
+                place_specific_trap(*ri, TRAP_NONTELEPORT);
         }
     }
 }
