@@ -11,7 +11,7 @@ static const char * Job_Abbrev_List[ NUM_JOBS ] =
       "Pa",
 #endif
       "As", "Be", "Hu",
-      "Cj", "En", "FE", "IE", "Su", "AE", "EE", "Cr",
+      "Cj", "So", "FE", "IE", "Su", "AE", "EE", "Cr",
       "VM",
       "CK", "Tm", "He",
 #if TAG_MAJOR_VERSION == 32
@@ -26,7 +26,7 @@ static const char * Job_Name_List[ NUM_JOBS ] =
 #if TAG_MAJOR_VERSION == 32
       "Paladin",
 #endif
-      "Assassin", "Berserker", "Hunter", "Conjurer", "Enchanter",
+      "Assassin", "Berserker", "Hunter", "Conjurer", "Sorcerer",
       "Fire Elementalist", "Ice Elementalist", "Summoner", "Air Elementalist",
       "Earth Elementalist", "Crusader",
       "Venom Mage",
