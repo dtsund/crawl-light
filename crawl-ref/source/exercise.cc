@@ -552,7 +552,7 @@ void autotrain()
             
         //Having trained the skill, check whether it was a magical skill;
         //if so, award piety to Sif Muna followers.
-        if( (current_autotrain_skill >= SK_SPELLCASTING) && (current_autotrain_skill <= SK_POISON_MAGIC) )
+        if( (current_autotrain_skill >= SK_SPELLCASTING) && (current_autotrain_skill <= SK_LAST_MAGIC_SCHOOL) )
             did_god_conduct(DID_SPELL_PRACTISE, 1);
         
         //If this maxed out the skill, stop autotraining it.  Might need to break the loop

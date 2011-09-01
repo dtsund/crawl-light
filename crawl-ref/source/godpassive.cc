@@ -657,7 +657,7 @@ int ash_skill_boost(skill_type sk)
     {
         // Boost your highest magical skill.
         skill_type highest = SK_NONE;
-        for (int i = SK_CONJURATIONS; i <= SK_POISON_MAGIC; ++i)
+        for (int i = SK_FIRST_MAGIC_SCHOOL; i <= SK_LAST_MAGIC_SCHOOL; ++i)
             if (compare_skills(skill_type(i), highest))
                 highest = skill_type(i);
 
