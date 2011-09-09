@@ -265,7 +265,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
                 " Your Spells                       Type          "
                 "                Success   Level",
                 " Your Spells                       Power         "
-                "Range           Hunger    Level",
+                "Range           Hunger x5 Level",
                 MEL_ITEM);
         me->colour = BLUE;
         spell_menu.add_entry(me);
@@ -276,7 +276,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
             " Your Spells                       Type          "
             "                Success   Level",
             " Your Spells                       Power         "
-            "Range           Hunger    Level",
+            "Range           Hunger x5 Level",
             MEL_TITLE));
 #endif
     spell_menu.set_highlighter(NULL);

@@ -2929,13 +2929,13 @@ static void _append_spell_stats(const spell_type spell,
         free(temp);
     }
     description += info;
-    description += "\n\nPower : ";
+    description += "\n\nPower   : ";
     description += spell_power_string(spell, rod);
-    description += "\nRange : ";
+    description += "\nRange   : ";
     description += spell_range_string(spell, rod);
-    description += "\nHunger: ";
+    description += "\nHunger x5: ";
     description += spell_hunger_string(spell, rod);
-    description += "\nNoise : ";
+    description += "\nNoise   : ";
     description += spell_noise_string(spell);
 }
 

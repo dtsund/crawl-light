@@ -842,18 +842,18 @@ const std::string make_detailed_cost_description(ability_type ability)
     {
         have_cost = true;
         if (abil.flags & ABFLAG_PERMANENT_MP)
-            ret << "\nMax MP : ";
+            ret << "\nMax MP  : ";
         else
-            ret << "\nMP     : ";
+            ret << "\nMP      : ";
         ret << abil.mp_cost;
     }
     if (abil.hp_cost)
     {
         have_cost = true;
         if (abil.flags & ABFLAG_PERMANENT_HP)
-            ret << "\nMax HP : ";
+            ret << "\nMax HP  : ";
         else
-            ret << "\nHP     : ";
+            ret << "\nHP      : ";
         ret << abil.hp_cost.cost(you.hp_max);
     }
 
@@ -861,20 +861,20 @@ const std::string make_detailed_cost_description(ability_type ability)
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
         have_cost = true;
-        ret << "\nHunger : ";
+        ret << "\nHunger x5: ";
         ret << _get_food_amount_str(abil.food_cost + abil.food_cost / 2);
     }
 
     if (abil.piety_cost)
     {
         have_cost = true;
-        ret << "\nPiety  : ";
+        ret << "\nPiety    : ";
         int avgcost = abil.piety_cost.base + abil.piety_cost.add / 2;
         ret << _get_piety_amount_str(avgcost);
     }
 
     if (!have_cost)
-        ret << "nothing.";
+        ret << "nothing. ";
 
     if (abil.flags & ABFLAG_BREATH)
         ret << "\nYou must catch your breath between uses of this ability.";
