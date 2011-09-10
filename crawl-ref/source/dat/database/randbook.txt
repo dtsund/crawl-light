@@ -960,6 +960,10 @@ Nergalle
 Josephine
 
 Frederick
+
+Asema
+
+Krelbel
 %%%%
 highlevel Earth owner
 
@@ -975,6 +979,8 @@ Lehudib
 Lee
 
 Roxanne
+
+Kalir
 
 __NONE
 %%%%
@@ -1078,6 +1084,8 @@ Summoning owner
 w:5
 Eustachio
 
+Ais
+
 __NONE
 %%%%
 highlevel Translocation owner
@@ -1098,6 +1106,8 @@ Transmutation owner
 Cigotuvi
 
 Roxanne
+
+Aerdan
 
 __NONE
 %%%%
