@@ -445,6 +445,12 @@ static void _update_weapon(const newgame_def& ng)
         you.inv[0].sub_type = ng.weapon;
 }
 
+static void _enchant_weapon(int slot, int plus, int plus2)
+{
+    you.inv[slot].plus = plus;
+    you.inv[slot].plus2 = plus2;
+}
+
 static void _give_items_skills(const newgame_def& ng)
 {
     int weap_skill = 0;
