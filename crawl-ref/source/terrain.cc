@@ -1638,7 +1638,7 @@ const char *dngn_feature_names[] =
 
 dungeon_feature_type dungeon_feature_by_name(const std::string &name)
 {
-    COMPILE_CHECK(ARRAYSZ(dngn_feature_names) == NUM_FEATURES, c1);
+    COMPILE_CHECK(ARRAYSZ(dngn_feature_names) == NUM_FEATURES);
     if (name.empty())
         return (DNGN_UNSEEN);
 
@@ -1660,7 +1660,7 @@ std::vector<std::string> dungeon_feature_matches(const std::string &name)
 {
     std::vector<std::string> matches;
 
-    COMPILE_CHECK(ARRAYSZ(dngn_feature_names) == NUM_FEATURES, c1);
+    COMPILE_CHECK(ARRAYSZ(dngn_feature_names) == NUM_FEATURES);
     if (name.empty())
         return (matches);
 

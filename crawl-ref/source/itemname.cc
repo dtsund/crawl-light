@@ -1564,14 +1564,14 @@ std::string item_def::name_aux(description_level_type desc,
                 "smoky ", "glowing ", "sedimented ", "metallic ", "murky ",
                 "gluggy ", "oily ", "slimy ", "emulsified "
             };
-            COMPILE_CHECK(ARRAYSZ(potion_qualifiers) == PDQ_NQUALS, c1);
+            COMPILE_CHECK(ARRAYSZ(potion_qualifiers) == PDQ_NQUALS);
 
             static const char *potion_colours[] = {
                 "clear", "blue", "black", "silvery", "cyan", "purple",
                 "orange", "inky", "red", "yellow", "green", "brown", "pink",
                 "white"
             };
-            COMPILE_CHECK(ARRAYSZ(potion_colours) == PDC_NCOLOURS, c1);
+            COMPILE_CHECK(ARRAYSZ(potion_colours) == PDC_NCOLOURS);
 
             const char *qualifier =
                 (pqual < 0 || pqual >= PDQ_NQUALS) ? "bug-filled "
@@ -1980,11 +1980,11 @@ std::string item_def::name_aux(description_level_type desc,
 
 static item_type_id_type objtype_to_idtype(object_class_type base_type)
 {
-    COMPILE_CHECK(NUM_WANDS     <= NUM_ID_SUBTYPE, c1);
-    COMPILE_CHECK(NUM_SCROLLS   <= NUM_ID_SUBTYPE, c2);
-    COMPILE_CHECK(NUM_JEWELLERY <= NUM_ID_SUBTYPE, c3);
-    COMPILE_CHECK(NUM_POTIONS   <= NUM_ID_SUBTYPE, c4);
-    COMPILE_CHECK(NUM_STAVES    <= NUM_ID_SUBTYPE, c5);
+    COMPILE_CHECK(NUM_WANDS     <= NUM_ID_SUBTYPE);
+    COMPILE_CHECK(NUM_SCROLLS   <= NUM_ID_SUBTYPE);
+    COMPILE_CHECK(NUM_JEWELLERY <= NUM_ID_SUBTYPE);
+    COMPILE_CHECK(NUM_POTIONS   <= NUM_ID_SUBTYPE);
+    COMPILE_CHECK(NUM_STAVES    <= NUM_ID_SUBTYPE);
 
     switch (base_type)
     {
