@@ -1733,9 +1733,9 @@ static bool _damaging_card(card_type card, int power, deck_rarity_type rarity)
     beam.range = LOS_RADIUS;
     if (spell_direction(target, beam, DIR_NONE, TARG_HOSTILE,
                         LOS_RADIUS, true, true, false, NULL, prompt.c_str())
-        && player_tracer(ZAP_DEBUGGING_RAY, power/4, beam))
+        && player_tracer(ZAP_DEBUGGING_RAY, power/6, beam))
     {
-        zapping(ztype, random2(power/4), beam);
+        zapping(ztype, power/6, beam);
     }
     else
         rc = false;
