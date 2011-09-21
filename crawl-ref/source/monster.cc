@@ -1367,6 +1367,9 @@ static bool _is_signature_weapon(monster* mons, const item_def &weapon)
             return (weapon_skill(weapon) == SK_SHORT_BLADES
                     || weapon_skill(weapon) == SK_LONG_BLADES);
         }
+
+        if (mons->type == MONS_MENNAS)
+            return (get_weapon_brand(weapon) == SPWPN_HOLY_WRATH);
     }
 
     if (is_unrandom_artefact(weapon))
