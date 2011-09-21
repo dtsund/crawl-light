@@ -6482,7 +6482,7 @@ void player::paralyse(actor *who, int str)
         paralysis = 13 * BASELINE_DELAY;
 }
 
-void player::petrify(actor *who)
+void player::petrify(actor *who, int str)
 {
     ASSERT(!crawl_state.game_is_arena());
 
