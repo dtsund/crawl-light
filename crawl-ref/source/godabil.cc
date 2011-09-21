@@ -3235,7 +3235,7 @@ bool fedhas_evolve_flora()
             simple_monster_message(target, " has already reached "
                                    "the pinnacle of evolution.");
         else
-            mprf("Only plants or fungi may be upgraded.");
+            mpr("Only plants or fungi may be evolved.");
 
         return (false);
     }
@@ -3254,7 +3254,7 @@ bool fedhas_evolve_flora()
 
     if (upgrade.piety_cost && upgrade.piety_cost > you.piety)
     {
-        mprf("Not enough piety.");
+        mpr("Not enough piety available.");
         return (false);
     }
 
