@@ -4580,27 +4580,8 @@ int get_real_hp(bool trans, bool rotted)
     if (trans && you.berserk())
         hitp = hitp * 3 / 2;
 
-    if (trans)
-    {
-        // Some transformations give you extra hp.
-        switch (you.form)
-        {
-        case TRAN_STATUE:
-            hitp *= 15;
-            hitp /= 10;
-            break;
-        case TRAN_ICE_BEAST:
-            hitp *= 12;
-            hitp /= 10;
-            break;
-        case TRAN_DRAGON:
-            hitp *= 16;
-            hitp /= 10;
-            break;
-        default:
-            break;
-        }
-    }
+    if (trans) // Some transformations give you extra hp.
+        hitp = hitp * form_hp_mod() / 10;
 
     if (rotted)
         hitp += player_rotted();
