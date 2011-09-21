@@ -48,7 +48,7 @@ enum NOTE_TYPES
     NOTE_XOM_EFFECT,            /* needs: description (name string) */
     NOTE_XOM_REVIVAL,           /* needs: death cause (string) */
     NOTE_PARALYSIS,             /* needs: paralysis source (string) */
-    NOTE_BANISH_MONSTER         /* needs: monster name (string) */
+    NOTE_BANISH_MONSTER,        /* needs: monster name (string) */
     NOTE_NUM_TYPES
 };
 

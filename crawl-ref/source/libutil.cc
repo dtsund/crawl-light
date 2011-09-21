@@ -11,7 +11,6 @@
 #include "externs.h"
 #include "macro.h"
 #include "message.h"
-#include "stuff.h"
 #include "unicode.h"
 #include "viewgeom.h"
 

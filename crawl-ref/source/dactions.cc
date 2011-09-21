@@ -11,12 +11,12 @@
 #include "debug.h"
 #include "decks.h"
 #include "env.h"
+#include "libutil.h"
 #include "mon-behv.h"
 #include "mon-stuff.h"
 #include "mon-util.h"
 #include "player.h"
 #include "religion.h"
-#include "stuff.h"
 #include "travel.h"
 #include "view.h"
 
@@ -39,7 +39,7 @@ static const char *daction_names[] =
     "Trog's gifts go hostile",
     "shuffle decks",
     "reapply passive mapping",
-    "remove Jiyva altars"
+    "remove Jiyva altars",
     "Pikel's slaves go good-neutral",
 };
 

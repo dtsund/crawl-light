@@ -30,11 +30,11 @@
 #include "player.h"
 #include "random.h"
 #include "religion.h"
+#include "shout.h"
 #include "species.h"
 #include "spl-book.h"
 #include "stuff.h"
 #include "view.h" // Elemental colours for unrandarts
-#include "shout.h"
 
 // The initial generation of a randart is very simple - it occurs in
 // dungeon.cc and consists of giving it a few random things - plus &

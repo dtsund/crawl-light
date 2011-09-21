@@ -38,7 +38,6 @@
 #include "spl-book.h"
 #include "spl-util.h"
 #include "state.h"
-#include "stuff.h"
 #include "unwind.h"
 
 static bool _acquiring_now = false;
@@ -800,7 +799,7 @@ static int _acquirement_staff_subtype(const has_vector& already_has)
 
     case SK_EVOCATIONS:
         if (!one_chance_in(4))
-            result = random_rod_subtype();
+            result = get_random_rod_type();
         break;
 
     default: // Invocations and leftover spell schools.
@@ -824,7 +823,7 @@ static int _acquirement_staff_subtype(const has_vector& already_has)
             && result < STAFF_FIRST_ROD
             && !one_chance_in(4)))
     {
-        result = random_rod_subtype();
+        result = get_random_rod_type();
     }
 
     return (result);
