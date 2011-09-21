@@ -827,7 +827,6 @@ not_numeric:
         goto not_numeric;
     return 0;
 }
->>>>>>> 2feae6c... Put usleep() emulation into syscalls.cc
 
 #ifndef USE_TILE
 coord_def cgettopleft(GotoRegion region)
