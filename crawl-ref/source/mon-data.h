@@ -5098,7 +5098,7 @@ static monsterentry mondata[] = {
 // statues (also '8')
 {
     MONS_ICE_STATUE, '8', LIGHTBLUE, "ice statue",
-    M_SPELLCASTER | M_STATIONARY | M_SPEAKS,
+    M_ARTIFICIAL | M_SPELLCASTER | M_STATIONARY | M_SPEAKS,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 3) | MR_RES_ELEC,
     0, 10, MONS_STATUE, MONS_ICE_STATUE, MH_NONLIVING, MAG_IMMUNE,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -5110,7 +5110,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SILVER_STATUE, '8', WHITE, "silver statue",
-    M_STATIONARY | M_SPEAKS,
+    M_ARTIFICIAL | M_STATIONARY | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_SILVER_STATUE, MH_NONLIVING, MAG_IMMUNE,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -5122,7 +5122,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_ORANGE_STATUE, '8', LIGHTRED, "orange crystal statue",
-    M_STATIONARY | M_SPEAKS,
+    M_ARTIFICIAL | M_STATIONARY | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_ORANGE_STATUE, MH_NONLIVING, MAG_IMMUNE,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -5134,7 +5134,7 @@ static monsterentry mondata[] = {
 
 { // always redefined
     MONS_STATUE, '8', LIGHTGREY, "statue",
-    M_STATIONARY | M_SPEAKS | M_ARCHER | M_NO_POLY_TO,
+    M_ARTIFICIAL | M_STATIONARY | M_SPEAKS | M_ARCHER | M_NO_POLY_TO,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 10, MONS_STATUE, MONS_STATUE, MH_NONLIVING, MAG_IMMUNE,
     { {AT_WEAP_ONLY, AF_PLAIN, 20}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -5912,7 +5912,8 @@ static monsterentry mondata[] = {
     // Roxanne obviously can't use items, but we want to equip her with
     // a spellbook, so MONUSE_STARTING_EQUIPMENT is necessary.
     MONS_ROXANNE, '8', BLUE, "Roxanne",
-    M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_STATIONARY | M_SPEAKS,
+    M_ARTIFICIAL | M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_STATIONARY
+        | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_STATUE, MH_NONLIVING, MAG_IMMUNE,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
