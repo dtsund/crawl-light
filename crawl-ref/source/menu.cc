@@ -1815,6 +1815,7 @@ bool formatted_scroller::process_key(int keyin)
         break;
     }
     default:
+        moved = false;
         if (is_set(MF_SINGLESELECT))
         {
             select_items(keyin);
@@ -1830,7 +1831,7 @@ bool formatted_scroller::process_key(int keyin)
 
     if (repaint)
         draw_menu();
-    else if (moved && is_set(MF_EASY_EXIT))
+    else if (!moved || is_set(MF_EASY_EXIT))
         return (false);
 
     return (true);
