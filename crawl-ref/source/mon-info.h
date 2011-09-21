@@ -38,7 +38,6 @@ enum monster_info_flags
     MB_ENSLAVED,
     MB_SWIFT,
     MB_INSANE,
-    MB_DUMMY, //Some 32-bit compiles have problems without this
     MB_SILENCING,
     MB_MESMERIZING,
     MB_EVIL_ATTACK,
@@ -58,8 +57,8 @@ enum monster_info_flags
     MB_NAME_REPLACE, // [art] foo does
     MB_NAME_UNQUALIFIED, // Foo does...
     MB_NAME_THE, // The foo does....
-    //MB_FADING_AWAY,
-    //MB_MOSTLY_FADED,  These two aren't used.
+    MB_FADING_AWAY,
+    MB_MOSTLY_FADED,  //These two aren't used.
     MB_FEAR_INSPIRING,
     MB_WITHDRAWN,
     MB_ATTACHED,
@@ -74,12 +73,13 @@ enum monster_info_flags
     MB_CLINGING,
     MB_NAME_ZOMBIE,
     MB_PERM_SUMMON,
+    NUM_MB_FLAGS
 };
 
 struct monster_info_base
 {
     coord_def pos;
-    uint64_t mb;
+    FixedBitArray<NUM_MB_FLAGS> mb;
     std::string mname;
     monster_type type;
     monster_type base_type;
@@ -165,7 +165,7 @@ struct monster_info : public monster_info_base
 
     inline bool is(unsigned mbflag) const
     {
-        return !!(mb & (((uint64_t)1) << mbflag));
+        return mb[mbflag];
     }
 
     inline std::string damage_desc() const
