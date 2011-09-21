@@ -3278,7 +3278,7 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_PETRIFY:
-        you.petrify(agent());
+        you.petrify(agent(), ench_power);
         obvious_effect = true;
         break;
 
