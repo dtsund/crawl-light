@@ -6489,16 +6489,19 @@ void player::petrify(actor *who)
     if (stasis_blocks_effect(true, true, "%s gives you a mild electric shock."))
         return;
 
-    str *= BASELINE_DELAY;
-    int &petrif(duration[DUR_PETRIFIED]);
-
-    mprf("You %s the ability to move!",
-         petrif ? "still haven't" : "suddenly lose");
-
-    if (str > petrif && (petrif < 3 || one_chance_in(petrif)))
-        petrif = str;
-
-    petrif = std::min(13 * BASELINE_DELAY, petrif);
+     if (you.petrifying())
+     {
+         mprf("Your limbs have turned to stone.");
+         you.duration[DUR_PETRIFYING] = 1;
+         return;
+     }
+ 
+     if (you.petrified() || you.petrifying())
+         return;
+ 
+     you.duration[DUR_PETRIFYING] = 3 * BASELINE_DELAY;
+ 
+     mprf(MSGCH_WARN, "You are slowing down.");
 }
 
 void player::slow_down(actor *foe, int str)
