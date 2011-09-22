@@ -1071,6 +1071,8 @@ static void tag_construct_you(writer &th)
     marshallShort(th, you.hit_points_regeneration * 100);
     marshallInt(th, you.experience);
     marshallInt(th, you.gold);
+    marshallInt(th, you.zigs_completed);
+    marshallByte(th, you.zig_max);
 
     marshallInt(th, you.exp_available);
 
@@ -1661,6 +1663,18 @@ static void tag_read_you(reader &th)
     you.experience                = unmarshallInt(th);
     you.gold                      = unmarshallInt(th);
     you.exp_available             = unmarshallInt(th);
+    
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_ZIG_COUNT)
+    {
+#endif
+    you.zigs_completed            = unmarshallInt(th);
+    you.zig_max                   = unmarshallByte(th);
+#if TAG_MAJOR_VERSION == 32
+    }
+    else
+        you.zigs_completed = you.zig_max = 0;
+#endif
 
     you.base_hp                   = unmarshallShort(th);
     you.base_hp2                  = unmarshallShort(th);

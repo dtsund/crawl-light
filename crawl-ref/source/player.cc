@@ -5337,6 +5337,8 @@ void player::init()
     experience       = 0;
     experience_level = 1;
     gold             = 0;
+    zigs_completed   = 0;
+    zig_max          = 0;
 
     equip.init(-1);
     melded.init(false);
