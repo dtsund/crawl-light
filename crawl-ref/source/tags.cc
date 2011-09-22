@@ -1071,10 +1071,11 @@ static void tag_construct_you(writer &th)
     marshallShort(th, you.hit_points_regeneration * 100);
     marshallInt(th, you.experience);
     marshallInt(th, you.gold);
-    marshallInt(th, you.zigs_completed);
-    marshallByte(th, you.zig_max);
 
     marshallInt(th, you.exp_available);
+
+    marshallInt(th, you.zigs_completed);
+    marshallByte(th, you.zig_max);
 
     marshallShort(th, you.base_hp);
     marshallShort(th, you.base_hp2);
