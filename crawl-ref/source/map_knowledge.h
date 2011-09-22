@@ -35,8 +35,6 @@
  */
 struct map_cell
 {
-    uint32_t flags;   // Flags describing the mappedness of this square.
-
     map_cell() : flags(0), _feat(DNGN_UNSEEN), _feat_colour(0),
                  _item(0), _mons(0), _cloud(CLOUD_NONE), _cloud_colour(0)
     {
@@ -224,6 +222,8 @@ struct map_cell
         return !!(flags & MAP_MAGIC_MAPPED_FLAG);
     }
 
+public:
+    uint32_t flags;   // Flags describing the mappedness of this square.
 private:
     dungeon_feature_type _feat;
     uint8_t _feat_colour;
