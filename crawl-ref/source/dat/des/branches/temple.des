@@ -1440,6 +1440,78 @@ ccccccccccccccccccc.........."""..........tt
                  ttttttttttttttttttttttttttt
 ENDMAP
 
+# Autumnal temple, 12 altars (oiseaux)
+NAME:   oiseaux_autumnal_temple_12
+DESC:   Autumnal temple
+PLACE:  Temple
+ORIENT: encompass
+TAGS:   no_rotate no_pool_fixup
+MARKER: A = lua:fog_machine { cloud_type = "thin mist", pow_min = 2, \
+        pow_max = 6, delay = 4, start_clouds = 1, size_min = 2, \
+        size_max = 6, spread_rate = 2 }
+SUBST:  A : w
+SUBST:  c : cd"""""""
+SUBST:  " = cd
+FTILE:  B{[( = FLOOR_PEBBLE_BROWN
+FTILE:  t. = FLOOR_SWAMP
+TILE:   d = FLOOR_PEBBLE
+TILE:   c = WALL_STONE_BRICK
+TILE:   ' = FLOOR_PEBBLE_BROWN
+TILE:   t = DNGN_TREE_YELLOW w:5 / DNGN_TREE_LIGHTRED w:5 / DNGN_TREE_RED / DNGN_TREE_DEAD: 3
+COLOUR: . = brown
+COLOUR: t = red w:5 / yellow w:5 / brown
+COLOUR: ' = darkgrey
+SUBST:  'd = .
+MAP
+tttttttttttttttttttttttttttttttttttttttt
+tttttttttttttttttttttttttttttttttttttttt
+ttttttttttAwwwtttttttttttttttttttttttttt
+tttttttttttttwwwtttttttttttttttttttttttt
+tttttttttttttttwwwtttttttttttttttttttttt
+tttttttttttttttttwwwtttttttttttttttttttt
+tttttttttttttttttttwwttttttttttttttttttt
+ttttttttttttttttttttwwtttttttttttttttttt
+ttttttttttttttttttttwwtttttttttttttttttt
+tttttttttttt..tttttwwtttttttcccctttttttt
+ttttttttt.''.ddtttWwwtttttttc''''ttttttt
+tttttttt..c'''c..tWwwWttttttc'B'tttttttt
+tttttt....d'B'c...WwwW..ttt.d.''''.ttttt
+ttttt......'''c..WwwW'dd..t.c.'''..ttttt
+tttt........''..Wwwc'''c'......'....tttt
+tt...ccdcd...'tWwwWc'B''.....''....ttttt
+ttt..c'''c.....WwW.d''.......'''..tttttt
+ttt..c'B'''.'..WwwWt....t...d'B'd..ttttt
+tttt.c''.c......Wwwtt........''.cttttttt
+ttttttt......t..ttwttt....'.'..ttttttttt
+ttttttttttt...ttttwwttt..t.......ttttttt
+tttttttttttt..tttttwttttt..dcc'...tttttt
+ttttttttttt'.ttttttwwtttt..''c.....ttttt
+ttttttt.ccc''...ttttwwwttt'B'c......tttt
+tttttt..d'''''.ttcttttwwtt'''d.....ttttt
+ttt.....c''B''c..c'Btttwwt.....'.dd.tttt
+tttt....c'''''c..c'''ttWwwW.....''c..ttt
+ttt.......'''....dcc'cttWwW.dd.'B't...tt
+tt..dd.....''......'''.tWwwWdd..''c..ttt
+tt..c''.....'t.....'''''tWwwddW..cc...tt
+tt..t'B'.....'.........'.tWwddwW.....ttt
+ttt..'''.........t.........WddwwW...tttt
+tt...c...t............t....'ddWwwW...ttt
+ttttt...'...t....''....t....ddtWwwW..ttt
+tttttttt..'ttt..''''.tttt.....ttWwwWtttt
+ttttttttt'.tttttd'B''.ttttt..'ttttwttttt
+tttttttt''ttttttc'''.ttttttt'.ttttwwtttt
+ttttttt''tttttttcccdttttttttt''ttttwwttt
+ttttttcd'ttttttttttttttttttt''tttttwwttt
+ttttttc'''ctttttttttttttttttt''''tttwwtt
+ttttttc'B'cttttttttttttttttt''''''tttwtt
+ttttttc'''c.ttttttttttttttt''({[''tttAtt
+ttttttdcccc.tttttttttttttttt''''''tttttt
+ttttttt.....tttttttttttttttttt''tttttttt
+tttttttttt.ttttttttttttttttttttttttttttt
+tttttttttttttttttttttttttttttttttttttttt
+tttttttttttttttttttttttttttttttttttttttt
+ENDMAP
+
 
 ##########################################################################
 # Water temples
