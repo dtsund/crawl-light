@@ -624,6 +624,12 @@ ifneq (,$(findstring profile,$(MAKECMDGOALS)))
 	DEBUG=YesPlease
 endif
 
+# Final
+# Use this for final release versions.
+ifneq (,$(findstring final,$(MAKECMDGOALS)))
+	FINAL=YesPlease
+endif
+
 ifdef HURRY
 	NO_OPTIMIZE=YesPlease
 endif
@@ -891,7 +897,14 @@ SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 .PHONY: all test install clean clean-contrib clean-rltiles distclean debug \
         profile wizard package-source source build-windows package-windows
 
-all: $(GAME) $(GENERATED_DOCS)
+all: buildscript $(GAME) $(GENERATED_DOCS)
+
+buildscript:
+ifdef FINAL
+	sh util/gen_ver.sh true
+else
+	sh util/gen_ver.sh false
+endif
 
 test:
 	./$(GAME) -test > /dev/null
@@ -1090,6 +1103,7 @@ $(GAME): $(GAME_DEPENDS)
 debug: all
 profile: all
 wizard: all
+final: all
 
 doxy-simple: doxygen-simple
 doxygen-simple:
