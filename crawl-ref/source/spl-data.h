@@ -2967,7 +2967,7 @@ struct spell_desc
 
 {
     SPELL_INNER_FLAME, "Inner Flame",
-     SPTYP_HEXES | SPTYP_FIRE,
+     SPTYP_SORCERY | SPTYP_FIRE,
      SPFLAG_DIR_OR_TARGET | SPFLAG_NOT_SELF,
      3,
      200,
