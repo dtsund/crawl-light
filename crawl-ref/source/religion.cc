@@ -2581,7 +2581,6 @@ void gain_piety(int original_gain, int denominator, bool force, bool should_scal
         }
         you.piety_max[you.religion] = you.piety;
     }
-}
 
     // check to see if we owe anything first
     if (you.penance[you.religion] > 0)
