@@ -171,7 +171,6 @@ portal_projectile PORTAL_PROJECTILE
 teleport TELEPORT
 teleport_other TELEPORT_OTHER
 warp_weapon WARP_WEAPON
-shroud_of_golubria SHROUD_OF_GOLUBRIA
 
 %sdir gui/spells/transmutation
 alter_self ALTER_SELF
