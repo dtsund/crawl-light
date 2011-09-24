@@ -2020,7 +2020,7 @@ void define_monster(monster* mons)
         if (col != BLACK) // May be overwritten by the mon_glyph option.
             break;
 
-        col = element_colour(ETC_GILA);
+        col = element_colour(ETC_FLASH);
         break;
 
     case MONS_KRAKEN:
