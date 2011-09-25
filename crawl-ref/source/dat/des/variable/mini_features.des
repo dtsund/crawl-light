@@ -2105,7 +2105,7 @@ NAME: early_knife
 TAGS: allow_dup extra transparent
 DEPTH: D:1-5
 CHANCE: 50%
-ITEM: knife not_cursed
+ITEM: dagger not_cursed
 MAP
 d
 ENDMAP
