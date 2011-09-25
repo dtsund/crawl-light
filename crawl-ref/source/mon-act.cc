@@ -3822,16 +3822,8 @@ static bool _monster_move(monster* mons)
                 ret    = true;
                 mmov.reset();
 
-<<<<<<< HEAD
-#ifdef DEBUG_DIAGNOSTICS
-                mprf(MSGCH_DIAGNOSTICS,
-                     "%s is skipping movement in order to follow.",
-                     mons->name(DESC_CAP_THE).c_str(), true);
-#endif
-=======
                 dprf("%s is skipping movement in order to follow.",
                      mons->name(DESC_CAP_THE).c_str());
->>>>>>> 9348c12... Fix format string warnings.
             }
         }
 
