@@ -837,8 +837,6 @@ bool mcache_ghost::transparent() const
 
 mcache_demon::mcache_demon(const monster_info& minf)
 {
-    ASSERT(minf.type == MONS_PANDEMONIUM_LORD);
-
     const uint32_t seed = hash(&minf.mname[0], minf.mname.size());
     rng_save_excursion exc;
     seed_rng(seed);
