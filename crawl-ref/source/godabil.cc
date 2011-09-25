@@ -1844,7 +1844,7 @@ void yred_request_injury_mirror()
         // Strictly speaking, since it is random, it is possible it
         // actually decreases.  The player doesn't know this, and this
         // way smart-asses won't re-roll it several times before charging.
-        mpr("Your dark aura grows in power.");
+        mpr("You renew your dark mirror aura.");
     }
     else
     {
