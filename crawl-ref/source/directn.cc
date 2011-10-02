@@ -3688,11 +3688,11 @@ std::string get_monster_equipment_desc(const monster_info& mi,
     // Print the rest of the equipment only for full descriptions.
     if (level != DESC_WEAPON)
     {
-        item_def* mon_arm = mi.inv[MSLOT_ARMOUR].get();
-        item_def* mon_shd = mi.inv[MSLOT_SHIELD].get();
-        item_def* mon_qvr = mi.inv[MSLOT_MISSILE].get();
-        item_def* mon_alt = mi.inv[MSLOT_ALT_WEAPON].get();
-        item_def* mon_wnd = mi.inv[MSLOT_WAND].get();
+        item_def* mon_arm = mi.mon()->mslot_item(MSLOT_ARMOUR);
+        item_def* mon_shd = mi.mon()->mslot_item(MSLOT_SHIELD);
+        item_def* mon_qvr = mi.mon()->mslot_item(MSLOT_MISSILE);
+        item_def* mon_alt = mi.mon()->mslot_item(MSLOT_ALT_WEAPON);
+        item_def* mon_wnd = mi.mon()->mslot_item(MSLOT_WAND);
 
         if (level == DESC_IDENTIFIED)
         {
@@ -3710,8 +3710,9 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         if (mi.two_weapons)
             mon_alt = 0;
 
-        const bool mon_has_wand = mi.props.exists("wand_known") && mon_wnd;
-        const bool mon_carry = mon_alt || mon_has_wand;
+        const bool mon_has_wand = mi.props.exists("wand_known") && mi.inv[MSLOT_WAND].get();
+        const bool mon_has_alt = mi.inv[MSLOT_ALT_WEAPON].get();
+        const bool mon_carry = mon_has_alt || mon_has_wand;
 
         bool found_sth    = !weap.empty();
 
@@ -3737,7 +3738,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
             desc += mon_shd->name(DESC_NOCAP_A);
         }
 
-        if (mon_qvr)
+        if (mi.inv[MSLOT_MISSILE].get())
         {
             if (found_sth)
                 desc += !mon_carry ? " and" : ",";
@@ -3755,7 +3756,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
 
             desc += " carrying ";
 
-            if (mon_alt)
+            if (mon_has_alt)
             {
                 desc += mon_alt->name(DESC_NOCAP_A);
                 if (mon_has_wand)
