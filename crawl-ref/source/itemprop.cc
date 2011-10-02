@@ -579,7 +579,7 @@ void do_uncurse_item(item_def &item, bool inscribe, bool no_ash)
     if (inscribe && Options.autoinscribe_cursed
         && item.inscription.find("was cursed") == std::string::npos
         && !item_ident(item, ISFLAG_SEEN_CURSED)
-        && !item_ident(item, ISFLAG_IDENT_MASK))
+        && false)
     {
         add_inscription(item, "was cursed");
     }
@@ -673,6 +673,7 @@ void set_ident_flags(item_def &item, iflags_t flags)
             trim_string(item.inscription);
         }
 
+/*
         if (notes_are_active() && !(item.flags & ISFLAG_NOTED_ID)
             && get_ident_type(item) != ID_KNOWN_TYPE
             && is_interesting_item(item))
@@ -685,6 +686,7 @@ void set_ident_flags(item_def &item, iflags_t flags)
             // don't note twice in those cases.
             item.flags |= (ISFLAG_NOTED_ID | ISFLAG_NOTED_GET);
         }
+*/
     }
 
     if (item.flags & ISFLAG_KNOW_TYPE && !is_artefact(item)

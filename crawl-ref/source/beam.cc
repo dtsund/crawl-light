@@ -3249,13 +3249,8 @@ void bolt::affect_player_enchantment()
             you.mutate();
             obvious_effect = true;
         }
-        else if (get_ident_type(OBJ_WANDS, WAND_POLYMORPH_OTHER)
-                 == ID_KNOWN_TYPE)
-        {
-            mpr("This is polymorph other only!");
-        }
         else
-            canned_msg(MSG_NOTHING_HAPPENS);
+            mpr("This is polymorph other only!");
         break;
 
     case BEAM_SLOW:

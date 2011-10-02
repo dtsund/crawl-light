@@ -4353,8 +4353,7 @@ static bool _vorpalise_weapon(bool already_known)
         // This is only naughty if you know you're doing it.
         // XXX: assumes this can only happen from Vorpalise Weapon scroll.
         did_god_conduct(DID_NECROMANCY, 10,
-                        get_ident_type(OBJ_SCROLLS, SCR_VORPALISE_WEAPON)
-                        == ID_KNOWN_TYPE);
+                        true);
         break;
 
     case SPWPN_DISTORTION:

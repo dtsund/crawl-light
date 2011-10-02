@@ -2557,8 +2557,10 @@ bool can_ingest(int what_isit, int kindof_thing, bool suppress_msg,
         return (false);
 
     case OBJ_POTIONS: // called by lua
+        /*
         if (get_ident_type(OBJ_POTIONS, kindof_thing) != ID_KNOWN_TYPE)
             return (true);
+        */
 
         switch (kindof_thing)
         {

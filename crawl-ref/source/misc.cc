@@ -518,8 +518,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     you.wield_change  = true;
     you.redraw_quiver = true;
 
-    const bool knew_coag  = (get_ident_type(OBJ_POTIONS, POT_BLOOD_COAGULATED)
-                                == ID_KNOWN_TYPE);
+    const bool knew_coag  = true;
 
     if (!coag_count) // Some potions rotted away, but none coagulated.
     {
@@ -551,8 +550,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     // Coagulated blood cannot coagulate any further...
     ASSERT(blood.sub_type == POT_BLOOD);
 
-    const bool knew_blood = get_ident_type(OBJ_POTIONS, POT_BLOOD)
-                                == ID_KNOWN_TYPE;
+    const bool knew_blood = true;
 
     _potion_stack_changed_message(blood, coag_count, "coagulate%s");
 

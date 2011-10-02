@@ -2015,7 +2015,7 @@ bool item_type_known(const item_def& item)
 
     const item_type_id_type idt = objtype_to_idtype(item.base_type);
     if (idt != NUM_IDTYPE)
-        return (type_ids[idt][item.sub_type] == ID_KNOWN_TYPE);
+        return (true);
     else
         return (false);
 }
@@ -2203,8 +2203,7 @@ void check_item_knowledge(bool unknown_items)
             if (i == 3 && j == POT_FIZZING)
                 continue;
 
-            if (unknown_items ? type_ids[i][j] != ID_KNOWN_TYPE
-                              : type_ids[i][j] == ID_KNOWN_TYPE)
+            if (!unknown_items)
             {
                 item_def* ptmp = new item_def;
                 if (ptmp != 0)
