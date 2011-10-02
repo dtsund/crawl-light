@@ -3147,30 +3147,25 @@ static const std::string _item_prefix(const item_def &item, bool temp,
         prefixes.push_back("identified");
     else
     {
-        if (get_ident_type(item) == ID_KNOWN_TYPE)
-        {
-            // Wands are only fully identified if we know the number of
-            // charges.
-            if (item.base_type == OBJ_WANDS)
-                prefixes.push_back("known");
+        // Wands are only fully identified if we know the number of
+        // charges.
+        if (item.base_type == OBJ_WANDS)
+            prefixes.push_back("known");
 
-            // Rings are fully identified simply by knowing their type,
-            // unless the ring has plusses, like a ring of dexterity.
-            else if (item.base_type == OBJ_JEWELLERY
-                     && !jewellery_is_amulet(item))
-            {
-                if (item.plus == 0 && item.plus2 == 0)
-                    prefixes.push_back("identified");
-                else
-                    prefixes.push_back("known");
-            }
-            // All other types of magical items are fully identified
-            // simply by knowing the type.
-            else
+        // Rings are fully identified simply by knowing their type,
+        // unless the ring has plusses, like a ring of dexterity.
+        else if (item.base_type == OBJ_JEWELLERY
+                 && !jewellery_is_amulet(item))
+        {
+            if (item.plus == 0 && item.plus2 == 0)
                 prefixes.push_back("identified");
+            else
+                prefixes.push_back("known");
         }
+        // All other types of magical items are fully identified
+        // simply by knowing the type.
         else
-            prefixes.push_back("unidentified");
+            prefixes.push_back("identified");
     }
 
     if (good_god_hates_item_handling(item) || god_hates_item_handling(item))
