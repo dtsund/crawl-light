@@ -2035,7 +2035,7 @@ bool item_type_known(const object_class_type base_type, const int sub_type)
 {
     const item_type_id_type idt = objtype_to_idtype(base_type);
     if (idt != NUM_IDTYPE)
-        return (type_ids[idt][sub_type] == ID_KNOWN_TYPE);
+        return (true);
     else
         return (false);
 }
