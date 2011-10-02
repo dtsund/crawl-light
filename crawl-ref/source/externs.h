@@ -597,6 +597,10 @@ private:
     std::string name_aux(description_level_type desc,
                          bool terse, bool ident, bool with_inscription,
                          iflags_t ignore_flags) const;
+
+    std::string name_aux(description_level_type desc,
+                         bool terse, bool ident, bool with_inscription,
+                         iflags_t ignore_flags, bool in_game) const;
 };
 
 typedef item_def item_info;

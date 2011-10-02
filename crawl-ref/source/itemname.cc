@@ -91,7 +91,7 @@ std::string item_def::name(description_level_type descrip,
     std::ostringstream buff;
 
     const std::string auxname = this->name_aux(descrip, terse, ident,
-                                               with_inscription, ignore_flags);
+                                               with_inscription, ignore_flags, true);
 
     const bool startvowel     = is_vowel(auxname[0]);
 
@@ -1211,11 +1211,20 @@ static void output_with_sign(std::ostream& os, int val)
     os << val;
 }
 
+//Wrapper, so that des files don't break on the removal of the ID game.
+std::string item_def::name_aux(description_level_type desc,
+                               bool terse, bool ident, bool with_inscription,
+                               iflags_t ignore_flags) const
+{
+    return name_aux(desc, terse, ident, with_inscription, ignore_flags, false);
+}
+    
+
 // Note that "terse" is only currently used for the "in hand" listing on
 // the game screen.
 std::string item_def::name_aux(description_level_type desc,
                                bool terse, bool ident, bool with_inscription,
-                               iflags_t ignore_flags) const
+                               iflags_t ignore_flags, bool in_game) const
 {
     // Shortcuts
     const int item_typ   = sub_type;
@@ -1228,20 +1237,26 @@ std::string item_def::name_aux(description_level_type desc,
     const bool basename = (desc == DESC_BASENAME || (dbname && !know_type));
     const bool qualname = (desc == DESC_QUALNAME);
 
-    const bool know_curse =
+    const bool know_curse = (desc != DESC_PLAIN);
+    /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_CURSE)
         && (ident || item_ident(*this, ISFLAG_KNOW_CURSE));
+    */
 
-    const bool __know_pluses =
+    const bool __know_pluses = (desc != DESC_PLAIN);
+    /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_PLUSES)
         && (ident || item_ident(*this, ISFLAG_KNOW_PLUSES));
+    */
 
-    const bool know_brand =
+    const bool know_brand = (desc != DESC_PLAIN);
+    /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_TYPE)
         && (ident || item_type_known(*this));
+    */
 
     const bool know_ego = know_brand;
 
