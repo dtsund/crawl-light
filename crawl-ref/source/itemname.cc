@@ -1237,21 +1237,21 @@ std::string item_def::name_aux(description_level_type desc,
     const bool basename = (desc == DESC_BASENAME || (dbname && !know_type));
     const bool qualname = (desc == DESC_QUALNAME);
 
-    const bool know_curse = (desc != DESC_PLAIN);
+    const bool know_curse = (desc != DESC_PLAIN && desc != DESC_DBNAME);
     /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_CURSE)
         && (ident || item_ident(*this, ISFLAG_KNOW_CURSE));
     */
 
-    const bool __know_pluses = (desc != DESC_PLAIN);
+    const bool __know_pluses = (desc != DESC_PLAIN && desc != DESC_DBNAME);
     /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_PLUSES)
         && (ident || item_ident(*this, ISFLAG_KNOW_PLUSES));
     */
 
-    const bool know_brand = (desc != DESC_PLAIN);
+    const bool know_brand = (desc != DESC_PLAIN && desc != DESC_DBNAME);
     /*
         !basename && !qualname && !dbname
         && !testbits(ignore_flags, ISFLAG_KNOW_TYPE)
