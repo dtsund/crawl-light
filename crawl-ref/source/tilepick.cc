@@ -4560,9 +4560,6 @@ tileidx_t tileidx_gametype(const game_type gtype)
 
 tileidx_t tileidx_known_brand(const item_def &item)
 {
-    if (!item_type_known(item))
-        return 0;
-
     if (item.base_type == OBJ_WEAPONS)
     {
         const int brand = get_weapon_brand(item);
