@@ -925,41 +925,6 @@ static const char* misc_type_name(int type, bool known)
     return "very buggy miscellaneous item";
 }
 
-static const char* book_secondary_string(int s)
-{
-    switch (s)
-    {
-    case 0:  return "";
-    case 1:  return "chunky ";
-    case 2:  return "thick ";
-    case 3:  return "thin ";
-    case 4:  return "wide ";
-    case 5:  return "glowing ";
-    case 6:  return "dog-eared ";
-    case 7:  return "oblong ";
-    case 8:  return "runed ";
-    case 9:  return "";
-    case 10: return "";
-    case 11: return "";
-    default: return "buggily ";
-    }
-}
-
-static const char* book_primary_string(int p)
-{
-    switch (p)
-    {
-    case 0:  return "paperback ";
-    case 1:  return "hardcover ";
-    case 2:  return "leatherbound ";
-    case 3:  return "metal-bound ";
-    case 4:  return "papyrus ";
-    case 5:  return "";
-    case 6:  return "";
-    default: return "buggy ";
-    }
-}
-
 static const char* _book_type_name(int booktype)
 {
     switch (static_cast<book_type>(booktype))
