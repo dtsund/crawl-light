@@ -3369,8 +3369,8 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
 {
     std::string desc = "";
     std::string name1, name2;
-    const item_def *weap = mi.inv[MSLOT_WEAPON].get();
-    const item_def *alt  = mi.inv[MSLOT_ALT_WEAPON].get();
+    const item_def *weap = mi.mon()->weapon(0);
+    const item_def *alt  = mi.mon()->weapon(1);
 
     if (weap && (!ident || item_type_known(*weap)))
     {
