@@ -1190,7 +1190,7 @@ std::string item_def::name_aux(description_level_type desc,
     const bool know_type = ident || item_type_known(*this);
 
     const bool dbname   = (desc == DESC_DBNAME);
-    const bool basename = (desc == DESC_BASENAME || (dbname && !know_type));
+    const bool basename = (desc == DESC_BASENAME);
     const bool qualname = (desc == DESC_QUALNAME);
 
     const bool know_curse = (desc != DESC_PLAIN && desc != DESC_DBNAME);

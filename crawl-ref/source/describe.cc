@@ -2395,9 +2395,7 @@ void get_item_desc(const item_def &item, describe_info &inf, bool terse)
 // Returns true if spells can be shown to player.
 static bool _can_show_spells(const item_def &item)
 {
-    return (item.has_spells()
-            && (item.base_type != OBJ_BOOKS || item_type_known(item)
-                || player_can_memorise_from_spellbook(item)));
+    return (item.has_spells());
 }
 
 static void _show_spells(const item_def &item)
