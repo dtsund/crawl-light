@@ -3372,12 +3372,12 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
     const item_def *weap = mi.mon()->weapon(0);
     const item_def *alt  = mi.mon()->weapon(1);
 
-    if (weap && (!ident || item_type_known(*weap)))
+    if (weap)
     {
         name1 = weap->name(DESC_NOCAP_A, false, false, true,
                            false, ISFLAG_KNOW_CURSE);
     }
-    if (alt && (!ident || item_type_known(*alt)) && mi.two_weapons)
+    if (alt && mi.two_weapons)
     {
         name2 = alt->name(DESC_NOCAP_A, false, false, true,
                           false, ISFLAG_KNOW_CURSE);
@@ -3693,18 +3693,6 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         item_def* mon_qvr = mi.mon()->mslot_item(MSLOT_MISSILE);
         item_def* mon_alt = mi.mon()->mslot_item(MSLOT_ALT_WEAPON);
         item_def* mon_wnd = mi.mon()->mslot_item(MSLOT_WAND);
-
-        if (level == DESC_IDENTIFIED)
-        {
-            if (mon_arm && !item_type_known(*mon_arm))
-                mon_arm = 0;
-            if (mon_shd && !item_type_known(*mon_shd))
-                mon_shd = 0;
-            if (mon_qvr && !item_type_known(*mon_qvr))
-                mon_qvr = 0;
-            if (mon_alt && !item_type_known(*mon_alt))
-                mon_alt = 0;
-        }
 
         // _describe_monster_weapon already took care of this
         if (mi.two_weapons)

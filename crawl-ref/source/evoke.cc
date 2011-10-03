@@ -306,7 +306,7 @@ static bool _is_crystal_ball(const item_def &item)
                 || item.sub_type == MISC_CRYSTAL_BALL_OF_SEEING));
 }
 
-static bool _check_crystal_ball(int subtype, bool known)
+static bool _check_crystal_ball(int subtype)
 {
     if (you.intel() <= 1)
     {
@@ -321,7 +321,6 @@ static bool _check_crystal_ball(int subtype, bool known)
     }
 
     if (subtype == MISC_CRYSTAL_BALL_OF_ENERGY
-        && known
         && you.magic_points == you.max_magic_points)
     {
         mpr("With no energy to recover, the crystal ball of energy is "
@@ -330,7 +329,7 @@ static bool _check_crystal_ball(int subtype, bool known)
     }
 
     int min_evo = 2;
-    if (known && subtype == MISC_CRYSTAL_BALL_OF_SEEING)
+    if (subtype == MISC_CRYSTAL_BALL_OF_SEEING)
         min_evo = 3;
     if (you.skill(SK_EVOCATIONS) < min_evo)
     {
@@ -540,9 +539,6 @@ void skill_manual(int slot)
     // a manual in advance.
     you.turn_is_over = true;
     item_def& manual(you.inv[slot]);
-    const bool known = item_type_known(manual);
-    if (!known)
-        set_ident_flags(manual, ISFLAG_KNOW_TYPE);
     const skill_type skill = static_cast<skill_type>(manual.plus);
 
     mprf("You read about %s.", skill_name(skill));
@@ -557,7 +553,7 @@ void skill_manual(int slot)
     else
         mpr("The manual looks somewhat more worn.");
 
-    xom_is_stimulated(known ? 14 : 64);
+    xom_is_stimulated(32);
 }
 
 static bool _box_of_beasts(item_def &box)
@@ -749,8 +745,7 @@ bool evoke_item(int slot)
         }
         else if (item.sub_type == STAFF_CHANNELING)
         {
-            if (item_type_known(item)
-                && !you.is_undead && you.hunger_state == HS_STARVING)
+            if (!you.is_undead && you.hunger_state == HS_STARVING)
             {
                 canned_msg(MSG_TOO_HUNGRY);
                 return (false);
@@ -784,7 +779,7 @@ bool evoke_item(int slot)
         }
 
         if (_is_crystal_ball(item)
-            && !_check_crystal_ball(item.sub_type, item_type_known(item)))
+            && !_check_crystal_ball(item.sub_type))
         {
             unevokable = true;
             break;
@@ -885,17 +880,6 @@ bool evoke_item(int slot)
         canned_msg(MSG_NOTHING_HAPPENS);
     else if (pract > 0)
         practise(EX_DID_EVOKE_ITEM, pract);
-
-    if (ident && !item_type_known(item))
-    {
-        set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
-        set_ident_flags(item, ISFLAG_KNOW_TYPE);
-
-        mprf("You are wielding %s.",
-             item.name(DESC_NOCAP_A).c_str());
-
-        you.wield_change = true;
-    }
 
     if (!unevokable)
         you.turn_is_over = true;

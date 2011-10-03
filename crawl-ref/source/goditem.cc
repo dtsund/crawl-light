@@ -611,13 +611,10 @@ conduct_type good_god_hates_item_handling(const item_def &item)
         return (DID_NOTHING);
     }
 
-    if (item_type_known(item))
-    {
-        if (is_evil_item(item))
-            return (DID_NECROMANCY);
-        else
-            return (DID_UNHOLY);
-    }
+    if (is_evil_item(item))
+        return (DID_NECROMANCY);
+    else
+        return (DID_UNHOLY);
 
     if (is_demonic(item))
         return (DID_UNHOLY);
@@ -630,9 +627,6 @@ conduct_type god_hates_item_handling(const item_def &item)
     switch (you.religion)
     {
     case GOD_ZIN:
-        if (!item_type_known(item))
-            return (DID_NOTHING);
-
         if (is_unclean_item(item))
             return (DID_UNCLEAN);
 
@@ -641,12 +635,12 @@ conduct_type god_hates_item_handling(const item_def &item)
         break;
 
     case GOD_SHINING_ONE:
-        if (item_type_known(item) && is_poisoned_item(item))
+        if (is_poisoned_item(item))
             return (DID_POISON);
         break;
 
     case GOD_YREDELEMNUL:
-        if (item_type_known(item) && is_holy_item(item))
+        if (is_holy_item(item))
             return (DID_HOLY);
         break;
 
@@ -656,13 +650,12 @@ conduct_type god_hates_item_handling(const item_def &item)
         break;
 
     case GOD_FEDHAS:
-        if (item_type_known(item) && is_corpse_violating_item(item))
+        if (is_corpse_violating_item(item))
             return (DID_CORPSE_VIOLATION);
         break;
 
     case GOD_CHEIBRIADOS:
-        if (item_type_known(item)
-            && (is_potentially_hasty_item(item) || is_hasty_item(item)))
+        if (is_potentially_hasty_item(item) || is_hasty_item(item))
         {
             return (DID_HASTY);
         }
@@ -672,20 +665,19 @@ conduct_type god_hates_item_handling(const item_def &item)
         break;
     }
 
-    if (item_type_known(item) && is_potentially_unholy_item(item)
+    if (is_potentially_unholy_item(item)
         && is_good_god(you.religion))
     {
         return (DID_UNHOLY);
     }
 
-    if (item_type_known(item) && is_potentially_evil_item(item)
+    if (is_potentially_evil_item(item)
         && is_good_god(you.religion))
     {
         return (DID_NECROMANCY);
     }
 
-    if (item_type_known(item)
-        && (god_hates_spellbook(item) || god_hates_rod(item)))
+    if (god_hates_spellbook(item) || god_hates_rod(item))
     {
         return (NUM_CONDUCTS); // FIXME: Get the specific reason, if it
     }                          // will ever be needed for spellbooks.

@@ -3217,15 +3217,6 @@ mon_attack_flavour melee_attack::random_chaos_attack_flavour()
 
 bool melee_attack::apply_damage_brand()
 {
-    bool brand_was_known = false;
-
-    if (weapon)
-    {
-        if (is_artefact(*weapon))
-            brand_was_known = artefact_known_wpn_property(*weapon, ARTP_BRAND);
-        else
-            brand_was_known = item_type_known(*weapon);
-    }
     bool ret = false;
 
     // Monster resistance to the brand.
@@ -3501,7 +3492,7 @@ bool melee_attack::apply_damage_brand()
     {
         // If your god objects to using chaos, then it makes the
         // brand obvious.
-        if (did_god_conduct(DID_CHAOS, 2 + random2(3), brand_was_known))
+        if (did_god_conduct(DID_CHAOS, 2 + random2(3), true))
             obvious_effect = true;
     }
     if (!obvious_effect)

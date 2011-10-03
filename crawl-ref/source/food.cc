@@ -2362,8 +2362,7 @@ bool is_preferred_food(const item_def &food)
     if (you.species == SP_VAMPIRE)
         return (is_blood_potion(food));
 
-    if (food.base_type == OBJ_POTIONS && food.sub_type == POT_PORRIDGE
-        && item_type_known(food))
+    if (food.base_type == OBJ_POTIONS && food.sub_type == POT_PORRIDGE)
     {
         return (!player_mutation_level(MUT_CARNIVOROUS));
     }
@@ -2426,22 +2425,7 @@ bool is_forbidden_food(const item_def &food)
 bool check_amu_the_gourmand(bool reqid)
 {
     if (wearing_amulet(AMU_THE_GOURMAND, !reqid))
-    {
-        const int amulet = you.equip[EQ_AMULET];
-
-        ASSERT(amulet != -1);
-
-        if (!item_type_known(you.inv[amulet]))
-        {
-            // For artefact amulets, this will tell you its name and
-            // subtype.  Other properties may still be hidden.
-            set_ident_flags(you.inv[amulet], ISFLAG_KNOW_TYPE);
-            set_ident_type(OBJ_JEWELLERY, AMU_THE_GOURMAND, ID_KNOWN_TYPE);
-            mpr(you.inv[amulet].name(DESC_INVENTORY, false).c_str());
-        }
-
         return (true);
-    }
 
     return (false);
 }
