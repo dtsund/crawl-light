@@ -339,9 +339,6 @@ static unrandart_entry *_seekunrandart(const item_def &item);
 
 bool is_known_artefact(const item_def &item)
 {
-    if (!item_type_known(item))
-        return (false);
-
     return (is_artefact(item));
 }
 
@@ -1422,7 +1419,7 @@ std::string artefact_name(const item_def &item, bool appearance)
     if (is_unrandom_artefact(item))
     {
         const unrandart_entry *unrand = _seekunrandart(item);
-        return (item_type_known(item) ? unrand->name : unrand->unid_name);
+        return (unrand->name);
     }
 
     const uint32_t seed = _calc_seed(item);
@@ -1525,16 +1522,8 @@ std::string get_artefact_name(const item_def &item, bool force_known)
 {
     ASSERT(is_artefact(item));
 
-    if (item_type_known(item) || force_known)
-    {
-        // print artefact's real name
-        if (item.props.exists(ARTEFACT_NAME_KEY))
-            return item.props[ARTEFACT_NAME_KEY].get_string();
-        return artefact_name(item, false);
-    }
-    // print artefact appearance
-    if (item.props.exists(ARTEFACT_APPEAR_KEY))
-        return item.props[ARTEFACT_APPEAR_KEY].get_string();
+    if (item.props.exists(ARTEFACT_NAME_KEY))
+        return item.props[ARTEFACT_NAME_KEY].get_string();
     return artefact_name(item, false);
 }
 

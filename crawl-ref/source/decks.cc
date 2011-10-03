@@ -1252,10 +1252,8 @@ static int _xom_check_card(item_def &deck, card_type card,
 {
     int amusement = 64;
 
-    if (!item_type_known(deck))
-        amusement *= 2;
     // Expecting one type of card but got another, real funny.
-    else if (flags & CFLAG_ODDITY)
+    if (flags & CFLAG_ODDITY)
         amusement = 200;
 
     if (player_in_a_dangerous_place())

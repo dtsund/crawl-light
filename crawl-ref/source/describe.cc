@@ -808,7 +808,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         spec_ench = SPWPN_NORMAL;
 
     // special weapon descrip
-    if (spec_ench != SPWPN_NORMAL && item_type_known(item))
+    if (spec_ench != SPWPN_NORMAL)
     {
         description += "\n\n";
 
@@ -969,8 +969,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         }
 
         // XXX: Can't happen, right?
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES)
-            && item_type_known(item))
+        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES))
         {
             description += "\nThis weapon may have some hidden properties.";
         }
@@ -1121,7 +1120,7 @@ static std::string _describe_ammo(const item_def &item)
     bool need_new_line    = true;
     bool always_destroyed = false;
 
-    if (item.special && item_type_known(item))
+    if (item.special)
     {
         description += "\n\n";
         std::string bolt_name;
@@ -1318,7 +1317,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
     }
 
     const int ego = get_armour_ego_type(item);
-    if (ego != SPARM_NORMAL && item_type_known(item) && verbose)
+    if (ego != SPARM_NORMAL && verbose)
     {
         description += "\n\n";
 
@@ -1418,7 +1417,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         }
 
         // Can't happen, right? (XXX)
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES) && item_type_known(item))
+        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES)
             description += "\nThis armour may have some hidden properties.";
     }
     else if (get_equip_race(item) != ISFLAG_NO_RACE)
@@ -1747,14 +1746,12 @@ bool is_dumpable_artefact(const item_def &item, bool verbose)
     {
         ret = item_ident(item, ISFLAG_KNOW_PROPERTIES);
     }
-    else if (verbose && item.base_type == OBJ_ARMOUR
-             && item_type_known(item))
+    else if (verbose && item.base_type == OBJ_ARMOUR)
     {
         const int spec_ench = get_armour_ego_type(item);
         ret = (spec_ench >= SPARM_RUNNING && spec_ench <= SPARM_PRESERVATION);
     }
-    else if (verbose && item.base_type == OBJ_JEWELLERY
-             && item_type_known(item))
+    else if (verbose && item.base_type == OBJ_JEWELLERY)
     {
         ret = true;
     }
@@ -1826,7 +1823,7 @@ std::string get_item_description(const item_def &item, bool verbose,
             const char *desc    = unrandart_descrip(0, item);
             const char *desc_id = unrandart_descrip(1, item);
 
-            if (item_type_known(item) && desc_id[0] != '\0')
+            if (desc_id[0] != '\0')
                 description << desc_id << "\n";
             else if (desc[0] != '\0')
                 description << desc << "\n";
@@ -1916,9 +1913,6 @@ std::string get_item_description(const item_def &item, bool verbose,
         {
             description << "\nThis book is beyond your current level of "
                            "understanding.";
-
-            if (!item_type_known(item))
-                break;
         }
         else if (is_dangerous_spellbook(item))
         {
@@ -1943,18 +1937,15 @@ std::string get_item_description(const item_def &item, bool verbose,
         break;
 
     case OBJ_WANDS:
-        if (item_type_known(item))
+        const int max_charges = wand_max_charges(item.sub_type);
+        if (item.plus < max_charges
+            || !item_ident(item, ISFLAG_KNOW_PLUSES))
         {
-            const int max_charges = wand_max_charges(item.sub_type);
-            if (item.plus < max_charges
-                || !item_ident(item, ISFLAG_KNOW_PLUSES))
-            {
-                description << "\nIt can have at most " << max_charges
-                            << " charges.";
-            }
-            else
-                description << "\nIt is fully charged.";
+            description << "\nIt can have at most " << max_charges
+                        << " charges.";
         }
+        else
+            description << "\nIt is fully charged.";
 
         if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus == 0
             || item.plus2 == ZAPCOUNT_EMPTY)
@@ -2128,7 +2119,7 @@ std::string get_item_description(const item_def &item, bool verbose,
                  description << (timer[i].get_int()) << "  ";
         }
 #endif
-        if (item_type_known(item) && you.has_spell(SPELL_EVAPORATE))
+        if (you.has_spell(SPELL_EVAPORATE))
         {
             description << "\nEvaporating this potion will create clouds of "
                         << get_evaporate_result_list(item.sub_type)
