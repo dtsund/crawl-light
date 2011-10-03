@@ -654,9 +654,6 @@ void skill_manual(int slot)
     // a manual in advance.
     you.turn_is_over = true;
     item_def& manual(you.inv[slot]);
-    const bool known = item_type_known(manual);
-    if (!known)
-        set_ident_flags(manual, ISFLAG_KNOW_TYPE);
     const skill_type skill = static_cast<skill_type>(manual.plus);
 
     mprf("You read about %s.", skill_name(skill));
@@ -668,7 +665,7 @@ void skill_manual(int slot)
     mpr("The manual crumbles into dust.");
     dec_inv_item_quantity(slot, 1);
 
-    xom_is_stimulated(known ? 14 : 64);
+    xom_is_stimulated(40);
 }
 
 static bool _box_of_beasts(item_def &box)
@@ -855,8 +852,7 @@ bool evoke_item(int slot)
         }
         else if (item.sub_type == STAFF_CHANNELING)
         {
-            if (item_type_known(item)
-                && !you.is_undead && you.hunger_state == HS_STARVING)
+            if (!you.is_undead && you.hunger_state == HS_STARVING)
             {
                 canned_msg(MSG_TOO_HUNGRY);
                 return (false);
@@ -890,7 +886,7 @@ bool evoke_item(int slot)
         }
 
         if (_is_crystal_ball(item)
-            && !_check_crystal_ball(item.sub_type, item_type_known(item)))
+            && !_check_crystal_ball(item.sub_type, true))
         {
             unevokable = true;
             break;
@@ -991,17 +987,6 @@ bool evoke_item(int slot)
         canned_msg(MSG_NOTHING_HAPPENS);
     else if (pract > 0)
         practise(EX_DID_EVOKE_ITEM, pract);
-
-    if (ident && !item_type_known(item))
-    {
-        set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
-        set_ident_flags(item, ISFLAG_KNOW_TYPE);
-
-        mprf("You are wielding %s.",
-             item.name(DESC_NOCAP_A).c_str());
-
-        you.wield_change = true;
-    }
 
     if (!unevokable)
         you.turn_is_over = true;

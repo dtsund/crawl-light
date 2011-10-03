@@ -690,7 +690,7 @@ bool sort_item_equipped(const InvEntry *a)
 
 bool sort_item_identified(const InvEntry *a)
 {
-    return !item_type_known(*(a->item));
+    return false;
 }
 
 bool sort_item_charged(const InvEntry *a)
@@ -1921,7 +1921,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
     {
         const unrandart_entry* entry = get_unrand_entry(item.special);
 
-        if (entry->evoke_func && item_type_known(item))
+        if (entry->evoke_func)
         {
             if (item_is_equipped(item) && !item_is_melded(item))
                 return (true);
@@ -1955,8 +1955,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
         if (!wielded && !msg)
             return (false);
 
-        if (get_weapon_brand(item) == SPWPN_REACHING
-            && item_type_known(item))
+        if (get_weapon_brand(item) == SPWPN_REACHING)
         {
             if (!wielded)
             {
@@ -1973,9 +1972,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
 
     case OBJ_STAVES:
         if (item_is_rod(item)
-            || !known && !item_type_known(item)
-            || item.sub_type == STAFF_CHANNELING
-               && item_type_known(item))
+            || item.sub_type == STAFF_CHANNELING)
         {
             if (!wielded)
             {

@@ -696,9 +696,6 @@ static bool _advise_use_healing_potion()
         if (obj.base_type != OBJ_POTIONS)
             continue;
 
-        if (!item_type_known(obj))
-            continue;
-
         if (obj.sub_type == POT_HEALING
             || obj.sub_type == POT_HEAL_WOUNDS)
         {
@@ -928,10 +925,6 @@ static bool _advise_use_wand()
 
         if (obj.base_type != OBJ_WANDS)
             continue;
-
-        // Wand type unknown, might be useful.
-        if (!item_type_known(obj))
-            return (true);
 
         // Empty wands are no good.
         if (obj.plus2 == ZAPCOUNT_EMPTY
@@ -3520,7 +3513,7 @@ void hints_describe_item(const item_def &item)
     {
        case OBJ_WEAPONS:
        {
-            if (is_artefact(item) && item_type_known(item))
+            if (is_artefact(item))
             {
                 if (gives_ability(item)
                     && wherey() <= get_number_of_lines() - 5)
@@ -3630,7 +3623,7 @@ void hints_describe_item(const item_def &item)
                 ostr << _hints_throw_stuff(item);
                 long_text = true;
             }
-            if (!item_type_known(item)
+            if (false
                 && (is_artefact(item)
                     || get_equip_desc(item) != ISFLAG_NO_DESC))
             {
@@ -3768,7 +3761,7 @@ void hints_describe_item(const item_def &item)
                         "the speed at which you can shoot arrows.";
             }
 
-            if (!item_type_known(item)
+            if (false
                 && (is_artefact(item)
                     || get_equip_desc(item) != ISFLAG_NO_DESC))
             {

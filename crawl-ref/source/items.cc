@@ -727,12 +727,9 @@ int item_name_specialness(const item_def& item)
         return 1;
     }
 
-    if (item_type_known(item))
-    {
-        if (item_is_branded(item))
-            return 1;
-        return 0;
-    }
+    if (item_is_branded(item))
+        return 1;
+    return 0;
 
     if (item.flags & ISFLAG_COSMETIC_MASK)
         return 1;
@@ -1410,7 +1407,7 @@ iflags_t ident_flags(const item_def &item)
     const iflags_t identmask = full_ident_mask(item);
     iflags_t flags = item.flags & identmask;
 
-    if ((identmask & ISFLAG_KNOW_TYPE) && item_type_known(item))
+    if ((identmask & ISFLAG_KNOW_TYPE))
         flags |= ISFLAG_KNOW_TYPE;
 
     return (flags);
@@ -2467,6 +2464,7 @@ static void _autoinscribe_item(item_def& item)
     // for automatically generated inscriptions
     if (!item.inscription.empty() && item.inscription != "god gift")
         return;
+
     const std::string old_inscription = item.inscription;
     item.inscription.clear();
 
@@ -2683,9 +2681,10 @@ static bool _similar_jewellery(const item_def& pickup_item,
     // For jewellery of the same sub-type, unidentified jewellery is
     // always considered similar, as is identified jewellery whose
     // effect doesn't stack.
-    return (!item_type_known(inv_item)
-            || (!jewellery_is_amulet(inv_item)
-                && !ring_has_stackable_effect(inv_item)));
+    if (jewellery_is_amulet(inv_item))
+        return _identical_types(pickup_item, inv_item);
+        
+    return !ring_has_stackable_effect(inv_item);
 }
 
 static bool _item_different_than_inv(const item_def& pickup_item,
@@ -2742,7 +2741,7 @@ static bool _interesting_explore_pickup(const item_def& item)
         return (true);
 
     // Possbible ego items.
-    if (!item_type_known(item) & (item.flags & ISFLAG_COSMETIC_MASK))
+    if (item.flags & ISFLAG_COSMETIC_MASK)
         return (true);
 
     switch(item.base_type)
@@ -3875,28 +3874,24 @@ item_info get_item_info(const item_def& item)
             ii.plus = item.plus;
             ii.plus2 = item.plus2;
         }
-        if (item_type_known(item))
-            ii.special = item.special; // brand
+        ii.special = item.special; // brand
         break;
     case OBJ_ARMOUR:
         ii.sub_type = item.sub_type;
         ii.plus2    = item.plus2;      // sub-subtype (gauntlets, etc)
         if (item_ident(ii, ISFLAG_KNOW_PLUSES))
             ii.plus = item.plus;
-        if (item_type_known(item))
-            ii.special = item.special; // brand
+        ii.special = item.special; // brand
         break;
     case OBJ_WANDS:
-        if (item_type_known(item))
-            ii.sub_type = item.sub_type;
+        ii.sub_type = item.sub_type;
         ii.special = item.special; // appearance
         if (item_ident(ii, ISFLAG_KNOW_PLUSES))
             ii.plus = item.plus; // charges
         ii.plus2 = item.plus2; // num zapped/recharged or empty
         break;
     case OBJ_POTIONS:
-        if (item_type_known(item))
-            ii.sub_type = item.sub_type;
+        ii.sub_type = item.sub_type;
         ii.plus = item.plus; // appearance
         break;
     case OBJ_FOOD:
@@ -3913,57 +3908,33 @@ item_info get_item_info(const item_def& item)
         ii.special = food_is_rotten(item) ? 99 : 100;
         break;
     case OBJ_SCROLLS:
-        if (item_type_known(item))
-            ii.sub_type = item.sub_type;
+        ii.sub_type = item.sub_type;
         ii.special = item.special; // name seed, part 1
         ii.plus = item.plus;  // name seed, part 2
         break;
     case OBJ_JEWELLERY:
-        if (item_type_known(item))
-            ii.sub_type = item.sub_type;
-        else
-        {
-            ii.sub_type = jewellery_is_amulet(item) ? AMU_FIRST_AMULET : RING_FIRST_RING;
-            if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-                ii.plus = item.plus; // str/dex/int/ac/ev ring plus
-        }
+        ii.sub_type = item.sub_type;
         ii.special = item.special; // appearance
         break;
     case OBJ_BOOKS:
-        if (item_type_known(item) || !item_is_spellbook(item))
-            ii.sub_type = item.sub_type;
+        ii.sub_type = item.sub_type;
         ii.special = item.special; // appearance
         break;
     case OBJ_STAVES:
-        if (item_type_known(item))
+        ii.sub_type = item.sub_type;
+        if (item_ident(ii, ISFLAG_KNOW_PLUSES))
         {
-            ii.sub_type = item.sub_type;
-            if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-            {
-                if (item.props.exists("rod_enchantment"))
-                    ii.props["rod_enchantment"] = item.props["rod_enchantment"];
-                ii.plus = item.plus;
-                ii.plus2 = item.plus2;
-            }
+            if (item.props.exists("rod_enchantment"))
+                ii.props["rod_enchantment"] = item.props["rod_enchantment"];
+            ii.plus = item.plus;
+            ii.plus2 = item.plus2;
         }
         else
             ii.sub_type = item_is_rod(item) ? STAFF_FIRST_ROD : 0;
         ii.special = item.special; // appearance
         break;
     case OBJ_MISCELLANY:
-        if (item_type_known(item))
-            ii.sub_type = item.sub_type;
-        else
-        {
-            if (item.sub_type >= MISC_DECK_OF_ESCAPE && item.sub_type <= MISC_DECK_OF_DEFENCE)
-                ii.sub_type = MISC_DECK_OF_ESCAPE;
-            else if (item.sub_type >= MISC_CRYSTAL_BALL_OF_ENERGY && item.sub_type <= MISC_CRYSTAL_BALL_OF_SEEING)
-                ii.sub_type = MISC_CRYSTAL_BALL_OF_ENERGY;
-            else if (item.sub_type >= MISC_BOX_OF_BEASTS && item.sub_type <= MISC_EMPTY_EBONY_CASKET)
-                ii.sub_type = MISC_BOX_OF_BEASTS;
-            else
-                ii.sub_type = item.sub_type;
-        }
+        ii.sub_type = item.sub_type;
 
         if (ii.sub_type == MISC_RUNE_OF_ZOT)
             ii.plus = item.plus; // which rune
@@ -4015,11 +3986,8 @@ item_info get_item_info(const item_def& item)
     if (item_ident(item, ISFLAG_KNOW_CURSE))
         ii.flags |= (item.flags & ISFLAG_CURSED);
 
-    if (item_type_known(item))
-    {
-        if (item.props.exists(ARTEFACT_NAME_KEY))
-            ii.props[ARTEFACT_NAME_KEY] = item.props[ARTEFACT_NAME_KEY];
-    }
+    if (item.props.exists(ARTEFACT_NAME_KEY))
+        ii.props[ARTEFACT_NAME_KEY] = item.props[ARTEFACT_NAME_KEY];
 
     const char* copy_props[] = {ARTEFACT_APPEAR_KEY, KNOWN_PROPS_KEY,
                                 CORPSE_NAME_KEY, CORPSE_NAME_TYPE_KEY,

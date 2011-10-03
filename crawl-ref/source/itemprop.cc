@@ -756,7 +756,7 @@ iflags_t full_ident_mask(const item_def& item)
         break;
     }
 
-    if (item_type_known(item.base_type, item.sub_type) && !is_artefact(item))
+    if (!is_artefact(item))
         flagset &= (~ISFLAG_KNOW_TYPE);
 
     if (is_artefact(item))
@@ -1847,7 +1847,7 @@ int weapon_ev_bonus(const item_def &wpn, int skill, size_type body, int dex,
         ret = 2 + (dex / 5);
 
     // Weapons of reaching are naturally a bit longer/flexier.
-    if (!hide_hidden || item_type_known(wpn))
+    if (!hide_hidden)
     {
         if (get_weapon_brand(wpn) == SPWPN_REACHING)
             ret += 1;
@@ -2093,10 +2093,6 @@ int ring_has_pluses(const item_def &item)
 {
     ASSERT (item.base_type == OBJ_JEWELLERY);
 
-    // not known -> no pluses
-    if (!item_type_known(item))
-        return (0);
-
     switch (item.sub_type)
     {
     case RING_SLAYING:
@@ -2122,9 +2118,6 @@ bool ring_has_stackable_effect(const item_def &item)
 {
     ASSERT (item.base_type == OBJ_JEWELLERY);
     ASSERT (!jewellery_is_amulet(item));
-
-    if (!item_type_known(item))
-        return (false);
 
     if (ring_has_pluses(item))
         return (true);
@@ -2483,9 +2476,6 @@ int property(const item_def &item, int prop_type)
 // Returns true if item is evokable.
 bool gives_ability(const item_def &item)
 {
-    if (!item_type_known(item))
-        return (false);
-
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
@@ -2535,9 +2525,6 @@ bool gives_ability(const item_def &item)
 // Returns true if the item confers an intrinsic that is shown on the % screen.
 bool gives_resistance(const item_def &item)
 {
-    if (!item_type_known(item))
-        return (false);
-
     switch (item.base_type)
     {
     case OBJ_WEAPONS:

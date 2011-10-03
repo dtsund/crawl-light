@@ -1850,17 +1850,8 @@ std::string get_item_description(const item_def &item, bool verbose,
 
             if (db_desc.empty())
             {
-                if (item_type_known(item))
-                {
-                    description << "[ERROR: no desc for item name '" << db_name
-                                << "']\n";
-                }
-                else
-                {
-                    description << article_a(item.name(DESC_CAP_A, true,
-                                                       false, false), false);
-                    description << ".\n";
-                }
+                description << "[ERROR: no desc for item name '" << db_name
+                            << "']\n";
             }
             else
                 description << db_desc;
