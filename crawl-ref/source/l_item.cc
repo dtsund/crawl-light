@@ -290,43 +290,40 @@ IDEF(subtype)
         const char *s = NULL;
         if (item->base_type == OBJ_ARMOUR)
             s = item_slot_name(get_armour_slot(*item), true).c_str();
-        if (item_type_known(*item))
+        if (item->base_type == OBJ_JEWELLERY)
         {
-            if (item->base_type == OBJ_JEWELLERY)
+            if (jewellery_is_amulet(*item))
+                s = amulet_types[ item->sub_type - AMU_RAGE ];
+            else
+                s = ring_types[item->sub_type];
+        }
+        else if (item->base_type == OBJ_POTIONS)
+        {
+            if (item->sub_type == POT_BLOOD)
+               s = "blood";
+            else if (item->sub_type == POT_BLOOD_COAGULATED)
+               s = "coagulated blood";
+            else if (item->sub_type == POT_WATER)
+               s = "water";
+            else if (item->sub_type == POT_PORRIDGE)
+               s = "porridge";
+            else if (item->sub_type == POT_BERSERK_RAGE)
+               s = "berserk";
+            else if (item->sub_type == POT_GAIN_STRENGTH
+                     || item->sub_type == POT_GAIN_DEXTERITY
+                     || item->sub_type == POT_GAIN_INTELLIGENCE)
             {
-                if (jewellery_is_amulet(*item))
-                    s = amulet_types[ item->sub_type - AMU_RAGE ];
-                else
-                    s = ring_types[item->sub_type];
+               s = "gain ability";
             }
-            else if (item->base_type == OBJ_POTIONS)
-            {
-                if (item->sub_type == POT_BLOOD)
-                   s = "blood";
-                else if (item->sub_type == POT_BLOOD_COAGULATED)
-                   s = "coagulated blood";
-                else if (item->sub_type == POT_WATER)
-                   s = "water";
-                else if (item->sub_type == POT_PORRIDGE)
-                   s = "porridge";
-                else if (item->sub_type == POT_BERSERK_RAGE)
-                   s = "berserk";
-                else if (item->sub_type == POT_GAIN_STRENGTH
-                         || item->sub_type == POT_GAIN_DEXTERITY
-                         || item->sub_type == POT_GAIN_INTELLIGENCE)
-                {
-                   s = "gain ability";
-                }
-                else if (item->sub_type == POT_CURE_MUTATION)
-                   s = "cure mutation";
-            }
-            else if (item->base_type == OBJ_BOOKS)
-            {
-                if (item->sub_type == BOOK_MANUAL)
-                    s = "manual";
-                else
-                    s = "spellbook";
-            }
+            else if (item->sub_type == POT_CURE_MUTATION)
+               s = "cure mutation";
+        }
+        else if (item->base_type == OBJ_BOOKS)
+        {
+            if (item->sub_type == BOOK_MANUAL)
+                s = "manual";
+            else
+                s = "spellbook";
         }
 
         if (s)
@@ -523,9 +520,7 @@ IDEF(branded)
     if (!item || !item->defined())
         return (0);
 
-    lua_pushboolean(ls, item_is_branded(*item)
-                        || item->flags & ISFLAG_COSMETIC_MASK
-                           && !item_type_known(*item));
+    lua_pushboolean(ls, item_is_branded(*item));
     return (1);
 }
 
@@ -676,8 +671,7 @@ static int l_item_do_identified (lua_State *ls)
             const bool check_type = strip_tag(flags, "type");
             iflags_t item_flags = str_to_item_status_flags(flags);
             known_status = ((item_flags || check_type)
-                            && (!item_flags || item_ident(*item, item_flags))
-                            && (!check_type || item_type_known(*item)));
+                            && (!item_flags || item_ident(*item, item_flags)));
         }
     }
     else

@@ -600,15 +600,6 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         if (verbose)
         {
             mpr("You're too calm and focused to rage.");
-            item_def *amu;
-            if (!player_mental_clarity(false) && wearing_amulet(AMU_CLARITY)
-                && (amu = &you.inv[you.equip[EQ_AMULET]]) && !item_type_known(*amu))
-            {
-                set_ident_type(amu->base_type, amu->sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(*amu, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
-                     amu->name(DESC_INVENTORY_EQUIP).c_str());
-            }
         }
 
         return (false);

@@ -904,8 +904,7 @@ int player_equip(equipment_type slot, int sub_type, bool calc_unid)
         // Like above, but must be magical staff.
         if (you.weapon()
             && you.weapon()->base_type == OBJ_STAVES
-            && you.weapon()->sub_type == sub_type
-            && (calc_unid || item_type_known(*you.weapon())))
+            && you.weapon()->sub_type == sub_type)
         {
             ret++;
         }
@@ -913,17 +912,13 @@ int player_equip(equipment_type slot, int sub_type, bool calc_unid)
 
     case EQ_RINGS:
         if ((item = you.slot_item(EQ_LEFT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret++;
         }
 
         if ((item = you.slot_item(EQ_RIGHT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret++;
         }
@@ -931,17 +926,13 @@ int player_equip(equipment_type slot, int sub_type, bool calc_unid)
 
     case EQ_RINGS_PLUS:
         if ((item = you.slot_item(EQ_LEFT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret += item->plus;
         }
 
         if ((item = you.slot_item(EQ_RIGHT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret += item->plus;
         }
@@ -949,17 +940,13 @@ int player_equip(equipment_type slot, int sub_type, bool calc_unid)
 
     case EQ_RINGS_PLUS2:
         if ((item = you.slot_item(EQ_LEFT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret += item->plus2;
         }
 
         if ((item = you.slot_item(EQ_RIGHT_RING))
-            && item->sub_type == sub_type
-            && (calc_unid
-                || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret += item->plus2;
         }
@@ -974,8 +961,7 @@ int player_equip(equipment_type slot, int sub_type, bool calc_unid)
         if (! (slot > EQ_NONE && slot < NUM_EQUIP))
             die("invalid slot");
         if ((item = you.slot_item(slot))
-            && item->sub_type == sub_type
-            && (calc_unid || item_type_known(*item)))
+            && item->sub_type == sub_type)
         {
             ret++;
         }
@@ -1022,8 +1008,7 @@ int player_equip_ego_type(int slot, int special, bool calc_unid)
         for (int i = EQ_MIN_ARMOUR; i <= EQ_MAX_ARMOUR; i++)
         {
             if ((item = you.slot_item(static_cast<equipment_type>(i), melded))
-                && get_armour_ego_type(*item) == special
-                && (calc_unid || item_type_known(*item)))
+                && get_armour_ego_type(*item) == special)
             {
                 ret++;
             }
@@ -1035,8 +1020,7 @@ int player_equip_ego_type(int slot, int special, bool calc_unid)
             die("invalid slot: %d", slot);
         // Check a specific armour slot for an ego type:
         if ((item = you.slot_item(static_cast<equipment_type>(slot), melded))
-            && get_armour_ego_type(*item) == special
-            && (calc_unid || item_type_known(*item)))
+            && get_armour_ego_type(*item) == special)
         {
             ret++;
         }
@@ -4066,7 +4050,7 @@ bool wearing_amulet(jewellery_type amulet, bool calc_unid, bool ignore_extrinsic
         return (false);
 
     const item_def& amu(you.inv[you.equip[EQ_AMULET]]);
-    return (amu.sub_type == amulet && (calc_unid || item_type_known(amu)));
+    return (amu.sub_type == amulet);
 }
 
 static int _species_exp_mod(species_type species)
@@ -5195,22 +5179,6 @@ void float_player(bool fly)
     {
         mprf("You gently float away from the %s.",
              you.is_wall_clinging() ? "wall" : "floor");
-    }
-
-    // Amulet of Controlled Flight can auto-ID.
-    if (wearing_amulet(AMU_CONTROLLED_FLIGHT)
-        && !extrinsic_amulet_effect(AMU_CONTROLLED_FLIGHT))
-    {
-        // it's important to do this only if the amulet is not identified yet,
-        // or you'd get spammed
-        item_def& amu(you.inv[you.equip[EQ_AMULET]]);
-        if (!is_artefact(amu) && !item_type_known(amu))
-        {
-            set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
-            set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
-            mprf("You are wearing: %s",
-                 amu.name(DESC_INVENTORY_EQUIP).c_str());
-        }
     }
 
     burden_change();

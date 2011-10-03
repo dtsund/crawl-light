@@ -1897,7 +1897,7 @@ bool monster::pickup_wand(item_def &item, int near)
     if (pickup(item, MSLOT_WAND, near))
     {
         if (near)
-            props["wand_known"] = item_type_known(item);
+            props["wand_known"] = true;
         return true;
     }
     else
