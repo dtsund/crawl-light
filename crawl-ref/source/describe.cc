@@ -1417,7 +1417,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         }
 
         // Can't happen, right? (XXX)
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES)
+        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES))
             description += "\nThis armour may have some hidden properties.";
     }
     else if (get_equip_race(item) != ISFLAG_NO_RACE)
@@ -1937,23 +1937,25 @@ std::string get_item_description(const item_def &item, bool verbose,
         break;
 
     case OBJ_WANDS:
-        const int max_charges = wand_max_charges(item.sub_type);
-        if (item.plus < max_charges
-            || !item_ident(item, ISFLAG_KNOW_PLUSES))
         {
-            description << "\nIt can have at most " << max_charges
-                        << " charges.";
-        }
-        else
-            description << "\nIt is fully charged.";
+            const int max_charges = wand_max_charges(item.sub_type);
+            if (item.plus < max_charges
+                || !item_ident(item, ISFLAG_KNOW_PLUSES))
+            {
+                description << "\nIt can have at most " << max_charges
+                            << " charges.";
+            }
+            else
+                description << "\nIt is fully charged.";
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus == 0
-            || item.plus2 == ZAPCOUNT_EMPTY)
-        {
-            description << "\nUnfortunately, it has no charges left.";
+            if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus == 0
+                || item.plus2 == ZAPCOUNT_EMPTY)
+            {
+                description << "\nUnfortunately, it has no charges left.";
+            }
+            description << "\n";
+            break;
         }
-        description << "\n";
-        break;
 
     case OBJ_CORPSES:
         if (item.sub_type == CORPSE_SKELETON)
