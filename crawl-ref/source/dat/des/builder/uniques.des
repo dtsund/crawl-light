@@ -369,6 +369,36 @@ DEPTH:  Zot
 : place_unique(_G, "Tiamat band")
 
 
+NAME:   uniq_ignacio
+DEPTH:  Pan
+CHANCE: 25%
+MINDIFF: 2
+# TODO: use regular unique code instead?
+TAGS:   pan transparent extra allow_dup luniq_ignacio
+{{
+  if not dgn.persist.ignacio_spawned then
+    local runes = 0;
+    for _, r in ipairs({"demonic","glowing","magical","fiery","dark"}) do
+      if you.have_rune(r) then
+        runes = runes + 1
+      end
+    end
+    if crawl.x_chance_in_y(runes * runes, 100) then
+      dgn.persist.ignacio_spawned = true
+      dgn.persist.ignacio_forbid = crawl.coinflip()
+    else
+      return
+    end
+  end
+  if dgn.persist.ignacio_forbid then
+    return
+  end
+  mons("Ignacio")
+}}
+MAP
+1
+ENDMAP
+
 ###############################################################################
 # Crazy Yiuf! Only in his cottage.
 NAME:    uniq_crazy_yiuf_cottage

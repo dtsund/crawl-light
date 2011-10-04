@@ -14,11 +14,17 @@ int mons_rarity(int mcls, const level_id &place = level_id::current(),
 
 int mons_level(int mcls, const level_id &place = level_id::current());
 
-bool mons_abyss(int mcls);
+//bool mons_abyss(int mcls);
 
-int mons_rare_abyss(int mcls, bool force_normal = false);
+//int mons_rare_abyss(int mcls, bool force_normal = false);
 
-bool mons_pan(int mcls);
+int mons_null_level(int mcls);
+int mons_null_rare(int mcls, bool force_normal = false);
+
+int mons_abyss_level(int mcls);
+int mons_abyss_rare(int mcls, bool force_normal = false);
+int mons_pan_level(int mcls);
+int mons_pan_rare(int mcls, bool force_normal = false);
 
 int mons_cocytus_level(int mcls);
 int mons_cocytus_rare(int mcls, bool force_normal = false);

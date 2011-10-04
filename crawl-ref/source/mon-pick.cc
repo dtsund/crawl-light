@@ -32,9 +32,9 @@ int mons_level(int mcls, const level_id &place)
     int monster_level = 0;
 
     if (place.level_type == LEVEL_ABYSS)
-        monster_level = ((mons_abyss(mcls)) ? place.absdepth() : 0);
+        monster_level = ((mons_abyss_level(mcls)) ? place.absdepth() : 0);
     else if (place.level_type == LEVEL_PANDEMONIUM)
-        monster_level = ((mons_pan(mcls)) ? place.absdepth() : 0);
+        monster_level = ((mons_pan_level(mcls)) ? place.absdepth() : 0);
     else if (place.level_type == LEVEL_DUNGEON)
         monster_level = branches[place.branch].mons_level_function(mcls);
 
@@ -47,7 +47,7 @@ int mons_rarity(int mcls, const level_id &place, bool force_normal)
 {
     // now, what about pandemonium ??? {dlb}
     if (place.level_type == LEVEL_ABYSS)
-        return mons_rare_abyss(mcls, force_normal);
+        return mons_abyss_rare(mcls, force_normal);
     else
         return branches[place.branch].mons_rarity_function(mcls, force_normal);
 }
@@ -205,7 +205,26 @@ bool mons_abyss(int mcls)
     }
 }
 
-int mons_rare_abyss(int mcls, bool force_normal)
+// The Ecumenical Temple and other places with no monster gen.
+int mons_null_level(int mcls)
+{
+    return 0;
+}
+
+int mons_null_rare(int mcls, bool force_normal)
+{
+    return 0;
+}
+
+// The Abyss
+int mons_abyss_level(int mcls)
+{
+    if (mons_abyss_rare(mcls))
+        return DEPTH_ABYSS;
+    return 0;
+}
+
+int mons_abyss_rare(int mcls, bool force_normal)
 {
     //Hard mode has a different distribution.
     if(player_in_hard_mode() && !force_normal)
@@ -393,6 +412,14 @@ int mons_rare_abyss(int mcls, bool force_normal)
     default:
         return 0;
     }
+}
+
+// Pandemonium
+int mons_pan_level(int mcls)
+{
+    if (mons_pan_rare(mcls))
+        return DEPTH_PAN;
+    return 0;
 }
 
 static int _mons_rare_abyss_hard(int mcls)
@@ -585,17 +612,21 @@ static int _mons_rare_abyss_hard(int mcls)
 
 
 // Pandemonium
-bool mons_pan(int mcls)
+int mons_pan_rare(int mcls, bool force_normal)
 {
+    // Note: this is used as-is by place:Pan, but not by actual Pan
+    // generation.  For that, there is only a 1/40 chance of picking from
+    // this list, and if so, it ignores rarities.
+    // TODO: Add a _mons_pan_rare_hard function.
     switch (mcls)
     {
-    // icky monsters
-    case MONS_BRAIN_WORM:
-    case MONS_FUNGUS:
-    case MONS_GIANT_ORANGE_BRAIN:
-    case MONS_JELLY:
-    case MONS_SLIME_CREATURE:
+    // demonic animals
+    case MONS_HELL_HOUND:
+    case MONS_HELL_HOG:
+    case MONS_HELLEPHANT:
+        return 10;
     // undead
+    case MONS_PROFANE_SERVITOR:
     case MONS_FLAMING_CORPSE:
     case MONS_FLAYED_GHOST:
     case MONS_FLYING_SKULL:
@@ -616,20 +647,22 @@ bool mons_pan(int mcls)
     case MONS_WRAITH:
     case MONS_ZOMBIE_LARGE:
     case MONS_ZOMBIE_SMALL:
+        return 5;
     // "things"
-    case MONS_ABOMINATION_LARGE:
-    case MONS_ABOMINATION_SMALL:
     case MONS_INSUBSTANTIAL_WISP:
     case MONS_PULSATING_LUMP:
-    case MONS_UNSEEN_HORROR:
+        return 2;
     // eyes
+    case MONS_GIANT_ORANGE_BRAIN:
     case MONS_EYE_OF_DRAINING:
     case MONS_GIANT_EYEBALL:
     case MONS_GREAT_ORB_OF_EYES:
     case MONS_GOLDEN_EYE:
-    // malign beings
+        return 2;
+    // foreign demons
     case MONS_EFREET:
     case MONS_RAKSHASA:
+        return 20;
     // golems
     case MONS_CLAY_GOLEM:
     case MONS_CRYSTAL_GOLEM:
@@ -637,22 +670,21 @@ bool mons_pan(int mcls)
     case MONS_STONE_GOLEM:
     case MONS_TOENAIL_GOLEM:
     case MONS_WOOD_GOLEM:
-    // dragons
-    case MONS_MOTTLED_DRAGON:
+        return 5;
     // elementals
     case MONS_AIR_ELEMENTAL:
     case MONS_EARTH_ELEMENTAL:
     case MONS_FIRE_ELEMENTAL:
-    // humanoids
-    case MONS_NECROMANCER:
-    case MONS_STONE_GIANT:
-    case MONS_WIZARD:
-    // demons
+        return 2;
+    // non-native demons
+    case MONS_DEMONIC_CRAWLER:
+    case MONS_CHAOS_SPAWN:
+    case MONS_UNSEEN_HORROR:
+        return 30;
+    // native popular demons
     case MONS_BALRUG:
     case MONS_BLIZZARD_DEMON:
     case MONS_CACODEMON:
-    case MONS_CHAOS_SPAWN:
-    case MONS_DEMONIC_CRAWLER:
     case MONS_EXECUTIONER:
     case MONS_GREEN_DEATH:
     case MONS_HELLWING:
@@ -666,9 +698,27 @@ bool mons_pan(int mcls)
     case MONS_UFETUBUS:
     case MONS_WHITE_IMP:
     case MONS_YNOXINUL:
-        return (true);
+    case MONS_ABOMINATION_LARGE:
+    case MONS_ABOMINATION_SMALL:
+        return 100;
+    // native rare demons
+    case MONS_HELL_BEAST:
+    case MONS_TORMENTOR:
+    case MONS_REAPER:
+    case MONS_SOUL_EATER:
+    case MONS_HAIRY_DEVIL:
+    case MONS_ICE_DEVIL:
+    case MONS_BLUE_DEVIL:
+    case MONS_IRON_DEVIL:
+    case MONS_RED_DEVIL:
+    case MONS_ROTTING_DEVIL:
+    case MONS_SUN_DEMON:
+    case MONS_SHADOW_IMP:
+    case MONS_SHADOW_DEMON:
+    case MONS_LOROCYPROCA:
+        return (40);
     default:
-        return (false);
+        return (0);
     }
 }
 
