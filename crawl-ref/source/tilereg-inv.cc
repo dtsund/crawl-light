@@ -451,8 +451,7 @@ bool InventoryRegion::update_tip_text(std::string& tip)
                 }
                 break;
             case OBJ_BOOKS:
-                if (item_type_known(item) && item_is_spellbook(item)
-                    && can_learn_spell(true))
+                if (item_is_spellbook(item) && can_learn_spell(true))
                 {
                     if (player_can_memorise_from_spellbook(item)
                         || has_spells_to_memorise(true))
@@ -477,9 +476,7 @@ bool InventoryRegion::update_tip_text(std::string& tip)
                 // For Sublimation of Blood.
                 if (wielded)
                     _handle_wield_tip(tmp, cmd, "\n[Ctrl + L-Click] ", true);
-                else if (item_type_known(item)
-                         && is_blood_potion(item)
-                         && you.has_spell(SPELL_SUBLIMATION_OF_BLOOD))
+                else if (is_blood_potion(item) && you.has_spell(SPELL_SUBLIMATION_OF_BLOOD))
                 {
                     _handle_wield_tip(tmp, cmd, "\n[Ctrl + L-Click] ");
                 }

@@ -448,10 +448,6 @@ static const bool _is_appropriate_evokable(const item_def& item,
     if (!you.see_cell_no_trans(target->pos()))
         return (false);
 
-    // We don't know what it is, so it *might* be appropriate.
-    if (!item_type_known(item))
-        return (true);
-
     // Random effects are always (in)apropriate for all targets.
     if (item.sub_type == WAND_RANDOM_EFFECTS)
         return (true);
@@ -533,7 +529,7 @@ static bool _evoke_item_on_target(actor* target)
     if (item->base_type == OBJ_WANDS)
     {
         if (item->plus2 == ZAPCOUNT_EMPTY
-            || item_type_known(*item) && item->plus <= 0)
+            || item->plus <= 0)
         {
             mpr("That wand is empty.");
             return (false);

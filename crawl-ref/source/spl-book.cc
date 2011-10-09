@@ -202,7 +202,6 @@ int spellbook_contents(item_def &book, read_book_action_type action,
 
     case RBOOK_READ_SPELL:
         if (book.base_type == OBJ_BOOKS && in_inventory(book)
-            && item_type_known(book)
             && player_can_memorise_from_spellbook(book))
         {
             out.cprintf("Select a spell to read its description, to "
@@ -470,27 +469,8 @@ void mark_had_book(int booktype)
     }
 }
 
-void inscribe_book_highlevel(item_def &book)
-{
-    if (!item_type_known(book)
-        && book.inscription.find("highlevel") == std::string::npos)
-    {
-        add_inscription(book, "highlevel");
-    }
-}
-
 int read_book(item_def &book, read_book_action_type action)
 {
-    if (book.base_type == OBJ_BOOKS && !item_type_known(book)
-        && !player_can_memorise_from_spellbook(book))
-    {
-        mpr("This book is beyond your current level of understanding.");
-        more();
-
-        inscribe_book_highlevel(book);
-        return (0);
-    }
-
     // Remember that this function is called from staff spells as well.
     const int keyin = spellbook_contents(book, action);
 
@@ -651,7 +631,6 @@ static void _index_book(item_def& book, spells_to_books &book_hash,
 {
     if (!player_can_memorise_from_spellbook(book))
     {
-        inscribe_book_highlevel(book);
         num_unreadable++;
         return;
     }
@@ -719,12 +698,6 @@ static bool _get_mem_list(spell_list &mem_spells,
         item_def book(*items[i]);
         if (!item_is_spellbook(book))
             continue;
-
-        if (!item_type_known(book))
-        {
-            num_unknown++;
-            continue;
-        }
 
         num_books++;
         num_on_ground++;
@@ -1396,9 +1369,6 @@ int count_staff_spells(const item_def &item, bool need_id)
 {
     if (item.base_type != OBJ_STAVES)
         return (-1);
-
-    if (need_id && !item_type_known(item))
-        return (0);
 
     const int type = item.book_number();
     if (!item_is_rod(item) || type == -1)

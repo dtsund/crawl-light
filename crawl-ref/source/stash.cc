@@ -276,8 +276,6 @@ bool Stash::is_filtered(const item_def &item)
         {
             if (is_artefact(item))
                 return (false);
-            if (filter.sub_type != 255 && !item_type_known(item))
-                return (false);
             return (true);
         }
     }
