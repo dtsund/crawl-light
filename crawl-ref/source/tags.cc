@@ -85,10 +85,6 @@ extern std::set<std::pair<std::string, level_id> > auto_unique_annotations;
 // to be autotrained
 extern int current_autotrain_skill;
 
-// temp file pairs used for file level cleanup
-
-level_id_set Generated_Levels;
-
 reader::reader(const std::string &_read_filename, int minorVersion)
     : _filename(_read_filename), _chunk(0), _pbuf(NULL), _read_offset(0),
       _minorVersion(minorVersion), seen_enums()
@@ -1367,8 +1363,6 @@ static void tag_construct_you_dungeon(writer &th)
         marshallInt(th, branches[j].branch_flags);
     }
 
-    marshallSet(th, Generated_Levels, marshall_level_id);
-
     marshallMap(th, stair_level,
                 _marshall_as_int<branch_type>, marshall_level_id);
     marshallMap(th, shops_present,
@@ -2196,7 +2190,13 @@ static void tag_read_you_dungeon(reader &th)
         branches[j].branch_flags = unmarshallInt(th);
     }
 
-    unmarshallSet(th, Generated_Levels, unmarshall_level_id);
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() < TAG_MINOR_NO_GEN_LEVELS)
+    {
+        std::set<level_id> Generated_Levels;
+        unmarshallSet(th, Generated_Levels, unmarshall_level_id);
+    }
+#endif
 
     unmarshallMap(th, stair_level,
                   unmarshall_long_as<branch_type>,

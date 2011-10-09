@@ -1609,9 +1609,6 @@ static void _setup_generic(const newgame_def& ng)
     // Set max glow according to race.
     you.max_magic_contamination = get_max_magic_contamination();
 
-    // tmpfile purging removed in favour of marking
-    Generated_Levels.clear();
-
     initialise_branch_depths();
     initialise_temples();
     init_level_connectivity();
