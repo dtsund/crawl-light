@@ -1549,22 +1549,19 @@ std::string item_def::name_aux(description_level_type desc,
             }
         }
 
-        else
+        if (item_is_rod(*this) && know_pluses
+            && !basename && !qualname && !dbname)
         {
-            if (item_is_rod(*this) && know_pluses
-                && !basename && !qualname && !dbname)
-            {
-                short rmod = 0;
-                if (props.exists("rod_enchantment"))
-                    rmod = props["rod_enchantment"];
+            short rmod = 0;
+            if (props.exists("rod_enchantment"))
+                rmod = props["rod_enchantment"];
 
-                output_with_sign(buff, rmod);
-                buff << " ";
-            }
-
-            buff << (item_is_rod(*this) ? "rod" : "staff")
-                 << " of " << staff_type_name(item_typ);
+            output_with_sign(buff, rmod);
+            buff << " ";
         }
+
+        buff << (item_is_rod(*this) ? "rod" : "staff")
+             << " of " << staff_type_name(item_typ);
 
         if (know_curse && cursed() && terse)
             buff << " (curse)";
