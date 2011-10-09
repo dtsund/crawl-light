@@ -182,8 +182,6 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         }
     }
 
-    const bool alreadyknown = item_type_known(item);
-    const bool dangerous    = player_in_a_dangerous_place();
     const bool msg          = !show_msgs || *show_msgs;
 
     artefact_properties_t  proprt;
@@ -292,16 +290,6 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
 
     if (proprt[ARTP_NOISES])
         you.attribute[ATTR_NOISES] = 1;
-
-    if (!alreadyknown && Options.autoinscribe_artefacts)
-        add_autoinscription(item, artefact_auto_inscription(item));
-
-    if (!alreadyknown && dangerous)
-    {
-        // Xom loves it when you use an unknown random artefact and
-        // there is a dangerous monster nearby...
-        xom_is_stimulated(100);
-    }
 
     // Let's try this here instead of up there.
     if (proprt[ARTP_MAGICAL_POWER])
@@ -499,7 +487,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         if (artefact)
             _equip_artefact_effect(item, &showMsgs, unmeld);
 
-        const bool was_known      = item_type_known(item);
               bool known_recurser = false;
 
         set_ident_flags(item, ISFLAG_EQ_WEAPON_MASK);
@@ -510,20 +497,8 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         {
             special = artefact_wpn_property(item, ARTP_BRAND);
 
-            if (!was_known)
-            {
-                item.flags |= ISFLAG_NOTED_ID;
-
-                if (Options.autoinscribe_artefacts)
-                    add_autoinscription(item, artefact_auto_inscription(item));
-
-                // Make a note of it.
-                take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(DESC_NOCAP_A).c_str(),
-                               origin_desc(item).c_str()));
-            }
-            else
-                known_recurser = artefact_known_wpn_property(item,
-                                                             ARTP_CURSED);
+            known_recurser = artefact_known_wpn_property(item,
+                                                         ARTP_CURSED);
         }
 
         if (special != SPWPN_NORMAL)
@@ -666,17 +641,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
 
             case SPWPN_DISTORTION:
                 mpr("Space warps around you for a moment!");
-
-                if (!was_known)
-                {
-                    // Xom loves it when you ID a distortion weapon this way,
-                    // and even more so if he gifted the weapon himself.
-                    god_type god;
-                    if (origin_is_god_gift(item, &god) && god == GOD_XOM)
-                        xom_is_stimulated(200);
-                    else
-                        xom_is_stimulated(100);
-                }
                 break;
 
             case SPWPN_ANTIMAGIC:
@@ -1067,17 +1031,6 @@ static void _unequip_armour_effect(item_def& item, bool meld)
             if (you.species == SP_DEEP_DWARF)
                 mpr("Your magic begins regenerating once more.");
         }
-        else if (player_equip(EQ_AMULET, AMU_GUARDIAN_SPIRIT, true))
-        {
-            item_def& amu(you.inv[you.equip[EQ_AMULET]]);
-            if (!item_type_known(amu))
-            {
-                set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
-                     amu.name(DESC_INVENTORY_EQUIP).c_str());
-            }
-        }
         break;
 
     case SPARM_ARCHERY:
@@ -1125,8 +1078,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     const bool artefact     = is_artefact(item);
     const bool known_pluses = item_ident(item, ISFLAG_KNOW_PLUSES);
     const bool known_cursed = item_known_cursed(item);
-    const bool known_bad    = (item_type_known(item)
-                               && item_value(item) <= 2);
+    const bool known_bad    = (item_value(item) <= 2);
 
     switch (item.sub_type)
     {
@@ -1154,8 +1106,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         // TODO: Check all monsters in LOS. If any of them are invisible
         //       (and thus become visible once the ring is worn), the ring
         //       should be autoidentified.
-        if (item_type_known(item))
-            autotoggle_autopickup(false);
+        autotoggle_autopickup(false);
         break;
 
     case RING_PROTECTION:
@@ -1349,7 +1300,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                                   "");
             ident = ID_KNOWN_TYPE;
 
-            contaminate_player(pow(amount, 0.333), item_type_known(item));
+            contaminate_player(pow(amount, 0.333), true);
 
             int dir = 0;
             if (you.duration[DUR_HASTE])

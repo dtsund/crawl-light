@@ -1015,65 +1015,62 @@ unsigned int item_value(item_def item, bool ident)
             break;
         }
 
-        if (item_type_known(item))
+        switch (get_weapon_brand(item))
         {
-            switch (get_weapon_brand(item))
-            {
-            case SPWPN_NORMAL:
-            default:            // randart
-                valued *= 10;
-                break;
+        case SPWPN_NORMAL:
+        default:            // randart
+            valued *= 10;
+            break;
 
-            case SPWPN_DRAINING:
-                valued *= 64;
-                break;
+        case SPWPN_DRAINING:
+            valued *= 64;
+            break;
 
-            case SPWPN_VAMPIRICISM:
-                valued *= 60;
-                break;
+        case SPWPN_VAMPIRICISM:
+            valued *= 60;
+            break;
 
-            case SPWPN_FLAME:
-            case SPWPN_FROST:
-            case SPWPN_HOLY_WRATH:
-            case SPWPN_REACHING:
-            case SPWPN_RETURNING:
-                valued *= 50;
-                break;
+        case SPWPN_FLAME:
+        case SPWPN_FROST:
+        case SPWPN_HOLY_WRATH:
+        case SPWPN_REACHING:
+        case SPWPN_RETURNING:
+            valued *= 50;
+            break;
 
-            case SPWPN_CHAOS:
-            case SPWPN_SPEED:
-                valued *= 40;
-                break;
+        case SPWPN_CHAOS:
+        case SPWPN_SPEED:
+            valued *= 40;
+            break;
 
-            case SPWPN_DISTORTION:
-            case SPWPN_ELECTROCUTION:
-            case SPWPN_PAIN:
-                valued *= 30;
-                break;
+        case SPWPN_DISTORTION:
+        case SPWPN_ELECTROCUTION:
+        case SPWPN_PAIN:
+            valued *= 30;
+            break;
 
-            case SPWPN_FLAMING:
-            case SPWPN_FREEZING:
-            case SPWPN_DRAGON_SLAYING:
-                valued *= 25;
-                break;
+        case SPWPN_FLAMING:
+        case SPWPN_FREEZING:
+        case SPWPN_DRAGON_SLAYING:
+            valued *= 25;
+            break;
 
-            case SPWPN_VENOM:
-                valued *= 23;
-                break;
+        case SPWPN_VENOM:
+            valued *= 23;
+            break;
 
-            case SPWPN_ORC_SLAYING:
-                valued *= 21;
-                break;
+        case SPWPN_ORC_SLAYING:
+            valued *= 21;
+            break;
 
-            case SPWPN_VORPAL:
-            case SPWPN_PROTECTION:
-            case SPWPN_EVASION:
-                valued *= 20;
-                break;
-            }
-
-            valued /= 10;
+        case SPWPN_VORPAL:
+        case SPWPN_PROTECTION:
+        case SPWPN_EVASION:
+            valued *= 20;
+            break;
         }
+
+        valued /= 10;
 
         if (get_equip_race(item) == ISFLAG_ELVEN
             || get_equip_race(item) == ISFLAG_DWARVEN)
@@ -1125,13 +1122,9 @@ unsigned int item_value(item_def item, bool ident)
 
         if (is_artefact(item))
         {
-            if (item_type_known(item))
-                valued += (7 * artefact_value(item));
-            else
-                valued += 50;
+            valued += (7 * artefact_value(item));
         }
-        else if (item_type_known(item)
-                 && get_equip_desc(item) != 0)
+        else if (get_equip_desc(item) != 0)
         {
             valued += 20;
         }
@@ -1170,51 +1163,48 @@ unsigned int item_value(item_def item, bool ident)
             break;
         }
 
-        if (item_type_known(item))
+        switch (get_ammo_brand(item))
         {
-            switch (get_ammo_brand(item))
-            {
-            case SPMSL_NORMAL:
-            default:
-                valued *= 10;
-                break;
+        case SPMSL_NORMAL:
+        default:
+            valued *= 10;
+            break;
 
-            case SPMSL_RETURNING:
-                valued *= 50;
-                break;
+        case SPMSL_RETURNING:
+            valued *= 50;
+            break;
 
-            case SPMSL_CHAOS:
-                valued *= 40;
-                break;
+        case SPMSL_CHAOS:
+            valued *= 40;
+            break;
 
-            case SPMSL_CURARE:
-            case SPMSL_PENETRATION:
-            case SPMSL_REAPING:
-            case SPMSL_SILVER:
-            case SPMSL_STEEL:
-            case SPMSL_DISPERSAL:
-            case SPMSL_EXPLODING:
-                valued *= 30;
-                break;
+        case SPMSL_CURARE:
+        case SPMSL_PENETRATION:
+        case SPMSL_REAPING:
+        case SPMSL_SILVER:
+        case SPMSL_STEEL:
+        case SPMSL_DISPERSAL:
+        case SPMSL_EXPLODING:
+            valued *= 30;
+            break;
 
-            case SPMSL_FLAME:
-            case SPMSL_FROST:
-                valued *= 25;
-                break;
+        case SPMSL_FLAME:
+        case SPMSL_FROST:
+            valued *= 25;
+            break;
 
-            case SPMSL_POISONED:
-            case SPMSL_PARALYSIS:
-            case SPMSL_SLOW:
-            case SPMSL_SLEEP:
-            case SPMSL_CONFUSION:
-            case SPMSL_SICKNESS:
-            case SPMSL_RAGE:
-                valued *= 23;
-                break;
-            }
-
-            valued /= 10;
+        case SPMSL_POISONED:
+        case SPMSL_PARALYSIS:
+        case SPMSL_SLOW:
+        case SPMSL_SLEEP:
+        case SPMSL_CONFUSION:
+        case SPMSL_SICKNESS:
+        case SPMSL_RAGE:
+            valued *= 23;
+            break;
         }
+
+        valued /= 10;
 
         if (get_equip_race(item) == ISFLAG_ELVEN
             || get_equip_race(item) == ISFLAG_DWARVEN)
@@ -1245,6 +1235,7 @@ unsigned int item_value(item_def item, bool ident)
         break;
 
     case OBJ_ARMOUR:
+    {
         switch (item.sub_type)
         {
         case ARM_PEARL_DRAGON_ARMOUR:
@@ -1365,59 +1356,56 @@ unsigned int item_value(item_def item, bool ident)
             break;
         }
 
-        if (item_type_known(item))
+        const int sparm = get_armour_ego_type(item);
+        switch (sparm)
         {
-            const int sparm = get_armour_ego_type(item);
-            switch (sparm)
-            {
-            case SPARM_NORMAL:
-            default:
-                valued *= 10;
-                break;
+        case SPARM_NORMAL:
+        default:
+            valued *= 10;
+            break;
 
-            case SPARM_ARCHMAGI:
-                valued *= 100;
-                break;
+        case SPARM_ARCHMAGI:
+            valued *= 100;
+            break;
 
-            case SPARM_DARKNESS:
-            case SPARM_RESISTANCE:
-            case SPARM_REFLECTION:
-                valued *= 60;
-                break;
+        case SPARM_DARKNESS:
+        case SPARM_RESISTANCE:
+        case SPARM_REFLECTION:
+            valued *= 60;
+            break;
 
-            case SPARM_POSITIVE_ENERGY:
-                valued *= 50;
-                break;
+        case SPARM_POSITIVE_ENERGY:
+            valued *= 50;
+            break;
 
-            case SPARM_MAGIC_RESISTANCE:
-            case SPARM_PROTECTION:
-            case SPARM_RUNNING:
-                valued *= 40;
-                break;
+        case SPARM_MAGIC_RESISTANCE:
+        case SPARM_PROTECTION:
+        case SPARM_RUNNING:
+            valued *= 40;
+            break;
 
-            case SPARM_COLD_RESISTANCE:
-            case SPARM_DEXTERITY:
-            case SPARM_FIRE_RESISTANCE:
-            case SPARM_SEE_INVISIBLE:
-            case SPARM_INTELLIGENCE:
-            case SPARM_LEVITATION:
-            case SPARM_PRESERVATION:
-            case SPARM_STEALTH:
-            case SPARM_STRENGTH:
-                valued *= 30;
-                break;
+        case SPARM_COLD_RESISTANCE:
+        case SPARM_DEXTERITY:
+        case SPARM_FIRE_RESISTANCE:
+        case SPARM_SEE_INVISIBLE:
+        case SPARM_INTELLIGENCE:
+        case SPARM_LEVITATION:
+        case SPARM_PRESERVATION:
+        case SPARM_STEALTH:
+        case SPARM_STRENGTH:
+            valued *= 30;
+            break;
 
-            case SPARM_POISON_RESISTANCE:
-                valued *= 20;
-                break;
+        case SPARM_POISON_RESISTANCE:
+            valued *= 20;
+            break;
 
-            case SPARM_PONDEROUSNESS:
-                valued *= 5;
-                break;
-            }
-
-            valued /= 10;
+        case SPARM_PONDEROUSNESS:
+            valued *= 5;
+            break;
         }
+
+        valued /= 10;
 
         if (get_equip_race(item) == ISFLAG_ELVEN
             || get_equip_race(item) == ISFLAG_DWARVEN)
@@ -1453,12 +1441,9 @@ unsigned int item_value(item_def item, bool ident)
 
         if (is_artefact(item))
         {
-            if (item_type_known(item))
-                valued += (7 * artefact_value(item));
-            else
-                valued += 50;
+            valued += (7 * artefact_value(item));
         }
-        else if (item_type_known(item) && get_equip_desc(item) != 0)
+        else if (get_equip_desc(item) != 0)
         {
             valued += 20;
         }
@@ -1469,142 +1454,134 @@ unsigned int item_value(item_def item, bool ident)
             valued /= 10;
         }
         break;
+    }
 
     case OBJ_WANDS:
-        if (!item_type_known(item))
-            valued += 200;
-        else
+        switch (item.sub_type)
         {
-            switch (item.sub_type)
-            {
-            case WAND_HASTING:
-            case WAND_HEALING:
-                valued += 300;
-                break;
+        case WAND_HASTING:
+        case WAND_HEALING:
+            valued += 300;
+            break;
 
-            case WAND_TELEPORTATION:
-                valued += 250;
-                break;
+        case WAND_TELEPORTATION:
+            valued += 250;
+            break;
 
-            case WAND_COLD:
-            case WAND_FIRE:
-            case WAND_FIREBALL:
-                valued += 200;
-                break;
+        case WAND_COLD:
+        case WAND_FIRE:
+        case WAND_FIREBALL:
+            valued += 200;
+            break;
 
-            case WAND_INVISIBILITY:
-            case WAND_DRAINING:
-            case WAND_LIGHTNING:
-                valued += 175;
-                break;
+        case WAND_INVISIBILITY:
+        case WAND_DRAINING:
+        case WAND_LIGHTNING:
+            valued += 175;
+            break;
 
-            case WAND_DISINTEGRATION:
-                valued += 160;
-                break;
+        case WAND_DISINTEGRATION:
+            valued += 160;
+            break;
 
-            case WAND_DIGGING:
-            case WAND_PARALYSIS:
-                valued += 100;
-                break;
+        case WAND_DIGGING:
+        case WAND_PARALYSIS:
+            valued += 100;
+            break;
 
-            case WAND_FLAME:
-            case WAND_FROST:
-                valued += 75;
-                break;
+        case WAND_FLAME:
+        case WAND_FROST:
+            valued += 75;
+            break;
 
-            case WAND_ENSLAVEMENT:
-            case WAND_POLYMORPH_OTHER:
-                valued += 90;
-                break;
+        case WAND_ENSLAVEMENT:
+        case WAND_POLYMORPH_OTHER:
+            valued += 90;
+            break;
 
-            case WAND_CONFUSION:
-            case WAND_SLOWING:
-                valued += 70;
-                break;
+        case WAND_CONFUSION:
+        case WAND_SLOWING:
+            valued += 70;
+            break;
 
-            case WAND_MAGIC_DARTS:
-            case WAND_RANDOM_EFFECTS:
-            default:
-                valued += 45;
-                break;
-            }
+        case WAND_MAGIC_DARTS:
+        case WAND_RANDOM_EFFECTS:
+        default:
+            valued += 45;
+            break;
+        }
 
-            if (item_ident(item, ISFLAG_KNOW_PLUSES))
-            {
-                if (item.plus == 0)
-                    valued -= 50;
-                else
-                    valued = (valued * (item.plus + 45)) / 50;
-            }
+        if (item_ident(item, ISFLAG_KNOW_PLUSES))
+        {
+            if (item.plus == 0)
+                valued -= 50;
+            else
+                valued = (valued * (item.plus + 45)) / 50;
         }
         break;
 
     case OBJ_POTIONS:
-        if (!item_type_known(item))
-            valued += 9;
-        else
+
+        switch (item.sub_type)
         {
-            switch (item.sub_type)
-            {
-            case POT_EXPERIENCE:
-                valued += 500;
-                break;
+        case POT_EXPERIENCE:
+            valued += 500;
+            break;
 
-            case POT_CURE_MUTATION:
-            case POT_GAIN_DEXTERITY:
-            case POT_GAIN_INTELLIGENCE:
-            case POT_GAIN_STRENGTH:
-                valued += 350;
-                break;
+        case POT_CURE_MUTATION:
+        case POT_GAIN_DEXTERITY:
+        case POT_GAIN_INTELLIGENCE:
+        case POT_GAIN_STRENGTH:
+            valued += 350;
+            break;
 
-            case POT_MAGIC:
-            case POT_RESISTANCE:
-                valued += 70;
-                break;
+        case POT_MAGIC:
+        case POT_RESISTANCE:
+            valued += 70;
+            break;
 
-            case POT_SPEED:
-            case POT_INVISIBILITY:
-                valued += 55;
-                break;
+        case POT_SPEED:
+        case POT_INVISIBILITY:
+            valued += 55;
+            break;
 
-            case POT_BERSERK_RAGE:
-            case POT_HEAL_WOUNDS:
-            case POT_RESTORE_ABILITIES:
-            case POT_LEVITATION:
-            case POT_MUTATION:
-                valued += 30;
-                break;
+        case POT_BERSERK_RAGE:
+        case POT_HEAL_WOUNDS:
+        case POT_RESTORE_ABILITIES:
+        case POT_LEVITATION:
+        case POT_MUTATION:
+            valued += 30;
+            break;
 
-            case POT_MIGHT:
-            case POT_AGILITY:
-            case POT_BRILLIANCE:
-                valued += 25;
-                break;
+        case POT_MIGHT:
+        case POT_AGILITY:
+        case POT_BRILLIANCE:
+            valued += 25;
+            break;
 
-            case POT_HEALING:
-            case POT_DECAY:
-            case POT_DEGENERATION:
-            case POT_STRONG_POISON:
-                valued += 20;
-                break;
+        case POT_HEALING:
+        case POT_DECAY:
+        case POT_DEGENERATION:
+        case POT_STRONG_POISON:
+            valued += 20;
+            break;
 
-            case POT_BLOOD:
-            case POT_PORRIDGE:
-            case POT_CONFUSION:
-            case POT_PARALYSIS:
-            case POT_POISON:
-            case POT_SLOWING:
-                valued += 10;
-                break;
+        case POT_BLOOD:
+        case POT_PORRIDGE:
+        case POT_CONFUSION:
+        case POT_PARALYSIS:
+        case POT_POISON:
+        case POT_SLOWING:
+            valued += 10;
+            break;
 
-            case POT_BLOOD_COAGULATED:
-                valued += 5;
-                break;
+        case POT_BLOOD_COAGULATED:
+            valued += 5;
+            break;
 
-            case POT_WATER:
-                valued++;
-                break;
-            }
+        case POT_WATER:
+            valued++;
+            break;
         }
         break;
 
@@ -1666,66 +1643,61 @@ unsigned int item_value(item_def item, bool ident)
         break;
 
     case OBJ_SCROLLS:
-        if (!item_type_known(item))
-            valued += 10;
-        else
+        switch (item.sub_type)
         {
-            switch (item.sub_type)
-            {
-            case SCR_ACQUIREMENT:
-                valued += 520;
-                break;
+        case SCR_ACQUIREMENT:
+            valued += 520;
+            break;
 
-            case SCR_ENCHANT_WEAPON_III:
-            case SCR_VORPALISE_WEAPON:
-                valued += 200;
-                break;
+        case SCR_ENCHANT_WEAPON_III:
+        case SCR_VORPALISE_WEAPON:
+            valued += 200;
+            break;
 
-            case SCR_SUMMONING:
-                valued += 95;
-                break;
+        case SCR_SUMMONING:
+            valued += 95;
+            break;
 
-            case SCR_TORMENT:
-            case SCR_HOLY_WORD:
-            case SCR_SILENCE:
-            case SCR_VULNERABILITY:
-                valued += 75;
-                break;
+        case SCR_TORMENT:
+        case SCR_HOLY_WORD:
+        case SCR_SILENCE:
+        case SCR_VULNERABILITY:
+            valued += 75;
+            break;
 
-            case SCR_RECHARGING:
-            case SCR_AMNESIA:
-            case SCR_ENCHANT_ARMOUR:
-            case SCR_ENCHANT_WEAPON_I:
-            case SCR_ENCHANT_WEAPON_II:
-            case SCR_BLINKING:
-                valued += 55;
-                break;
+        case SCR_RECHARGING:
+        case SCR_AMNESIA:
+        case SCR_ENCHANT_ARMOUR:
+        case SCR_ENCHANT_WEAPON_I:
+        case SCR_ENCHANT_WEAPON_II:
+        case SCR_BLINKING:
+            valued += 55;
+            break;
 
-            case SCR_FEAR:
-            case SCR_MAGIC_MAPPING:
-                valued += 35;
-                break;
+        case SCR_FEAR:
+        case SCR_MAGIC_MAPPING:
+            valued += 35;
+            break;
 
-            case SCR_REMOVE_CURSE:
-            case SCR_TELEPORTATION:
-                valued += 30;
-                break;
+        case SCR_REMOVE_CURSE:
+        case SCR_TELEPORTATION:
+            valued += 30;
+            break;
 
-            case SCR_FOG:
-            case SCR_DETECT_CURSE:
-            case SCR_IDENTIFY:
-            case SCR_CURSE_ARMOUR:
-            case SCR_CURSE_WEAPON:
-            case SCR_CURSE_JEWELLERY:
-                valued += 20;
-                break;
+        case SCR_FOG:
+        case SCR_DETECT_CURSE:
+        case SCR_IDENTIFY:
+        case SCR_CURSE_ARMOUR:
+        case SCR_CURSE_WEAPON:
+        case SCR_CURSE_JEWELLERY:
+            valued += 20;
+            break;
 
-            case SCR_NOISE:
-            case SCR_RANDOM_USELESSNESS:
-            case SCR_IMMOLATION:
-                valued += 10;
-                break;
-            }
+        case SCR_NOISE:
+        case SCR_RANDOM_USELESSNESS:
+        case SCR_IMMOLATION:
+            valued += 10;
+            break;
         }
         break;
 
@@ -1733,249 +1705,214 @@ unsigned int item_value(item_def item, bool ident)
         if (item_known_cursed(item))
             valued -= 10;
 
-        if (!item_type_known(item))
-            valued += 50;
-        else
+        if (item_ident(item, ISFLAG_KNOW_PLUSES)
+            && (item.sub_type == RING_PROTECTION
+                || item.sub_type == RING_STRENGTH
+                || item.sub_type == RING_EVASION
+                || item.sub_type == RING_DEXTERITY
+                || item.sub_type == RING_INTELLIGENCE
+                || item.sub_type == RING_SLAYING))
         {
-            if (item_ident(item, ISFLAG_KNOW_PLUSES)
-                && (item.sub_type == RING_PROTECTION
-                    || item.sub_type == RING_STRENGTH
-                    || item.sub_type == RING_EVASION
-                    || item.sub_type == RING_DEXTERITY
-                    || item.sub_type == RING_INTELLIGENCE
-                    || item.sub_type == RING_SLAYING))
-            {
-                if (item.plus > 0)
-                    valued += 70 * item.plus;
+            if (item.plus > 0)
+                valued += 70 * item.plus;
 
-                if (item.sub_type == RING_SLAYING && item.plus2 > 0)
-                    valued += 70 * item.plus2;
+            if (item.sub_type == RING_SLAYING && item.plus2 > 0)
+                valued += 70 * item.plus2;
 
-                if (item.plus < 0)
-                    valued -= 350;
-
-                if (item.sub_type == RING_SLAYING && item.plus2 < 0)
-                    valued -= 350;
-            }
-
-            switch (item.sub_type)
-            {
-            case RING_INVISIBILITY:
-                valued += 700;
-                break;
-
-            case RING_REGENERATION:
-                valued += 525;
-                break;
-
-            case RING_FIRE:
-            case RING_ICE:
-                valued += 434;
-                break;
-
-            case RING_LIFE_PROTECTION:
-                valued += 420;
-                break;
-
-            case RING_TELEPORT_CONTROL:
-                valued += 294;
-                break;
-
-            case RING_MAGICAL_POWER:
-            case RING_PROTECTION_FROM_MAGIC:
-                valued += 280;
-                break;
-
-            case RING_WIZARDRY:
-                valued += 245;
-                break;
-
-            case RING_LEVITATION:
-            case RING_POISON_RESISTANCE:
-            case RING_PROTECTION_FROM_COLD:
-            case RING_PROTECTION_FROM_FIRE:
-            case RING_SLAYING:
-                valued += 210;
-                break;
-
-            case RING_SUSTAIN_ABILITIES:
-            case RING_SUSTENANCE:
-            case RING_TELEPORTATION: // usually cursed
-                valued += 175;
-                break;
-
-            case RING_SEE_INVISIBLE:
-                valued += 140;
-                break;
-
-            case RING_DEXTERITY:
-            case RING_EVASION:
-            case RING_INTELLIGENCE:
-            case RING_PROTECTION:
-            case RING_STRENGTH:
-                valued += 70;
-                break;
-
-            case RING_HUNGER:
+            if (item.plus < 0)
                 valued -= 350;
-                break;
 
-            case AMU_THE_GOURMAND:
-            case AMU_GUARDIAN_SPIRIT:
-            case AMU_FAITH:
-                valued += 245;
-                break;
-
-            case AMU_CLARITY:
-            case AMU_RESIST_CORROSION:
-            case AMU_RESIST_MUTATION:
-            case AMU_WARDING:
-                valued += 210;
-                break;
-
-            case AMU_CONSERVATION:
-            case AMU_CONTROLLED_FLIGHT:
-                valued += 175;
-                break;
-
-            case AMU_RAGE:
-            case AMU_STASIS:
-                valued += 140;
-                break;
-
-            case AMU_INACCURACY:
+            if (item.sub_type == RING_SLAYING && item.plus2 < 0)
                 valued -= 350;
-                break;
-                // got to do delusion!
-            }
+        }
 
-            if (is_artefact(item))
-            {
-                // in this branch we're guaranteed to know
-                // the item type!
-                if (valued < 0)
-                    valued = (artefact_value(item) - 5) * 7;
-                else
-                    valued += artefact_value(item) * 7;
-            }
+        switch (item.sub_type)
+        {
+        case RING_INVISIBILITY:
+            valued += 700;
+            break;
+
+        case RING_REGENERATION:
+            valued += 525;
+            break;
+
+        case RING_FIRE:
+        case RING_ICE:
+            valued += 434;
+            break;
+
+        case RING_LIFE_PROTECTION:
+            valued += 420;
+            break;
+
+        case RING_TELEPORT_CONTROL:
+            valued += 294;
+            break;
+
+        case RING_MAGICAL_POWER:
+        case RING_PROTECTION_FROM_MAGIC:
+            valued += 280;
+            break;
+
+        case RING_WIZARDRY:
+            valued += 245;
+            break;
+
+        case RING_LEVITATION:
+        case RING_POISON_RESISTANCE:
+        case RING_PROTECTION_FROM_COLD:
+        case RING_PROTECTION_FROM_FIRE:
+        case RING_SLAYING:
+            valued += 210;
+            break;
+
+        case RING_SUSTAIN_ABILITIES:
+        case RING_SUSTENANCE:
+        case RING_TELEPORTATION: // usually cursed
+            valued += 175;
+            break;
+
+        case RING_SEE_INVISIBLE:
+            valued += 140;
+            break;
+
+        case RING_DEXTERITY:
+        case RING_EVASION:
+        case RING_INTELLIGENCE:
+        case RING_PROTECTION:
+        case RING_STRENGTH:
+            valued += 70;
+            break;
+
+        case RING_HUNGER:
+            valued -= 350;
+            break;
+
+        case AMU_THE_GOURMAND:
+        case AMU_GUARDIAN_SPIRIT:
+        case AMU_FAITH:
+            valued += 245;
+            break;
+
+        case AMU_CLARITY:
+        case AMU_RESIST_CORROSION:
+        case AMU_RESIST_MUTATION:
+        case AMU_WARDING:
+            valued += 210;
+            break;
+
+        case AMU_CONSERVATION:
+        case AMU_CONTROLLED_FLIGHT:
+            valued += 175;
+            break;
+
+        case AMU_RAGE:
+        case AMU_STASIS:
+            valued += 140;
+            break;
+
+        case AMU_INACCURACY:
+            valued -= 350;
+            break;
+            // got to do delusion!
+        }
+ 
+        if (is_artefact(item))
+        {
+            // in this branch we're guaranteed to know
+            // the item type!
+            if (valued < 0)
+                valued = (artefact_value(item) - 5) * 7;
+            else
+                valued += artefact_value(item) * 7;
         }
         break;
 
     case OBJ_MISCELLANY:
-        if (item_type_known(item))
+        switch (item.sub_type)
         {
-            switch (item.sub_type)
-            {
-            case MISC_RUNE_OF_ZOT:  // upped from 1200 to encourage collecting
-                valued += 10000;
-                break;
+        case MISC_RUNE_OF_ZOT:  // upped from 1200 to encourage collecting
+            valued += 10000;
+            break;
 
-            case MISC_HORN_OF_GERYON:
-                valued += 5000;
-                break;
+        case MISC_HORN_OF_GERYON:
+            valued += 5000;
+            break;
 
-            case MISC_DISC_OF_STORMS:
-                valued += 2000;
-                break;
+        case MISC_DISC_OF_STORMS:
+            valued += 2000;
+            break;
 
-            case MISC_CRYSTAL_BALL_OF_SEEING:
+        case MISC_CRYSTAL_BALL_OF_SEEING:
+            valued += 500;
+            break;
+
+        case MISC_BOTTLED_EFREET:
+            valued += 400;
+            break;
+
+        case MISC_EMPTY_EBONY_CASKET:
+            valued += 20;
+            break;
+        default:
+            if (is_deck(item))
+                valued += 200 + item.special * 150;
+            else
                 valued += 500;
-                break;
-
-            case MISC_BOTTLED_EFREET:
-                valued += 400;
-                break;
-
-            case MISC_EMPTY_EBONY_CASKET:
-                valued += 20;
-                break;
-            default:
-                if (is_deck(item))
-                    valued += 200 + item.special * 150;
-                else
-                    valued += 500;
-            }
-        }
-        else
-        {
-            switch (item.sub_type)
-            {
-            case MISC_RUNE_OF_ZOT:
-                valued += 5000;
-                break;
-
-            case MISC_HORN_OF_GERYON:
-                valued += 1000;
-                break;
-
-            case MISC_CRYSTAL_BALL_OF_SEEING:
-                valued += 450;
-                break;
-
-            case MISC_BOTTLED_EFREET:
-                valued += 350;
-                break;
-
-            default:
-                valued += 400;
-            }
         }
         break;
 
     case OBJ_BOOKS:
+    {
         valued = 150;
 
-        if (item_type_known(item))
+        double rarity = 0;
+        if (is_random_artefact(item))
         {
-            double rarity = 0;
-            if (is_random_artefact(item))
+            // Consider spellbook as rare as the average of its
+            // three rarest spells.
+            int rarities[SPELLBOOK_SIZE];
+            int count_valid = 0;
+            for (int i = 0; i < SPELLBOOK_SIZE; i++)
             {
-                // Consider spellbook as rare as the average of its
-                // three rarest spells.
-                int rarities[SPELLBOOK_SIZE];
-                int count_valid = 0;
-                for (int i = 0; i < SPELLBOOK_SIZE; i++)
+                spell_type spell = which_spell_in_book(item, i);
+                if (spell == SPELL_NO_SPELL)
                 {
-                    spell_type spell = which_spell_in_book(item, i);
-                    if (spell == SPELL_NO_SPELL)
-                    {
-                        rarities[i] = 0;
-                        continue;
-                    }
-
-                    rarities[i] = spell_rarity(spell);
-                    count_valid++;
-                }
-                ASSERT(count_valid > 0);
-
-                if (count_valid > 3)
-                    count_valid = 3;
-
-                std::sort(rarities, rarities + SPELLBOOK_SIZE);
-                for (int i = SPELLBOOK_SIZE - 1;
-                     i >= SPELLBOOK_SIZE - count_valid; i--)
-                {
-                    rarity += rarities[i];
+                    rarities[i] = 0;
+                    continue;
                 }
 
-                rarity /= count_valid;
-
-                // Fixed level randarts get a bonus for the really low and
-                // really high level spells.
-                if (item.sub_type == BOOK_RANDART_LEVEL)
-                    valued += 50 * abs(5 - item.plus);
+                rarities[i] = spell_rarity(spell);
+                count_valid++;
             }
-            else
-                rarity = book_rarity(item.sub_type);
+            ASSERT(count_valid > 0);
 
-            valued += (int)(rarity * 50.0);
+            if (count_valid > 3)
+                count_valid = 3;
+
+            std::sort(rarities, rarities + SPELLBOOK_SIZE);
+            for (int i = SPELLBOOK_SIZE - 1;
+                 i >= SPELLBOOK_SIZE - count_valid; i--)
+            {
+                rarity += rarities[i];
+            }
+
+            rarity /= count_valid;
+
+            // Fixed level randarts get a bonus for the really low and
+            // really high level spells.
+            if (item.sub_type == BOOK_RANDART_LEVEL)
+                valued += 50 * abs(5 - item.plus);
         }
+        else
+            rarity = book_rarity(item.sub_type);
+
+        valued += (int)(rarity * 50.0);
         break;
+    }
 
     case OBJ_STAVES:
-        if (!item_type_known(item))
-            valued = 120;
-        else if (item.sub_type == STAFF_SMITING
+        if (item.sub_type == STAFF_SMITING
                 || item.sub_type == STAFF_STRIKING
                 || item.sub_type == STAFF_WARDING)
         {
@@ -2401,7 +2338,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
         return (0);
     }
 
-    if (!item_type_known(item) || is_artefact(item))
+    if (is_artefact(item))
         return (0);
 
     // Ignore stat-modification rings which reduce a stat, since they're
@@ -2446,7 +2383,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
             continue;
         }
 
-        if (!item_type_known(list_item) || is_artefact(list_item))
+        if (is_artefact(list_item))
             continue;
 
         const level_pos list_pos = thing_pos(thing);
