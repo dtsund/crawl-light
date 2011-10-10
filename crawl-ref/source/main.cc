@@ -1731,6 +1731,10 @@ static void _do_list_gold()
 // e.g. list_jewellery, etc.
 void process_command(command_type cmd)
 {
+    //If the player doesn't move here, he shouldn't get to sidestep.
+    //On the other hand, if he does, it'll overwrite this.
+    you.snap_last_pos_to_current();
+    
     apply_berserk_penalty = true;
     switch (cmd)
     {

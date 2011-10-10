@@ -6,6 +6,8 @@
 #include "AppHdr.h"
 #include "mon-act.h"
 
+#include <stdio.h>
+
 #include "areas.h"
 #include "arena.h"
 #include "artefact.h"
@@ -1849,7 +1851,7 @@ static bool _handle_throw(monster* mons, bolt & beem)
 
     // Clear fake damage (will be set correctly in mons_throw).
     beem.damage = 0;
-
+    
     // Good idea?
     if (mons_should_fire(beem))
     {
@@ -2241,6 +2243,9 @@ void handle_monster_move(monster* mons)
 
             beem.source      = mons->pos();
             beem.target      = mons->target;
+            //Let the player sidestep, possibly.
+            if(beem.target == you.pos() && coinflip())
+                beem.target = you.get_last_position();
             beem.beam_source = mons->mindex();
 
             // Prevents unfriendlies from nuking you from offscreen.

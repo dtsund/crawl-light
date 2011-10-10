@@ -53,6 +53,8 @@ public:
                                         int killernum = -1) = 0;
 
     virtual void set_position(const coord_def &c);
+    virtual void snap_last_pos_to_current();
+    virtual coord_def get_last_position();
     virtual const coord_def& pos() const { return position; }
 
     // Blink the actor to the destination. c should be a
@@ -310,6 +312,9 @@ public:
     virtual bool     do_shaft() = 0;
 
     coord_def position;
+    
+    //VERY EXPERIMENTAL
+    coord_def last_position;
 
     CrawlHashTable props;
 

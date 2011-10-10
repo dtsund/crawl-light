@@ -146,6 +146,20 @@ void actor::set_position(const coord_def &c)
     position = c;
     los_actor_moved(this, oldpos);
     areas_actor_moved(this, oldpos);
+    last_position = oldpos;
+}
+
+//last_position is used for sidestepping, but there may be cases
+//(like with stairs) where sidestepping after changing location is
+//not valid.  Call this function in those times.
+void actor::snap_last_pos_to_current()
+{
+    last_position = position;
+}
+
+coord_def actor::get_last_position()
+{
+    return last_position;
 }
 
 bool actor::can_hibernate(bool holi_only) const

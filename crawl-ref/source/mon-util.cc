@@ -2771,7 +2771,9 @@ bool mons_should_fire(struct bolt &beam)
     // friends when considering collateral damage.
 
     // Quick check - did we in fact get any foes?
-    if (beam.foe_info.count == 0)
+    // Allow targeting of where the player was last turn regardless
+    // for sidestepping.
+    if (beam.foe_info.count == 0 && beam.target != you.get_last_position())
         return (false);
 
     if (is_sanctuary(you.pos()) || is_sanctuary(beam.source))
