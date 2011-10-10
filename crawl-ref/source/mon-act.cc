@@ -1035,7 +1035,7 @@ static bool _get_rod_spell_and_cost(const item_def& rod, spell_type& spell,
 // notes:
 // shamelessly repurposing handle_wand code
 // not one word about the name of this function!
-static bool _handle_rod(monster *mons, bolt &beem)
+static bool _handle_rod(monster *mons, bolt &beem, bool sidestep_attempt)
 {
     const int weapon = mons->inv[MSLOT_WEAPON];
     item_def &rod(mitm[weapon]);
@@ -1134,6 +1134,8 @@ static bool _handle_rod(monster *mons, bolt &beem)
             return (false);
         _rod_fired_pre(mons, nice_spell);
         direct_effect(mons, mzap, beem, foe);
+        if(sidestep_attempt && !beem.hits_player)
+            mpr("You sidestep!");
         return (_rod_fired_post(mons, rod, weapon, beem, rate, was_visible));
     }
     else if (nice_spell || zap)
@@ -1141,6 +1143,8 @@ static bool _handle_rod(monster *mons, bolt &beem)
         _rod_fired_pre(mons, nice_spell);
         beem.is_tracer = false;
         beem.fire();
+        if(sidestep_attempt && !beem.hits_player)
+            mpr("You sidestep!");
         return (_rod_fired_post(mons, rod, weapon, beem, rate, was_visible));
     }
 
@@ -1155,7 +1159,7 @@ static bool _handle_rod(monster *mons, bolt &beem)
 // if the monster zapped.
 //
 //---------------------------------------------------------------
-static bool _handle_wand(monster* mons, bolt &beem)
+static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
 {
     // Yes, there is a logic to this ordering {dlb}:
     // FIXME: monsters should be able to use wands or rods
@@ -1174,7 +1178,7 @@ static bool _handle_wand(monster* mons, bolt &beem)
     if (mons->inv[MSLOT_WEAPON] != NON_ITEM
         && item_is_rod(mitm[mons->inv[MSLOT_WEAPON]]))
     {
-        return (_handle_rod(mons, beem));
+        return (_handle_rod(mons, beem, sidestep_attempt));
     }
 
     if (mons->inv[MSLOT_WAND] == NON_ITEM
@@ -1307,6 +1311,9 @@ static bool _handle_wand(monster* mons, bolt &beem)
         wand.plus--;
         beem.is_tracer = false;
         beem.fire();
+        
+        if(sidestep_attempt && !beem.hits_player)
+            mpr("You sidestep!");
 
         if (was_visible)
         {
@@ -1348,7 +1355,7 @@ static void _setup_generic_throw(monster* mons, struct bolt &pbolt)
 }
 
 // msl is the item index of the thrown missile (or weapon).
-static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
+static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sidestep_attempt)
 {
     std::string ammo_name;
 
@@ -1696,6 +1703,9 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
     // came into view and the screen hasn't been updated yet.
     viewwindow();
     pbolt.fire();
+    
+    if(sidestep_attempt && !pbolt.hits_player)
+        mpr("You sidestep!");
 
     // The item can be destroyed before returning.
     if (really_returns && thrown_object_destroyed(&item, pbolt.target))
@@ -1760,7 +1770,7 @@ static bool _mons_has_launcher(const monster* mons)
 // the monster hurled.
 //
 //---------------------------------------------------------------
-static bool _handle_throw(monster* mons, bolt & beem)
+static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 {
     // Yes, there is a logic to this ordering {dlb}:
     if (mons->incapacitated()
@@ -1862,7 +1872,7 @@ static bool _handle_throw(monster* mons, bolt & beem)
             mons->swap_weapons();
 
         beem.name.clear();
-        return (_mons_throw(mons, beem, mon_item));
+        return (_mons_throw(mons, beem, mon_item, sidestep_attempt));
     }
 
     return (false);
@@ -2240,12 +2250,29 @@ void handle_monster_move(monster* mons)
                 || mons->type == MONS_SLIME_CREATURE)
         {
             bolt beem;
+            
+            //There are two things that need to be checked before determining
+            //whether to print a sidestep message: whether the monster was trying
+            //to fire at you but instead shot at your previous square, and whether
+            //the beam, in fact, missed you.  If the first case fails, it could be
+            //that the monster was firing at an ally of yours, rather than at you,
+            //and no sidestep message should be printed.  If the second case fails,
+            //you could have been walking to or from the monster such that you're
+            //still in the line of fire regardless.
+            //sidestep_attempt tracks the first of those two cases.  The second one
+            //is tracked in the 'beem' object itself, specifically the hits_player
+            //variable.  hits_player is set correctly in the do_fire method of
+            //beam.cc when the tracer is fired. -dtsund
+            bool sidestep_attempt = false;
 
             beem.source      = mons->pos();
             beem.target      = mons->target;
             //Let the player sidestep, possibly.
             if(beem.target == you.pos() && coinflip())
+            {
                 beem.target = you.get_last_position();
+                sidestep_attempt = true;
+            }
             beem.beam_source = mons->mindex();
 
             // Prevents unfriendlies from nuking you from offscreen.
@@ -2285,7 +2312,7 @@ void handle_monster_move(monster* mons)
                     continue;
                 }
 
-                if (_handle_wand(mons, beem))
+                if (_handle_wand(mons, beem, sidestep_attempt))
                 {
                     DEBUG_ENERGY_USE("_handle_wand()");
                     continue;
@@ -2298,7 +2325,7 @@ void handle_monster_move(monster* mons)
                 }
             }
 
-            if (_handle_throw(mons, beem))
+            if (_handle_throw(mons, beem, sidestep_attempt))
             {
                 DEBUG_ENERGY_USE("_handle_throw()");
                 continue;

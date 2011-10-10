@@ -157,6 +157,9 @@ struct bolt
     bool        auto_hit;
 
     ray_def     ray;             // shoot on this specific ray
+    
+    bool        hits_player;     // whether the tracer hit the player;
+                                 // used to determine whether to print sidestep msg.
 
 #ifdef USE_TILE
     int         tile_beam;

@@ -1362,8 +1362,17 @@ void bolt::do_fire()
         oldValue = set_buffering(false);
 #endif
 
+    //Track whether a tracer went through the player's position.
+    //We need this to determine whether to print a sidestep message.
+    if(is_tracer)
+        hits_player = false;
+
     while (map_bounds(pos()))
     {
+        //If this is set to true, we won't print a sidestep message later.
+        if (is_tracer && pos() == you.pos())
+            hits_player = true;
+
         if (range_used() > range)
         {
             ray.regress();
