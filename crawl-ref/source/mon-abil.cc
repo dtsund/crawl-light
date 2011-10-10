@@ -1989,7 +1989,7 @@ void move_kraken_tentacles(monster* kraken)
 // mon_special_ability
 //
 //---------------------------------------------------------------
-bool mon_special_ability(monster* mons, bolt & beem)
+bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
 {
     bool used = false;
 
@@ -2110,6 +2110,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons, " spits lava!");
             beem.fire();
+            if(sidestep_attempt && !beem.hits_player)
+                mpr("You sidestep!");
             used = true;
         }
         break;
@@ -2147,6 +2149,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
             simple_monster_message(mons,
                                    " shoots out a bolt of electricity!");
             beem.fire();
+            if(sidestep_attempt && !beem.hits_player)
+                mpr("You sidestep!");
             used = true;
         }
         break;
@@ -2335,6 +2339,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons, " flicks its tail!");
             beem.fire();
+            if(sidestep_attempt && !beem.hits_player)
+                mpr("You sidestep!");
             used = true;
             // Decrement # of volleys left.
             mons->number--;

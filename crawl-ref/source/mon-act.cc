@@ -2287,10 +2287,10 @@ void handle_monster_move(monster* mons)
                 // [ds] Special abilities shouldn't overwhelm
                 // spellcasting in monsters that have both.  This aims
                 // to give them both roughly the same weight.
-                if (coinflip() ? mon_special_ability(mons, beem)
+                if (coinflip() ? mon_special_ability(mons, beem, sidestep_attempt)
                                  || _do_mon_spell(mons, beem, sidestep_attempt)
                                : _do_mon_spell(mons, beem, sidestep_attempt)
-                                 || mon_special_ability(mons, beem))
+                                 || mon_special_ability(mons, beem, sidestep_attempt))
                 {
                     DEBUG_ENERGY_USE("spell or special");
                     mmov.reset();
