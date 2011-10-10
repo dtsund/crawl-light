@@ -2798,12 +2798,12 @@ static void _generate_scroll_item(item_def& item, int force_type,
                  // Medium-level scrolls.
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
-                 140, (depth_mod < 4 ? SCR_DETECT_CURSE  : SCR_SUMMONING),
+                 140, (depth_mod < 4 ? SCR_REMOVE_CURSE  : SCR_SUMMONING),
 
                  // High-level scrolls.
                  140, (depth_mod < 7 ? SCR_TELEPORTATION : SCR_VORPALISE_WEAPON),
-                 140, (depth_mod < 7 ? SCR_DETECT_CURSE  : SCR_TORMENT),
-                 140, (depth_mod < 7 ? SCR_DETECT_CURSE  : SCR_HOLY_WORD),
+                 140, (depth_mod < 7 ? SCR_MAGIC_MAPPING : SCR_TORMENT),
+                 140, (depth_mod < 7 ? SCR_FOG           : SCR_HOLY_WORD),
 
                  // Balanced by rarity.
                  10, SCR_SILENCE,
