@@ -2773,15 +2773,14 @@ static void _generate_scroll_item(item_def& item, int force_type,
         int tries = 500;
         do
         {
-            // total weight: 10000
             item.sub_type = random_choose_weighted(
-                1800, SCR_IDENTIFY,
+                //1800, SCR_IDENTIFY,
                 1115, SCR_REMOVE_CURSE,
-                 511, SCR_DETECT_CURSE,
+                 //511, SCR_DETECT_CURSE,
                  331, SCR_FEAR,
                  331, SCR_MAGIC_MAPPING,
                  331, SCR_FOG,
-                 331, SCR_RANDOM_USELESSNESS,
+                 //331, SCR_RANDOM_USELESSNESS,
                  331, SCR_RECHARGING,
                  331, SCR_BLINKING,
                  331, SCR_ENCHANT_ARMOUR,
@@ -2792,9 +2791,9 @@ static void _generate_scroll_item(item_def& item, int force_type,
                  // Don't create ?oImmolation at low levels (encourage read-ID).
                  331, (item_level < 4 ? SCR_TELEPORTATION : SCR_IMMOLATION),
 
-                 270, SCR_CURSE_WEAPON,
-                 270, SCR_CURSE_ARMOUR,
-                 270, SCR_CURSE_JEWELLERY,
+                 //270, SCR_CURSE_WEAPON,
+                 //270, SCR_CURSE_ARMOUR,
+                 //270, SCR_CURSE_JEWELLERY,
 
                  // Medium-level scrolls.
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
@@ -2819,7 +2818,7 @@ static void _generate_scroll_item(item_def& item, int force_type,
                 (crawl_state.game_is_sprint() ? 0 : 802), SCR_TELEPORTATION,
 
                 // [Cha] don't generate noise scrolls if in sprint
-                (crawl_state.game_is_sprint() ? 0 : 331), SCR_NOISE,
+                //(crawl_state.game_is_sprint() ? 0 : 331), SCR_NOISE,
 
                  0);
         }
@@ -2986,15 +2985,7 @@ static int _determine_ring_plus(int subtype)
     case RING_EVASION:
     case RING_DEXTERITY:
     case RING_INTELLIGENCE:
-        if (one_chance_in(5))       // 20% of such rings are cursed {dlb}
-        {
-            rc = (coinflip() ? -2 : -3);
-
-            if (one_chance_in(3))
-                rc -= random2(4);
-        }
-        else
-            rc = 1 + (one_chance_in(3) ? random2(3) : random2avg(6, 2));
+        rc = 1 + (one_chance_in(3) ? random2(3) : random2avg(6, 2));
         break;
 
     default:
@@ -3035,24 +3026,17 @@ static void _generate_jewellery_item(item_def& item, bool allow_uniques,
     item.plus2 = 0;
 
     item.plus = _determine_ring_plus(item.sub_type);
-    if (item.plus < 0)
-        do_curse_item(item);
 
     if (item.sub_type == RING_SLAYING) // requires plus2 too
     {
-        if (item.cursed() && !one_chance_in(20))
-            item.plus2 = -1 - random2avg(6, 2);
-        else
-        {
-            item.plus2 = 1 + (one_chance_in(3) ? random2(3) : random2avg(6, 2));
+        item.plus2 = 1 + (one_chance_in(3) ? random2(3) : random2avg(6, 2));
 
-            if (x_chance_in_y(9, 25))        // 36% of such rings {dlb}
-            {
-                // make "ring of damage"
-                do_uncurse_item(item, false);
-                item.plus   = 0;
-                item.plus2 += 2;
-            }
+        if (x_chance_in_y(9, 25))        // 36% of such rings {dlb}
+        {
+            // make "ring of damage"
+            do_uncurse_item(item, false);
+            item.plus   = 0;
+            item.plus2 += 2;
         }
     }
 
@@ -3468,13 +3452,54 @@ static bool _missile_is_visibly_special(const item_def &item)
 
 jewellery_type get_random_amulet_type()
 {
-    return (jewellery_type)
-                (AMU_FIRST_AMULET + random2(NUM_JEWELLERY - AMU_FIRST_AMULET));
+    //Weighted equally, except for inaccuracy, which is now never
+    //randomly generated.  Done this way to preserve compatibility.
+    return (jewellery_type) random_choose_weighted(
+        1, AMU_RAGE,
+        1, AMU_CLARITY,
+        1, AMU_WARDING,
+        1, AMU_RESIST_CORROSION,
+        1, AMU_THE_GOURMAND,
+        1, AMU_CONSERVATION,
+        1, AMU_CONTROLLED_FLIGHT,
+        1, AMU_RESIST_MUTATION,
+        1, AMU_GUARDIAN_SPIRIT,
+        1, AMU_FAITH,
+        1, AMU_STASIS,
+        0);
 }
 
 static jewellery_type _get_raw_random_ring_type()
 {
+    return (jewellery_type) random_choose_weighted(
+        1, RING_REGENERATION,
+        1, RING_PROTECTION,
+        1, RING_PROTECTION_FROM_FIRE,
+        1, RING_POISON_RESISTANCE,
+        1, RING_PROTECTION_FROM_COLD,
+        1, RING_STRENGTH,
+        1, RING_SLAYING,
+        1, RING_SEE_INVISIBLE,
+        1, RING_INVISIBILITY,
+        1, RING_TELEPORTATION,
+        1, RING_EVASION,
+        1, RING_SUSTAIN_ABILITIES,
+        1, RING_SUSTENANCE,
+        1, RING_DEXTERITY,
+        1, RING_INTELLIGENCE,
+        1, RING_WIZARDRY,
+        1, RING_MAGICAL_POWER,
+        1, RING_LEVITATION,
+        1, RING_LIFE_PROTECTION,
+        1, RING_PROTECTION_FROM_MAGIC,
+        1, RING_FIRE,
+        1, RING_ICE,
+        1, RING_TELEPORT_CONTROL,
+        0);
+
+/*
     return (jewellery_type) (RING_REGENERATION + random2(NUM_RINGS));
+*/
 }
 
 jewellery_type get_random_ring_type()
