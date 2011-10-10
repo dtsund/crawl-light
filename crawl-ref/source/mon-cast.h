@@ -14,7 +14,7 @@ struct bolt;
 void init_mons_spells();
 bool is_valid_mon_spell(spell_type spell);
 
-bool handle_mon_spell(monster* mons, bolt &beem);
+bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt);
 
 bolt mons_spells(monster* mons, spell_type spell_cast, int power,
                  bool check_validity = false);

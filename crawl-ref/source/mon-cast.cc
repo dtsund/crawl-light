@@ -1261,7 +1261,7 @@ static bool _is_physiological_spell(spell_type spell)
 // a spell was cast.
 //
 //---------------------------------------------------------------
-bool handle_mon_spell(monster* mons, bolt &beem)
+bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 {
     bool monsterNearby = mons_near(mons);
     bool finalAnswer   = false;   // as in: "Is that your...?" {dlb}
@@ -1749,6 +1749,9 @@ bool handle_mon_spell(monster* mons, bolt &beem)
                 make_mons_stop_fleeing(mons);
 
             mons_cast(mons, beem, spell_cast);
+            //Print whether the player sidestepped, if appropriate.
+            if(spell_needs_tracer(spell_cast) && sidestep_attempt && !beem.hits_player)
+                mprf("You sidestep the %s!", beem.name.c_str());
             mons->lose_energy(EUT_SPELL);
         }
     } // end "if mons_class_flag(mons->type, M_SPELLCASTER)

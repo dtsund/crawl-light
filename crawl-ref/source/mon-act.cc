@@ -209,12 +209,12 @@ static bool _swap_monsters(monster* mover, monster* moved)
     return (true);
 }
 
-static bool _do_mon_spell(monster* mons, bolt &beem)
+static bool _do_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 {
     // Shapeshifters don't get spells.
     if (!mons->is_shapeshifter() || !mons->is_actual_spellcaster())
     {
-        if (handle_mon_spell(mons, beem))
+        if (handle_mon_spell(mons, beem, sidestep_attempt))
         {
             mmov.reset();
             return (true);
@@ -2288,8 +2288,8 @@ void handle_monster_move(monster* mons)
                 // spellcasting in monsters that have both.  This aims
                 // to give them both roughly the same weight.
                 if (coinflip() ? mon_special_ability(mons, beem)
-                                 || _do_mon_spell(mons, beem)
-                               : _do_mon_spell(mons, beem)
+                                 || _do_mon_spell(mons, beem, sidestep_attempt)
+                               : _do_mon_spell(mons, beem, sidestep_attempt)
                                  || mon_special_ability(mons, beem))
                 {
                     DEBUG_ENERGY_USE("spell or special");
