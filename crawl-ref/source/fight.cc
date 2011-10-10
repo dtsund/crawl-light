@@ -1670,17 +1670,6 @@ int melee_attack::player_apply_weapon_bonuses(int damage)
 
 void melee_attack::player_weapon_auto_id()
 {
-    if (weapon
-        && weapon->base_type == OBJ_WEAPONS
-        && !is_range_weapon(*weapon)
-        && !item_ident(*weapon, ISFLAG_KNOW_PLUSES)
-        && x_chance_in_y(you.skill(wpn_skill), 100))
-    {
-        set_ident_flags(*weapon, ISFLAG_KNOW_PLUSES);
-        mprf("You are wielding %s.", weapon->name(DESC_NOCAP_A).c_str());
-        more();
-        you.wield_change = true;
-    }
 }
 
 int melee_attack::player_stab_weapon_bonus(int damage)
@@ -3809,19 +3798,6 @@ void melee_attack::player_apply_staff_damage()
         mpr("You're wielding some staff I've never heard of! (fight.cc)",
             MSGCH_ERROR);
         break;
-    }
-
-    if (special_damage > 0)
-    {
-        if (!item_type_known(*weapon))
-        {
-            set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
-            set_ident_type(*weapon, ID_KNOWN_TYPE);
-
-            mprf("You are wielding %s.", weapon->name(DESC_NOCAP_A).c_str());
-            more();
-            you.wield_change = true;
-        }
     }
 }
 

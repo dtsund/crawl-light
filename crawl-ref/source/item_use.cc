@@ -2737,33 +2737,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             dice_mult = dice_mult * 140 / 100;
         }
 
-        // ID check. Can't ID off teleported projectiles, uh, because
-        // it's too weird. Also it messes up the messages.
-        if (item_ident(*you.weapon(), ISFLAG_KNOW_PLUSES))
-        {
-            if (!teleport
-                && !item_ident(you.inv[throw_2], ISFLAG_KNOW_PLUSES)
-                && x_chance_in_y(shoot_skill, 100))
-            {
-                set_ident_flags(item, ISFLAG_KNOW_PLUSES);
-                set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_PLUSES);
-                ammo_ided = true;
-                identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
-                mprf("You are firing %s.",
-                     you.inv[throw_2].name(DESC_NOCAP_A).c_str());
-            }
-        }
-        else if (!teleport && x_chance_in_y(shoot_skill, 100))
-        {
-            item_def& weapon = *you.weapon();
-            set_ident_flags(weapon, ISFLAG_KNOW_PLUSES);
-
-            mprf("You are wielding %s.", weapon.name(DESC_NOCAP_A).c_str());
-
-            more();
-            you.wield_change = true;
-        }
-
         if (get_weapon_brand(launcher) == SPWPN_SPEED)
             speed_brand = true;
     }
