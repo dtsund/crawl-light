@@ -2395,8 +2395,11 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
         band_size = 2 + random2(3);
         break;
     case MONS_JACKAL:
-        band = BAND_JACKALS;
-        band_size = 1 + random2(3);
+        if(you.absdepth0 != 0)
+        {
+            band = BAND_JACKALS;
+            band_size = 1 + random2(3);
+        }
         break;
     case MONS_MARGERY:
         natural_leader = true;
