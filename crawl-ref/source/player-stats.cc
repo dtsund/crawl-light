@@ -446,18 +446,6 @@ bool lose_stat(stat_type which_stat, int8_t stat_loss, bool force,
     {
         int sust = player_sust_abil();
         stat_loss >>= sust;
-
-        if (sust && !stat_loss && !player_sust_abil(false))
-        {
-            item_def *ring = get_only_unided_ring();
-            if (ring && !is_artefact(*ring)
-                && ring->sub_type == RING_SUSTAIN_ABILITIES)
-            {
-                set_ident_type(*ring, ID_KNOWN_TYPE);
-                mprf("You are wearing: %s",
-                     ring->name(DESC_INVENTORY_EQUIP).c_str());
-            }
-        }
     }
 
     mprf(stat_loss > 0 ? MSGCH_WARN : MSGCH_PLAIN,

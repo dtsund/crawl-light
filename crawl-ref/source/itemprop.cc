@@ -499,7 +499,7 @@ void do_curse_item(item_def &item, bool quiet)
         if (!quiet)
         {
             mprf("Your %s glows black briefly, but repels the curse.",
-                 item.name(DESC_PLAIN).c_str());
+                 item.name().c_str());
         }
         return;
     }
@@ -511,7 +511,7 @@ void do_curse_item(item_def &item, bool quiet)
         if (!quiet)
         {
             mprf("Your %s glows black briefly, but repels the curse.",
-                item.name(DESC_PLAIN).c_str());
+                item.name().c_str());
         }
         return;
     }
@@ -519,7 +519,7 @@ void do_curse_item(item_def &item, bool quiet)
     if (!quiet)
     {
         mprf("Your %s glows black for a moment.",
-             item.name(DESC_PLAIN).c_str());
+             item.name().c_str());
 
         // If we get the message, we know the item is cursed now.
         item.flags |= ISFLAG_KNOW_CURSE;

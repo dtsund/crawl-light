@@ -2457,14 +2457,6 @@ void maybe_id_ring_TC()
         if (player_wearing_slot(i))
         {
             item_def& ring = you.inv[you.equip[i]];
-            if (!item_ident(ring, ISFLAG_KNOW_PROPERTIES)
-                && ring.sub_type == RING_TELEPORT_CONTROL)
-            {
-                set_ident_type(ring.base_type, ring.sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
-                     ring.name(DESC_INVENTORY_EQUIP).c_str());
-            }
         }
 }
 
