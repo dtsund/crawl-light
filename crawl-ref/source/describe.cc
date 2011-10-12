@@ -192,9 +192,6 @@ const char* jewellery_base_ability_string(int subtype)
     return "";
 }
 
-
-#define known_proprt(prop) (proprt[(prop)] && known[(prop)])
-
 struct property_annotators
 {
     const char* name;
@@ -257,16 +254,13 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
 
     // For randart jewellery, note the base jewellery type if it's not
     // covered by artefact_desc_properties()
-    if (item.base_type == OBJ_JEWELLERY
-        && item_ident(item, ISFLAG_KNOW_PROPERTIES))
+    if (item.base_type == OBJ_JEWELLERY)
     {
         const std::string type = jewellery_base_ability_string(item.sub_type);
         if (!type.empty())
             propnames.push_back(type);
     }
-    else if (item_ident(item, ISFLAG_KNOW_TYPE)
-             || is_artefact(item)
-                && artefact_known_wpn_property(item, ARTP_BRAND))
+    else
     {
         std::string ego;
         if (item.base_type == OBJ_WEAPONS)
@@ -280,7 +274,7 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
 
             // ... and another one for adding a comma if needed.
             for (unsigned i = 0; i < ARRAYSZ(propanns); ++i)
-                if (known_proprt(propanns[i].prop)
+                if (proprt[propanns[i].prop]
                     && propanns[i].prop != ARTP_BRAND
                     && !no_comma)
                 {
@@ -294,7 +288,7 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
 
     for (unsigned i = 0; i < ARRAYSZ(propanns); ++i)
     {
-        if (known_proprt(propanns[i].prop))
+        if (proprt[propanns[i].prop])
         {
             const int val = proprt[propanns[i].prop];
 
@@ -463,7 +457,7 @@ static std::string _randart_descrip(const item_def &item)
 
     for (unsigned i = 0; i < ARRAYSZ(propdescs); ++i)
     {
-        if (known_proprt(propdescs[i].property))
+        if (proprt[propdescs[i].property])
         {
             // Only randarts with ARTP_CURSED > 0 may recurse themselves.
             if (propdescs[i].property == ARTP_CURSED
@@ -503,7 +497,7 @@ static std::string _randart_descrip(const item_def &item)
     }
 
     // Some special cases which don't fit into the above.
-    if (known_proprt(ARTP_METABOLISM))
+    if (proprt[ARTP_METABOLISM])
     {
         if (proprt[ ARTP_METABOLISM ] >= 3)
             description += "\nIt greatly speeds your metabolism.";
@@ -511,7 +505,7 @@ static std::string _randart_descrip(const item_def &item)
             description += "\nIt speeds your metabolism. ";
     }
 
-    if (known_proprt(ARTP_STEALTH))
+    if (proprt[ARTP_STEALTH])
     {
         const int stval = proprt[ARTP_STEALTH];
         char buf[80];
@@ -521,7 +515,7 @@ static std::string _randart_descrip(const item_def &item)
         description += buf;
     }
 
-    if (known_proprt(ARTP_MUTAGENIC))
+    if (proprt[ARTP_MUTAGENIC])
     {
         if (proprt[ ARTP_MUTAGENIC ] > 3)
             description += "\nIt glows with mutagenic radiation.";
@@ -531,7 +525,6 @@ static std::string _randart_descrip(const item_def &item)
 
     return description;
 }
-#undef known_proprt
 
 static const char *trap_names[] =
 {
@@ -966,12 +959,6 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         {
             description += "\n\n";
             description += rand_desc;
-        }
-
-        // XXX: Can't happen, right?
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES))
-        {
-            description += "\nThis weapon may have some hidden properties.";
         }
     }
 

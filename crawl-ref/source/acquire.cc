@@ -1708,7 +1708,12 @@ int acquirement_create_item_general(object_class_type class_wanted,
     }
 
     if (agent > GOD_NO_GOD && agent < NUM_GODS && agent == you.religion)
-        thing.inscription = "god gift";
+    {
+        if(strcmp(thing.inscription.c_str(), ""))
+            thing.inscription = "god gift; " + thing.inscription;
+        else
+            thing.inscription = "god gift";
+    }
 
     // Moving this above the move since it might not exist after falling.
     if (thing_created != NON_ITEM && !quiet)

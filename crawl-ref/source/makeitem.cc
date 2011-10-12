@@ -3198,6 +3198,8 @@ int items(int allow_uniques,       // not just true-false,
         {
             make_item_unrandart(mitm[p], force_ego);
             ASSERT(mitm[p].is_valid());
+            if(is_artefact(mitm[p]))
+                mitm[p].inscription = artefact_auto_inscription(mitm[p]);
             return (p);
         }
         // the base item otherwise
@@ -3322,6 +3324,8 @@ int items(int allow_uniques,       // not just true-false,
 
     // Note that item might be invalidated now, since p could have changed.
     ASSERT(mitm[p].is_valid());
+    if(is_artefact(mitm[p]))
+        mitm[p].inscription = artefact_auto_inscription(mitm[p]);
     return (p);
 }
 
