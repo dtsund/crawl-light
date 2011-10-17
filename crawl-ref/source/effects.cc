@@ -938,7 +938,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
 
             std::string desc;
 
-            if (charged && item_ident(wand, ISFLAG_KNOW_PLUSES))
+            if (charged)
             {
                 snprintf(info, INFO_SIZE, " and now has %d charge%s",
                          new_charges, new_charges == 1 ? "" : "s");
