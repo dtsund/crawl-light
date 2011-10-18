@@ -328,9 +328,6 @@ bool SkillMenuEntry::is_selectable(bool keep_hotkey)
     if (is_invalid_skill(m_sk))
         return false;
 
-    if (you.skills[m_sk] == 0 && !is_set(SKMF_DISP_ALL))
-        return false;
-
     if (is_set(SKMF_DO_SHOW_DESC))
         return true;
 
@@ -340,9 +337,6 @@ bool SkillMenuEntry::is_selectable(bool keep_hotkey)
             ++m_letter;
         return false;
     }
-
-    if (you.skills[m_sk] == 0 && !is_set(SKMF_DO_RESKILL_TO))
-        return false;
 
     if (you.skills[m_sk] == 27)
     {
@@ -381,8 +375,6 @@ COLORS SkillMenuEntry::_get_colour() const
         return LIGHTBLUE;
     else if (you.skills[m_sk] == 27)
         return YELLOW;
-    else if (you.skills[m_sk] == 0)
-        return DARKGREY;
     else if (ct_bonus > 1 && is_set(SKMF_DISP_APTITUDE))
         return GREEN;
     else if (is_antitrained(m_sk) && is_set(SKMF_DISP_APTITUDE))
@@ -401,7 +393,7 @@ std::string SkillMenuEntry::_get_prefix()
     else
         letter = ' ';
 
-    const int sign = (you.skills[m_sk] == 0 || you.skills[m_sk] == 27) ? ' '
+    const int sign = (you.skills[m_sk] == 27) ? ' '
                                     : (you.autotrain_skill[m_sk]) ? '#'
                                     : (you.practise_skill[m_sk]) ? '+' : '-';
 #ifdef USE_TILE
