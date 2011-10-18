@@ -842,6 +842,7 @@ static const char* _book_type_name(int booktype)
     case BOOK_DREAMS:                 return "Dreams";
     case BOOK_CHEMISTRY:              return "Chemistry";
     case BOOK_ZOOLOGY:                return "Zoology";
+    case BOOK_RUIN:                   return "Ruin";
     case BOOK_RANDART_LEVEL:          return "Fixed Level";
     case BOOK_RANDART_THEME:          return "Fixed Theme";
     default:                          return "Bugginess";

@@ -1056,10 +1056,10 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
              JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
-            "Warrior-mage",    // XXX: Arcane Marksmen are temporarily disabled
+            "Warrior-mage",
             coord_def(35, 0), 20,
-            {JOB_CRUSADER, JOB_ENCHANTER, JOB_TRANSMUTER, JOB_STALKER,
-             JOB_WARPER, JOB_ARCANE_MARKSMAN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
+            {JOB_CRUSADER, JOB_REAVER, JOB_ENCHANTER, JOB_TRANSMUTER, JOB_STALKER,
+             JOB_WARPER, JOB_ARCANE_MARKSMAN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
             "Mage",
@@ -1761,6 +1761,7 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
     case JOB_DEATH_KNIGHT:
     case JOB_ABYSSAL_KNIGHT:
     case JOB_CRUSADER:
+    case JOB_REAVER:
     case JOB_WARPER:
         break;
     default:

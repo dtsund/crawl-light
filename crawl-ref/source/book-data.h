@@ -475,6 +475,17 @@
     SPELL_NO_SPELL,
 },
 
+{   // Book of Ruin
+    SPELL_MAGIC_DART,
+    SPELL_THROW_FROST,
+    SPELL_CONJURE_FLAME,
+    SPELL_STONE_ARROW,
+    SPELL_DISCHARGE,
+    SPELL_ISKENDERUNS_MYSTIC_BLAST,
+    SPELL_NO_SPELL,
+    SPELL_NO_SPELL,
+},
+
 {   // Book of Annihilations - Vehumet special
     SPELL_POISON_ARROW,
     SPELL_IOOD,

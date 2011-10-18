@@ -1587,7 +1587,11 @@ static void tag_read_char(reader &th)
     dprf("Last save Crawl version: %s", old_version.c_str());
 
     you.species           = static_cast<species_type>(unmarshallByte(th));
-    you.char_class        = static_cast<job_type>(unmarshallByte(th));
+    int temp_class        = unmarshallByte(th);
+    you.char_class        = static_cast<job_type>(temp_class);
+    //Need to adjust if reaver was added right before now.
+    if(th.getMinorVersion() < TAG_MINOR_RESTORE_REAVER && temp_class >= JOB_REAVER)
+        you.char_class    = static_cast<job_type>(temp_class);
     you.experience_level  = unmarshallByte(th);
     you.class_name        = unmarshallString(th);
     you.religion          = static_cast<god_type>(unmarshallByte(th));
@@ -2284,6 +2288,11 @@ void unmarshallItem(reader &th, item_def &item)
         ++item.sub_type;
     }
 #endif
+    if (th.getMinorVersion() < TAG_MINOR_RESTORE_REAVER
+        && item.base_type == OBJ_BOOKS && item.sub_type >= BOOK_RUIN)
+    {
+        ++item.sub_type;
+    }
     item.plus        = unmarshallShort(th);
     item.plus2       = unmarshallShort(th);
     item.special     = unmarshallInt(th);

@@ -261,6 +261,10 @@ book of practical magic
 
 A book of magic spells.
 %%%%
+book of ruin
+
+The cover of this book bears a deep slash from some long-forgotten battle.
+%%%%
 book of spatial translocations
 
 You can never seem to remember where you leave this book. It just turns up when needed.

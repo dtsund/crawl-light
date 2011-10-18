@@ -87,6 +87,10 @@ Stalker
 
 Stalkers use stealth and various forms of magic to approach and subdue their victims.
 %%%%
+Reaver
+
+Reavers are battle-mages who care little for subtlety, supplementing their melee capabilities with offensive magic.
+%%%%
 Summoner
 
 Summoners start with the book of Callings and are able to cast Summon Small Mammals from the start.
