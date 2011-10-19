@@ -50,7 +50,7 @@ WRKDIR=`pwd`
 # packaged in the tarball.  Since make clean nukes them, we have to regenerate
 # them before packaging.
 # TODO: replace the tilegen program with an honest-to-gog script.
-cd $GITDIR/source/rltiles/
+cd $GITDIR/crawl-ref/source/rltiles/
 make all
 cd tool/
 rm *.o *.d *.elf
@@ -65,7 +65,7 @@ fi
 echo "Making release named $RELEASENAME (tip $TIP)"
 
 echo "Making build.h..."
-printf "#define CRAWL_VERSION_FINAL %s\n#define CRAWL_VERSION_SHORT \"%s\"\n#define CRAWL_VERSION_LONG \"%s\"\n" "$FINAL" "$VERSION" "$TIP" > $GITDIR/source/build.h
+printf "#define CRAWL_VERSION_FINAL %s\n#define CRAWL_VERSION_SHORT \"%s\"\n#define CRAWL_VERSION_LONG \"%s\"\n" "$FINAL" "$VERSION" "$TIP" > $GITDIR/crawl-ref/source/build.h
 
 echo "Building root: $RELEASENAME/"
 cd $GITDIR || exit 1
@@ -77,13 +77,13 @@ cd $WRKDIR || exit 1
 tar -xzvf $RELEASENAME-working.tar.gz || exit 1
 cd $RELEASENAME || exit 1
 rm -rf .gitignore
-rm -rf .indent.pro source/util/makerelease.sh
+rm -rf .indent.pro crawl-ref/source/util/makerelease.sh
 
 # We can't tell git about build.h because the act of committing a new version
 # of build.h actually changes what should be in the thing.  Therefore, we
 # generate the thing above and manually move it here, instead of relying on
 # git archive to put it in the tarball.
-cp $GITDIR/source/build.h $WRKDIR/$RELEASENAME/source/build.h
+cp $GITDIR/crawl-ref/source/build.h $WRKDIR/$RELEASENAME/crawl-ref/source/build.h
 
 # Run application specific instructions here.
 if [ -x "$GITDIR/scripts/application.sh" ]; then
