@@ -963,7 +963,7 @@ static void _sdump_spells(dump_params &par)
 
         text += "You " + verb + " the following spells:\n\n";
 
-        text += " Your Spells              Type           Power        Success   Level  Hunger x5" "\n";
+        text += " Your Spells              Type           Power        Failure   Level  Hunger x5" "\n";
 
         for (int j = 0; j < 52; j++)
         {

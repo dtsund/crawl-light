@@ -217,7 +217,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
         ToggleableMenuEntry* me =
             new ToggleableMenuEntry(
                 " Your Spells                       Type          "
-                "                Success   Level",
+                "                Failure   Level",
                 " Your Spells                       Power         "
                 "Range           Hunger x5 Level",
                 MEL_ITEM);
@@ -228,7 +228,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
     spell_menu.set_title(
         new ToggleableMenuEntry(
             " Your Spells                       Type          "
-            "                Success   Level",
+            "                Failure   Level",
             " Your Spells                       Power         "
             "Range           Hunger x5 Level",
             MEL_TITLE));
@@ -2021,12 +2021,10 @@ char* failure_rate_to_string(int fail)
     char *buffer = new char[5];
     if(failPercent <= 2)
     {
-        sprintf(buffer, "%d%%", 100);
+        sprintf(buffer, "%d%%", 0);
         return buffer;
     }
-
-    int success = 100 - failPercent;
-    sprintf(buffer, "%d%%", success);
+    sprintf(buffer, "%d%%", failPercent);
     return buffer;
 
 /*
