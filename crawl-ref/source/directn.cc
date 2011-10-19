@@ -3699,8 +3699,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
             mon_alt = 0;
 
         const bool mon_has_wand = mi.props.exists("wand_known") && mi.inv[MSLOT_WAND].get();
-        const bool mon_has_alt = mi.inv[MSLOT_ALT_WEAPON].get();
-        const bool mon_carry = mon_has_alt || mon_has_wand;
+        const bool mon_carry = mon_has_wand;
 
         bool found_sth    = !weap.empty();
 
@@ -3743,13 +3742,6 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 desc += " and";
 
             desc += " carrying ";
-
-            if (mon_has_alt)
-            {
-                desc += mon_alt->name(DESC_NOCAP_A);
-                if (mon_has_wand)
-                    desc += " and ";
-            }
 
             if (mon_has_wand)
             {
