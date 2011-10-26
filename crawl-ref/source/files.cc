@@ -1228,7 +1228,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     // Delete old Tartarus levels.  You can't revisit them; they're intended
     // to be nonpersistent.
     if(level_id::current().branch == BRANCH_TARTARUS
-       && level_id::current().depth < branches[BRANCH_TARTARUS].depth)
+       && level_id::current().depth < brdepth[BRANCH_TARTARUS])
     {
         you.save->delete_chunk(level_name);
     }

@@ -36,10 +36,13 @@ void PlaceInfo::assert_validity() const
 
     // Don't assume we've seen a Tartarus level, because of that branch's
     // amnesia.
-    if ((branches[branch].depth > 1 || is_connected_branch(branch))
-        && branch != BRANCH_TARTARUS)
+    if (branch >= 0) // global data is -1
     {
-        ASSERT(levels_seen <= (unsigned long) branches[branch].depth);
+        if ((brdepth[branch] > 1 || is_connected_branch(branch))
+            && branch != BRANCH_TARTARUS)
+        {
+            ASSERT((int)levels_seen <= brdepth[branch]);
+        }
     }
 
     ASSERT(turns_total == (turns_explore + turns_travel + turns_interlevel

@@ -393,7 +393,7 @@ static std::string _get_seen_branches(bool display)
                 "<yellow>%7s</yellow> <darkgrey>(%d/%d)</darkgrey> %s",
                      branches[branch].abbrevname,
                      lid.depth,
-                     branches[branch].depth,
+                     brdepth[branch],
                      stair_level[branch].describe(false, true).c_str());
 
             disp += buffer;
@@ -673,7 +673,7 @@ static std::string _get_notes()
     std::string disp;
 
     for (int br = 0 ; br < NUM_BRANCHES; ++br)
-        for (int d = 1; d <= branches[br].depth; ++d)
+        for (int d = 1; d <= brdepth[br]; ++d)
         {
             level_id i(static_cast<branch_type>(br), d);
             if (!get_level_annotation(i).empty())

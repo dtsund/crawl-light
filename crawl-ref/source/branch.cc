@@ -9,14 +9,16 @@
 #include "travel.h"
 #include "branch-data.h"
 
-Branch& your_branch()
+FixedVector<int, NUM_BRANCHES> startdepth, brdepth;
+
+const Branch& your_branch()
 {
     return branches[you.where_are_you];
 }
 
 bool at_branch_bottom()
 {
-    return your_branch().depth == player_branch_depth();
+    return brdepth[you.where_are_you] == player_branch_depth();
 }
 
 level_id branch_entry_level(branch_type branch)
@@ -33,7 +35,7 @@ level_id branch_entry_level(branch_type branch)
     }
 
     const branch_type parent = branches[branch].parent_branch;
-    const int subdepth = branches[branch].startdepth;
+    const int subdepth = startdepth[branch];
 
     // This may be invalid if the branch doesn't exist this game --
     // it's the caller's job to check.

@@ -3162,7 +3162,7 @@ static void _place_branch_entrances(int dlevel, branch_type branch)
     {
         if (branches[i].entry_stairs != NUM_FEATURES
             && player_in_branch(branches[i].parent_branch)
-            && player_branch_depth() == branches[i].startdepth)
+            && (player_branch_depth() == startdepth[i]))
         {
             // Place a stair.
             dprf("Placing stair to %s", branches[i].shortname);
@@ -5893,7 +5893,7 @@ void init_level_connectivity()
 {
     for (int i = 0; i < NUM_BRANCHES; i++)
     {
-        int depth = branches[i].depth > 0 ? branches[i].depth : 0;
+        int depth = brdepth[i] > 0 ? brdepth[i] : 0;
         connectivity[i].resize(depth);
     }
 }
@@ -5909,7 +5909,7 @@ void read_level_connectivity(reader &th)
 #endif
     for (int i = 0; i < nb; i++)
     {
-        unsigned int depth = branches[i].depth > 0 ? branches[i].depth : 0;
+        unsigned int depth = brdepth[i] > 0 ? brdepth[i] : 0;
         unsigned int num_entries = unmarshallInt(th);
         connectivity[i].resize(std::max(depth, num_entries));
 
@@ -5944,7 +5944,7 @@ static bool _fixup_interlevel_connectivity()
     //      is updated, so we rely on the level not being vetoed after
     //      this check.
 
-    if (!player_in_connected_branch() || your_branch().depth == -1)
+    if (!player_in_connected_branch() || brdepth[you.where_are_you] == -1)
         return (true);
     if (branches[you.where_are_you].branch_flags & BFLAG_ISLANDED)
         return (true);

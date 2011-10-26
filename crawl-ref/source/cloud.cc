@@ -1519,7 +1519,7 @@ int num_fogs_for_place(int level_number, const level_id &place)
     {
     default:
     {
-        Branch &branch = branches[place.branch];
+        const Branch &branch = branches[place.branch];
         ASSERT((branch.num_fogs_function == NULL
                 && branch.rand_fog_function == NULL)
                || (branch.num_fogs_function != NULL
@@ -1552,7 +1552,7 @@ fog_machine_data random_fog_for_place(int level_number, const level_id &place)
     {
     default:
     {
-        Branch &branch = branches[place.branch];
+        const Branch &branch = branches[place.branch];
         ASSERT(branch.num_fogs_function != NULL
                 && branch.rand_fog_function != NULL);
         branch.rand_fog_function(level_number, data);

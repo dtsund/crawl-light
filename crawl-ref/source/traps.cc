@@ -1597,7 +1597,7 @@ bool is_valid_shaft_level(const level_id &place)
     if (env.turns_on_level == -1 && branch.dangerous_bottom_level)
         min_delta = 2;
 
-    return ((branch.depth - place.depth) >= min_delta);
+    return ((brdepth[place.branch] - place.depth) >= min_delta);
 }
 
 // Shafts can be generated visible.
@@ -1620,8 +1620,8 @@ level_id generic_shaft_dest(level_pos lpos, bool known = false)
     if (!is_connected_branch(lid))
         return lid;
 
-    int      curr_depth = lid.depth;
-    Branch   &branch    = branches[lid.branch];
+    int curr_depth = lid.depth;
+    int max_depth = brdepth[lid.branch];
 
     // Shaft traps' behavior depends on whether it is entered intentionally.
     // Knowingly entering one is more likely to drop you 1 level.
@@ -1648,8 +1648,8 @@ level_id generic_shaft_dest(level_pos lpos, bool known = false)
        (curr_depth == EASY_CHECKPOINT - 2 || curr_depth == HARD_CHECKPOINT - 1))
        lid.depth = curr_depth + 1;
 
-    if (lid.depth > branch.depth)
-        lid.depth = branch.depth;
+    if (lid.depth > max_depth)
+        lid.depth = max_depth;
 
     if (lid.depth == curr_depth)
         return lid;
@@ -1659,9 +1659,9 @@ level_id generic_shaft_dest(level_pos lpos, bool known = false)
     // be created during level generation time.
     // Include level 27 of the main dungeon here, but don't restrict
     // shaft creation (so don't set branch.dangerous_bottom_level).
-    if (branch.dangerous_bottom_level
-        && lid.depth == branch.depth
-        && (branch.depth - curr_depth) > 1)
+    if (branches[lid.branch].dangerous_bottom_level
+        && lid.depth == max_depth
+        && (max_depth - curr_depth) > 1)
     {
         lid.depth--;
     }
