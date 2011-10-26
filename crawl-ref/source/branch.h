@@ -74,11 +74,8 @@ int current_level_ambient_noise();
 
 bool branch_has_monsters(branch_type branch);
 
-bool set_branch_flags(uint32_t flags, bool silent = false,
-                      branch_type branch = NUM_BRANCHES);
-bool unset_branch_flags(uint32_t flags, bool silent = false,
-                        branch_type branch = NUM_BRANCHES);
-uint32_t get_branch_flags(branch_type branch = NUM_BRANCHES);
+branch_type get_branch_at(const coord_def& pos);
+bool branch_is_unfinished(branch_type branch);
 
 bool is_portal_vault(branch_type branch); // AXE ME!
 #endif
