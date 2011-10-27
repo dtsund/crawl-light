@@ -62,6 +62,7 @@
 #include "spl-summoning.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
+#include "stairs.h"
 #include "stash.h"
 #include "state.h"
 #include "stuff.h"
@@ -3783,7 +3784,7 @@ void lugonu_bend_space()
 //Lugonu's Exit The Abyss invocation.
 void lugonu_abyss_exit()
 {
-    banished(DNGN_EXIT_ABYSS);
+    down_stairs(DNGN_EXIT_ABYSS);
 }
 
 //Lugonu's Banishment invocation.
@@ -3842,7 +3843,7 @@ void lugonu_abyss_enter()
 
     bool note_status = notes_are_active();
     activate_notes(false);  // This banishment shouldn't be noted.
-    banished(DNGN_ENTER_ABYSS);
+    banished();
     activate_notes(note_status);
 }
 
