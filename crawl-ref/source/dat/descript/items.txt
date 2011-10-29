@@ -393,7 +393,7 @@ crystal ball of seeing
 
 A magical device which allows one to see the layout of one's surroundings. It requires a degree of magical ability to be used reliably, otherwise it can produce unpredictable and possibly harmful results.
 %%%%
-crystal plate mail
+crystal plate
 
 An incredibly heavy but extremely effective suit of crystalline armour.
 %%%%

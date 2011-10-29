@@ -741,7 +741,7 @@ static std::string _corrosion_resistance_string(const item_def &item)
     else if (ench >= 4)
         return make_stringf(format, "extremely resistant");
     else if (item.base_type == OBJ_ARMOUR
-             && item.sub_type == ARM_CRYSTAL_PLATE_MAIL)
+             && item.sub_type == ARM_CRYSTAL_PLATE)
     {
         return "\nBeing made of crystal renders it very resistant to acidic "
                "corrosion.";
