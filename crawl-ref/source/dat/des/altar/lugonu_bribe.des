@@ -36,16 +36,18 @@ function callback.tgw_lugonu_bribe_lugonu_item (data, triggerable,
          Lugonu="no",
          Makhleb="tome of destruction / rod of demonology",
          ["Nemelex Xobeh"]="scroll of random uselessness q:5-10",
-         Okawaru="book of Callings / randbook owner:Lugonu spells:summon_butterflies numspells:1 \
-         / scroll of summoning q:2-3",
-         ["Sif Muna"]="staff of channeling / good_item plate mail",
-         ["The Shining One"]="wand of invisibility w:20 / book of Envenomations \
-         / Young Poisoner's Handbook / rod of venom / potion of invisibility q:3-6",
-         Trog="manual of Spellcasting w:100 / manual of Air Magic / manual of Earth Magic \
-         / manual of Fire Magic / manual of Ice Magic / manual of Poison Magic / any magical staff /\
-         ring of wizardry",
-         Vehumet="book of Callings w:5 / book of Power w:5 \
-         / randbook owner:Lugonu spells:magic_dart numspells:1",
+         Okawaru="randbook owner:Lugonu spells:summon_butterflies numspells:1 /\
+              book of Callings / scroll of summoning q:2-3",
+         ["Sif Muna"]="staff of channeling / good_item plate armour",
+         ["The Shining One"]="wand of invisibility w:20 / rod of venom /\
+              book of Envenomations / Young Poisoner's Handbook /\
+              potion of invisibility q:3-6",
+         Trog="manual of Spellcasting w:100 / manual of Air Magic /\
+              manual of Earth Magic / manual of Fire Magic /\
+              manual of Ice Magic / manual of Poison Magic / any magical staff /\
+              ring of wizardry",
+         Vehumet="book of Callings w:5 / book of Power w:5 /\
+              randbook owner:Lugonu spells:magic_dart numspells:1",
          Xom="manual of Invocations",
          Yredelemnul= "scroll of holy word q:2-4 / good_item " .. weapon .. " ego:holy_wrath",
          Zin="good_item " .. weapon .. " ego:draining / good_item " .. weapon .. " ego:pain \
