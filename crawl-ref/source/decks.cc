@@ -1511,12 +1511,10 @@ static void _velocity_card(int power, deck_rarity_type rarity)
         //Player doesn't get to abort this, so potion_effect is told
         //that he/she was already warned.  Them's the breaks.
         potion_effect(POT_SPEED, random2(power / 4), false, true);
-    }
-    else if (power_level == 1)
-    {
-        cast_fly(random2(power / 4));
         cast_swiftness(random2(power / 4));
     }
+    else if (power_level == 1)
+        potion_effect(POT_SPEED, random2(power / 4), false, true);
     else
         cast_swiftness(random2(power / 4));
 }
