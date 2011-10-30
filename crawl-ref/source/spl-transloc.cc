@@ -985,10 +985,8 @@ bool cast_golubrias_passage(const coord_def& where)
         testbits(env.pgrid(randomized_where), FPROP_NO_CTELE_INTO) ||
         testbits(env.pgrid(randomized_here), FPROP_NO_CTELE_INTO))
     {
-        // lose a turn
         mpr("A powerful magic interferes with the creation of the passage.");
-        place_cloud(CLOUD_TLOC_ENERGY, randomized_where, 3 + random2(3), &you);
-        return true;
+        return false;
     }
 
     place_specific_trap(randomized_where, TRAP_GOLUBRIA);
