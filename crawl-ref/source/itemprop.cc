@@ -993,7 +993,7 @@ bool set_item_ego_type(item_def &item, int item_type, int ego_type)
     return (false);
 }
 
-int get_weapon_brand(const item_def &item)
+brand_type get_weapon_brand(const item_def &item)
 {
     // Weapon ego types are "brands", so we do the randart lookup here.
 
@@ -1002,9 +1002,9 @@ int get_weapon_brand(const item_def &item)
         return (SPWPN_NORMAL);
 
     if (is_artefact(item))
-        return (artefact_wpn_property(item, ARTP_BRAND));
+        return static_cast<brand_type>(artefact_wpn_property(item, ARTP_BRAND));
 
-    return (item.special);
+    return static_cast<brand_type>(item.special);
 }
 
 bool missile_brand_obvious(special_missile_type brand)
@@ -1812,7 +1812,6 @@ skill_type range_skill(object_class_type wclass, int wtype)
 
     return (range_skill(wpn));
 }
-
 
 // Calculate the bonus to melee EV for using "wpn", with "skill" and "dex"
 // to protect a body of size "body".
