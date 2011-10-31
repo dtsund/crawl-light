@@ -2659,6 +2659,8 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
     else
         you.experience += exp_gained;
 
+    you.attribute[ATTR_EVOL_XP] += exp_gained;
+
     if (you.duration[DUR_SAGE] && you.challenge != CHALLENGE_SIF_MUNA)
     {
         // Bonus skill training from Sage.
