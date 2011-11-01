@@ -1905,7 +1905,7 @@ struct spell_desc
      200,
      LOS_RADIUS, LOS_RADIUS,
      0,
-     "Fragment what (e.g. a wall or monster)?",
+     "Fragment what (e.g. wall or brittle monster)?",
      false,
      false
 },
