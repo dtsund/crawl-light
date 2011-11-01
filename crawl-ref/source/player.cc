@@ -731,8 +731,7 @@ bool you_can_wear(int eq, bool special_armour)
             return (true);
         if (you.species == SP_TROLL
             || you.species == SP_SPRIGGAN
-            || player_genus(GENPC_OGREISH)
-            || player_genus(GENPC_DRACONIAN))
+            || you.species == SP_OGRE)
         {
             return (false);
         }
