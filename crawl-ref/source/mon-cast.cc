@@ -1568,7 +1568,16 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
                 {
                     const bool explode =
                         spell_is_direct_explosion(spell_cast);
-                    fire_tracer(mons, beem, explode);
+                    if(sidestep_attempt)
+                    {
+                        //Fire the tracer at your actual position.  Necessary because
+                        //Bad Things happen otherwise in decision making.
+                        beem.target = you.pos();
+                        fire_tracer(mons, beem, explode);
+                        beem.target = you.get_last_position();
+                    }
+                    else
+                        fire_tracer(mons, beem, explode);
                     // Good idea?
                     if (mons_should_fire(beem))
                         spellOK = true;

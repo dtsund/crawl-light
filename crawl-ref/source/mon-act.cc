@@ -1123,7 +1123,16 @@ static bool _handle_rod(monster *mons, bolt &beem, bool sidestep_attempt)
     }
     else if (!nice_spell)
     {
-        fire_tracer(mons, beem);
+        if(sidestep_attempt)
+        {
+            //Fire the tracer at your actual position.  Necessary because
+            //Bad Things happen otherwise in decision making.
+            beem.target = you.pos();
+            fire_tracer(mons, beem);
+            beem.target = you.get_last_position();
+        }
+        else
+            fire_tracer(mons,beem);
         zap = mons_should_fire(beem);
     }
 
@@ -1290,7 +1299,16 @@ static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
     else if (!niceWand)
     {
         // Fire tracer, if necessary.
-        fire_tracer(mons, beem);
+        if(sidestep_attempt)
+        {
+            //Fire the tracer at your actual position.  Necessary because
+            //Bad Things happen otherwise in decision making.
+            beem.target = you.pos();
+            fire_tracer(mons, beem);
+            beem.target = you.get_last_position();
+        }
+        else
+            fire_tracer(mons,beem);
 
         // Good idea?
         zap = mons_should_fire(beem);
@@ -1857,7 +1875,16 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
     beem.item = missile;
 
     // Fire tracer.
-    fire_tracer(mons, beem);
+    if(sidestep_attempt)
+    {
+        //Fire the tracer at your actual position.  Necessary because
+        //Bad Things happen otherwise in decision making.
+        beem.target = you.pos();
+        fire_tracer(mons, beem);
+        beem.target = you.get_last_position();
+    }
+    else
+        fire_tracer(mons,beem);
 
     // Clear fake damage (will be set correctly in mons_throw).
     beem.damage = 0;
