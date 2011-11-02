@@ -2268,7 +2268,7 @@ void handle_monster_move(monster* mons)
             beem.source      = mons->pos();
             beem.target      = mons->target;
             //Let the player sidestep, possibly.
-            if(beem.target == you.pos() && coinflip())
+            if(beem.target == you.pos() && coinflip() && you.pos() != you.get_last_position())
             {
                 beem.target = you.get_last_position();
                 sidestep_attempt = true;
