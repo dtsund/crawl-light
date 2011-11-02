@@ -21,7 +21,8 @@ void wizard_list_levels();
 void wizard_recreate_level();
 void debug_make_trap(void);
 void debug_make_shop(void);
-void debug_place_map();
+void debug_place_map(bool primary);
+void wizard_primary_vault();
 void debug_test_explore();
 
 #endif
