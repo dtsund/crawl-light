@@ -1991,6 +1991,18 @@ void move_kraken_tentacles(monster* kraken)
 //---------------------------------------------------------------
 bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
 {
+    //Attempting to sidestep?  Overwrite the target!
+    if(sidestep_attempt)
+    {
+        if(one_chance_in(5))
+            beem.target = you.get_last_position();
+        else
+        {
+            beem.target = you.pos();
+            sidestep_attempt = false;
+        }
+    }
+    
     bool used = false;
 
     const monster_type mclass = (mons_genus(mons->type) == MONS_DRACONIAN)

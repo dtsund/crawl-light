@@ -211,6 +211,18 @@ static bool _swap_monsters(monster* mover, monster* moved)
 
 static bool _do_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 {
+    //Attempting to sidestep?  Overwrite the target!
+    if(sidestep_attempt)
+    {
+        if(one_chance_in(5))
+            beem.target = you.get_last_position();
+        else
+        {
+            beem.target = you.pos();
+            sidestep_attempt = false;
+        }
+    }
+        
     // Shapeshifters don't get spells.
     if (!mons->is_shapeshifter() || !mons->is_actual_spellcaster())
     {
@@ -1174,6 +1186,18 @@ static bool _handle_rod(monster *mons, bolt &beem, bool sidestep_attempt)
 //---------------------------------------------------------------
 static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
 {
+    //Attempting to sidestep?  Overwrite the target!
+    if(sidestep_attempt)
+    {
+        if(one_chance_in(5))
+            beem.target = you.get_last_position();
+        else
+        {
+            beem.target = you.pos();
+            sidestep_attempt = false;
+        }
+    }
+
     // Yes, there is a logic to this ordering {dlb}:
     // FIXME: monsters should be able to use wands or rods
     //        out of sight of the player [rob]
@@ -1798,6 +1822,18 @@ static bool _mons_has_launcher(const monster* mons)
 //---------------------------------------------------------------
 static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 {
+    //Attempting to sidestep?  Overwrite the target!
+    if(sidestep_attempt)
+    {
+        if(one_chance_in(2))
+            beem.target = you.get_last_position();
+        else
+        {
+            beem.target = you.pos();
+            sidestep_attempt = false;
+        }
+    }
+
     // Yes, there is a logic to this ordering {dlb}:
     if (mons->incapacitated()
         || mons->asleep()
@@ -2310,7 +2346,11 @@ void handle_monster_move(monster* mons)
             //Let the player sidestep, possibly.
             if(beem.target == you.pos() && coinflip() && you.pos() != you.get_last_position())
             {
-                beem.target = you.get_last_position();
+                // The individual functions with sidestep_attempt as their argument will determine
+                // whether the target gets shifted; this is so that different types of attacks can
+                // have different sidestep chances.  As of right now, mundane projectiles get a 50%
+                // sidestep chance, while things like spells, wands, and breath attacks will only
+                // offer a 20% chance.
                 sidestep_attempt = true;
             }
             beem.beam_source = mons->mindex();
