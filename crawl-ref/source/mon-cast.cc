@@ -1581,6 +1581,10 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
                     // Good idea?
                     if (mons_should_fire(beem))
                         spellOK = true;
+                        
+                    // Ugly, ugly... fire the tracer again so we know whether a sidestep
+                    // happened.
+                    fire_tracer(mons, beem, explode);
                 }
                 else
                 {

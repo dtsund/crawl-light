@@ -1134,6 +1134,10 @@ static bool _handle_rod(monster *mons, bolt &beem, bool sidestep_attempt)
         else
             fire_tracer(mons,beem);
         zap = mons_should_fire(beem);
+
+        // Ugly, ugly... fire the tracer again so we know whether a sidestep
+        // happened.
+        fire_tracer(mons, beem, explode);
     }
 
     if (is_direct_effect)
@@ -1312,6 +1316,10 @@ static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
 
         // Good idea?
         zap = mons_should_fire(beem);
+        
+        // Ugly, ugly... fire the tracer again so we know whether a sidestep
+        // happened.
+        fire_tracer(mons, beem, explode);
     }
 
     if (niceWand || zap)
@@ -1892,6 +1900,11 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
     // Good idea?
     if (mons_should_fire(beem))
     {
+    
+        // Ugly, ugly... fire the tracer again so we know whether a sidestep
+        // happened.
+        fire_tracer(mons, beem, explode);
+        
         // Monsters shouldn't shoot if fleeing, so let them "turn to attack".
         make_mons_stop_fleeing(mons);
 
