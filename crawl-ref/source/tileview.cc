@@ -170,7 +170,7 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
 
     case BRANCH_DIS:
         flv.wall  = TILE_WALL_ZOT_CYAN;
-        flv.floor = TILE_FLOOR_TOMB;
+        flv.floor = TILE_FLOOR_IRON;
         return;
 
     case BRANCH_GEHENNA:
@@ -978,6 +978,13 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
         && orig == TILE_DNGN_METAL_WALL)
     {
         orig = TILE_WALL_CRYPT_METAL;
+    }
+    else if (player_in_branch(BRANCH_DIS))
+    {
+        if (orig == TILE_DNGN_METAL_WALL)
+            orig = TILE_DNGN_METAL_IRON;
+        else if (orig == TILE_DNGN_CRYSTAL)
+            orig = TILE_WALL_EMERALD;
     }
 
     if (orig == TILE_FLOOR_NORMAL)
