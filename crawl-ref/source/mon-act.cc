@@ -1167,6 +1167,13 @@ static bool _handle_rod(monster *mons, bolt &beem, bool sidestep_attempt)
     {
         _rod_fired_pre(mons, nice_spell);
         beem.is_tracer = false;
+        
+        //No sidestepping incorporeal enchantment-beams!
+        if(!strcmp("", beem.name.c_str()) && sidestep_attempt)
+        {
+            sidestep_attempt = false;
+            beem.target = you.pos();
+        }
         beem.fire();
         if(sidestep_attempt && !beem.hits_player)
             mpr("You sidestep!");
@@ -1360,6 +1367,13 @@ static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
         // charge expenditure {dlb}
         wand.plus--;
         beem.is_tracer = false;
+        
+        //No sidestepping incorporeal enchantment-beams!
+        if(!strcmp("", beem.name.c_str()) && sidestep_attempt)
+        {
+            sidestep_attempt = false;
+            beem.target = you.pos();
+        }
         beem.fire();
         
         if(sidestep_attempt && !beem.hits_player)
