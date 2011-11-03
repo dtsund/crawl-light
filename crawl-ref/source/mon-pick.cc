@@ -3383,6 +3383,7 @@ int mons_gehenna_level(int mcls)
     case MONS_HELLION:
     case MONS_TORMENTOR:
     case MONS_FIRE_CRAB:
+    case MONS_BALRUG:
         mlev += 4;
         break;
 
@@ -3455,6 +3456,7 @@ int mons_gehenna_rare(int mcls, bool force_normal)
     case MONS_HELL_HOG:
     case MONS_CRIMSON_IMP:
     case MONS_IRON_DEVIL:
+    case MONS_BALRUG:
         return 30;
 
     case MONS_LICH:
@@ -3537,6 +3539,7 @@ int mons_cocytus_level(int mcls)
     case MONS_ICE_DRAGON:
     case MONS_TORMENTOR:
     case MONS_WHITE_IMP:
+    case MONS_BLIZZARD_DEMON:
         mlev += 3;
         break;
 
@@ -3602,6 +3605,9 @@ int mons_cocytus_rare(int mcls, bool force_normal)
 
     case MONS_VAMPIRE:
         return 34;
+        
+    case MONS_BLIZZARD_DEMON:
+        return 30;
 
     case MONS_HAIRY_DEVIL:
     case MONS_HUNGRY_GHOST:
