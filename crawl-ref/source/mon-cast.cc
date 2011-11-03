@@ -1674,6 +1674,23 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
             return (false);
 
         // Past this point, we're actually casting, instead of just pondering.
+        
+        // Check if it's a smite or enchantment.  Crude check, currently; just
+        // checks whether the beam has a name.  If it's one of these, don't let
+        // the player sidestep.
+        
+        // setup_mons_cast is called here because there's no real reason not to,
+        // and it also wipes the name for beamless spells, allowing this check to
+        // actually work.  Sometimes, beem still has a residual name from the
+        // spell selection process.
+        
+        setup_mons_cast(mons, beem, spell_cast);
+        
+        if(!strcmp("", beem.name.c_str()) && sidestep_attempt)
+        {
+            sidestep_attempt = false;
+            beem.target = you.pos();
+        }
 
         // Check for antimagic.
         if (mons->has_ench(ENCH_ANTIMAGIC)
