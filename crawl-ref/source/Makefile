@@ -111,6 +111,8 @@ CFWARN_L := -Wundef
 
 DEFINES := $(EXTERNAL_DEFINES)
 
+LDFLAGS := $(EXTERNAL_LDFLAGS)
+
 #
 # The GCC and GXX variables are set later.
 #
@@ -316,7 +318,7 @@ endif
 # To get stack trace symbols.
 # Note that MinGW doesn't support -rdynamic.
 ifndef NO_RDYNAMIC
-LDFLAGS := -rdynamic
+LDFLAGS += -rdynamic
 endif
 ifdef NEED_STATIC
 LDFLAGS += -static
