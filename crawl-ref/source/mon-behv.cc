@@ -932,6 +932,8 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
 
             if (!mons_is_cornered(mon))
                 mon->behaviour = BEH_SEEK;
+            else if (mon->asleep())
+                mon->behaviour = BEH_SEEK;
 
             if (src == MHITYOU)
             {
