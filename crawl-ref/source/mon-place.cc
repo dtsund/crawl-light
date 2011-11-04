@@ -575,12 +575,13 @@ monster_type pick_random_monster(const level_id &place, int power,
             return (type);
     }
 
-    if (place == BRANCH_LABYRINTH)
+    // Short-circuit it when we know it will fail.
+    // Should use !branch_has_monsters() instead.
+    if (place == BRANCH_LABYRINTH || place == BRANCH_ECUMENICAL_TEMPLE)
         return (MONS_PROGRAM_BUG);
 
-    if (place == BRANCH_ECUMENICAL_TEMPLE)
-        return (MONS_PROGRAM_BUG);
-
+    // FIXME: used by Shadow Creatures, which operates inconsistently in portal
+    // vaults vs regular no-monster levels.
     if (is_portal_vault(place.branch) && !branch_has_monsters(place.branch))
     {
         dprf("No valid monsters for place, doing portal vault fallback.");
