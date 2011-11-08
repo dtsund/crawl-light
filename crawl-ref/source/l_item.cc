@@ -342,8 +342,7 @@ IDEF(subtype)
 
 IDEF(cursed)
 {
-    bool cursed = item && item_ident(*item, ISFLAG_KNOW_CURSE)
-                       && item->cursed();
+    bool cursed = item && item->cursed();
     lua_pushboolean(ls, cursed);
     return (1);
 }
@@ -541,7 +540,7 @@ static int l_item_do_pluses (lua_State *ls)
 
     UDATA_ITEM(item);
 
-    if (!item || !item->defined() || !item_ident(*item, ISFLAG_KNOW_PLUSES))
+    if (!item || !item->defined())
     {
         lua_pushboolean(ls, false);
         return (1);
@@ -704,12 +703,6 @@ IDEF(sub_type)
 
 IDEF(ego_type)
 {
-    if (CLua::get_vm(ls).managed_vm && !item_ident(*item, ISFLAG_KNOW_TYPE))
-    {
-        lua_pushstring(ls, "unknown");
-        return (1);
-    }
-
     lua_pushstring(ls, ego_type_string(*item).c_str());
     return (1);
 }
