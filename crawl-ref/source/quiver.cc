@@ -565,8 +565,7 @@ static bool _item_matches(const item_def &item, fire_type types,
     else if (item.base_type == OBJ_WEAPONS && is_throwable(&you, item))
     {
         if ((types & FIRE_RETURNING)
-            && item.special == SPWPN_RETURNING
-            && item_ident(item, ISFLAG_KNOW_TYPE))
+            && item.special == SPWPN_RETURNING)
         {
             return (true);
         }

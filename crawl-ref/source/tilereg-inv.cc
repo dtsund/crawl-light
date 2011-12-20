@@ -610,13 +610,11 @@ static void _fill_item_info(InventoryTile &desc, const item_def &item)
         // -1 specifies don't display anything
         desc.quantity = (item.quantity == 1) ? -1 : item.quantity;
     }
-    else if (type == OBJ_WANDS
-             && ((item.flags & ISFLAG_KNOW_PLUSES)
-                 || item.plus2 == ZAPCOUNT_EMPTY))
+    else if (type == OBJ_WANDS)
     {
         desc.quantity = item.plus;
     }
-    else if (item_is_rod(item) && item.flags & ISFLAG_KNOW_PLUSES)
+    else if (item_is_rod(item))
         desc.quantity = item.plus / ROD_CHARGE_MULT;
     else
         desc.quantity = -1;

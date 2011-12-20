@@ -3781,12 +3781,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
             ch = TILE_MISC_DECK;
             break;
         }
-        if (item.flags & ISFLAG_KNOW_TYPE)
-        {
-            // NOTE: order of tiles must be identical to order of decks.
-            int offset = item.sub_type - MISC_DECK_OF_ESCAPE + 1;
-            ch += offset;
-        }
+        // NOTE: order of tiles must be identical to order of decks.
+        int offset = item.sub_type - MISC_DECK_OF_ESCAPE + 1;
+        ch += offset;
         return ch;
     }
     case MISC_RUNE_OF_ZOT:

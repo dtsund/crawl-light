@@ -106,8 +106,6 @@ int spellbook_contents(item_def &book, read_book_action_type action,
 
     bool spell_skills = player_spell_skills();
 
-    set_ident_flags(book, ISFLAG_KNOW_TYPE);
-
     formatted_string out;
     out.textcolor(LIGHTGREY);
 
@@ -483,9 +481,6 @@ int read_book(item_def &book, read_book_action_type action)
     // Put special book effects in another function which can be called
     // from memorise as well.
 
-    set_ident_flags(book, ISFLAG_KNOW_TYPE);
-    set_ident_flags(book, ISFLAG_IDENT_MASK);
-
     return (keyin);
 }
 
@@ -636,8 +631,6 @@ static void _index_book(item_def& book, spells_to_books &book_hash,
     }
 
     mark_had_book(book);
-    set_ident_flags(book, ISFLAG_KNOW_TYPE);
-    set_ident_flags(book, ISFLAG_IDENT_MASK);
 
     int spells_in_book = 0;
     for (int j = 0; j < SPELLBOOK_SIZE; j++)

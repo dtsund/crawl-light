@@ -770,14 +770,6 @@ bool detect_curse(int scroll, bool suppress_msg)
             if (item_count > 0)
                 found_item = i;
         }
-
-        if (item.base_type == OBJ_WEAPONS
-            || item.base_type == OBJ_STAVES
-            || item.base_type == OBJ_ARMOUR
-            || item.base_type == OBJ_JEWELLERY)
-        {
-            set_ident_flags(item, ISFLAG_KNOW_CURSE);
-        }
     }
 
     // Not carrying any items -> don't id the scroll.

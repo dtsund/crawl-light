@@ -4269,13 +4269,6 @@ int scan_artefacts(artefact_prop_type which_property, bool calc_unid)
         if (!is_artefact(you.inv[ eq ]))
             continue;
 
-        // Ignore unidentified items [TileCrawl dump enhancements].
-        if (!item_ident(you.inv[ eq ], ISFLAG_KNOW_PROPERTIES)
-            && !calc_unid)
-        {
-            continue;
-        }
-
         retval += artefact_wpn_property(you.inv[ eq ], which_property);
     }
 

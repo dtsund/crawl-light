@@ -1078,9 +1078,6 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
     {
         item.special = brand;
 
-        if (seen)
-            set_ident_flags(item, ISFLAG_KNOW_TYPE);
-
         // Make sure it's visibly special.
         if (!(item.flags & ISFLAG_COSMETIC_MASK))
             item.flags |= ISFLAG_GLOWING;

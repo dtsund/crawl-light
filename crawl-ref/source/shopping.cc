@@ -867,8 +867,7 @@ unsigned int item_value(item_def item, bool ident)
     // copy to mangle as necessary.
     item.flags = (ident) ? (item.flags | ISFLAG_IDENT_MASK) : (item.flags);
 
-    if (is_unrandom_artefact(item)
-        && item_ident(item, ISFLAG_KNOW_PROPERTIES))
+    if (is_unrandom_artefact(item))
     {
         const unrandart_entry *entry = get_unrand_entry(item.special);
         if (entry->value != 0)
@@ -1085,39 +1084,36 @@ unsigned int item_value(item_def item, bool ident)
             valued /= 10;
         }
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES))
+        if (item.plus >= 0)
         {
-            if (item.plus >= 0)
-            {
-                valued += item.plus * 2;
-                valued *= 10 + 3 * item.plus;
-                valued /= 10;
-            }
+            valued += item.plus * 2;
+            valued *= 10 + 3 * item.plus;
+            valued /= 10;
+        }
 
-            if (item.plus2 >= 0)
-            {
-                valued += item.plus2 * 2;
-                valued *= 10 + 3 * item.plus2;
-                valued /= 10;
-            }
+        if (item.plus2 >= 0)
+        {
+            valued += item.plus2 * 2;
+            valued *= 10 + 3 * item.plus2;
+            valued /= 10;
+        }
 
-            if (item.plus < 0)
-            {
-                valued -= 5;
-                valued += (item.plus * item.plus * item.plus);
+        if (item.plus < 0)
+        {
+            valued -= 5;
+            valued += (item.plus * item.plus * item.plus);
 
-                if (valued < 1)
-                    valued = 1;
-            }
+            if (valued < 1)
+                valued = 1;
+        }
 
-            if (item.plus2 < 0)
-            {
-                valued -= 5;
-                valued += (item.plus2 * item.plus2 * item.plus2);
+        if (item.plus2 < 0)
+        {
+            valued -= 5;
+            valued += (item.plus2 * item.plus2 * item.plus2);
 
-                if (valued < 1)
-                    valued = 1;
-            }
+            if (valued < 1)
+                valued = 1;
         }
 
         if (is_artefact(item))
@@ -1219,18 +1215,15 @@ unsigned int item_value(item_def item, bool ident)
             valued /= 10;
         }
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES))
+        if (item.plus >= 0)
+            valued += (item.plus * 2);
+
+        if (item.plus < 0)
         {
-            if (item.plus >= 0)
-                valued += (item.plus * 2);
+            valued += item.plus * item.plus * item.plus;
 
-            if (item.plus < 0)
-            {
-                valued += item.plus * item.plus * item.plus;
-
-                if (valued < 1)
-                    valued = 1;
-            }
+            if (valued < 1)
+                valued = 1;
         }
         break;
 
@@ -1420,23 +1413,20 @@ unsigned int item_value(item_def item, bool ident)
             valued /= 10;
         }
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES))
+        valued += 5;
+        if (item.plus >= 0)
         {
-            valued += 5;
-            if (item.plus >= 0)
-            {
-                valued += item.plus * 30;
-                valued *= 10 + 4 * item.plus;
-                valued /= 10;
-            }
+            valued += item.plus * 30;
+            valued *= 10 + 4 * item.plus;
+            valued /= 10;
+        }
 
-            if (item.plus < 0)
-            {
-                valued += item.plus * item.plus * item.plus;
+        if (item.plus < 0)
+        {
+            valued += item.plus * item.plus * item.plus;
 
-                if (valued < 1)
-                    valued = 1;
-            }
+            if (valued < 1)
+                valued = 1;
         }
 
         if (is_artefact(item))
@@ -1511,13 +1501,11 @@ unsigned int item_value(item_def item, bool ident)
             break;
         }
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES))
-        {
-            if (item.plus == 0)
-                valued -= 50;
-            else
-                valued = (valued * (item.plus + 45)) / 50;
-        }
+        if (item.plus == 0)
+            valued -= 50;
+        else
+            valued = (valued * (item.plus + 45)) / 50;
+
         break;
 
     case OBJ_POTIONS:
@@ -1705,13 +1693,12 @@ unsigned int item_value(item_def item, bool ident)
         if (item_known_cursed(item))
             valued -= 10;
 
-        if (item_ident(item, ISFLAG_KNOW_PLUSES)
-            && (item.sub_type == RING_PROTECTION
+        if (item.sub_type == RING_PROTECTION
                 || item.sub_type == RING_STRENGTH
                 || item.sub_type == RING_EVASION
                 || item.sub_type == RING_DEXTERITY
                 || item.sub_type == RING_INTELLIGENCE
-                || item.sub_type == RING_SLAYING))
+                || item.sub_type == RING_SLAYING)
         {
             if (item.plus > 0)
                 valued += 70 * item.plus;
@@ -1921,7 +1908,7 @@ unsigned int item_value(item_def item, bool ident)
         else
             valued = 250;
 
-        if (item_is_rod(item) && item_ident(item, ISFLAG_KNOW_PLUSES))
+        if (item_is_rod(item))
             valued += 50 * (item.plus2 / ROD_CHARGE_MULT);
         break;
 
