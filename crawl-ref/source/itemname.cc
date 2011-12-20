@@ -1675,25 +1675,7 @@ static item_type_id_type objtype_to_idtype(object_class_type base_type)
 
 bool item_type_known(const item_def& item)
 {
-    if (item_ident(item, ISFLAG_KNOW_TYPE))
         return (true);
-
-    // Artefacts have different descriptions from other items,
-    // so we can't use general item knowledge for them.
-    if (is_artefact(item))
-        return (false);
-
-    if (item.base_type == OBJ_MISSILES
-        && missile_brand_obvious(get_ammo_brand(item)))
-    {
-        return (true);
-    }
-
-    const item_type_id_type idt = objtype_to_idtype(item.base_type);
-    if (idt != NUM_IDTYPE)
-        return (true);
-    else
-        return (false);
 }
 
 bool item_type_unknown(const item_def& item)
@@ -2418,10 +2400,9 @@ bool is_bad_item(const item_def &item, bool temp)
         case RING_STRENGTH:
         case RING_DEXTERITY:
         case RING_INTELLIGENCE:
-            return (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus <= 0);
+            return (item.plus <= 0);
         case RING_SLAYING:
-            return (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus <= 0
-                    && item.plus2 <= 0);
+            return (item.plus <= 0 && item.plus2 <= 0);
         default:
             return (false);
         }
@@ -2573,8 +2554,7 @@ bool is_useless_item(const item_def &item, bool temp)
         if (you.species == SP_CAT)
             return (true);
 
-        return (item.plus2 == ZAPCOUNT_EMPTY)
-               || item_ident(item, ISFLAG_KNOW_PLUSES) && !item.plus;
+        return (item.plus2 == ZAPCOUNT_EMPTY) || !item.plus;
 
     case OBJ_POTIONS:
     {

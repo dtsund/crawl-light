@@ -2660,8 +2660,7 @@ static bool _similar_wands(const item_def& pickup_item,
 
     // Not similar if wand in inventory is known to be empty.
     return (inv_item.plus2 != ZAPCOUNT_EMPTY
-            || (item_ident(inv_item, ISFLAG_KNOW_PLUSES)
-                && inv_item.plus > 0));
+            || inv_item.plus > 0));
 }
 
 static bool _similar_jewellery(const item_def& pickup_item,
@@ -2971,7 +2970,6 @@ static bool _find_subtype_by_name(item_def &item,
     item.quantity  = 1;
     // Don't use set_ident_flags in order to avoid triggering notes.
     // FIXME - is this the proper solution?
-    item.flags |= (ISFLAG_KNOW_TYPE | ISFLAG_KNOW_PROPERTIES);
 
     int type_wanted = -1;
 
@@ -3864,25 +3862,20 @@ item_info get_item_info(const item_def& item)
     case OBJ_WEAPONS:
     case OBJ_MISSILES:
         ii.sub_type = item.sub_type;
-        if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-        {
-            ii.plus = item.plus;
-            ii.plus2 = item.plus2;
-        }
+        ii.plus = item.plus;
+        ii.plus2 = item.plus2;
         ii.special = item.special; // brand
         break;
     case OBJ_ARMOUR:
         ii.sub_type = item.sub_type;
         ii.plus2    = item.plus2;      // sub-subtype (gauntlets, etc)
-        if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-            ii.plus = item.plus;
+        ii.plus = item.plus;
         ii.special = item.special; // brand
         break;
     case OBJ_WANDS:
         ii.sub_type = item.sub_type;
         ii.special = item.special; // appearance
-        if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-            ii.plus = item.plus; // charges
+        ii.plus = item.plus; // charges
         ii.plus2 = item.plus2; // num zapped/recharged or empty
         break;
     case OBJ_POTIONS:
@@ -3917,13 +3910,10 @@ item_info get_item_info(const item_def& item)
         break;
     case OBJ_STAVES:
         ii.sub_type = item.sub_type;
-        if (item_ident(ii, ISFLAG_KNOW_PLUSES))
-        {
-            if (item.props.exists("rod_enchantment"))
-                ii.props["rod_enchantment"] = item.props["rod_enchantment"];
-            ii.plus = item.plus;
-            ii.plus2 = item.plus2;
-        }
+        if (item.props.exists("rod_enchantment"))
+            ii.props["rod_enchantment"] = item.props["rod_enchantment"];
+        ii.plus = item.plus;
+        ii.plus2 = item.plus2;
         else
             ii.sub_type = item_is_rod(item) ? STAFF_FIRST_ROD : 0;
         ii.special = item.special; // appearance
@@ -3977,9 +3967,6 @@ item_info get_item_info(const item_def& item)
     default:
         ii.sub_type = item.sub_type;
     }
-
-    if (item_ident(item, ISFLAG_KNOW_CURSE))
-        ii.flags |= (item.flags & ISFLAG_CURSED);
 
     if (item.props.exists(ARTEFACT_NAME_KEY))
         ii.props[ARTEFACT_NAME_KEY] = item.props[ARTEFACT_NAME_KEY];

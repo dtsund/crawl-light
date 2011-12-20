@@ -2434,30 +2434,7 @@ void swap_with_monster(monster* mon_to_swap)
 // Code copied from fire/ice in spl-cast.cc
 void maybe_id_ring_TC()
 {
-    if (you.duration[DUR_CONTROL_TELEPORT]
-        || player_mutation_level(MUT_TELEPORT_CONTROL))
-    {
-        return;
-    }
-
-    int num_unknown = 0;
-    for (int i = EQ_LEFT_RING; i <= EQ_RIGHT_RING; ++i)
-    {
-        if (player_wearing_slot(i)
-            && !item_ident(you.inv[you.equip[i]], ISFLAG_KNOW_PROPERTIES))
-        {
-            ++num_unknown;
-        }
-    }
-
-    if (num_unknown != 1)
-        return;
-
-    for (int i = EQ_LEFT_RING; i <= EQ_RIGHT_RING; ++i)
-        if (player_wearing_slot(i))
-        {
-            item_def& ring = you.inv[you.equip[i]];
-        }
+    //pass
 }
 
 // Reduce damage by AC.

@@ -110,23 +110,17 @@ const std::string &InvEntry::get_fullname() const
 
 bool InvEntry::is_item_cursed() const
 {
-    return (item_ident(*item, ISFLAG_KNOW_CURSE) && item->cursed());
+    return item->cursed();
 }
 
 bool InvEntry::is_item_glowing() const
 {
-    return (!item_ident(*item, ISFLAG_KNOW_TYPE)
-            && (get_equip_desc(*item)
-                || (is_artefact(*item)
-                    && (item->base_type == OBJ_WEAPONS
-                        || item->base_type == OBJ_MISSILES
-                        || item->base_type == OBJ_ARMOUR
-                        || item->base_type == OBJ_BOOKS))));
+    return false;
 }
 
 bool InvEntry::is_item_ego() const
 {
-    return (item_ident(*item, ISFLAG_KNOW_TYPE) && !is_artefact(*item)
+    return (!is_artefact(*item)
             && item->special != 0
             && (item->base_type == OBJ_WEAPONS
                 || item->base_type == OBJ_MISSILES
@@ -135,7 +129,7 @@ bool InvEntry::is_item_ego() const
 
 bool InvEntry::is_item_art() const
 {
-    return (item_ident(*item, ISFLAG_KNOW_TYPE) && is_artefact(*item));
+    return is_artefact(*item);
 }
 
 bool InvEntry::is_item_equipped() const
@@ -1592,9 +1586,6 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
 {
     if (_has_warning_inscription(item, oper))
         return (true);
-
-    if (!item_ident(item, ISFLAG_KNOW_TYPE))
-        return (false);
 
     if (oper == OPER_REMOVE
         && item.base_type == OBJ_JEWELLERY

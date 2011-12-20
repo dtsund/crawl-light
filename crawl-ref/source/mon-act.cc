@@ -808,14 +808,6 @@ static bool _handle_reaching(monster* mons)
     {
         ret = true;
         monster_attack_actor(mons, foe, false);
-
-        if (mons->alive())
-        {
-            // Player saw the item reach.
-            item_def *wpn = mons->weapon(0);
-            if (wpn && !is_artefact(*wpn) && you.can_see(mons))
-                set_ident_flags(*wpn, ISFLAG_KNOW_TYPE);
-        }
     }
 
     return (ret);
@@ -1653,20 +1645,6 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
     if (mons_intel(mons) == I_HIGH)
         exHitBonus += 10;
 
-    // Identify before throwing, so we don't get different
-    // messages for first and subsequent missiles.
-    if (mons->observable())
-    {
-        if (projected == LRET_LAUNCHED
-               && item_type_known(mitm[weapon])
-            || projected == LRET_THROWN
-               && mitm[msl].base_type == OBJ_MISSILES)
-        {
-            set_ident_flags(mitm[msl], ISFLAG_KNOW_TYPE);
-            set_ident_flags(item, ISFLAG_KNOW_TYPE);
-        }
-    }
-
     // Now, if a monster is, for some reason, throwing something really
     // stupid, it will have baseHit of 0 and damage of 0.  Ah well.
     std::string msg = mons->name(DESC_CAP_THE);
@@ -1793,15 +1771,6 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
                               ("to " + mons->name(DESC_NOCAP_THE))
                             : "from whence it came")
                         << "!" << std::endl;
-        }
-
-        // Player saw the item return.
-        if (!is_artefact(item))
-        {
-            // Since this only happens for non-artefacts, also mark properties
-            // as known.
-            set_ident_flags(mitm[msl],
-                            ISFLAG_KNOW_TYPE | ISFLAG_KNOW_PROPERTIES);
         }
     }
     else if (dec_mitm_item_quantity(msl, 1))

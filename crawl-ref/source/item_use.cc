@@ -1938,7 +1938,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     }
 
     beam.item         = &item;
-    beam.effect_known = item_ident(item, ISFLAG_KNOW_TYPE);
+    beam.effect_known = true;
     beam.source       = agent->pos();
     beam.colour       = item.colour;
     beam.flavour      = BEAM_MISSILE;
@@ -2014,7 +2014,6 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         }
         else
         {
-            set_ident_flags (item, ISFLAG_KNOW_TYPE);
             beam_changed = true;
         }
         beam.colour  = ETC_RANDOM;
@@ -2030,7 +2029,6 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         }
         else
         {
-            set_ident_flags (item, ISFLAG_KNOW_TYPE);
             beam_changed = true;
         }
 
@@ -2047,7 +2045,6 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         }
         else
         {
-            set_ident_flags (item, ISFLAG_KNOW_TYPE);
             beam_changed = true;
         }
         beam.colour  = WHITE;
@@ -2632,10 +2629,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // wielded.
         if (determines_ammo_brand(bow_brand, ammo_brand))
         {
-            set_ident_flags(item, ISFLAG_KNOW_TYPE);
             if (ammo_brand != SPMSL_NORMAL)
             {
-                set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_TYPE);
                 ammo_ided = true;
             }
         }
@@ -2863,7 +2858,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         if (wepClass == OBJ_MISSILES)
         {
             // Identify ammo type.
-            set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_TYPE);
             ammo_ided = true;
 
             switch (wepType)
@@ -2914,19 +2908,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         else
         {
             practise(EX_WILL_THROW_WEAPON);
-        }
-
-        // ID check
-        if (!teleport
-            && !item_ident(you.inv[throw_2], ISFLAG_KNOW_PLUSES)
-            && x_chance_in_y(you.skill(SK_THROWING), 100))
-        {
-            set_ident_flags(item, ISFLAG_KNOW_PLUSES);
-            set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_PLUSES);
-            identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
-            ammo_ided = true;
-            mprf("You are throwing %s.",
-                 you.inv[throw_2].name(DESC_NOCAP_A).c_str());
         }
     }
 
@@ -3058,15 +3039,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
         msg::stream << item.name(DESC_CAP_THE) << " returns to your pack!"
                     << std::endl;
-
-        // Player saw the item return.
-        if (!is_artefact(you.inv[throw_2]))
-        {
-            // Since this only happens for non-artefacts, also mark properties
-            // as known.
-            set_ident_flags(you.inv[throw_2],
-                            ISFLAG_KNOW_TYPE | ISFLAG_KNOW_PROPERTIES);
-        }
     }
     else
     {
@@ -3221,8 +3193,7 @@ bool safe_to_remove_or_wear(const item_def &item, bool remove, bool quiet)
     int prop_str = 0;
     int prop_dex = 0;
     int prop_int = 0;
-    if (item.base_type == OBJ_JEWELLERY
-        && item_ident(item, ISFLAG_KNOW_PLUSES))
+    if (item.base_type == OBJ_JEWELLERY)
     {
         switch (item.sub_type)
         {
@@ -3644,7 +3615,6 @@ bool remove_ring(int slot, bool announce)
         else
             mpr("It's stuck to you!");
 
-        set_ident_flags(you.inv[you.equip[hand_used]], ISFLAG_KNOW_CURSE);
         return (false);
     }
 
@@ -3923,8 +3893,6 @@ void zap_wand(int slot)
 
     mprf("This wand has %d charge%s left.",
          wand.plus, wand.plus == 1 ? "" : "s");
-
-    set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
 
     practise(EX_DID_ZAP_WAND);
     alert_nearby_monsters();
@@ -5076,10 +5044,7 @@ void read_scroll(int slot)
                            tried_on_item ? ID_TRIED_ITEM_TYPE
                                          : ID_TRIED_TYPE);
 
-    // Finally, destroy and identify the scroll.
-    if (id_the_scroll)
-        set_ident_flags(scroll, ISFLAG_KNOW_TYPE); // for notes
-
+    // Finally, destroy the scroll.
     std::string scroll_name = scroll.name(DESC_QUALNAME).c_str();
 
     if (!cancel_scroll)

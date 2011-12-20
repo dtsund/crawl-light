@@ -561,14 +561,6 @@ void do_curse_item(item_def &item, bool quiet)
 
 void do_uncurse_item(item_def &item, bool inscribe, bool no_ash)
 {
-    if (!item.cursed())
-    {
-        item.flags &= ~ISFLAG_SEEN_CURSED;
-        if (in_inventory(item))
-            item.flags |= ISFLAG_KNOW_CURSE;
-        return;
-    }
-
     if (no_ash && you.religion == GOD_ASHENZARI)
     {
         simple_god_message(" preserves the curse.");
@@ -590,7 +582,6 @@ void do_uncurse_item(item_def &item, bool inscribe, bool no_ash)
             // Redraw the weapon.
             you.wield_change = true;
         }
-        item.flags |= ISFLAG_KNOW_CURSE;
     }
     item.flags &= (~ISFLAG_CURSED);
     item.flags &= (~ISFLAG_SEEN_CURSED);
@@ -688,8 +679,7 @@ void set_ident_flags(item_def &item, iflags_t flags)
 */
     }
 
-    if (item.flags & ISFLAG_KNOW_TYPE && !is_artefact(item)
-        && _is_affordable(item))
+    if (!is_artefact(item) && _is_affordable(item))
     {
         if (item.base_type == OBJ_WEAPONS)
             you.seen_weapon[item.sub_type] |= 1 << item.special;
@@ -1219,8 +1209,7 @@ bool item_is_rechargeable(const item_def &it, bool hide_charged, bool weapons)
 
         // Don't offer wands already maximally charged.
         if (it.plus2 == ZAPCOUNT_MAX_CHARGED
-            || item_ident(it, ISFLAG_KNOW_PLUSES)
-               && it.plus >= wand_max_charges(it.sub_type))
+            || it.plus >= wand_max_charges(it.sub_type))
         {
             return (false);
         }
@@ -1231,13 +1220,10 @@ bool item_is_rechargeable(const item_def &it, bool hide_charged, bool weapons)
         if (!hide_charged)
             return (true);
 
-        if (item_ident(it, ISFLAG_KNOW_PLUSES))
-        {
-            return (it.plus2 < MAX_ROD_CHARGE * ROD_CHARGE_MULT
-                    || it.plus < it.plus2
-                    || !it.props.exists("rod_enchantment")
-                    || short(it.props["rod_enchantment"]) < MAX_WPN_ENCHANT);
-        }
+        return (it.plus2 < MAX_ROD_CHARGE * ROD_CHARGE_MULT
+                || it.plus < it.plus2
+                || !it.props.exists("rod_enchantment")
+                || short(it.props["rod_enchantment"]) < MAX_WPN_ENCHANT);
         return (true);
     }
 
@@ -1315,13 +1301,6 @@ bool is_enchantable_armour(const item_def &arm, bool uncurse, bool unknown)
     // Melded armour cannot be enchanted.
     if (item_is_melded(arm))
         return (false);
-
-    // If we don't know the plusses, assume enchanting is possible.
-    if (unknown && !is_known_artefact(arm)
-        && !item_ident(arm, ISFLAG_KNOW_PLUSES))
-    {
-        return (true);
-    }
 
     // Artefacts or highly enchanted armour cannot be enchanted, only
     // uncursed.
@@ -2814,8 +2793,7 @@ bool shield_reflects(const item_def &shield)
 
 void ident_reflector(item_def *item)
 {
-    if (!is_artefact(*item))
-        set_ident_flags(*item, ISFLAG_KNOW_TYPE);
+    //pass
 }
 
 std::string item_base_name(const item_def &item)
@@ -2880,8 +2858,4 @@ void seen_item(const item_def &item)
             you.seen_misc.set(item.sub_type);
         }
     }
-
-    // major hack.  Deconstify should be safe here, but it's still repulsive.
-    if (you.religion == GOD_ASHENZARI)
-        ((item_def*)&item)->flags |= ISFLAG_KNOW_CURSE;
 }

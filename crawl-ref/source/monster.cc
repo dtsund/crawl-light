@@ -998,9 +998,6 @@ bool monster::unequip(item_def &item, int slot, int near, bool force)
     if (!force && item.cursed())
         return (false);
 
-    if (!force && you.can_see(this))
-        set_ident_flags(item, ISFLAG_KNOW_CURSE);
-
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
