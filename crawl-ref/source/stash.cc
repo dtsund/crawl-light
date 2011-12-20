@@ -731,12 +731,6 @@ void Stash::_update_corpses(int rot_time)
     }
 }
 
-void Stash::_update_identification()
-{
-    for (int i = items.size() - 1; i >= 0; i--)
-        ash_id_item(items[i]);
-}
-
 void Stash::add_item(const item_def &item, bool add_to_front)
 {
     if (_is_rottable(item))
@@ -1419,15 +1413,6 @@ void LevelStashes::_update_corpses(int rot_time)
     }
 }
 
-void LevelStashes::_update_identification()
-{
-    for (stashes_t::iterator iter = m_stashes.begin();
-            iter != m_stashes.end(); ++iter)
-    {
-        iter->second._update_identification();
-    }
-}
-
 void LevelStashes::write(FILE *f, bool identify) const
 {
     if (visible_stash_count() == 0)
@@ -1797,7 +1782,6 @@ void StashTracker::search_stashes()
     char buf[400];
 
     this->update_corpses();
-    this->update_identification();
 
     stash_search_reader reader(buf, sizeof buf);
 
@@ -2106,18 +2090,6 @@ void StashTracker::update_corpses()
             iter != levels.end(); ++iter)
     {
         iter->second._update_corpses(rot_time);
-    }
-}
-
-void StashTracker::update_identification()
-{
-    if (you.religion != GOD_ASHENZARI)
-        return;
-
-    for (stash_levels_t::iterator iter = levels.begin();
-            iter != levels.end(); ++iter)
-    {
-        iter->second._update_identification();
     }
 }
 

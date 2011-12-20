@@ -408,7 +408,7 @@ void artefact_desc_properties(const item_def &item,
 
     artefact_wpn_properties(item, proprt, known);
 
-    if (!force_fake_props && item_ident(item, ISFLAG_KNOW_PROPERTIES))
+    if (!force_fake_props)
         return;
 
     // Only jewellery need fake randart properties.
@@ -418,11 +418,6 @@ void artefact_desc_properties(const item_def &item,
     artefact_prop_type fake_rap  = ARTP_NUM_PROPERTIES;
     int               fake_plus = 1;
 
-    // The base jewellery type is one whose property is revealed by
-    // wearing it, but whose property isn't revealed by having
-    // ISFLAG_KNOW_PLUSES set.  For a randart with a base type of, for
-    // example, a ring of strength, wearing it sets
-    // ISFLAG_KNOW_PLUSES, which reveals the ring's strength plus.
     switch (item.sub_type)
     {
     case RING_INVISIBILITY:
@@ -450,12 +445,7 @@ void artefact_desc_properties(const item_def &item,
     if (fake_rap != ARTP_NUM_PROPERTIES)
     {
         proprt[fake_rap] += fake_plus;
-
-        if (item_ident(item, ISFLAG_KNOW_PROPERTIES)
-            || item_ident(item, ISFLAG_KNOW_TYPE))
-        {
-            known[fake_rap] = true;
-        }
+        known[fake_rap] = true;
 
         return;
     }
@@ -551,15 +541,11 @@ void artefact_desc_properties(const item_def &item,
     if (fake_rap2 != ARTP_NUM_PROPERTIES && fake_plus2 != 0)
         proprt[fake_rap2] += fake_plus2;
 
-    if (item_ident(item, ISFLAG_KNOW_PROPERTIES)
-        || item_ident(item, ISFLAG_KNOW_TYPE))
-    {
-        if (fake_rap != ARTP_NUM_PROPERTIES && proprt[fake_rap] != 0)
-            known[fake_rap] = true;
+    if (fake_rap != ARTP_NUM_PROPERTIES && proprt[fake_rap] != 0)
+        known[fake_rap] = true;
 
-        if (fake_rap2 != ARTP_NUM_PROPERTIES && proprt[fake_rap2] != 0)
-            known[fake_rap2] = true;
-    }
+    if (fake_rap2 != ARTP_NUM_PROPERTIES && proprt[fake_rap2] != 0)
+        known[fake_rap2] = true;
 }
 
 inline static void _randart_propset(artefact_properties_t &p,
@@ -1244,16 +1230,8 @@ void artefact_wpn_properties(const item_def &item,
     ASSERT(known_vec.size()         == ART_PROPERTIES);
     ASSERT(known_vec.get_max_size() == ART_PROPERTIES);
 
-    if (item_ident(item, ISFLAG_KNOW_PROPERTIES))
-    {
-        for (vec_size i = 0; i < ART_PROPERTIES; i++)
-            known[i] = static_cast<bool>(true);
-    }
-    else
-    {
-        for (vec_size i = 0; i < ART_PROPERTIES; i++)
-            known[i] = known_vec[i];
-    }
+    for (vec_size i = 0; i < ART_PROPERTIES; i++)
+        known[i] = static_cast<bool>(true);
 
     if (item.props.exists(ARTEFACT_PROPS_KEY))
     {
@@ -1332,25 +1310,6 @@ static int _artefact_num_props(const artefact_properties_t &proprt)
             num++;
 
     return num;
-}
-
-void artefact_wpn_learn_prop(item_def &item, artefact_prop_type prop)
-{
-    ASSERT(is_artefact(item));
-    ASSERT(item.props.exists(KNOWN_PROPS_KEY));
-    CrawlStoreValue &_val = item.props[KNOWN_PROPS_KEY];
-    ASSERT(_val.get_type() == SV_VEC);
-    CrawlVector &known_vec = _val.get_vector();
-    ASSERT(known_vec.get_type()     == SV_BOOL);
-    ASSERT(known_vec.size()         == ART_PROPERTIES);
-    ASSERT(known_vec.get_max_size() == ART_PROPERTIES);
-
-    if (item_ident(item, ISFLAG_KNOW_PROPERTIES))
-        return;
-
-    known_vec[prop] = static_cast<bool>(true);
-    if (Options.autoinscribe_artefacts)
-        add_autoinscription(item, artefact_auto_inscription(item));
 }
 
 static std::string _get_artefact_type(const item_def &item,

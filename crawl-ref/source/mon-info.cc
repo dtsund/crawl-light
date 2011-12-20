@@ -503,8 +503,6 @@ monster_info::monster_info(const monster* m, int milev)
             ok = true;
         else if (i == MSLOT_WAND)
             ok = props.exists("wand_known") && props["wand_known"];
-        else if (m->props.exists("ash_id"))
-            ok = true;
         else if (i == MSLOT_ALT_WEAPON)
             ok = two_weapons;
         else if (i == MSLOT_MISSILE)

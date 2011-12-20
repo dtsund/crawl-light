@@ -2387,19 +2387,6 @@ bool melee_attack::distortion_affects_defender()
     {
         emit_nodmg_hit_message();
 
-        if (defender->atype() == ACT_PLAYER && attacker_visible
-            && weapon != NULL && !is_unrandom_artefact(*weapon)
-            && !is_special_unrandom_artefact(*weapon))
-        {
-            // If the player is being sent to the Abyss by being attacked
-            // with a distortion weapon, then we have to ID it before
-            // the player goes to Abyss, while the weapon object is
-            // still in memory.
-            if (is_artefact(*weapon))
-                artefact_wpn_learn_prop(*weapon, ARTP_BRAND);
-            else
-                set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
-        }
         else if (defender_visible)
             obvious_effect = true;
 
@@ -3486,14 +3473,6 @@ bool melee_attack::apply_damage_brand()
     }
     if (!obvious_effect)
         obvious_effect = !special_damage_message.empty();
-
-    if (obvious_effect && attacker_visible && weapon != NULL)
-    {
-        if (is_artefact(*weapon))
-            artefact_wpn_learn_prop(*weapon, ARTP_BRAND);
-        else
-            set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
-    }
 
     return (ret);
 }
@@ -5872,11 +5851,6 @@ void melee_attack::mons_perform_attack_rounds()
         }
 
         item_def *weap = attacker->as_monster()->mslot_item(MSLOT_WEAPON);
-        if (weap && you.can_see(attacker) && weap->cursed()
-            && is_range_weapon(*weap))
-        {
-            set_ident_flags(*weap, ISFLAG_KNOW_CURSE);
-        }
     }
 
     // Check for passive freeze or eyeball mutation.

@@ -134,8 +134,6 @@ int artefact_wpn_property(const item_def &item, artefact_prop_type prop);
 int artefact_known_wpn_property(const item_def &item,
                                  artefact_prop_type prop);
 
-void artefact_wpn_learn_prop(item_def &item, artefact_prop_type prop);
-
 bool make_item_randart(item_def &item, bool force_mundane = false);
 bool make_item_unrandart(item_def &item, int unrand_index);
 

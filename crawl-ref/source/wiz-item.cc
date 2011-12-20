@@ -548,7 +548,6 @@ void wizard_tweak_object(void)
 
         // cursedness might have changed
         ash_check_bondage();
-        ash_id_inventory();
     }
 }
 

@@ -719,8 +719,6 @@ static bool _beogh_retribution()
                 wpn.plus2 = random2(3);
                 wpn.sub_type = wpn_type;
 
-                set_ident_flags(wpn, ISFLAG_KNOW_TYPE);
-
                 item_colour(wpn);
 
                 menv[mon].flags |= (MF_NO_REWARD | MF_HARD_RESET);

@@ -1801,8 +1801,6 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
     if (!item.slot)
         item.slot = index_to_letter(item.link);
 
-    ash_id_item(item);
-
     note_inscribe_item(item);
 
     item.quantity = quant_got;
@@ -1898,9 +1896,6 @@ bool move_item_to_grid(int *const obj, const coord_def& p, bool silent)
 
         return (true);
     }
-
-    if (you.religion == GOD_ASHENZARI && you.see_cell(p))
-        ash_id_item(item);
 
     // If it's a stackable type...
     if (is_stackable_item(item))

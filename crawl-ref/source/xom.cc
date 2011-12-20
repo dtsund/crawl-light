@@ -1073,9 +1073,6 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
     if (is_random_artefact(item))
     {
         artefact_set_property(item, ARTP_BRAND, brand);
-
-        if (seen)
-            artefact_wpn_learn_prop(item, ARTP_BRAND);
     }
     else
     {

@@ -92,7 +92,6 @@ public:
 
 private:
     void _update_corpses(int rot_time);
-    void _update_identification();
     void add_item(const item_def &item, bool add_to_front = false);
 
 private:
@@ -297,7 +296,6 @@ public:
  private:
     int _num_enabled_stashes() const;
     void _update_corpses(int rot_time);
-    void _update_identification();
     void _waypoint_search(int n, std::vector<stash_search_result> &results) const;
 
  private:
@@ -348,7 +346,6 @@ public:
     };
 
     void update_corpses();
-    void update_identification();
 
     void update_visible_stashes(StashTracker::stash_update_mode = ST_PASSIVE);
 

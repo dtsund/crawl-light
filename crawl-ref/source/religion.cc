@@ -2662,19 +2662,6 @@ void gain_piety(int original_gain, int denominator, bool force, bool should_scal
             if (you.religion == GOD_SHINING_ONE && i == 0)
                 mpr("A divine halo surrounds you!");
 
-            if (you.religion == GOD_ASHENZARI)
-            {
-                if (i == 2)
-                {
-                    autotoggle_autopickup(false);
-                    // Inconsistent with donning amulets, but matches the
-                    // message better and is not abusable.
-                    you.duration[DUR_CONF] = 0;
-                }
-
-                ash_id_inventory();
-            }
-
             // When you gain a piety level, you get another chance to
             // make hostile holy beings good neutral.
             if (is_good_god(you.religion))
@@ -3285,23 +3272,6 @@ void god_welcome_identify_gear()
         mpr("Your amulet flashes!", MSGCH_GOD);
         flash_view_delay(god_colour(you.religion), 300);
         set_ident_type(*amulet, ID_KNOWN_TYPE);
-    }
-
-    if (you.religion == GOD_ASHENZARI)
-    {
-        // Seemingly redundant with ash_id_inventory(), but we don't want to
-        // announce items where the only new information is their cursedness.
-        for (int i = 0; i < ENDOFPACK; i++)
-            if (you.inv[i].defined())
-                you.inv[i].flags |= ISFLAG_KNOW_CURSE;
-
-        set_ident_type(OBJ_SCROLLS, SCR_DETECT_CURSE, ID_KNOWN_TYPE);
-        set_ident_type(OBJ_SCROLLS, SCR_REMOVE_CURSE, ID_KNOWN_TYPE);
-        set_ident_type(OBJ_SCROLLS, SCR_CURSE_WEAPON, ID_KNOWN_TYPE);
-        set_ident_type(OBJ_SCROLLS, SCR_CURSE_ARMOUR, ID_KNOWN_TYPE);
-        set_ident_type(OBJ_SCROLLS, SCR_CURSE_JEWELLERY, ID_KNOWN_TYPE);
-        ash_id_inventory();
-        ash_detect_portals(true);
     }
 }
 

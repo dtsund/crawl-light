@@ -82,8 +82,6 @@
 // The card type and per-card flags are each stored as unsigned bytes,
 // for a maximum of 256 different kinds of cards and 8 bits of flags.
 
-static void _deck_ident(item_def& deck);
-
 struct card_with_weights
 {
     card_type card;
@@ -478,16 +476,12 @@ static void _push_top_card(item_def& deck, card_type card,
     flags.push_back((char) _flags);
 }
 
-static void _remember_drawn_card(item_def& deck, card_type card, bool allow_id)
+static void _remember_drawn_card(item_def& deck, card_type card)
 {
     ASSERT(is_deck(deck));
     CrawlHashTable &props = deck.props;
     CrawlVector &drawn = props["drawn_cards"].get_vector();
     drawn.push_back(static_cast<char>(card));
-
-    // Once you've drawn two cards, you know the deck.
-    if (allow_id && (drawn.size() >= 2 || origin_is_god_gift(deck)))
-        _deck_ident(deck);
 }
 
 const std::vector<card_type> get_drawn_cards(const item_def& deck)
@@ -771,16 +765,6 @@ bool choose_deck_and_draw()
     return (true);
 }
 
-static void _deck_ident(item_def& deck)
-{
-    if (in_inventory(deck) && !item_ident(deck, ISFLAG_KNOW_TYPE))
-    {
-        set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        mprf("This is %s.", deck.name(DESC_NOCAP_A).c_str());
-        you.wield_change = true;
-    }
-}
-
 // This also shuffles the deck.
 static void _deck_lose_card(item_def& deck)
 {
@@ -862,9 +846,6 @@ bool deck_peek()
     mpr("You shuffle the cards back into the deck.");
     _shuffle_deck(deck);
 
-    // Peeking identifies the deck.
-    _deck_ident(deck);
-
     you.wield_change = true;
     return (true);
 }
@@ -940,7 +921,6 @@ bool deck_mark()
         mprf("You shuffle the cards back into the deck.");
 
     _shuffle_deck(deck);
-    _deck_ident(deck);
     you.wield_change = true;
 
     return (true);
@@ -1006,7 +986,6 @@ bool deck_stack()
         return (false);
     }
 
-    _deck_ident(deck);
     const int num_cards    = cards_in_deck(deck);
     const int num_to_stack = (num_cards < 5 ? num_cards : 5);
 
@@ -1144,11 +1123,6 @@ bool deck_triple_draw()
 
     const int num_cards = cards_in_deck(deck);
 
-    // We have to identify the deck before removing cards from it.
-    // Otherwise, _remember_drawn_card() will implicitly call
-    // _deck_ident() when the deck might have no cards left.
-    _deck_ident(deck);
-
     if (num_cards == 1)
     {
         // Only one card to draw, so just draw it.
@@ -1206,7 +1180,7 @@ bool deck_triple_draw()
     uint8_t num_marked_left = deck.props["num_marked"].get_byte();
     for (int i = 0; i < num_to_draw; ++i)
     {
-        _remember_drawn_card(deck, draws[i], false);
+        _remember_drawn_card(deck, draws[i]);
         if (flags[i] & CFLAG_MARKED)
         {
             ASSERT(num_marked_left > 0);
@@ -1292,17 +1266,12 @@ void evoke_deck(item_def& deck)
         return;
 
     int brownie_points = 0;
-    bool allow_id = in_inventory(deck) && !item_ident(deck, ISFLAG_KNOW_TYPE);
 
     const deck_rarity_type rarity = deck_rarity(deck);
     CrawlHashTable &props = deck.props;
 
     uint8_t flags = 0;
     card_type card = _draw_top_card(deck, true, flags);
-
-    // Oddity cards don't give any information about the deck.
-    if (flags & CFLAG_ODDITY)
-        allow_id = false;
 
     // Passive Nemelex retribution: sometimes a card gets swapped out.
     // More likely to happen with marked decks.
@@ -1342,7 +1311,7 @@ void evoke_deck(item_def& deck)
         props["non_brownie_draws"]--;
 
     deck.plus2++;
-    _remember_drawn_card(deck, card, allow_id);
+    _remember_drawn_card(deck, card);
 
     // Get rid of the deck *before* the card effect because a card
     // might cause a wielded deck to be swapped out for something else,
@@ -1375,18 +1344,6 @@ void evoke_deck(item_def& deck)
             if (one_chance_in(3))
                 brownie_points++;
         }
-
-        // You can't ID off a marked card
-        allow_id = false;
-    }
-
-    if (!deck_gone && allow_id
-        && you.skill(SK_EVOCATIONS) > 5 + random2(35))
-    {
-        mpr("Your skill with magical items lets you identify the deck.");
-        set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        msg::streams(MSGCH_EQUIPMENT) << deck.name(DESC_INVENTORY)
-                                      << std::endl;
     }
 
     if (!fake_draw)

@@ -756,9 +756,9 @@ static std::string _corrosion_resistance_string(const item_def &item)
 
     if (is_artefact(item))
         return "";
-    if (ench >= 5 && item_ident(item, ISFLAG_KNOW_PLUSES))
+    if (ench >= 5)
         return make_stringf(format, "immune");
-    else if (ench >= 4 && item_ident(item, ISFLAG_KNOW_PLUSES))
+    else if (ench >= 4)
         return make_stringf(format, "extremely resistant");
     else if (item.base_type == OBJ_ARMOUR
              && item.sub_type == ARM_CRYSTAL_PLATE_MAIL)
@@ -771,9 +771,9 @@ static std::string _corrosion_resistance_string(const item_def &item)
         return "\nBeing of dwarven fabrication renders it very resistant to "
                "acidic corrosion.";
     }
-    else if (ench >= 3 && item_ident(item, ISFLAG_KNOW_PLUSES))
+    else if (ench >= 3)
         return make_stringf(format, "resistant");
-    else if (ench >= 2 && item_ident(item, ISFLAG_KNOW_PLUSES))
+    else if (ench >= 2)
         return make_stringf(format, "somewhat resistant");
     else
         return "";
@@ -1041,8 +1041,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
 
     if (!is_artefact(item))
     {
-        if (item_ident(item, ISFLAG_KNOW_PLUSES)
-            && item.plus >= MAX_WPN_ENCHANT && item.plus2 >= MAX_WPN_ENCHANT)
+        if (item.plus >= MAX_WPN_ENCHANT && item.plus2 >= MAX_WPN_ENCHANT)
         {
             description += "\nIt is maximally enchanted.";
         }
@@ -1256,7 +1255,7 @@ static std::string _describe_ammo(const item_def &item)
     else if (item.sub_type != MI_THROWING_NET)
         append_missile_info(description);
 
-    if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus >= MAX_WPN_ENCHANT)
+    if (item.plus >= MAX_WPN_ENCHANT)
         description += "\nIt is maximally enchanted.";
     else
     {
@@ -1402,10 +1401,6 @@ static std::string _describe_armour(const item_def &item, bool verbose)
             description += "\n\n";
             description += rand_desc;
         }
-
-        // Can't happen, right? (XXX)
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES))
-            description += "\nThis armour may have some hidden properties.";
     }
     else if (get_equip_race(item) != ISFLAG_NO_RACE)
     {
@@ -1439,7 +1434,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
             description += "\nEnchanting it will turn it into a suit of "
                            "magical armour.";
         }
-        else if (item.plus < max_ench || !item_ident(item, ISFLAG_KNOW_PLUSES))
+        else if (item.plus < max_ench)
         {
             description += "\nIt can be maximally enchanted to +";
             _append_value(description, max_ench, false);
@@ -1465,8 +1460,7 @@ static std::string _describe_jewellery(const item_def &item, bool verbose)
 
     description.reserve(200);
 
-    if ((verbose || is_artefact(item))
-        && item_ident(item, ISFLAG_KNOW_PLUSES))
+    if (verbose || is_artefact(item))
     {
         // Explicit description of ring power (useful for randarts)
         // Note that for randarts we'll print out the pluses even
@@ -1544,13 +1538,6 @@ static std::string _describe_jewellery(const item_def &item, bool verbose)
         {
             description += "\n";
             description += rand_desc;
-        }
-        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES) ||
-            !item_ident(item, ISFLAG_KNOW_TYPE))
-        {
-            description += "\nThis ";
-            description += (jewellery_is_amulet(item) ? "amulet" : "ring");
-            description += " may have hidden properties.";
         }
     }
 
@@ -1731,7 +1718,7 @@ bool is_dumpable_artefact(const item_def &item, bool verbose)
 
     if (is_known_artefact(item))
     {
-        ret = item_ident(item, ISFLAG_KNOW_PROPERTIES);
+        ret = true;
     }
     else if (verbose && item.base_type == OBJ_ARMOUR)
     {
@@ -1917,8 +1904,7 @@ std::string get_item_description(const item_def &item, bool verbose,
     case OBJ_WANDS:
         {
             const int max_charges = wand_max_charges(item.sub_type);
-            if (item.plus < max_charges
-                || !item_ident(item, ISFLAG_KNOW_PLUSES))
+            if (item.plus < max_charges)
             {
                 description << "\nIt can have at most " << max_charges
                             << " charges.";
@@ -1926,8 +1912,7 @@ std::string get_item_description(const item_def &item, bool verbose,
             else
                 description << "\nIt is fully charged.";
 
-            if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus == 0
-                || item.plus2 == ZAPCOUNT_EMPTY)
+            if (item.plus == 0 || item.plus2 == ZAPCOUNT_EMPTY)
             {
                 description << "\nUnfortunately, it has no charges left.";
             }
@@ -2022,37 +2007,30 @@ std::string get_item_description(const item_def &item, bool verbose,
 
                 const int max_charges = MAX_ROD_CHARGE;
                 const int max_recharge_rate = MAX_WPN_ENCHANT;
-                if (item_ident(item, ISFLAG_KNOW_PLUSES))
-                {
-                    const int num_charges = item.plus2 / ROD_CHARGE_MULT;
-                    if (max_charges > num_charges)
-                    {
-                        description << "\nIt can currently hold " << num_charges
-                                    << " charges. It can be magically "
-                                    << "recharged to contain up to "
-                                    << max_charges << " charges.";
-                    }
-                    else
-                        description << "\nIt is fully charged.";
 
-                    const int recharge_rate = short(item.props["rod_enchantment"]);
-                    if (recharge_rate < max_recharge_rate)
-                    {
-                        description << "\nIts current recharge rate is "
-                                    << (recharge_rate >= 0 ? "+" : "")
-                                    << recharge_rate << ". It can be magically "
-                                    << "recharged up to +" << max_recharge_rate
-                                    << ".";
-                    }
-                    else
-                        description << "\nIts recharge rate is at maximum.";
+                const int num_charges = item.plus2 / ROD_CHARGE_MULT;
+                if (max_charges > num_charges)
+                {
+                    description << "\nIt can currently hold " << num_charges
+                                << " charges. It can be magically "
+                                << "recharged to contain up to "
+                                << max_charges << " charges.";
                 }
                 else
+                    description << "\nIt is fully charged.";
+
+                const int recharge_rate = short(item.props["rod_enchantment"]);
+                if (recharge_rate < max_recharge_rate)
                 {
-                    description << "\nIt can have at most " << max_charges
-                                << " charges and +" << max_recharge_rate
-                                << " recharge rate.";
+                    description << "\nIts current recharge rate is "
+                                << (recharge_rate >= 0 ? "+" : "")
+                                << recharge_rate << ". It can be magically "
+                                << "recharged up to +" << max_recharge_rate
+                                << ".";
                 }
+                else
+                    description << "\nIts recharge rate is at maximum.";
+                
             }
             else if (Options.dump_book_spells)
             {

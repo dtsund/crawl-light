@@ -48,8 +48,6 @@ void equip_item(equipment_type slot, int item_slot, bool msg)
 
     _equip_effect(slot, item_slot, false, msg);
     ash_check_bondage();
-    if (you.equip[slot] != -1 && you.inv[you.equip[slot]].cursed())
-        ash_id_inventory();
 }
 
 // Clear an equipment slot (possibly melded).
@@ -162,8 +160,6 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
 
 static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
 {
-#define unknown_proprt(prop) (proprt[(prop)] && !known[(prop)])
-
     ASSERT(is_artefact(item));
 
     // Call unrandart equip function first, so that it can modify the
@@ -192,29 +188,11 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_AC])
     {
         you.redraw_armour_class = true;
-        if (!known[ARTP_AC])
-        {
-            if (msg)
-            {
-                mprf("You feel %s.", proprt[ARTP_AC] > 0?
-                     "well-protected" : "more vulnerable");
-            }
-            artefact_wpn_learn_prop(item, ARTP_AC);
-        }
     }
 
     if (proprt[ARTP_EVASION])
     {
         you.redraw_evasion = true;
-        if (!known[ARTP_EVASION])
-        {
-            if (msg)
-            {
-                mprf("You feel somewhat %s.", proprt[ARTP_EVASION] > 0?
-                     "nimbler" : "more awkward");
-            }
-            artefact_wpn_learn_prop(item, ARTP_EVASION);
-        }
     }
 
     if (proprt[ARTP_PONDEROUS] && !unmeld)
@@ -227,65 +205,16 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_EYESIGHT])
         autotoggle_autopickup(false);
 
-    if (proprt[ARTP_MAGICAL_POWER] && !known[ARTP_MAGICAL_POWER])
-    {
-        if (msg)
-        {
-            canned_msg(proprt[ARTP_MAGICAL_POWER] > 0 ? MSG_MANA_INCREASE
-                                                      : MSG_MANA_DECREASE);
-        }
-        artefact_wpn_learn_prop(item, ARTP_MAGICAL_POWER);
-    }
-
     // Modify ability scores.
     // Output result even when identified (because of potential fatality).
     notify_stat_change(STAT_STR,     proprt[ARTP_STRENGTH], !msg, item);
     notify_stat_change(STAT_INT, proprt[ARTP_INTELLIGENCE], !msg, item);
     notify_stat_change(STAT_DEX,    proprt[ARTP_DEXTERITY], !msg, item);
 
-    const artefact_prop_type stat_props[3] =
-        {ARTP_STRENGTH, ARTP_INTELLIGENCE, ARTP_DEXTERITY};
-
-    for (int i = 0; i < 3; i++)
-        if (unknown_proprt(stat_props[i]))
-            artefact_wpn_learn_prop(item, stat_props[i]);
-
-    // For evokable stuff, check whether other equipped items yield
-    // the same ability.  If not, and if the ability granted hasn't
-    // already been discovered, give a message.
-    if (unknown_proprt(ARTP_LEVITATE)
-        && !items_give_ability(item.link, ARTP_LEVITATE))
-    {
-        if (msg)
-        {
-            if (you.airborne())
-                mpr("You feel vaguely more buoyant than before.");
-            else
-                mpr("You feel buoyant.");
-        }
-        artefact_wpn_learn_prop(item, ARTP_LEVITATE);
-    }
-
-    if (unknown_proprt(ARTP_INVISIBLE) && !you.duration[DUR_INVIS])
-    {
-        if (msg)
-            mpr("You become transparent for a moment.");
-        artefact_wpn_learn_prop(item, ARTP_INVISIBLE);
-    }
-
-    if (unknown_proprt(ARTP_BERSERK)
-        && !items_give_ability(item.link, ARTP_BERSERK))
-    {
-        if (msg)
-            mpr("You feel a brief urge to hack something to bits.");
-        artefact_wpn_learn_prop(item, ARTP_BERSERK);
-    }
-
     if (!unmeld && !item.cursed() && proprt[ARTP_CURSED] > 0
          && one_chance_in(proprt[ARTP_CURSED]))
     {
         do_curse_item(item, !msg);
-        artefact_wpn_learn_prop(item, ARTP_CURSED);
     }
 
     if (proprt[ARTP_NOISES])
@@ -294,7 +223,6 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     // Let's try this here instead of up there.
     if (proprt[ARTP_MAGICAL_POWER])
         calc_mp();
-#undef unknown_proprt
 }
 
 static void _unequip_artefact_effect(const item_def &item,
@@ -310,21 +238,11 @@ static void _unequip_artefact_effect(const item_def &item,
     if (proprt[ARTP_AC])
     {
         you.redraw_armour_class = true;
-        if (!known[ARTP_AC] && msg)
-        {
-            mprf("You feel less %s.",
-                 proprt[ARTP_AC] > 0? "well-protected" : "vulnerable");
-        }
     }
 
     if (proprt[ARTP_EVASION])
     {
         you.redraw_evasion = true;
-        if (!known[ARTP_EVASION] && msg)
-        {
-            mprf("You feel less %s.",
-                 proprt[ARTP_EVASION] > 0? "nimble" : "awkward");
-        }
     }
 
     if (proprt[ARTP_PONDEROUS] && !meld)
@@ -332,12 +250,6 @@ static void _unequip_artefact_effect(const item_def &item,
         if (msg)
             mpr("That put a bit of spring back into your step.");
         che_handle_change(CB_PONDEROUS_COUNT, -1);
-    }
-
-    if (proprt[ARTP_MAGICAL_POWER] && !known[ARTP_MAGICAL_POWER] && msg)
-    {
-        canned_msg(proprt[ARTP_MAGICAL_POWER] > 0 ? MSG_MANA_DECREASE
-                                                  : MSG_MANA_INCREASE);
     }
 
     // Modify ability scores; always output messages.
@@ -1336,18 +1248,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     {
         bool show_msgs = true;
         _equip_artefact_effect(item, &show_msgs, unmeld);
-
-        if (learn_pluses && (item.plus != 0 || item.plus2 != 0))
-            set_ident_flags(item, ISFLAG_KNOW_PLUSES);
-
-        if (fake_rap != ARTP_NUM_PROPERTIES)
-            artefact_wpn_learn_prop(item, fake_rap);
-
-        if (!item.props.exists("jewellery_tried")
-            || !item.props["jewellery_tried"].get_bool())
-        {
-            item.props["jewellery_tried"].get_bool() = true;
-        }
     }
     else
     {

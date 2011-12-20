@@ -927,8 +927,7 @@ static bool _advise_use_wand()
             continue;
 
         // Empty wands are no good.
-        if (obj.plus2 == ZAPCOUNT_EMPTY
-            || item_ident(obj, ISFLAG_KNOW_PLUSES) && obj.plus <= 0)
+        if (obj.plus2 == ZAPCOUNT_EMPTY || obj.plus <= 0)
         {
             continue;
         }
@@ -3945,21 +3944,13 @@ void hints_describe_item(const item_def &item)
             else // It's a spellbook!
             {
                 if (you.religion == GOD_TROG
-                    && (item.sub_type != BOOK_DESTRUCTION
-                        || !item_ident(item, ISFLAG_KNOW_TYPE)))
+                    && (item.sub_type != BOOK_DESTRUCTION)
                 {
-                    if (!item_ident(item, ISFLAG_KNOW_TYPE))
-                    {
-                        ostr << "It's a book, you can <w>%</w>ead it.";
-                        cmd.push_back(CMD_READ);
-                    }
-                    else
-                    {
-                        ostr << "A spellbook! You could <w>%</w>emorise some "
-                                "spells and then cast them with <w>%</w>.";
-                        cmd.push_back(CMD_MEMORISE_SPELL);
-                        cmd.push_back(CMD_CAST_SPELL);
-                    }
+                    ostr << "A spellbook! You could <w>%</w>emorise some "
+                            "spells and then cast them with <w>%</w>.";
+                    cmd.push_back(CMD_MEMORISE_SPELL);
+                    cmd.push_back(CMD_CAST_SPELL);
+                    
                     ostr << "\nAs a worshipper of "
                          << god_name(GOD_TROG)
                          << ", though, you might instead wish to burn this "
@@ -3969,17 +3960,7 @@ void hints_describe_item(const item_def &item)
                             "on the floor and not on your current square. ";
                     cmd.push_back(CMD_USE_ABILITY);
                 }
-                else if (!item_ident(item, ISFLAG_KNOW_TYPE))
-                {
-                    ostr << "It's a book, you can <w>%</w>ead it"
-#ifdef USE_TILE
-                            ", something that can also be achieved by clicking "
-                            "on its tile in your inventory."
-#endif
-                            ".";
-                    cmd.push_back(CMD_READ);
-                }
-                else if (item.sub_type == BOOK_DESTRUCTION)
+                if (item.sub_type == BOOK_DESTRUCTION)
                 {
                     ostr << "This magical item can cause great destruction "
                             "- to you, or your surroundings. Use with care!";
@@ -4113,26 +4094,12 @@ void hints_describe_item(const item_def &item)
        case OBJ_STAVES:
             if (item_is_rod(item))
             {
-                if (!item_ident(item, ISFLAG_KNOW_TYPE))
-                {
-                    ostr << "\n\nTo find out what this rod might do, you have "
-                            "to <w>%</w>ield it to see if you can use the "
-                            "spells hidden within, then e<w>%</w>oke it to "
-                            "actually do so"
+                ostr << "\n\nYou can use this rod's magic by "
+                        "<w>%</w>ielding and e<w>%</w>oking it"
 #ifdef USE_TILE
-                            ", both of which can be done by clicking on it"
+                        ", both of which can be achieved by clicking on it"
 #endif
-                            ".";
-                }
-                else
-                {
-                    ostr << "\n\nYou can use this rod's magic by "
-                            "<w>%</w>ielding and e<w>%</w>oking it"
-#ifdef USE_TILE
-                            ", both of which can be achieved by clicking on it"
-#endif
-                            ".";
-                }
+                        ".";
                 cmd.push_back(CMD_WIELD_WEAPON);
                 cmd.push_back(CMD_EVOKE_WIELDED);
             }

@@ -690,7 +690,7 @@ static bool _dump_item_origin(const item_def &item, int value)
         return (true);
 
     if (fs(IODS_ARTEFACTS)
-        && is_artefact(item) && item_ident(item, ISFLAG_KNOW_PROPERTIES))
+        && is_artefact(item))
     {
         return (true);
     }

@@ -316,8 +316,6 @@ void update_monsters_in_view()
         for (unsigned int i = 0; i < size; ++i)
         {
             const monster* mon = monsters[i];
-            if (!mon->props.exists("ash_id"))
-                continue;
 
             if (warning)
                 warning_msg += " ";
