@@ -2660,7 +2660,7 @@ static bool _similar_wands(const item_def& pickup_item,
 
     // Not similar if wand in inventory is known to be empty.
     return (inv_item.plus2 != ZAPCOUNT_EMPTY
-            || inv_item.plus > 0));
+            || inv_item.plus > 0);
 }
 
 static bool _similar_jewellery(const item_def& pickup_item,
@@ -3914,8 +3914,7 @@ item_info get_item_info(const item_def& item)
             ii.props["rod_enchantment"] = item.props["rod_enchantment"];
         ii.plus = item.plus;
         ii.plus2 = item.plus2;
-        else
-            ii.sub_type = item_is_rod(item) ? STAFF_FIRST_ROD : 0;
+        ii.sub_type = item_is_rod(item) ? STAFF_FIRST_ROD : 0;
         ii.special = item.special; // appearance
         break;
     case OBJ_MISCELLANY:

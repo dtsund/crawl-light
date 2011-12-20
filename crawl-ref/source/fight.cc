@@ -2387,7 +2387,7 @@ bool melee_attack::distortion_affects_defender()
     {
         emit_nodmg_hit_message();
 
-        else if (defender_visible)
+        if (defender_visible)
             obvious_effect = true;
 
         defender->banish(attacker->name(DESC_PLAIN, true));
@@ -5849,8 +5849,6 @@ void melee_attack::mons_perform_attack_rounds()
             if (attk.flavour == AF_STEAL)
                 mons_apply_attack_flavour(attk);
         }
-
-        item_def *weap = attacker->as_monster()->mslot_item(MSLOT_WEAPON);
     }
 
     // Check for passive freeze or eyeball mutation.

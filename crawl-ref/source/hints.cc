@@ -3944,7 +3944,7 @@ void hints_describe_item(const item_def &item)
             else // It's a spellbook!
             {
                 if (you.religion == GOD_TROG
-                    && (item.sub_type != BOOK_DESTRUCTION)
+                    && (item.sub_type != BOOK_DESTRUCTION))
                 {
                     ostr << "A spellbook! You could <w>%</w>emorise some "
                             "spells and then cast them with <w>%</w>.";

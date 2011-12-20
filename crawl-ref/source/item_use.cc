@@ -2226,19 +2226,6 @@ static int dex_adjust_thrown_tohit(int hit)
     return stat_adjust(hit, you.dex(), 13, 160, 90);
 }
 
-static void identify_floor_missiles_matching(item_def mitem, int idflags)
-{
-    mitem.flags &= ~idflags;
-
-    for (int y = 0; y < GYM; ++y)
-        for (int x = 0; x < GXM; ++x)
-            for (stack_iterator si(coord_def(x,y)); si; ++si)
-            {
-                if ((si->flags & ISFLAG_THROWN) && items_stack(*si, mitem))
-                    si->flags |= idflags;
-            }
-}
-
 static void _merge_ammo_in_inventory(int slot)
 {
     if (!you.inv[slot].defined())
