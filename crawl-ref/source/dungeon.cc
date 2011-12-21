@@ -11,6 +11,7 @@
 #include <list>
 #include <set>
 #include <sstream>
+#include <string>
 #include <algorithm>
 #include <cmath>
 
@@ -4027,8 +4028,11 @@ retry:
                 props["randbook_title"].get_string());
         }
 
-        // Remove unsuitable inscriptions such as {god gift}.
-        item.inscription.clear();
+        // Remove unsuitable inscriptions (I think the only such one is {god gift}).
+        if(item.inscription.find("god gift, ") != std::string::npos)
+            item.inscription.replace(0,10,"");
+        else if(item.inscription.find("god gift") != std::string::npos)
+            item.inscription.replace(0,8,"");
         // And wipe item origin to remove "this is a god gift!" from there,
         // unless we're dealing with a corpse.
         if (!spec.corpselike())
