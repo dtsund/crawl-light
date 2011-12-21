@@ -624,10 +624,10 @@ std::string monster_info::_core_name() const
         case MONS_DANCING_WEAPON:
             if (inv[MSLOT_WEAPON].get())
             {
-                iflags_t ignore_flags = ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES;
+                iflags_t ignore_flags = ISFLAG_KNOW_CURSE;
                 bool     use_inscrip  = true;
                 const item_def& item = *inv[MSLOT_WEAPON];
-                s = (item.name(DESC_PLAIN, false, false, use_inscrip, false,
+                s = (item.name(DESC_INVENTORY, false, false, use_inscrip, false,
                                   ignore_flags));
             }
             break;
