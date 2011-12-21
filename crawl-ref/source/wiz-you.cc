@@ -248,6 +248,7 @@ void wizard_heal(bool super_heal)
     set_mp(you.max_magic_points, false);
     set_hunger(10999, true);
     you.redraw_hit_points = true;
+    you.redraw_glow = true;
 }
 
 void wizard_set_hunger_state()
