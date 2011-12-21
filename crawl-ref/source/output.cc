@@ -167,6 +167,8 @@ colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY);
 colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY);
 #endif
 
+colour_bar Glow_Bar(YELLOW, DARKGREY, DARKGREY, DARKGREY);
+
 // ----------------------------------------------------------------------
 // Status display
 // ----------------------------------------------------------------------
@@ -200,6 +202,9 @@ void update_turn_count()
         return;
     }
 
+/*
+Removed to make room for glow meter!
+
     cgotoxy(19+6, 9, GOTO_STAT);
 
     // Show the turn count starting from 1. You can still quit on turn 0.
@@ -214,6 +219,7 @@ void update_turn_count()
     else
         cprintf("%d", you.num_turns);
     textcolor(LIGHTGREY);
+*/
 }
 
 static int _count_digits(int val)
@@ -308,6 +314,40 @@ static void _print_stats_hp(int x, int y)
 
     if (!Options.classic_hud)
         HP_Bar.draw(19, y, you.hp, you.hp_max);
+}
+
+static void _print_stats_glow(int x, int y)
+{
+//This define is here for now; it'll be replaced when species-specific max glow is implemented.
+#define MAX_GLOW 5
+    // Calculate colour
+    short glow_colour = HUD_VALUE_COLOUR;
+
+    if(you.magic_contamination >= MAX_GLOW)
+        glow_colour = RED;
+    else if(you.magic_contamination >= 3)
+        glow_colour = YELLOW;
+    else if(you.magic_contamination >= 1)
+        glow_colour = GREEN;
+    else
+        glow_colour = HUD_VALUE_COLOUR;
+
+    cgotoxy(x+8, y, GOTO_STAT);
+    textcolor(glow_colour);
+    cprintf("%d", you.magic_contamination);
+    textcolor(HUD_VALUE_COLOUR);
+    cprintf("/%d", MAX_GLOW);
+
+    int col = _count_digits(you.magic_contamination)
+              + _count_digits(MAX_GLOW) + 1;
+    for (int i = 11-col; i > 0; i--)
+        cprintf(" ");
+    
+    //Sanity!  The bar drawing function gags if you give it an overfull bar.
+    int bar_fullness = (you.magic_contamination > MAX_GLOW) ? MAX_GLOW : you.magic_contamination;
+
+    if (!Options.classic_hud)
+        Glow_Bar.draw(19, y, bar_fullness, MAX_GLOW);
 }
 
 static short _get_stat_colour(stat_type stat)
@@ -662,17 +702,18 @@ void print_stats(void)
 
     if (you.redraw_hit_points)   { you.redraw_hit_points = false;   _print_stats_hp (1, 3); }
     if (you.redraw_magic_points) { you.redraw_magic_points = false; _print_stats_mp (1, 4); }
-    if (you.redraw_armour_class) { you.redraw_armour_class = false; _print_stats_ac (1, 5); }
-    if (you.redraw_evasion)      { you.redraw_evasion = false;      _print_stats_ev (1, 6); }
+    _print_stats_glow(1,5);
+    if (you.redraw_armour_class) { you.redraw_armour_class = false; _print_stats_ac (1, 6); }
+    if (you.redraw_evasion)      { you.redraw_evasion = false;      _print_stats_ev (1, 7); }
 
     for (int i = 0; i < NUM_STATS; ++i)
         if (you.redraw_stats[i])
-            _print_stat(static_cast<stat_type>(i), 19, 5 + i);
+            _print_stat(static_cast<stat_type>(i), 19, 6 + i);
     you.redraw_stats.init(false);
 
     if (you.redraw_experience)
     {
-        cgotoxy(1,8, GOTO_STAT);
+        cgotoxy(1,9, GOTO_STAT);
         textcolor(Options.status_caption_colour);
 #ifdef DEBUG_DIAGNOSTICS
         cprintf("XP: ");
@@ -706,6 +747,10 @@ void print_stats(void)
 
     int yhack = 0;
 
+/*
+Have to get rid of gold and turns to make room for the glow meter.  Sorry!
+
+
     // If Options.show_gold_turns, line 9 is Gold and Turns
     if (Options.show_gold_turns)
     {
@@ -715,6 +760,7 @@ void print_stats(void)
         textcolor(HUD_VALUE_COLOUR);
         cprintf("%-6d", you.gold);
     }
+*/
 
     if (you.wield_change)
     {
@@ -728,7 +774,7 @@ void print_stats(void)
         // Also, it's a little bogus to change simulation state in
         // render code.  We should find a better place for this.
         you.m_quiver->on_weapon_changed();
-        _print_stats_wp(9 + yhack);
+        _print_stats_wp(10 + yhack);
     }
     you.wield_change  = false;
 
@@ -739,14 +785,14 @@ void print_stats(void)
         yhack -= 1;
     }
     else if (you.redraw_quiver || you.wield_change)
-        _print_stats_qv(10 + yhack);
+        _print_stats_qv(11 + yhack);
 
     you.redraw_quiver = false;
 
     if (you.redraw_status_flags)
     {
         you.redraw_status_flags = 0;
-        _print_status_lights(11 + yhack);
+        _print_status_lights(12 + yhack);
     }
     textcolor(LIGHTGREY);
 
@@ -887,19 +933,22 @@ void draw_border(void)
 
     //cgotoxy(1, 3, GOTO_STAT); cprintf("Hp:");
     cgotoxy(1, 4, GOTO_STAT); cprintf("Magic:");
-    cgotoxy(1, 5, GOTO_STAT); cprintf("AC:");
-    cgotoxy(1, 6, GOTO_STAT); cprintf("EV:");
-    cgotoxy(1, 7, GOTO_STAT); cprintf("SH:");
+    cgotoxy(1, 5, GOTO_STAT); cprintf("Glow:");
+    cgotoxy(1, 6, GOTO_STAT); cprintf("AC:");
+    cgotoxy(1, 7, GOTO_STAT); cprintf("EV:");
+    cgotoxy(1, 8, GOTO_STAT); cprintf("SH:");
 
-    cgotoxy(19, 5, GOTO_STAT); cprintf("Str:");
-    cgotoxy(19, 6, GOTO_STAT); cprintf("Int:");
-    cgotoxy(19, 7, GOTO_STAT); cprintf("Dex:");
+    cgotoxy(19, 6, GOTO_STAT); cprintf("Str:");
+    cgotoxy(19, 7, GOTO_STAT); cprintf("Int:");
+    cgotoxy(19, 8, GOTO_STAT); cprintf("Dex:");
 
+/*
     if (Options.show_gold_turns)
     {
         cgotoxy(1, 9, GOTO_STAT); cprintf("Gold:");
         cgotoxy(19, 9, GOTO_STAT); cprintf("Turn:");
     }
+*/
     // Line 8 is exp pool, Level
 }
 
