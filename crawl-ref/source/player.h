@@ -288,6 +288,7 @@ public:
 
   bool redraw_hit_points;
   bool redraw_magic_points;
+  bool redraw_glow;
   FixedVector<bool, NUM_STATS> redraw_stats;
   bool redraw_experience;
   bool redraw_armour_class;

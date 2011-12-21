@@ -702,7 +702,7 @@ void print_stats(void)
 
     if (you.redraw_hit_points)   { you.redraw_hit_points = false;   _print_stats_hp (1, 3); }
     if (you.redraw_magic_points) { you.redraw_magic_points = false; _print_stats_mp (1, 4); }
-    _print_stats_glow(1,5);
+    if (you.redraw_glow)         { you.redraw_glow = false;         _print_stats_glow(1,5); }
     if (you.redraw_armour_class) { you.redraw_armour_class = false; _print_stats_ac (1, 6); }
     if (you.redraw_evasion)      { you.redraw_evasion = false;      _print_stats_ev (1, 7); }
 

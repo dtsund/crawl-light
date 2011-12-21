@@ -232,6 +232,7 @@ void wizard_heal(bool super_heal)
     {
         // Clear more stuff and give a HP boost.
         you.magic_contamination = 0;
+        you.redraw_glow = true;
         you.duration[DUR_LIQUID_FLAMES] = 0;
         you.clear_beholders();
         inc_hp(10, true);

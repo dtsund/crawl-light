@@ -1988,6 +1988,7 @@ void revive()
 {
     you.disease = 0;
     you.magic_contamination = 0;
+    you.redraw_glow = true;
     set_hunger(6000, true);
     restore_stat(STAT_ALL, 0, true);
     you.rotting = 0;

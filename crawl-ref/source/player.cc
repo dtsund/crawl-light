@@ -4741,6 +4741,8 @@ void contaminate_player(int change, bool controlled, bool msg)
         else if (controlled && change > 0 && old_level > 1)
             did_god_conduct(DID_CAUSE_GLOWING, 1 + new_level, true);
     }
+    
+    you.redraw_glow = true;
 }
 
 bool confuse_player(int amount, bool resistable)
