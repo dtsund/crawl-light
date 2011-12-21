@@ -982,6 +982,7 @@ enum description_level_type
     DESC_NOCAP_YOUR,
     DESC_PLAIN,
     DESC_NOCAP_ITS,
+    DESC_NOPRONOUN,
     DESC_INVENTORY_EQUIP,
     DESC_INVENTORY,
 
