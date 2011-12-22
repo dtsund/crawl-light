@@ -2276,7 +2276,7 @@ void handle_time()
         // [ds] Move magic contamination effects closer to b26 again.
         const bool glow_effect =
             (get_contamination_level() > 1
-             && x_chance_in_y(you.magic_contamination, 12));
+             && x_chance_in_y(you.magic_contamination, you.max_magic_contamination * 2));
 
         if (glow_effect && is_sanctuary(you.pos()))
         {
@@ -2292,21 +2292,21 @@ void handle_time()
             // Undead enjoy extra contamination explosion damage because
             // the magical contamination has a harder time dissipating
             // through non-living flesh. :-)
-            if (you.magic_contamination > 10 && coinflip())
+            if (you.magic_contamination > you.max_magic_contamination * 2 && coinflip())
             {
                 bolt beam;
 
                 beam.flavour      = BEAM_RANDOM;
                 beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
-                beam.damage       = dice_def(3, you.magic_contamination
+                beam.damage       = dice_def(3, you.magic_contamination * 5 / you.max_magic_contamination
                                              * (you.is_undead ? 4 : 2) / 4);
                 beam.target       = you.pos();
                 beam.name         = "magical storm";
                 beam.beam_source  = NON_MONSTER;
                 beam.aux_source   = "a magical explosion";
                 beam.ex_size      = std::max(1, std::min(9,
-                                        you.magic_contamination / 15));
-                beam.ench_power   = you.magic_contamination * 5;
+                                        you.magic_contamination / (3 * you.max_magic_contamination)));
+                beam.ench_power   = you.magic_contamination * 25 / you.max_magic_contamination;
                 beam.is_explosion = true;
 
                 beam.explode();
@@ -2321,7 +2321,7 @@ void handle_time()
             // we're meaner now, what with explosions and whatnot, but
             // we dial down the contamination a little faster if its actually
             // mutating you.  -- GDL
-            contaminate_player(-(random2(you.magic_contamination / 4) + 1));
+            contaminate_player(-(random2(you.magic_contamination / (you.max_magic_contamination - 1)) + 1));
         }
     }
 

@@ -205,6 +205,7 @@ public:
 
   int earth_attunement; // nomes only
   int magic_contamination;
+  int max_magic_contamination;
 
   FixedVector<bool, NUM_FIXED_BOOKS> had_book;
   FixedVector<bool, NUM_SPELLS>      seen_spell;
@@ -928,4 +929,6 @@ void run_macro(const char *macroname = NULL);
 int count_worn_ego(int which_ego);
 bool need_expiration_warning(duration_type dur, coord_def p = you.pos());
 bool need_expiration_warning(coord_def p = you.pos());
+
+int get_max_magic_contamination(species_type species);
 #endif

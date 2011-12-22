@@ -1643,6 +1643,9 @@ static void _setup_generic(const newgame_def& ng)
     // Make sure the starting player is fully charged up.
     set_hp(you.hp_max, false);
     set_mp(you.max_magic_points, false);
+    
+    // Set max glow according to race.
+    you.max_magic_contamination = get_max_magic_contamination(you.species);
 
     // tmpfile purging removed in favour of marking
     Generated_Levels.clear();

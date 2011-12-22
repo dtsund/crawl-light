@@ -4647,15 +4647,15 @@ int get_contamination_level()
 {
     const int glow = you.magic_contamination;
 
-    if (glow > 60)
-        return (glow / 20 + 3);
-    if (glow > 40)
+    if (glow > 12 * you.max_magic_contamination)
+        return (glow / (4 * you.max_magic_contamination) + 3);
+    if (glow > 8 * you.max_magic_contamination)
         return (5);
-    if (glow > 25)
+    if (glow > 5 * you.max_magic_contamination)
         return (4);
-    if (glow > 15)
+    if (glow > 3 * you.max_magic_contamination)
         return (3);
-    if (glow > 5)
+    if (glow > you.max_magic_contamination)
         return (2);
     if (glow > 0)
         return (1);
@@ -7118,4 +7118,10 @@ bool need_expiration_warning(coord_def p)
 {
     return need_expiration_warning(DUR_LEVITATION, p)
            || need_expiration_warning(DUR_TRANSFORMATION, p);
+}
+
+int get_max_magic_contamination(species_type species)
+{
+    //Will be species-specific later on.
+    return 5;
 }

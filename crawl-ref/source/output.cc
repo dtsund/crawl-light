@@ -318,14 +318,12 @@ static void _print_stats_hp(int x, int y)
 
 static void _print_stats_glow(int x, int y)
 {
-//This define is here for now; it'll be replaced when species-specific max glow is implemented.
-#define MAX_GLOW 5
     // Calculate colour
     short glow_colour = HUD_VALUE_COLOUR;
 
-    if(you.magic_contamination >= MAX_GLOW)
+    if(you.magic_contamination >= you.max_magic_contamination)
         glow_colour = RED;
-    else if(you.magic_contamination >= 3)
+    else if(you.magic_contamination >= you.max_magic_contamination / 2)
         glow_colour = YELLOW;
     else if(you.magic_contamination >= 1)
         glow_colour = GREEN;
@@ -336,18 +334,18 @@ static void _print_stats_glow(int x, int y)
     textcolor(glow_colour);
     cprintf("%d", you.magic_contamination);
     textcolor(HUD_VALUE_COLOUR);
-    cprintf("/%d", MAX_GLOW);
+    cprintf("/%d", you.max_magic_contamination);
 
     int col = _count_digits(you.magic_contamination)
-              + _count_digits(MAX_GLOW) + 1;
+              + _count_digits(you.max_magic_contamination) + 1;
     for (int i = 11-col; i > 0; i--)
         cprintf(" ");
     
     //Sanity!  The bar drawing function gags if you give it an overfull bar.
-    int bar_fullness = (you.magic_contamination > MAX_GLOW) ? MAX_GLOW : you.magic_contamination;
+    int bar_fullness = (you.magic_contamination > you.max_magic_contamination) ? you.max_magic_contamination : you.magic_contamination;
 
     if (!Options.classic_hud)
-        Glow_Bar.draw(19, y, bar_fullness, MAX_GLOW);
+        Glow_Bar.draw(19, y, bar_fullness, you.max_magic_contamination);
 }
 
 static short _get_stat_colour(stat_type stat)

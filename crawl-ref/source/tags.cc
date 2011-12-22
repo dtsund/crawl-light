@@ -1847,6 +1847,8 @@ static void tag_read_you(reader &th)
     you.exploration = unmarshallInt(th);
 
     you.magic_contamination = unmarshallShort(th);
+    
+    you.max_magic_contamination = get_max_magic_contamination(you.species);
 
     you.transit_stair  = static_cast<dungeon_feature_type>(unmarshallShort(th));
     you.entering_level = unmarshallByte(th);
