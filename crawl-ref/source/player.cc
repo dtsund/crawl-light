@@ -7122,6 +7122,9 @@ bool need_expiration_warning(coord_def p)
 
 int get_max_magic_contamination(species_type species)
 {
-    //Will be species-specific later on.
-    return 5;
+    if(species == SP_SPRIGGAN)
+        return 7;
+    else if(species == SP_TROLL)
+        return 6; //Might be interesting to make this even lower, but strengthen trolls significantly
+    return 10;
 }
