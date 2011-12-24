@@ -3268,8 +3268,9 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_HASTE:
+        //contaminate_player is no longer called here, since all hasting
+        //incurs a glow cost of 6.
         potion_effect(POT_SPEED, ench_power, false, effect_known);
-        contaminate_player(1, effect_known);
         obvious_effect = true;
         nasty = false;
         nice  = true;
@@ -3298,9 +3299,10 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_INVISIBILITY:
+        //contaminate_player is no longer called here, since all invisibility
+        //incurs a glow cost of 6.
         you.attribute[ATTR_INVIS_UNCANCELLABLE] = 1;
         potion_effect(POT_INVISIBILITY, ench_power);
-        contaminate_player(1 + random2(2), effect_known);
         obvious_effect = true;
         nasty = false;
         nice  = true;
