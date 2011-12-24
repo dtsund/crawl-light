@@ -157,12 +157,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         break;
 
     case POT_SPEED:
+        //Contamination is handled in haste_player.
         if (haste_player((40 + random2(pow)) / factor))
             did_god_conduct(DID_HASTY, 10, was_known);
         break;
 
     case POT_MIGHT:
     {
+        // Might always incurs some glow cost.
+        contaminate_player(1, true);
         const bool were_mighty = you.duration[DUR_MIGHT] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -171,15 +174,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         // conceivable max gain of +184 {dlb}
         you.increase_duration(DUR_MIGHT, (35 + random2(pow)) / factor, 80);
 
-        if (were_mighty)
-            contaminate_player(1, was_known);
-        else
+        if (!were_mighty)
             notify_stat_change(STAT_STR, 5, true, "");
         break;
     }
 
     case POT_BRILLIANCE:
     {
+        // Brilliance always incurs some glow cost.
+        contaminate_player(1, true);
         const bool were_brilliant = you.duration[DUR_BRILLIANCE] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -188,15 +191,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         you.increase_duration(DUR_BRILLIANCE,
                               (35 + random2(pow)) / factor, 80);
 
-        if (were_brilliant)
-            contaminate_player(1, was_known);
-        else
+        if (!were_brilliant)
             notify_stat_change(STAT_INT, 5, true, "");
         break;
     }
 
     case POT_AGILITY:
     {
+        // Agility always incurs some glow cost.
+        contaminate_player(1, true);
         const bool were_agile = you.duration[DUR_AGILITY] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -204,9 +207,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
         you.increase_duration(DUR_AGILITY, (35 + random2(pow)) / factor, 80);
 
-        if (were_agile)
-            contaminate_player(1, was_known);
-        else
+        if (!were_agile)
             notify_stat_change(STAT_DEX, 5, true, "");
         break;
     }
@@ -276,6 +277,8 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         break;
 
     case POT_INVISIBILITY:
+        // Invisibility is very costly!
+        contaminate_player(5, true);
         if (you.haloed() || you.glows_naturally())
         {
             // You can't turn invisible while haloed or glowing

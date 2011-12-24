@@ -2246,6 +2246,9 @@ void handle_time()
 
     int added_contamination = 0;
 
+    //Haste, Invis, and Finesse users now pay their (severe!) glow costs up-front.
+    
+/*
     // Account for mutagenic radiation.  Invis and haste will give the
     // player about .1 points per turn, mutagenic randarts will give
     // about 1.5 points on average, so they can corrupt the player
@@ -2259,6 +2262,7 @@ void handle_time()
 
     if (you.duration[DUR_FINESSE] && x_chance_in_y(4, 10))
         added_contamination++;
+*/
 
     bool mutagenic_randart = false;
     if (artefact_glow)
