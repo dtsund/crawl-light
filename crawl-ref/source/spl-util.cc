@@ -408,6 +408,19 @@ int spell_glow(spell_type which_spell, bool rod)
     return 0;
 }
 
+// Spell glow evaluator that takes into consideration the glow
+// caused by the spell's effects, not just the cost of the spell
+// itself.  Used for interface purposes.
+int adjusted_spell_glow(spell_type which_spell, bool rod)
+{
+    if (which_spell == SPELL_HASTE)
+        return spell_glow(which_spell, rod) + 6;
+    else if (which_spell == SPELL_INVISIBILITY)
+        return spell_glow(which_spell, rod) + 5;
+    
+    return spell_glow(which_spell, rod);
+}
+
 // Used to determine whether or not a monster should always fire this spell
 // if selected.  If not, we should use a tracer.
 

@@ -184,7 +184,7 @@ static std::string _spell_extra_description(spell_type spell)
     const std::string rangestring = spell_range_string(spell);
     
     char glowstring[12];
-    sprintf(glowstring, "%d", spell_glow(spell));
+    sprintf(glowstring, "%d", adjusted_spell_glow(spell));
 
     desc << chop_string(spell_power_string(spell), 14)
          << chop_string(rangestring, 16 + tagged_string_tag_length(rangestring))
