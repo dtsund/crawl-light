@@ -3747,8 +3747,12 @@ void zap_wand(int slot)
         // else intentional fall-through
     case WAND_HASTING:
     case WAND_INVISIBILITY:
+        beam.needs_glow_warning = true;
         targ_mode = TARG_FRIEND;
         break;
+    case WAND_RANDOM_EFFECTS:
+        beam.needs_glow_warning = false;
+        //fall through intentional
 
     default:
         targ_mode = TARG_HOSTILE;
@@ -3855,7 +3859,8 @@ void zap_wand(int slot)
 #endif
 
     // zapping() updates beam.
-    zapping(type_zapped, 30 + roll_dice(2, you.skill(SK_EVOCATIONS)), beam);
+    if(!zapping(type_zapped, 30 + roll_dice(2, you.skill(SK_EVOCATIONS)), beam))
+        return;
 
     // Take off a charge.
     wand.plus--;
@@ -3995,14 +4000,10 @@ void drink(int slot)
         return;
     }
 
-    // Identify item and type.
-    if (potion_effect(static_cast<potion_type>(potion.sub_type),
-                      40, true, true))
-    {
-        set_ident_flags(potion, ISFLAG_IDENT_MASK);
-        set_ident_type(potion, ID_KNOWN_TYPE);
-        mpr("It was a " + potion.name(DESC_QUALNAME) + ".");
-    }
+    // Give the player a chance to abort before drinking overly-contaminating stuff.
+    if (!potion_effect(static_cast<potion_type>(potion.sub_type),
+                      40, true, false))
+        return;
 
     if (is_blood_potion(potion))
     {

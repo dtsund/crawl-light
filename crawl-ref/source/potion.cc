@@ -30,6 +30,7 @@
 #include "player-equip.h"
 #include "player-stats.h"
 #include "spl-miscast.h"
+#include "stuff.h"
 #include "terrain.h"
 #include "transform.h"
 #include "xom.h"
@@ -40,17 +41,15 @@
  * This is called when the player quaff a potion, but also for some cards,
  * beams, sparkling fountains, god effects and miscasts.
  *
- * @param pot_eff   The potion type.
- * @param pow       The power of the effect. 40 for actual potions.
- * @param drank_it  Wether the player actually quaffed (potions and fountains).
- * @param was_known Wether the potion was already identified.
+ * @param pot_eff        The potion type.
+ * @param pow            The power of the effect. 40 for actual potions.
+ * @param drank_it       Whether the player actually quaffed (potions and fountains).
+ * @param already_warned Whether the user was already warned about overcontamination.
  *
- * @return If the potion was identified.
+ * @return If the effect was used, rather than aborted.
  */
-bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
+bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_warned)
 {
-    bool effect = true;  // current behaviour is all potions id on quaffing
-
     pow = std::min(pow, 150);
 
     int factor = (you.species == SP_VAMPIRE
@@ -59,7 +58,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
     // Knowingly drinking bad potions is much less amusing.
     int xom_factor = factor;
-    if (drank_it && was_known)
+    if (drank_it)
     {
         xom_factor *= 2;
         if (!player_in_a_dangerous_place())
@@ -153,18 +152,28 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
                     lessen_hunger(value, true);
             }
         }
-        did_god_conduct(DID_DRINK_BLOOD, 1 + random2(3), was_known);
+        did_god_conduct(DID_DRINK_BLOOD, 1 + random2(3), true);
         break;
 
     case POT_SPEED:
-        //Contamination is handled in haste_player.
+        // Actual contamination is handled in haste_player.
+        if (!already_warned && !contamination_warning_prompt(HASTE_GLOW_COST))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         if (haste_player((40 + random2(pow)) / factor))
-            did_god_conduct(DID_HASTY, 10, was_known);
+            did_god_conduct(DID_HASTY, 10, true);
         break;
 
     case POT_MIGHT:
     {
         // Might always incurs some glow cost.
+        if (!already_warned && !contamination_warning_prompt(MIGHT_GLOW_COST))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         contaminate_player(MIGHT_GLOW_COST, true);
         const bool were_mighty = you.duration[DUR_MIGHT] > 0;
 
@@ -182,6 +191,11 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
     case POT_BRILLIANCE:
     {
         // Brilliance always incurs some glow cost.
+        if (!already_warned && !contamination_warning_prompt(BRILLIANCE_GLOW_COST))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         contaminate_player(BRILLIANCE_GLOW_COST, true);
         const bool were_brilliant = you.duration[DUR_BRILLIANCE] > 0;
 
@@ -199,6 +213,11 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
     case POT_AGILITY:
     {
         // Agility always incurs some glow cost.
+        if (!already_warned && !contamination_warning_prompt(AGILITY_GLOW_COST))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         contaminate_player(AGILITY_GLOW_COST, true);
         const bool were_agile = you.duration[DUR_AGILITY] > 0;
 
@@ -278,6 +297,11 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
     case POT_INVISIBILITY:
         // Invisibility is very costly!
+        if (!already_warned && !contamination_warning_prompt(INVIS_GLOW_COST))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         contaminate_player(INVIS_GLOW_COST, true);
         if (you.haloed() || you.glows_naturally())
         {
@@ -403,7 +427,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         }
         else
         {
-            if (go_berserk(was_known, true))
+            if (go_berserk(true, true))
                 xom_is_stimulated(50);
         }
         break;
@@ -421,10 +445,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
             mutate(RANDOM_MUTATION, false);
 
         learned_something_new(HINT_YOU_MUTATED);
-        did_god_conduct(DID_DELIBERATE_MUTATING, 10, was_known);
+        did_god_conduct(DID_DELIBERATE_MUTATING, 10, true);
         break;
 
     case POT_RESISTANCE:
+        if (!already_warned && !contamination_warning_prompt(1))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         mpr("You feel protected.", MSGCH_DURATION);
         you.increase_duration(DUR_RESIST_FIRE,   (random2(pow) + 35) / factor);
         you.increase_duration(DUR_RESIST_COLD,   (random2(pow) + 35) / factor);
@@ -433,7 +462,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
         // Just one point of contamination. These potions are really rare,
         // and contamination is nastier.
-        contaminate_player(1, was_known);
+        contaminate_player(1, true);
         break;
 
     case NUM_POTIONS:
@@ -441,5 +470,5 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         break;
     }
 
-    return (!was_known && effect);
+    return true;
 }

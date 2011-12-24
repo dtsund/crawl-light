@@ -1441,7 +1441,11 @@ static void _velocity_card(int power, deck_rarity_type rarity)
 {
     const int power_level = get_power_level(power, rarity);
     if (power_level >= 2)
-        potion_effect(POT_SPEED, random2(power / 4));
+    {
+        //Player doesn't get to abort this, so potion_effect is told
+        //that he/she was already warned.  Them's the breaks.
+        potion_effect(POT_SPEED, random2(power / 4), false, true);
+    }
     else if (power_level == 1)
     {
         cast_fly(random2(power / 4));
@@ -1541,7 +1545,9 @@ static void _flight_card(int power, deck_rarity_type rarity)
         //Removed the shaft trap because it was exploitable.
         //Invisibility is now guaranteed at power level 2, will
         //never happen otherwise.
-        potion_effect(POT_INVISIBILITY, random2(power)/4);
+        //Player doesn't get to cancel out of card effects; potion_effect
+        //is told that the player was already warned about possible glow.
+        potion_effect(POT_INVISIBILITY, random2(power)/4, false, true);
     }
     else if (!success)
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -1741,7 +1747,7 @@ static void _battle_lust_card(int power, deck_rarity_type rarity)
                          0, "You feel your rage building.");
     }
     else if (power_level == 0)
-        potion_effect(POT_MIGHT, random2(power/4));
+        potion_effect(POT_MIGHT, random2(power/4), false, true);
 }
 
 static void _metamorphosis_card(int power, deck_rarity_type rarity)
@@ -1890,7 +1896,7 @@ static void _shadow_card(int power, deck_rarity_type rarity)
         you.increase_duration(DUR_STEALTH, random2(power/4) + 1);
     }
 
-    potion_effect(POT_INVISIBILITY, random2(power/4));
+    potion_effect(POT_INVISIBILITY, random2(power/4), false, true);
 }
 
 static void _potion_card(int power, deck_rarity_type rarity)
@@ -1911,7 +1917,7 @@ static void _potion_card(int power, deck_rarity_type rarity)
     if (power_level >= 2 && coinflip())
         pot = (coinflip() ? POT_SPEED : POT_RESISTANCE);
 
-    potion_effect(pot, random2(power/4));
+    potion_effect(pot, random2(power/4), false, true);
 }
 
 static void _focus_card(int power, deck_rarity_type rarity)

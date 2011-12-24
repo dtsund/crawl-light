@@ -3649,15 +3649,15 @@ void ashenzari_scrying()
 
 
 //Okawaru's Might invocation.
-void okawaru_might()
+bool okawaru_might()
 {
-    potion_effect(POT_MIGHT, you.skills[SK_INVOCATIONS] * 8);
+    return potion_effect(POT_MIGHT, you.skills[SK_INVOCATIONS] * 8, false, false);
 }
 
 //Okawaru's Haste invocation.
-void okawaru_haste()
+bool okawaru_haste()
 {
-    potion_effect(POT_SPEED, you.skills[SK_INVOCATIONS] * 8);
+    return potion_effect(POT_SPEED, you.skills[SK_INVOCATIONS] * 8, false, false);
 }
 
 //Okawaru's Heroism invocation, currently unused.

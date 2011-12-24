@@ -101,8 +101,8 @@ bool ashenzari_transfer_knowledge();
 bool ashenzari_end_transfer(bool finished = false, bool force = false);
 void ashenzari_scrying();
 
-void okawaru_might();
-void okawaru_haste();
+bool okawaru_might();
+bool okawaru_haste();
 //The below two currently aren't used, but I do hate throwing away code outright.
 void okawaru_heroism();
 bool okawaru_finesse();

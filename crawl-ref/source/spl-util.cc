@@ -374,6 +374,10 @@ bool del_spell_from_memory(spell_type spell)
 //of glow, honeycomb level corresponds to 2 points, ration level to 3.
 int spell_glow(spell_type which_spell, bool rod)
 {
+    //Staff of Energy means no charge.
+    if(player_energy())
+        return 0;
+
     const int level = spell_difficulty(which_spell);
 
     const int basehunger[] = {

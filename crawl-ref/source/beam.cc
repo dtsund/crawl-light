@@ -263,6 +263,9 @@ bool zapping(zap_type ztype, int power, bolt &pbolt,
         pbolt.aimed_at_spot = false;
 
     pbolt.fire();
+    
+    if(pbolt.beam_cancelled)
+        return false; // Player cancelled a haste zap or something
 
     return (true);
 }
@@ -1456,7 +1459,8 @@ void bolt::do_fire()
     // something which ends up having no obvious effect then the player
     // isn't going to realise it).
     if (!msg_generated && !obvious_effect && is_enchantment()
-        && real_flavour != BEAM_CHAOS && YOU_KILL(thrower))
+        && real_flavour != BEAM_CHAOS && YOU_KILL(thrower)
+        && !beam_cancelled)
     {
         canned_msg(MSG_NOTHING_HAPPENS);
     }
@@ -3270,7 +3274,11 @@ void bolt::affect_player_enchantment()
     case BEAM_HASTE:
         //contaminate_player is no longer called here, since all hasting
         //incurs a glow cost of 6.
-        potion_effect(POT_SPEED, ench_power, false, effect_known);
+        if(!potion_effect(POT_SPEED, ench_power, false, !needs_glow_warning))
+        {
+            beam_cancelled = true;
+            break;
+        }
         obvious_effect = true;
         nasty = false;
         nice  = true;
@@ -3300,9 +3308,13 @@ void bolt::affect_player_enchantment()
 
     case BEAM_INVISIBILITY:
         //contaminate_player is no longer called here, since all invisibility
-        //incurs a glow cost of 6.
+        //incurs a glow cost of 5.
         you.attribute[ATTR_INVIS_UNCANCELLABLE] = 1;
-        potion_effect(POT_INVISIBILITY, ench_power);
+        if(!potion_effect(POT_INVISIBILITY, ench_power, false, !needs_glow_warning))
+        {
+            beam_cancelled = true;
+            break;
+        }
         obvious_effect = true;
         nasty = false;
         nice  = true;

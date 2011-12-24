@@ -160,6 +160,11 @@ struct bolt
     
     bool        hits_player;     // whether the tracer hit the player;
                                  // used to determine whether to print sidestep msg.
+    
+    bool        needs_glow_warning; // whether the player should get a 'really overcontaminate?'
+                                    // warning; spells will have already given one,
+                                    // wand of hasting and invis should give one,
+                                    // wand of random effects should not
 
 #ifdef USE_TILE
     int         tile_beam;

@@ -732,6 +732,14 @@ bool cast_a_spell(bool check_range, spell_type spell)
         mpr("You don't have enough magic to cast that spell.");
         return (false);
     }
+    
+    // Check to see whether the player really wants to contaminate him/herself
+    // if that's what'll happen.
+    if(!contamination_warning_prompt(adjusted_spell_glow(spell)))
+    {
+        canned_msg(MSG_OK);
+        return false;
+    }
 
     if (check_range && spell_no_hostile_in_range(spell, minRange))
     {

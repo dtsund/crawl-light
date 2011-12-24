@@ -7128,3 +7128,16 @@ int get_max_magic_contamination(species_type species)
         return 6; //Might be interesting to make this even lower, but strengthen trolls significantly
     return 10;
 }
+
+// Determines if 'cost' additional glow will put the player
+// into dangerous levels of contamination, and gives a y/n
+// prompt if it will.  Returns true if there's no immediate
+// danger or if the player responds y to the prompt, false
+// otherwise.
+bool contamination_warning_prompt(int cost)
+{
+    if(you.magic_contamination + cost <= you.max_magic_contamination)
+        return true;
+    
+    return yesno("This will incur dangerous levels of magical contamination.  Continue?");
+}

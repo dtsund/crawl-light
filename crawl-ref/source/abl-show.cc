@@ -2091,8 +2091,8 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_EVOKE_TURN_INVISIBLE:     // ring, randarts, darkness items
-        potion_effect(POT_INVISIBILITY, 2 * you.skill(SK_EVOCATIONS) + 5);
-        contaminate_player(1 + random2(3), true);
+        if(!potion_effect(POT_INVISIBILITY, 2 * you.skill(SK_EVOCATIONS) + 5, false))
+            return false;
         break;
 
     case ABIL_EVOKE_TURN_VISIBLE:
@@ -2227,11 +2227,13 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_OKAWARU_MIGHT:
-        okawaru_might();
+        if(!okawaru_might())
+            return false;
         break;
 
     case ABIL_OKAWARU_HASTE:
-        okawaru_haste();
+        if(!okawaru_haste())
+            return false;
         break;
 
     case ABIL_MAKHLEB_MINOR_DESTRUCTION:
