@@ -2172,6 +2172,7 @@ void handle_time()
         !you.duration[DUR_INVIS] && !you.duration[DUR_HASTE] &&
         !you.duration[DUR_MIGHT] && !you.duration[DUR_BRILLIANCE] &&
         !you.duration[DUR_AGILITY] && !you.duration[DUR_BERSERK] &&
+        !you.duration[DUR_FINESSE] &&
         !artefact_glow)
     {
         contaminate_player(-1, false);
