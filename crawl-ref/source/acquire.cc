@@ -2066,8 +2066,15 @@ bool acquirement(object_class_type class_wanted, int agent,
             textcolor(YELLOW);
 
             _acquire_print(info, 0);
-        
-            snprintf(info, INFO_SIZE, "What would you like to do? ");
+            
+            if(viewing)
+            {
+                snprintf(info, INFO_SIZE, "What would you like to examine? ");
+            }
+            else
+            {
+                snprintf(info, INFO_SIZE, "What would you like to acquire? ");
+            }
 
             textcolor(CYAN);
             _acquire_print(info, 1);
