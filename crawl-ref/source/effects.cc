@@ -2164,6 +2164,18 @@ void handle_time()
     {
         spawn_random_monsters();
     }
+    
+    const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC);
+    // Every 10 turns, decrement glow if the player isn't under glow-causing
+    // effects.
+    if ((_div(base_time, 100) > _div(old_time, 100)) && 
+        !you.duration[DUR_INVIS] && !you.duration[DUR_HASTE] &&
+        !you.duration[DUR_MIGHT] && !you.duration[DUR_BRILLIANCE] &&
+        !you.duration[DUR_AGILITY] && !you.duration[DUR_BERSERK] &&
+        !artefact_glow)
+    {
+        contaminate_player(-1, false);
+    }
 
     // Every 20 turns, a variety of other effects.
     if (! (_div(base_time, 200) > _div(old_time, 200)))
@@ -2248,7 +2260,7 @@ void handle_time()
         added_contamination++;
 
     bool mutagenic_randart = false;
-    if (const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC))
+    if (artefact_glow)
     {
         // Reduced randart glow. Note that one randart will contribute
         // 2 - 5 units of glow to artefact_glow. A randart with a mutagen
@@ -2261,10 +2273,6 @@ void handle_time()
         added_contamination += div_rand_round(actual_glow, 1000);
         mutagenic_randart = true;
     }
-
-    // We take off about .5 points per turn.
-    if (!you.duration[DUR_INVIS] && !you.duration[DUR_HASTE] && coinflip())
-        added_contamination--;
 
     // Only punish if contamination caused by mutagenic randarts.
     // (Haste and invisibility already penalised earlier.)
