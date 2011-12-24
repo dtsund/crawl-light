@@ -165,7 +165,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
     case POT_MIGHT:
     {
         // Might always incurs some glow cost.
-        contaminate_player(1, true);
+        contaminate_player(MIGHT_GLOW_COST, true);
         const bool were_mighty = you.duration[DUR_MIGHT] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -182,7 +182,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
     case POT_BRILLIANCE:
     {
         // Brilliance always incurs some glow cost.
-        contaminate_player(1, true);
+        contaminate_player(BRILLIANCE_GLOW_COST, true);
         const bool were_brilliant = you.duration[DUR_BRILLIANCE] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -199,7 +199,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
     case POT_AGILITY:
     {
         // Agility always incurs some glow cost.
-        contaminate_player(1, true);
+        contaminate_player(AGILITY_GLOW_COST, true);
         const bool were_agile = you.duration[DUR_AGILITY] > 0;
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
@@ -278,7 +278,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
     case POT_INVISIBILITY:
         // Invisibility is very costly!
-        contaminate_player(5, true);
+        contaminate_player(INVIS_GLOW_COST, true);
         if (you.haloed() || you.glows_naturally())
         {
             // You can't turn invisible while haloed or glowing

@@ -22,6 +22,7 @@
 #include "coordit.h"
 #include "directn.h"
 #include "debug.h"
+#include "effects.h"
 #include "godabil.h"
 #include "stuff.h"
 #include "env.h"
@@ -414,9 +415,9 @@ int spell_glow(spell_type which_spell, bool rod)
 int adjusted_spell_glow(spell_type which_spell, bool rod)
 {
     if (which_spell == SPELL_HASTE)
-        return spell_glow(which_spell, rod) + 6;
+        return spell_glow(which_spell, rod) + HASTE_GLOW_COST;
     else if (which_spell == SPELL_INVISIBILITY)
-        return spell_glow(which_spell, rod) + 5;
+        return spell_glow(which_spell, rod) + INVIS_GLOW_COST;
     
     return spell_glow(which_spell, rod);
 }

@@ -3682,7 +3682,7 @@ bool okawaru_finesse()
         return (false);
     }
     // Finesse is somewhat costly!
-    contaminate_player(4, true);
+    contaminate_player(FINESSE_GLOW_COST, true);
 
     mprf(MSGCH_DURATION, you.duration[DUR_FINESSE]
          ? "Your hands get new energy."

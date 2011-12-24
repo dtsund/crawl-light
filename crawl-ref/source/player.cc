@@ -5085,7 +5085,7 @@ bool haste_player(int turns, bool rageext)
         mpr("You feel as though your hastened speed will last longer.");
 
     // Haste is very costly!
-    contaminate_player(6, true); // always deliberate
+    contaminate_player(HASTE_GLOW_COST, true); // always deliberate
 
     you.increase_duration(DUR_HASTE, turns, threshold);
 
