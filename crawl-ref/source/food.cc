@@ -69,6 +69,9 @@ static void _heal_from_food(int hp_amt, int mp_amt = 0, bool unrot = false,
 void make_hungry(int hunger_amount, bool suppress_msg,
                  bool allow_reducing)
 {
+    //Kill the food clock.
+    return;
+    
     if (crawl_state.disables[DIS_HUNGER])
         return;
 
