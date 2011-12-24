@@ -963,7 +963,7 @@ static void _sdump_spells(dump_params &par)
 
         text += "You " + verb + " the following spells:\n\n";
 
-        text += " Your Spells              Type           Power        Failure   Level  Hunger x5" "\n";
+        text += " Your Spells              Type           Power        Failure   Level  Glow     " "\n";
 
         for (int j = 0; j < 52; j++)
         {
@@ -1009,8 +1009,14 @@ static void _sdump_spells(dump_params &par)
                 spell_line += tmp_quant;
 
                 spell_line = chop_string(spell_line, 71);
+                
+                //C++ STRINGS
+                //AWESOME
+                //THAT'S REALLY ALL THERE IS TO SAY ON THE MATTER
+                std::stringstream aargh;
+                aargh << spell_line << spell_glow(spell);
+                spell_line = aargh.str();
 
-                spell_line += spell_hunger_string(spell);
                 spell_line += "\n";
 
                 text += spell_line;

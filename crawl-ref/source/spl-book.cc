@@ -1437,22 +1437,7 @@ int staff_spell(int staff)
     // We also need a fixed power for range calculation
     int fixed_power = calc_spell_power(spell, false, false, true, true);
 
-    int food = spell_hunger(spell, true);
-
-    // For now player_energy() is always 0, because you've got to
-    // be wielding the rod...
-    if (you.is_undead == US_UNDEAD || player_energy() > 0)
-        food = 0;
-    else
-        food = calc_hunger(food);
-
-    if (food && (you.hunger_state == HS_STARVING || you.hunger <= food)
-        && !you.is_undead)
-    {
-        mpr("You don't have the energy to cast that spell.");
-        crawl_state.zero_turns_taken();
-        return (-1);
-    }
+    int glow = spell_glow(spell, true);
 
     if (istaff.plus < mana)
     {
@@ -1479,7 +1464,7 @@ int staff_spell(int staff)
         return (-1);
     }
 
-    make_hungry(food, true, true);
+    contaminate_player(glow, true);
     istaff.plus -= mana;
     you.wield_change = true;
     you.turn_is_over = true;

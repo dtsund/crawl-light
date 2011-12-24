@@ -368,7 +368,10 @@ bool del_spell_from_memory(spell_type spell)
         return del_spell_from_memory_by_slot(i);
 }
 
-int spell_hunger(spell_type which_spell, bool rod)
+//This used to be spell_hunger; now hunger costs are converted to
+//glow costs.  Old hunger of choko level corresponds to 1 point
+//of glow, honeycomb level corresponds to 2 points, ration level to 3.
+int spell_glow(spell_type which_spell, bool rod)
 {
     const int level = spell_difficulty(which_spell);
 
@@ -393,8 +396,16 @@ int spell_hunger(spell_type which_spell, bool rod)
 
     if (hunger < 0)
         hunger = 0;
-
-    return hunger;
+    
+    //The ration, honeycomb, and choko breakpoints.
+    if (hunger > 400)
+        return 3;
+    else if (hunger > 120)
+        return 2;
+    else if (hunger > 40)
+        return 1;
+    
+    return 0;
 }
 
 // Used to determine whether or not a monster should always fire this spell

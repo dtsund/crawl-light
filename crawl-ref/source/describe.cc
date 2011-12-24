@@ -2869,13 +2869,17 @@ static void _append_spell_stats(const spell_type spell,
         free(temp);
     }
     description += info;
-    description += "\n\nPower    : ";
+    description += "\n\nPower: ";
     description += spell_power_string(spell, rod);
-    description += "\nRange    : ";
+    description += "\nRange: ";
     description += spell_range_string(spell, rod);
-    description += "\nHunger x5: ";
-    description += spell_hunger_string(spell, rod);
-    description += "\nNoise    : ";
+    description += "\nGlow : ";
+    //Screw std::string forever; these three lines would be one
+    //in a sensible language
+    std::stringstream aargh;
+    aargh << description << spell_glow(spell, rod);
+    description = aargh.str();
+    description += "\nNoise: ";
     description += spell_noise_string(spell);
 }
 

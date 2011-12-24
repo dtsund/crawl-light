@@ -182,10 +182,13 @@ static std::string _spell_extra_description(spell_type spell)
 
     // spell power, spell range, hunger level, level
     const std::string rangestring = spell_range_string(spell);
+    
+    char glowstring[12];
+    sprintf(glowstring, "%d", spell_glow(spell));
 
     desc << chop_string(spell_power_string(spell), 14)
          << chop_string(rangestring, 16 + tagged_string_tag_length(rangestring))
-         << chop_string(spell_hunger_string(spell), 12)
+         << chop_string(glowstring, 12)
          << spell_difficulty(spell);
 
     desc << "</" << colour_to_str(highlight) <<">";
@@ -219,7 +222,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
                 " Your Spells                       Type          "
                 "                Failure   Level",
                 " Your Spells                       Power         "
-                "Range           Hunger x5 Level",
+                "Range           Glow      Level",
                 MEL_ITEM);
         me->colour = BLUE;
         spell_menu.add_entry(me);
@@ -230,7 +233,7 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
             " Your Spells                       Type          "
             "                Failure   Level",
             " Your Spells                       Power         "
-            "Range           Hunger x5 Level",
+            "Range           Glow      Level",
             MEL_TITLE));
 #endif
     spell_menu.set_highlighter(NULL);
@@ -748,14 +751,6 @@ bool cast_a_spell(bool check_range, spell_type spell)
         return (false);
     }
 
-    if (!you.is_undead
-        && (you.hunger_state == HS_STARVING
-            || you.hunger <= spell_hunger(spell)))
-    {
-        mpr("You don't have the energy to cast that spell.");
-        return (false);
-    }
-
     const bool staff_energy = player_energy();
     if (you.confused())
         random_uselessness();
@@ -776,15 +771,8 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
     dec_mp(spell_mana(spell));
 
-    if (!staff_energy && you.is_undead != US_UNDEAD)
-    {
-        const int spellh = calc_hunger(spell_hunger(spell));
-        if (spellh > 0)
-        {
-            make_hungry(spellh, true);
-            learned_something_new(HINT_SPELL_HUNGER);
-        }
-    }
+    if (!staff_energy)
+        contaminate_player(spell_glow(spell), true);
 
     you.turn_is_over = true;
     alert_nearby_monsters();
@@ -2050,25 +2038,6 @@ static unsigned int _breakpoint_rank(int val, const int breakpoints[],
         ++result;
 
     return result;
-}
-
-const char* spell_hunger_string(spell_type spell, bool rod)
-{
-    if (you.is_undead == US_UNDEAD)
-        return ("N/A");
-
-    const int hunger = spell_hunger(spell, rod);
-
-    // Spell hunger is "Fruit" if casting the spell five times costs at
-    // most one "Fruit".
-    const char* hunger_descriptions[] = {
-        "None", "Sultana", "Strawberry", "Choko", "Honeycomb", "Ration"
-    };
-
-    const int breakpoints[] = { 1, 15, 41, 121, 401 };
-
-    return (hunger_descriptions[_breakpoint_rank(hunger, breakpoints,
-                                                 ARRAYSZ(breakpoints))]);
 }
 
 std::string spell_noise_string(spell_type spell)
