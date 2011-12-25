@@ -7139,5 +7139,5 @@ bool contamination_warning_prompt(int cost)
     if(you.magic_contamination + cost <= you.max_magic_contamination)
         return true;
     
-    return yesno("This will incur dangerous levels of magical contamination.  Continue?");
+    return yesno("This will incur dangerous levels of magical contamination. Continue?");
 }
