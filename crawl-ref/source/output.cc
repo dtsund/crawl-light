@@ -72,9 +72,10 @@ class colour_bar
     colour_bar(color_t default_colour,
                color_t change_pos,
                color_t change_neg,
-               color_t empty)
+               color_t empty,
+               color_t full)
         : m_default(default_colour), m_change_pos(change_pos),
-          m_change_neg(change_neg), m_empty(empty),
+          m_change_neg(change_neg), m_empty(empty), m_full(full),
           m_old_disp(-1),
           m_request_redraw_after(0)
     {
@@ -89,6 +90,10 @@ class colour_bar
 
     void draw(int ox, int oy, int val, int max_val)
     {
+        color_t fullness_color = m_default;
+        if(val == max_val)
+            fullness_color = m_full;
+
         ASSERT(val <= max_val);
         if (max_val <= 0)
         {
@@ -111,14 +116,14 @@ class colour_bar
             textcolor(BLACK + m_empty * 16);
 
             if (cx < disp)
-                textcolor(BLACK + m_default * 16);
+                textcolor(BLACK + fullness_color * 16);
             else if (old_disp > disp && cx < old_disp)
                 textcolor(BLACK + m_change_neg * 16);
             putwch(' ');
 #else
             if (cx < disp && cx < old_disp)
             {
-                textcolor(m_default);
+                textcolor(fullness_color);
                 putwch('=');
             }
             else if (cx < disp)
@@ -155,19 +160,20 @@ class colour_bar
     const color_t m_change_pos;
     const color_t m_change_neg;
     const color_t m_empty;
+    const color_t m_full;
     int m_old_disp;
     int m_request_redraw_after; // force a redraw at this turn count
 };
 
-colour_bar HP_Bar(LIGHTGREEN, GREEN, RED, DARKGREY);
+colour_bar HP_Bar(LIGHTGREEN, GREEN, RED, DARKGREY, LIGHTGREEN);
 
 #ifdef USE_TILE
-colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY);
+colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY, BLUE);
 #else
-colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY);
+colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY, LIGHTBLUE);
 #endif
 
-colour_bar Glow_Bar(YELLOW, DARKGREY, DARKGREY, DARKGREY);
+colour_bar Glow_Bar(YELLOW, DARKGREY, DARKGREY, DARKGREY, RED);
 
 // ----------------------------------------------------------------------
 // Status display
