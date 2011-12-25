@@ -35,8 +35,8 @@ static species_type species_order[] = {
     //SP_DEMIGOD,
     SP_DEMONSPAWN,
     // undead species
-    SP_MUMMY,          SP_GHOUL,
-    SP_VAMPIRE,
+    SP_MUMMY,          //SP_GHOUL,
+    //SP_VAMPIRE,
     // not humanoid at all
     //SP_CAT
 };
