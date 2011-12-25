@@ -245,7 +245,7 @@ static const ability_def Ability_List[] =
 {
     // NON_ABILITY should always come first
     { ABIL_NON_ABILITY, "No ability", 0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_SPIT_POISON, "Spit Poison", 0, 0, 40, 0, ABFLAG_BREATH },
+    { ABIL_SPIT_POISON, "Spit Poison", 0, 0, 0, 0, ABFLAG_BREATH },
 
     { ABIL_TELEPORTATION, "Teleportation", 0, 100, 2, 0, ABFLAG_NONE },
     { ABIL_BLINK, "Blink", 0, 50, 1, 0, ABFLAG_NONE },
