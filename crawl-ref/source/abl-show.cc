@@ -247,24 +247,24 @@ static const ability_def Ability_List[] =
     { ABIL_NON_ABILITY, "No ability", 0, 0, 0, 0, ABFLAG_NONE },
     { ABIL_SPIT_POISON, "Spit Poison", 0, 0, 0, 0, ABFLAG_BREATH },
 
-    { ABIL_TELEPORTATION, "Teleportation", 0, 100, 2, 0, ABFLAG_NONE },
+    { ABIL_TELEPORTATION, "Teleportation", 0, 100, 1, 0, ABFLAG_NONE },
     { ABIL_BLINK, "Blink", 0, 50, 1, 0, ABFLAG_NONE },
 
-    { ABIL_BREATHE_FIRE, "Breathe Fire", 0, 0, 2, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_FROST, "Breathe Frost", 0, 0, 2, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POISON, "Breathe Poison Gas", 0, 0, 2, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_FIRE, "Breathe Fire", 0, 0, 1, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_FROST, "Breathe Frost", 0, 0, 1, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_POISON, "Breathe Poison Gas", 0, 0, 1, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_MEPHITIC, "Breathe Noxious Fumes",
-      0, 0, 2, 0, ABFLAG_BREATH },
+      0, 0, 1, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_LIGHTNING, "Breathe Lightning",
-      0, 0, 2, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POWER, "Breathe Energy", 0, 0, 2, 0, ABFLAG_BREATH },
+      0, 0, 1, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_POWER, "Breathe Energy", 0, 0, 1, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_STICKY_FLAME, "Breathe Sticky Flame",
-      0, 0, 2, 0, ABFLAG_BREATH },
+      0, 0, 1, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_STEAM, "Breathe Steam", 0, 0, 1, 0, ABFLAG_BREATH },
     { ABIL_TRAN_BAT, "Bat Form", 2, 0, 0, 0, ABFLAG_NONE },
     { ABIL_BOTTLE_BLOOD, "Bottle Blood", 0, 0, 0, 0, ABFLAG_NONE }, // no costs
 
-    { ABIL_SPIT_ACID, "Spit Acid", 0, 0, 2, 0, ABFLAG_BREATH },
+    { ABIL_SPIT_ACID, "Spit Acid", 0, 0, 1, 0, ABFLAG_BREATH },
 
     { ABIL_FLY, "Fly", 3, 0, 1, 0, ABFLAG_NONE },
     { ABIL_STOP_FLYING, "Stop Flying", 0, 0, 0, 0, ABFLAG_NONE },
@@ -289,14 +289,14 @@ static const ability_def Ability_List[] =
     // any reason to label them as "Evoke" in the text, they don't
     // use or train Evocations (the others do).  -- bwr
     { ABIL_EVOKE_TELEPORTATION, "Evoke Teleportation",
-      3, 0, 2, 0, ABFLAG_NONE },
+      3, 0, 1, 0, ABFLAG_NONE },
     { ABIL_EVOKE_BLINK, "Evoke Blink", 1, 0, 1, 0, ABFLAG_NONE },
     { ABIL_RECHARGING, "Device Recharging", 1, 0, 0, 0, ABFLAG_PERMANENT_MP },
 
     { ABIL_EVOKE_BERSERK, "Evoke Berserk Rage", 0, 0, 0, 0, ABFLAG_NONE },
 
     { ABIL_EVOKE_TURN_INVISIBLE, "Evoke Invisibility",
-      2, 0, 2, 0, ABFLAG_NONE },
+      2, 0, 0, 0, ABFLAG_NONE },
     { ABIL_EVOKE_TURN_VISIBLE, "Turn Visible", 0, 0, 0, 0, ABFLAG_NONE },
     { ABIL_EVOKE_LEVITATE, "Evoke Levitation", 1, 0, 1, 0, ABFLAG_NONE },
     { ABIL_EVOKE_STOP_LEVITATING, "Stop Levitating", 0, 0, 0, 0, ABFLAG_NONE },
@@ -336,8 +336,8 @@ static const ability_def Ability_List[] =
       2, 0, 1, 0, ABFLAG_NONE },
 
     // Okawaru
-    { ABIL_OKAWARU_MIGHT, "Might", 2, 0, 1, 1, ABFLAG_NONE },
-    { ABIL_OKAWARU_HASTE, "Haste", 5, 0, 1, 4, ABFLAG_NONE },
+    { ABIL_OKAWARU_MIGHT, "Might", 2, 0, 0, 1, ABFLAG_NONE },
+    { ABIL_OKAWARU_HASTE, "Haste", 5, 0, 0, 4, ABFLAG_NONE },
 
     // Makhleb
     { ABIL_MAKHLEB_MINOR_DESTRUCTION, "Minor Destruction",
@@ -375,8 +375,8 @@ static const ability_def Ability_List[] =
       2, 0, 2, 2, ABFLAG_CONF_OK },
     { ABIL_ELYVILON_GREATER_HEALING_OTHERS, "Greater Healing",
       2, 0, 2, 2, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_RESTORATION, "Restoration", 3, 0, 3, 3, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_DIVINE_VIGOUR, "Divine Vigour", 0, 0, 3, 6,
+    { ABIL_ELYVILON_RESTORATION, "Restoration", 3, 0, 2, 3, ABFLAG_CONF_OK },
+    { ABIL_ELYVILON_DIVINE_VIGOUR, "Divine Vigour", 0, 0, 2, 6,
       ABFLAG_CONF_OK },
 
     // Lugonu
