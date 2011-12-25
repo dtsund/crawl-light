@@ -248,7 +248,7 @@ static const ability_def Ability_List[] =
     { ABIL_SPIT_POISON, "Spit Poison", 0, 0, 40, 0, ABFLAG_BREATH },
 
     { ABIL_TELEPORTATION, "Teleportation", 0, 100, 2, 0, ABFLAG_NONE },
-    { ABIL_BLINK, "Blink", 0, 50, 51, 0, ABFLAG_NONE },
+    { ABIL_BLINK, "Blink", 0, 50, 1, 0, ABFLAG_NONE },
 
     { ABIL_BREATHE_FIRE, "Breathe Fire", 0, 0, 2, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_FROST, "Breathe Frost", 0, 0, 2, 0, ABFLAG_BREATH },
