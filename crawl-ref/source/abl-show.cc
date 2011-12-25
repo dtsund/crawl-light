@@ -1686,6 +1686,17 @@ static bool _do_ability(const ability_def& abil)
     args.restricts = DIR_TARGET;
     args.needs_path = false;
     args.may_target_monster = false;
+    
+    // Abort if the player refuses to overcontaminate self.
+    // If an ability causes an effect that itself induces glow,
+    // either make the ability not cost glow above that or
+    // count it here and take action to make it not prompt a
+    // second time.
+    if(!contamination_warning_prompt(abil.glow_cost))
+    {
+        canned_msg(MSG_OK);
+        return false;
+    }
 
     // Note: the costs will not be applied until after this switch
     // statement... it's assumed that only failures have returned! - bwr
