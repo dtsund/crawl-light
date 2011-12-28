@@ -1438,6 +1438,12 @@ int staff_spell(int staff)
     int fixed_power = calc_spell_power(spell, false, false, true, true);
 
     int glow = spell_glow(spell, true);
+    
+    if(!contamination_warning_prompt(glow))
+    {
+        canned_msg(MSG_OK);
+        return -1;
+    }
 
     if (istaff.plus < mana)
     {
