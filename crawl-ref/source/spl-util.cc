@@ -418,12 +418,16 @@ int spell_glow(spell_type which_spell, bool rod)
 // itself.  Used for interface purposes.
 int adjusted_spell_glow(spell_type which_spell, bool rod)
 {
+    int to_add = 0;
     if (which_spell == SPELL_HASTE)
-        return spell_glow(which_spell, rod) + HASTE_GLOW_COST;
+        to_add = HASTE_GLOW_COST;
     else if (which_spell == SPELL_INVISIBILITY)
-        return spell_glow(which_spell, rod) + INVIS_GLOW_COST;
+        to_add = INVIS_GLOW_COST;
+    else if (which_spell == SPELL_BERSERKER_RAGE)
+        to_add = BERSERK_GLOW_COST;
+        
     
-    return spell_glow(which_spell, rod);
+    return spell_glow(which_spell, rod) + to_add;
 }
 
 // Used to determine whether or not a monster should always fire this spell

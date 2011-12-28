@@ -14,6 +14,7 @@
 #define BRILLIANCE_GLOW_COST 1
 #define AGILITY_GLOW_COST 1
 #define FINESSE_GLOW_COST 4
+#define BERSERK_GLOW_COST 6
 
 struct bolt;
 

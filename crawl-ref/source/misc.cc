@@ -35,6 +35,7 @@
 #include "directn.h"
 #include "dgnevent.h"
 #include "directn.h"
+#include "effects.h"
 #include "env.h"
 #include "exercise.h"
 #include "fight.h"
@@ -1388,6 +1389,7 @@ bool go_berserk(bool intentional, bool potion)
     int berserk_duration = (20 + random2avg(19,2)) / 2;
 
     you.increase_duration(DUR_BERSERK, berserk_duration);
+    contaminate_player(BERSERK_GLOW_COST, intentional);
 
     calc_hp();
     you.hp = you.hp * 3 / 2;

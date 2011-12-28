@@ -427,6 +427,12 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
         }
         else
         {
+            // Actual contamination is handled in go_berserk.
+            if (!already_warned && !contamination_warning_prompt(BERSERK_GLOW_COST))
+            {
+                canned_msg(MSG_OK);
+                return false;
+            }
             if (go_berserk(true, true))
                 xom_is_stimulated(50);
         }
