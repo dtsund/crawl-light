@@ -356,7 +356,7 @@ static const ability_def Ability_List[] =
 
     // Trog
     { ABIL_TROG_BURN_SPELLBOOKS, "Burn Spellbooks", 0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_TROG_BERSERK, "Berserk", 0, 0, 2, generic_cost::range(0,1), ABFLAG_NONE },
+    { ABIL_TROG_BERSERK, "Berserk", 0, 0, 0, generic_cost::range(0,1), ABFLAG_NONE },
     { ABIL_TROG_REGEN_MR, "Trog's Hand",
       0, 0, 1, generic_cost::range(2, 3), ABFLAG_NONE },
     { ABIL_TROG_BROTHERS_IN_ARMS, "Brothers in Arms",
@@ -477,6 +477,35 @@ static const ability_def& _get_ability_def(ability_type abil)
     }
 
     return (Ability_List[0]);
+}
+
+//Some abilities will induce effects that cost glow themselves.
+//If this is the case, for interface purposes, we'll want to add that
+//to the cost of the ability itself in some places.
+static int _get_true_glow_cost(ability_def abil)
+{
+    int to_add = 0;
+    
+    switch(abil.ability)
+    {
+        case ABIL_OKAWARU_MIGHT:
+            to_add = MIGHT_GLOW_COST; break;
+        case ABIL_OKAWARU_HASTE:
+            to_add = HASTE_GLOW_COST; break;
+        /*
+        case ABIL_OKAWARU_FINESSE:
+            to_add = FINESSE_GLOW_COST; break;
+        */
+        case ABIL_TROG_BERSERK:
+            to_add = BERSERK_GLOW_COST; break;
+        case ABIL_EVOKE_BERSERK:
+            to_add = BERSERK_GLOW_COST; break;
+        case ABIL_EVOKE_TURN_INVISIBLE:
+            to_add = INVIS_GLOW_COST; break;
+        default: break;
+    }
+    
+    return abil.glow_cost + to_add;
 }
 
 bool string_matches_ability_name(const std::string& key)
@@ -707,12 +736,12 @@ const std::string make_cost_description(ability_type ability)
         ret << " XP";
     }
 
-    if (abil.glow_cost)
+    if (_get_true_glow_cost(abil))
     {
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << abil.glow_cost;
+        ret << _get_true_glow_cost(abil);
         ret << " Glow";
     }
 
@@ -848,11 +877,11 @@ const std::string make_detailed_cost_description(ability_type ability)
         ret << abil.hp_cost.cost(you.hp_max);
     }
 
-    if (abil.glow_cost)
+    if (_get_true_glow_cost(abil))
     {
         have_cost = true;
         ret << "\nGlow  : ";
-        ret << abil.glow_cost;
+        ret << _get_true_glow_cost(abil);
     }
 
     if (abil.piety_cost)
@@ -1692,7 +1721,7 @@ static bool _do_ability(const ability_def& abil)
     // either make the ability not cost glow above that or
     // count it here and take action to make it not prompt a
     // second time.
-    if(!contamination_warning_prompt(abil.glow_cost))
+    if(!contamination_warning_prompt(_get_true_glow_cost(abil)))
     {
         canned_msg(MSG_OK);
         return false;
@@ -2102,7 +2131,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_EVOKE_TURN_INVISIBLE:     // ring, randarts, darkness items
-        if(!potion_effect(POT_INVISIBILITY, 2 * you.skill(SK_EVOCATIONS) + 5, false))
+        if(!potion_effect(POT_INVISIBILITY, 2 * you.skill(SK_EVOCATIONS) + 5, false, true))
             return false;
         break;
 
@@ -2514,7 +2543,7 @@ static void _pay_ability_costs(const ability_def& abil, int xpcost)
     const int hp_cost    = abil.hp_cost.cost(you.hp_max);
 
     dprf("Cost: mp=%d; hp=%d; glow=%d; piety=%d",
-         abil.mp_cost, hp_cost, abil.glow_cost, piety_cost);
+         abil.mp_cost, hp_cost, _get_true_glow_cost(abil), piety_cost);
 
     if (abil.mp_cost)
     {
@@ -2564,6 +2593,8 @@ static void _pay_ability_costs(const ability_def& abil, int xpcost)
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
         adjust_level(-1);
 
+    //DO NOT USE _get_true_glow_cost HERE.  The incidental cost of the
+    //induced effect (Haste, Invisibility, or whatever) will be applied later.
     if (abil.glow_cost)
         contaminate_player(abil.glow_cost, true);
 
