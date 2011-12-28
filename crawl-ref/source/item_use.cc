@@ -1990,8 +1990,6 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     ASSERT(!exploding || !is_artefact(item));
 
     beam.name = item.name(DESC_NOPRONOUN, false, false, false);
-    
-    printf("%s\n",beam.name.c_str());
 
     // Note that bow_brand is known since the bow is equipped.
 
