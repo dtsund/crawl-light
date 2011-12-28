@@ -425,7 +425,6 @@ int adjusted_spell_glow(spell_type which_spell, bool rod)
         to_add = INVIS_GLOW_COST;
     else if (which_spell == SPELL_BERSERKER_RAGE)
         to_add = BERSERK_GLOW_COST;
-        
     
     return spell_glow(which_spell, rod) + to_add;
 }
