@@ -2014,7 +2014,7 @@ char* failure_rate_to_string(int fail)
     //this raw fail number into the actual fail percentage
     //before displaying it.
     int failPercent = get_true_fail_rate(fail);
-    char *buffer = new char[5];
+    char *buffer = (char *)malloc(5);
     if(failPercent <= 2)
     {
         sprintf(buffer, "%d%%", 0);
