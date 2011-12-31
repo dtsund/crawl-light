@@ -40,7 +40,9 @@ const int SHOALS_ISLAND_COLLIDE_DIST2 = 5 * 5;
 // The raw tide height / TIDE_MULTIPLIER is the actual tide height. The higher
 // the tide multiplier, the slower the tide advances and recedes. A multiplier
 // of X implies that the tide will advance visibly about once in X turns.
-int TIDE_MULTIPLIER = 30;
+// Currently set to 1 so that the tides are a tactical threat, rather than a
+// strategic one.
+int TIDE_MULTIPLIER = 1;
 
 int LOW_TIDE = -14 * TIDE_MULTIPLIER;
 int HIGH_TIDE = 15 * TIDE_MULTIPLIER;
