@@ -301,6 +301,7 @@ static const ability_def Ability_List[] =
     { ABIL_EVOKE_LEVITATE, "Evoke Levitation", 1, 0, 1, 0, ABFLAG_NONE },
     { ABIL_EVOKE_STOP_LEVITATING, "Stop Levitating", 0, 0, 0, 0, ABFLAG_NONE },
 
+    { ABIL_FORGET_SPELL, "Forget Spell", 0, 0, 7, 0, ABFLAG_NONE },
     { ABIL_END_TRANSFORMATION, "End Transformation", 0, 0, 0, 0, ABFLAG_NONE },
 
     // INVOCATIONS:
@@ -2484,6 +2485,10 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_ASHENZARI_END_TRANSFER:
         ashenzari_end_transfer();
         break;
+    
+    case ABIL_FORGET_SPELL:
+        return cast_selective_amnesia();
+        break;
 
     case ABIL_RENOUNCE_RELIGION:
         if (yesno("Really renounce your faith, foregoing its fabulous benefits?",
@@ -2940,6 +2945,10 @@ std::vector<talent> your_talents(bool check_confused)
                         check_confused);
         }
     }
+    
+    // If you have spells, you can forget them to make room for new ones.
+    if (you.spell_no)
+        _add_talent(talents, ABIL_FORGET_SPELL, check_confused);
 
     // And finally, the ability to opt-out of your faith {dlb}:
     if (you.religion != GOD_NO_GOD && !silenced(you.pos()))

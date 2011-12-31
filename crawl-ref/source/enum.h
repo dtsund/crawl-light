@@ -28,6 +28,7 @@ enum ability_type
 
     // Others
     ABIL_DELAYED_FIREBALL,
+    ABIL_FORGET_SPELL,
     ABIL_END_TRANSFORMATION,
 
     // Species-specific abilities.
