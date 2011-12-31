@@ -42,8 +42,8 @@ const int SHOALS_ISLAND_COLLIDE_DIST2 = 5 * 5;
 // of X implies that the tide will advance visibly about once in X turns.
 int TIDE_MULTIPLIER = 30;
 
-int LOW_TIDE = -18 * TIDE_MULTIPLIER;
-int HIGH_TIDE = 25 * TIDE_MULTIPLIER;
+int LOW_TIDE = -14 * TIDE_MULTIPLIER;
+int HIGH_TIDE = 15 * TIDE_MULTIPLIER;
 
 // The highest a tide can be called by a tide caller such as Ilsuiw.
 const int HIGH_CALLED_TIDE = 50;
@@ -213,6 +213,38 @@ static void _shoals_smooth_water()
 {
     for (rectangle_iterator ri(0); ri; ++ri)
         dgn_smooth_height_at(*ri, 1, SHT_SHALLOW_WATER - 1);
+}
+
+// Make any square that's ever shallow water be no deeper than shallow water
+// under normal circumstances.  Effectively, put the islands on a 'shelf' of
+// area that's always shallow enough to traverse.
+static void _shoals_island_shelf()
+{
+    int low_end = SHT_SHALLOW_WATER - HIGH_TIDE / TIDE_MULTIPLIER;
+    int high_end = SHT_FLOOR - LOW_TIDE  / TIDE_MULTIPLIER;
+    
+    int narrow_low = SHT_SHALLOW_WATER + HIGH_TIDE / TIDE_MULTIPLIER;
+    for (rectangle_iterator ri(0); ri; ++ri)
+    {
+        int current_height = dgn_height_at(*ri);
+        //Anything in this range is shallow water at least part of the time without this modification.
+        if(current_height >= low_end && current_height <= high_end)
+        {            
+            //The edge of the islands should always be under shallow water.
+            if(current_height <= low_end + 7)
+            {
+                dgn_height_at(*ri) = narrow_low;
+            }
+            else
+            {
+                //Otherwise, have a smooth transition.
+                dgn_height_at(*ri) = (current_height - low_end)
+                                   * (high_end - narrow_low) 
+                                   / (high_end - low_end)
+                                   + narrow_low;
+            }
+        }
+    }
 }
 
 static void _shoals_apply_level()
@@ -701,6 +733,7 @@ void dgn_build_shoals_level(int level_number)
     _shoals_deepen_water();
     _shoals_deepen_edges();
     _shoals_smooth_water();
+    _shoals_island_shelf();
     _shoals_furniture(_shoals_margin);
 }
 
