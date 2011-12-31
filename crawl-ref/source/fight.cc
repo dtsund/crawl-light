@@ -296,7 +296,7 @@ melee_attack::melee_attack(actor *attk, actor *defn,
     shield(NULL), defender_shield(NULL),
     player_body_armour_penalty(0), player_shield_penalty(0),
     player_armour_tohit_penalty(0), player_shield_tohit_penalty(0),
-    can_do_unarmed(false), apply_bleeding(false),
+    can_do_unarmed(false), apply_bleeding(false), water_attack(false),
     miscast_level(-1), miscast_type(SPTYP_NONE), miscast_target(NULL)
 {
     init_attack();
@@ -344,6 +344,7 @@ void melee_attack::init_attack()
                        && !weapon->cursed()
                        && hands == HANDS_HALF);
 
+    water_attack       = is_water_attack(attacker, defender);
     attacker_visible   = attacker->observable();
     attacker_invisible = (!attacker_visible && you.see_cell(attacker->pos()));
     defender_visible   = defender && defender->observable();
@@ -472,6 +473,12 @@ bool melee_attack::is_banished(const actor *a) const
         return (you.banished);
     else
         return (a->as_monster()->flags & MF_BANISHED);
+}
+
+bool melee_attack::is_water_attack(const actor *attk,
+                                   const actor *defn) const
+{
+    return (defn && (attk->mons_species() == MONS_KRAKEN_TENTACLE) && defn->floundering());
 }
 
 void melee_attack::check_autoberserk()
@@ -4471,6 +4478,10 @@ int melee_attack::mons_calc_damage(const mon_attack_def &attk)
 
     if (weapon && get_weapon_brand(*weapon) == SPWPN_SPEED)
         damage = div_rand_round(damage * 9, 10);
+        
+    // If a kraken hits you while you're floundering in shallows, double damage.
+    if (water_attack)
+        damage *= 2;
 
     // If the defender is asleep, the attacker gets a stab.
     if (defender && defender->asleep())
@@ -4625,6 +4636,12 @@ std::string melee_attack::mons_defender_name()
 
 void melee_attack::mons_announce_hit(const mon_attack_def &attk)
 {
+    if (water_attack && attacker_visible && attacker != defender)
+    {
+        mprf("%s uses the watery terrain to its advantage.",
+             attacker->name(DESC_CAP_THE).c_str());
+    }
+
     if (needs_message)
     {
         mprf("%s %s %s%s%s%s",
@@ -5924,6 +5941,10 @@ int melee_attack::mons_to_hit()
 #ifdef DEBUG_DIAGNOSTICS
     const int base_hit = mhit;
 #endif
+
+    //Krakens get better accuracy against floundering players.
+    if(water_attack)
+        mhit += 5;
 
     if (weapon && (weapon->base_type == OBJ_WEAPONS && !is_range_weapon(*weapon)
                 || weapon->base_type == OBJ_STAVES))

@@ -72,6 +72,10 @@ public:
 
     bool      can_do_unarmed;
     bool      apply_bleeding; // whether the attack should cause bleeding
+    
+    // Attacker (kraken) uses watery terrain to its advantage, against a
+    // player in the water.
+    bool      water_attack;
 
     // Miscast to cause after special damage is done.  If miscast_level == 0
     // the miscast is discarded if special_damage_message isn't empty.
@@ -102,6 +106,7 @@ public:
 private:
     void init_attack();
     bool is_banished(const actor *) const;
+    bool is_water_attack(const actor *, const actor *) const;
     void check_autoberserk();
     bool check_unrand_effects(bool mondied = false);
     void emit_nodmg_hit_message();
