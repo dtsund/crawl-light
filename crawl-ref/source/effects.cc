@@ -2158,9 +2158,14 @@ void handle_time()
     // The checks below assume the function is called at least
     // once every 50 elapsed time units.
 
-    // Every 5 turns, spawn random monsters, not in Zotdef.
+    // Every 5 turns, spawn random monsters in appropriate areas, not in Zotdef.
+    // Appropriate areas: Abyss, Hells, Pandemonium.  A player farming those is
+    // already strong enough to win.
     if (_div(base_time, 50) > _div(old_time, 50)
-        && !crawl_state.game_is_zotdef())
+        && !crawl_state.game_is_zotdef()
+        && (you.level_type == LEVEL_ABYSS
+        ||  you.level_type == LEVEL_PANDEMONIUM
+        || (you.where_are_you >= BRANCH_FIRST_HELL && you.where_are_you <= BRANCH_LAST_HELL)))
     {
         spawn_random_monsters();
     }
