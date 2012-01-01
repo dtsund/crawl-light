@@ -2893,7 +2893,7 @@ static void _player_reacts_to_monsters()
         manage_fire_shield(you.time_taken);
 
     // penance checked there (as you can have antennae too)
-    if (player_mutation_level(MUT_ANTENNAE) || you.religion == GOD_ASHENZARI)
+    if (player_mutation_level(MUT_ANTENNAE) || you.religion == GOD_CHEIBRIADOS)
         check_antennae_detect();
 
     if (you.religion == GOD_ASHENZARI && !player_under_penance())

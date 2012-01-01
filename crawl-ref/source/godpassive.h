@@ -37,13 +37,13 @@ enum jiyva_slurp_results
 int che_boost_level();
 int che_boost(che_boost_type bt, int level = che_boost_level());
 void che_handle_change(che_change_type ct, int diff);
+monster_type che_monster_tier(const monster *mon);
 void jiyva_eat_offlevel_items();
 void jiyva_slurp_bonus(int item_value, int *js);
 void jiyva_slurp_message(int js);
 int ash_bondage_level(int type_only = 0);
 void ash_check_bondage();
 int ash_detect_portals(bool all);
-monster_type ash_monster_tier(const monster *mon);
 //int ash_skill_boost(skill_type sk);
 
 #endif

@@ -129,6 +129,27 @@ void che_handle_change(che_change_type ct, int diff)
     }
 }
 
+monster_type che_monster_tier(const monster *mon)
+{
+    double factor = sqrt(exp_needed(you.experience_level) / 30.0);
+    int tension = exper_value(mon) / (1 + factor);
+
+    if (mon->friendly())
+        return MONS_SENSED_FRIENDLY;
+    else if (tension <= 0)
+        // Conjurators use melee to conserve mana, MDFis switch plates...
+        return MONS_SENSED_TRIVIAL;
+    else if (tension <= 5)
+        // An easy fight but not ignorable.
+        return MONS_SENSED_EASY;
+    else if (tension <= 32)
+        // Hard but reasonable.
+        return MONS_SENSED_TOUGH;
+    else
+        // Check all wands/jewels several times, wear brown pants...
+        return MONS_SENSED_NASTY;
+}
+
 // Eat from one random off-level item stack.
 void jiyva_eat_offlevel_items()
 {
@@ -383,27 +404,6 @@ int ash_detect_portals(bool all)
 
     you.seen_portals += portals_found;
     return (portals_found);
-}
-
-monster_type ash_monster_tier(const monster *mon)
-{
-    double factor = sqrt(exp_needed(you.experience_level) / 30.0);
-    int tension = exper_value(mon) / (1 + factor);
-
-    if (mon->friendly())
-        return MONS_SENSED_FRIENDLY;
-    else if (tension <= 0)
-        // Conjurators use melee to conserve mana, MDFis switch plates...
-        return MONS_SENSED_TRIVIAL;
-    else if (tension <= 5)
-        // An easy fight but not ignorable.
-        return MONS_SENSED_EASY;
-    else if (tension <= 32)
-        // Hard but reasonable.
-        return MONS_SENSED_TOUGH;
-    else
-        // Check all wands/jewels several times, wear brown pants...
-        return MONS_SENSED_NASTY;
 }
 
 #if 0
