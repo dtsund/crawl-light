@@ -2472,7 +2472,7 @@ static bool _do_ability(const ability_def& abil)
         break;
     
     case ABIL_FORGET_SPELL:
-        return cast_selective_amnesia();
+        return (cast_selective_amnesia() > 0);
         break;
 
     case ABIL_RENOUNCE_RELIGION:
