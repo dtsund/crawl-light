@@ -203,7 +203,7 @@ ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
       ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, ABIL_MAKHLEB_MAJOR_DESTRUCTION,
       ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB },
     // Sif Muna
-    { ABIL_SIF_MUNA_CHANNEL_ENERGY, ABIL_SIF_MUNA_FORGET_SPELL,
+    { ABIL_SIF_MUNA_CHANNEL_ENERGY, ABIL_NON_ABILITY,
       ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY },
     // Trog
     { ABIL_TROG_BERSERK, ABIL_TROG_REGEN_MR, ABIL_NON_ABILITY,
@@ -353,7 +353,6 @@ static const ability_def Ability_List[] =
     // Sif Muna
     { ABIL_SIF_MUNA_CHANNEL_ENERGY, "Channel Energy",
       0, 0, 1, 0, ABFLAG_NONE },
-    { ABIL_SIF_MUNA_FORGET_SPELL, "Forget Spell", 5, 0, 0, 8, ABFLAG_NONE },
 
     // Trog
     { ABIL_TROG_BURN_SPELLBOOKS, "Burn Spellbooks", 0, 0, 0, 0, ABFLAG_NONE },
@@ -1191,7 +1190,6 @@ static talent _get_talent(ability_type ability, bool check_confused)
     case ABIL_TSO_DIVINE_SHIELD:
     case ABIL_BEOGH_SMITING:
     case ABIL_MAKHLEB_MINOR_DESTRUCTION:
-    case ABIL_SIF_MUNA_FORGET_SPELL:
     case ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB:
     case ABIL_ELYVILON_GREATER_HEALING_SELF:
     case ABIL_ELYVILON_GREATER_HEALING_OTHERS:
@@ -1517,14 +1515,6 @@ static bool _check_ability_possible(const ability_def& abil)
         if (you.level_type == LEVEL_ABYSS)
         {
             mpr("You're already here!");
-            return (false);
-        }
-        return (true);
-
-    case ABIL_SIF_MUNA_FORGET_SPELL:
-        if (you.spell_no == 0)
-        {
-            canned_msg(MSG_NO_SPELLS);
             return (false);
         }
         return (true);
@@ -2310,11 +2300,6 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_TROG_BROTHERS_IN_ARMS:
         trog_brothers_in_arms();
-        break;
-
-    case ABIL_SIF_MUNA_FORGET_SPELL:
-        if(!sif_muna_forget_spell())
-            return (false);
         break;
 
     case ABIL_ELYVILON_LIFESAVING:

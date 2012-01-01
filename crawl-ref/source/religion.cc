@@ -268,7 +268,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "summon a greater servant of Makhleb" },
     // Sif Muna
     { "tap ambient magical fields",
-      "freely open your mind to new spells",
+      "",
       "",
       "Sif Muna is protecting you from miscast magic.",
       "" },
@@ -383,7 +383,7 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "summon a greater servant of Makhleb" },
     // Sif Muna
     { "tap ambient magical fields",
-      "forget spells at will",
+      "",
       "",
       "Sif Muna will no longer protect you from miscast magic.",
       "" },
