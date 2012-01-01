@@ -2739,12 +2739,12 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
 
     case MONS_MERFOLK_JAVELINEER:
         band = BAND_MERFOLK_JAVELINEER;
-        band_size = random_range(3, 5);
+        band_size = random_range(2, 3);
         break;
 
     case MONS_MERFOLK_IMPALER:
         band = BAND_MERFOLK_IMPALER;
-        band_size = random_range(3, 5);
+        band_size = random_range(2, 3);
         break;
 
     case MONS_ELEPHANT:

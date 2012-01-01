@@ -1663,6 +1663,8 @@ int mons_shoals_level(int mcls)
         break;
 
     case MONS_MERFOLK:
+    case MONS_MERFOLK_JAVELINEER:
+    case MONS_MERFOLK_IMPALER:
     case MONS_MERMAID:
     case MONS_HIPPOGRIFF:
     case MONS_CENTAUR:
@@ -1685,8 +1687,6 @@ int mons_shoals_level(int mcls)
         break;
 
     case MONS_ALLIGATOR_SNAPPING_TURTLE:
-    case MONS_MERFOLK_JAVELINEER:
-    case MONS_MERFOLK_IMPALER:
     case MONS_MERFOLK_AQUAMANCER:
     // case MONS_PORTAL_MIMIC:
         mlev += 4;
@@ -1703,6 +1703,7 @@ int mons_shoals_rare(int mcls)
     switch (mcls)
     {
     case MONS_MERFOLK:
+    case MONS_MERFOLK_IMPALER:
         return 90;
 
     case MONS_SNAPPING_TURTLE:
@@ -1731,7 +1732,6 @@ int mons_shoals_rare(int mcls)
         return 18;
 
     case MONS_MERFOLK_AQUAMANCER:
-    case MONS_MERFOLK_IMPALER:
         return 15;
 
     case MONS_OKLOB_PLANT:

@@ -12,6 +12,7 @@
 #include "mon-gear.h"
 
 #include "artefact.h"
+#include "branch.h"
 #include "colour.h"
 #include "dungeon.h"
 #include "env.h"
@@ -760,7 +761,7 @@ static item_make_species_type _give_weapon(monster* mon, int level,
                                                0);
         if (coinflip())
             level = MAKE_GOOD_ITEM;
-        else if (coinflip())
+        else if (coinflip() && player_in_branch(BRANCH_SHOALS) && at_branch_bottom())
         {
             // Per dpeg request :)
             item.special = SPWPN_REACHING;
@@ -783,7 +784,7 @@ static item_make_species_type _give_weapon(monster* mon, int level,
         item_race = MAKE_ITEM_NO_RACE;
         item.base_type = OBJ_WEAPONS;
         item.sub_type = WPN_SPEAR;
-        if (!one_chance_in(3))
+        if (!one_chance_in(10))
             level = MAKE_GOOD_ITEM;
         break;
 
@@ -1404,17 +1405,7 @@ static void _give_ammo(monster* mon, int level,
             break;
 
         case MONS_MERFOLK:
-            if (one_chance_in(3)
-                || active_monster_band == BAND_MERFOLK_JAVELINEER)
-            {
-                item_race  = MAKE_ITEM_NO_RACE;
-                weap_class = OBJ_WEAPONS;
-                weap_type  = WPN_SPEAR;
-                qty        = random_range(4, 8);
-                if (active_monster_band == BAND_MERFOLK_JAVELINEER)
-                    break;
-            }
-            if (one_chance_in(6) && !mons_summoned)
+            if (one_chance_in(20) && !mons_summoned)
             {
                 weap_class = OBJ_MISSILES;
                 weap_type  = MI_THROWING_NET;
