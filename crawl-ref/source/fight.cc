@@ -478,7 +478,8 @@ bool melee_attack::is_banished(const actor *a) const
 bool melee_attack::is_water_attack(const actor *attk,
                                    const actor *defn) const
 {
-    return (defn && (attk->mons_species() == MONS_KRAKEN_TENTACLE) && defn->floundering());
+    return (defn && (attk->mons_species() == MONS_KRAKEN_TENTACLE
+            || attk->mons_species() == MONS_MERFOLK) && defn->floundering());
 }
 
 void melee_attack::check_autoberserk()
@@ -4479,7 +4480,7 @@ int melee_attack::mons_calc_damage(const mon_attack_def &attk)
     if (weapon && get_weapon_brand(*weapon) == SPWPN_SPEED)
         damage = div_rand_round(damage * 9, 10);
         
-    // If a kraken hits you while you're floundering in shallows, double damage.
+    // If a Shoals foe hits you while you're floundering in shallows, double damage.
     if (water_attack)
         damage *= 2;
 
@@ -5942,7 +5943,7 @@ int melee_attack::mons_to_hit()
     const int base_hit = mhit;
 #endif
 
-    //Krakens get better accuracy against floundering players.
+    //Shoals foes get better accuracy against floundering players.
     if(water_attack)
         mhit += 5;
 
