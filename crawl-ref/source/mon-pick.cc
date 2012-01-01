@@ -1704,6 +1704,7 @@ int mons_shoals_rare(int mcls)
     {
     case MONS_MERFOLK:
     case MONS_MERFOLK_IMPALER:
+    case MONS_MERFOLK_JAVELINEER:
         return 90;
 
     case MONS_SNAPPING_TURTLE:
@@ -1736,7 +1737,6 @@ int mons_shoals_rare(int mcls)
 
     case MONS_OKLOB_PLANT:
     case MONS_ALLIGATOR_SNAPPING_TURTLE:
-    case MONS_MERFOLK_JAVELINEER:
     // case MONS_PORTAL_MIMIC:
         return 10;
 
