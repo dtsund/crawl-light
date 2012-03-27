@@ -331,8 +331,6 @@ static item_make_species_type _give_weapon(monster* mon, int level,
                 set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FREEZING);
         }
 
-        if (one_chance_in(3))
-            do_curse_item(item);
         break;
 
     case MONS_EDMUND:
@@ -393,7 +391,6 @@ static item_make_species_type _give_weapon(monster* mon, int level,
         {
             item.plus  = -1 + (-1 * random2(4));
             item.plus2 = -1 + (-1 * random2(4));
-            do_curse_item(item);
         }
         break;
 

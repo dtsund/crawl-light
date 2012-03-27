@@ -720,28 +720,9 @@ void wizard_make_object_randart()
     mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
 }
 
-// Returns whether an item of this type can be cursed.
-static bool _item_type_can_be_cursed(int type)
-{
-    return (type == OBJ_WEAPONS || type == OBJ_ARMOUR || type == OBJ_JEWELLERY
-            || type == OBJ_STAVES);
-}
-
 void wizard_uncurse_item()
 {
-    const int i = prompt_invent_item("(Un)curse which item?", MT_INVLIST, -1);
-
-    if (!prompt_failed(i))
-    {
-        item_def& item(you.inv[i]);
-
-        if (item.cursed())
-            do_uncurse_item(item);
-        else if (_item_type_can_be_cursed(item.base_type))
-            do_curse_item(item);
-        else
-            mpr("That type of item cannot be cursed.");
-    }
+    mpr("Sorry, this command's been removed.");
 }
 
 void wizard_identify_pack()

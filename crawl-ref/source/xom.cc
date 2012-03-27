@@ -518,8 +518,8 @@ static bool _transformation_check(const spell_type spell)
     if (tran == TRAN_NONE)
         return (true);
 
-    // Check whether existing enchantments/transformations, cursed
-    // equipment or potential stat loss interfere with this
+    // Check whether existing enchantments/transformations
+    // or potential stat loss interfere with this
     // transformation.
     return (transform(0, tran, true, true));
 }
@@ -764,65 +764,7 @@ static bool _xom_annoyance_gift(int power, bool debug = false)
     {
         const item_def *weapon = you.weapon();
 
-        // Xom has a sense of humour.
-        if (coinflip() && weapon && weapon->cursed())
-        {
-            if (debug)
-                return (true);
-
-            // If you are wielding a cursed item then Xom will give you
-            // an item of that same type.  Ha ha!
-            god_speaks(GOD_XOM, _get_xom_speech("cursed gift").c_str());
-            if (coinflip())
-                // For added humour, give the same sub-type.
-                _xom_make_item(weapon->base_type, weapon->sub_type, power * 3);
-            else
-                _xom_acquirement(weapon->base_type);
-            return (true);
-        }
-
-        const item_def *gloves = you.slot_item(EQ_GLOVES, true);
-        if (coinflip() && gloves && gloves->cursed())
-        {
-            if (debug)
-                return (true);
-
-            // If you are wearing cursed gloves, then Xom will give you
-            // a ring.  Ha ha!
-            god_speaks(GOD_XOM, _get_xom_speech("cursed gift").c_str());
-            _xom_make_item(OBJ_JEWELLERY, get_random_ring_type(), power * 3);
-            return (true);
-        };
-
-        const item_def *amulet = you.slot_item(EQ_AMULET, true);
-        if (coinflip() && amulet && amulet->cursed())
-        {
-            if (debug)
-                return (true);
-
-            // If you are wearing a cursed amulet, then Xom will give
-            // you an amulet.  Ha ha!
-            god_speaks(GOD_XOM, _get_xom_speech("cursed gift").c_str());
-            _xom_make_item(OBJ_JEWELLERY, get_random_amulet_type(), power * 3);
-            return (true);
-        };
-
-        const item_def *left_ring = you.slot_item(EQ_LEFT_RING, true);
-        const item_def *right_ring = you.slot_item(EQ_RIGHT_RING, true);
-        if (coinflip() && ((left_ring && left_ring->cursed())
-                           || (right_ring && right_ring->cursed())))
-        {
-            if (debug)
-                return (true);
-
-            // If you are wearing a cursed ring, then Xom will give you
-            // a ring.  Ha ha!
-            god_speaks(GOD_XOM, _get_xom_speech("ring gift").c_str());
-            _xom_make_item(OBJ_JEWELLERY, get_random_ring_type(), power * 3);
-            return (true);
-        }
-
-        if (one_chance_in(5) && weapon)
+        if (one_chance_in(15) && weapon)
         {
             if (debug)
                 return (true);
@@ -840,19 +782,6 @@ static bool _xom_annoyance_gift(int power, bool debug = false)
                 _xom_make_item(objtype, OBJ_RANDOM, power * 3);
             return (true);
         }
-    }
-
-    const item_def *cloak = you.slot_item(EQ_CLOAK, true);
-    if (coinflip() && cloak && cloak->cursed())
-    {
-        // If you are wearing a cursed cloak, then Xom will give you a
-        // cloak or body armour.  Ha ha!
-        god_speaks(GOD_XOM, _get_xom_speech("armour gift").c_str());
-        _xom_make_item(OBJ_ARMOUR,
-                       one_chance_in(10) ? ARM_CLOAK :
-                                get_random_body_armour_type(power * 2),
-                       power * 3);
-        return (true);
     }
 
     return (false);
@@ -1759,7 +1688,6 @@ static int _xom_random_stickable(const int HD)
 
 // A near-inversion of sticks_to_snakes with the following limitations:
 //  * Transformations are permanent.
-//  * Weapons are always non-cursed.
 //  * HD influences the enchantment and type of the weapon.
 //  * Weapon is not guaranteed to be useful.
 //  * Weapon will never be branded.

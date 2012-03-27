@@ -205,8 +205,7 @@ bool cast_sticks_to_snakes(int pow, god_type god)
 
     const int dur = std::min(3 + random2(pow) / 20, 5);
     int how_many_max = 1 + random2(1 + you.skill(SK_TRANSMUTATIONS)) / 4;
-    const bool friendly = (!wpn.cursed());
-    const beh_type beha = (friendly) ? BEH_FRIENDLY : BEH_HOSTILE;
+    const beh_type beha = BEH_FRIENDLY;
 
     int count = 0;
 
@@ -957,10 +956,8 @@ bool cast_tukimas_ball(actor *caster, int pow, god_type god, bool force_hostile)
                 //attempt to animate weapon
                 item_def wpn = *si;
 
-                // Cursed weapons become hostile.
-                const bool friendly = !force_hostile && !wpn.cursed();
                 mgen_data mg(MONS_DANCING_WEAPON,
-                             friendly ? BEH_FRIENDLY : BEH_HOSTILE,
+                             BEH_FRIENDLY,
                              caster,
                              dur,
                              SPELL_TUKIMAS_DANCE,
@@ -1015,11 +1012,8 @@ bool cast_tukimas_dance(int pow, god_type god, bool force_hostile)
         // Mark weapon as "thrown", so we'll autopickup it later.
         cp.flags |= ISFLAG_THROWN;
 
-        // Cursed weapons become hostile.
-        const bool friendly = (!force_hostile && !wpn->cursed());
-
         mgen_data mg(MONS_DANCING_WEAPON,
-                     friendly ? BEH_FRIENDLY : BEH_HOSTILE,
+                     BEH_FRIENDLY,
                      force_hostile ? 0 : &you,
                      dur, SPELL_TUKIMAS_DANCE,
                      you.pos(),

@@ -247,6 +247,12 @@ int get_mimic_colour(const monster* mimic)
 // Monster curses a random player inventory item.
 bool curse_an_item(bool quiet)
 {
+    //Because curses don't do anything anymore, come up with
+    //some other mild punishment later.  Leaving this
+    //function here as reminder.
+    mpr("...but then you feel rather smug.");
+    
+    /*
     // allowing these would enable mummy scumming
     if (you.religion == GOD_ASHENZARI)
     {
@@ -293,6 +299,7 @@ bool curse_an_item(bool quiet)
         return (false);
 
     do_curse_item(you.inv[item], false);
+    */
 
     return (true);
 }

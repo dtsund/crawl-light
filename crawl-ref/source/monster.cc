@@ -551,20 +551,6 @@ bool monster::can_wield(const item_def& item, bool ignore_curse,
         _shield = &mitm[inv[MSLOT_SHIELD]];
     }
 
-    if (!ignore_curse)
-    {
-        int num_cursed = 0;
-        if (weap1 && weap1->cursed())
-            num_cursed++;
-        if (weap2 && weap2->cursed())
-            num_cursed++;
-        if (_shield && _shield->cursed())
-            num_cursed++;
-
-        if (two_handed && num_cursed > 0 || num_cursed >= avail_slots)
-            return (false);
-    }
-
     return could_wield(item, ignore_brand, ignore_transform);
 }
 
@@ -993,9 +979,6 @@ void monster::unequip_armour(item_def &item, int near)
 
 bool monster::unequip(item_def &item, int slot, int near, bool force)
 {
-    if (!force && item.cursed())
-        return (false);
-
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
@@ -1151,8 +1134,7 @@ bool monster::drop_item(int eslot, int near)
 
     item_def* pitem = &mitm[item_index];
 
-    // Unequip equipped items before dropping them; unequip() prevents
-    // cursed items from being removed.
+    // Unequip equipped items before dropping them
     bool was_unequipped = false;
     if (eslot == MSLOT_WEAPON || eslot == MSLOT_ARMOUR
         || eslot == MSLOT_ALT_WEAPON && mons_wields_two_weapons(this))
@@ -1449,7 +1431,7 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
                 return (false);
 
             // If we get here, the weapon is a melee weapon.
-            // If the new weapon is better than the current one and not cursed,
+            // If the new weapon is better than the current one,
             // replace it. Otherwise, give up.
             const int old_wpn_dam = mons_weapon_damage_rating(*weap)
                                     + _ego_damage_bonus(*weap);
@@ -1475,7 +1457,7 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
                     new_wpn_better = true;
             }
 
-            if (new_wpn_better && !weap->cursed())
+            if (new_wpn_better)
             {
                 if (!dual_wielding
                     || i == MSLOT_WEAPON
@@ -2052,7 +2034,7 @@ void monster::swap_weapons(int near)
 
     if (weap && !unequip(*weap, MSLOT_WEAPON, near))
     {
-        // Item was cursed.
+        //XXX This shouldn't happen, I think?.
         return;
     }
 
@@ -2072,7 +2054,7 @@ void monster::swap_weapons(int near)
 void monster::wield_melee_weapon(int near)
 {
     const item_def *weap = mslot_item(MSLOT_WEAPON);
-    if (!weap || (!weap->cursed() && is_range_weapon(*weap)))
+    if (!weap || is_range_weapon(*weap))
     {
         const item_def *alt = mslot_item(MSLOT_ALT_WEAPON);
 

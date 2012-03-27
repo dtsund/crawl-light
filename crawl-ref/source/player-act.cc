@@ -279,12 +279,6 @@ bool player::can_wield(const item_def& item, bool ignore_curse,
                        bool ignore_brand, bool ignore_shield,
                        bool ignore_transform) const
 {
-    if (equip[EQ_WEAPON] != -1 && !ignore_curse)
-    {
-        if (inv[equip[EQ_WEAPON]].cursed())
-            return (false);
-    }
-
     // Unassigned means unarmed combat.
     const bool two_handed = item.base_type == OBJ_UNASSIGNED
                             || hands_reqd(item, body_size()) == HANDS_TWO;

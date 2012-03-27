@@ -211,15 +211,6 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     notify_stat_change(STAT_INT, proprt[ARTP_INTELLIGENCE], !msg, item);
     notify_stat_change(STAT_DEX,    proprt[ARTP_DEXTERITY], !msg, item);
 
-    //Properly remove this later.
-    /*
-    if (!unmeld && !item.cursed() && proprt[ARTP_CURSED] > 0
-         && one_chance_in(proprt[ARTP_CURSED]))
-    {
-        do_curse_item(item, !msg);
-    }
-    */
-
     if (proprt[ARTP_NOISES])
         you.attribute[ATTR_NOISES] = 1;
 
@@ -1206,22 +1197,12 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             set_ident_flags(item, ISFLAG_EQ_JEWELLERY_MASK);
     }
 
-    // Cursed or not, we know that since we've put the ring on.
-    set_ident_flags(item, ISFLAG_KNOW_CURSE);
-
     mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
 }
 
 static void _unequip_jewellery_effect(item_def &item, bool mesg)
 {
     // The ring/amulet must already be removed from you.equip at this point.
-
-    // Turn off show_uncursed before getting the item name, because this item
-    // was just removed, and the player knows it's uncursed.
-    const bool old_showuncursed = Options.show_uncursed;
-    Options.show_uncursed = false;
-
-    Options.show_uncursed = old_showuncursed;
 
     switch (item.sub_type)
     {
