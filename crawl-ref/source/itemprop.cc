@@ -472,16 +472,20 @@ void init_properties()
 //
 bool item_known_cursed(const item_def &item)
 {
-    return ((item.flags & ISFLAG_KNOW_CURSE) && (item.flags & ISFLAG_CURSED));
+    //return ((item.flags & ISFLAG_KNOW_CURSE) && (item.flags & ISFLAG_CURSED));
+    return false;
 }
 
 bool item_known_uncursed(const item_def &item)
 {
-    return ((item.flags & ISFLAG_KNOW_CURSE) && !(item.flags & ISFLAG_CURSED));
+    //return ((item.flags & ISFLAG_KNOW_CURSE) && !(item.flags & ISFLAG_CURSED));
+    return true;
 }
 
 void do_curse_item(item_def &item, bool quiet)
 {
+    //Don't do anything.
+/*
     // Already cursed?
     if (item.flags & ISFLAG_CURSED)
         return;
@@ -557,10 +561,13 @@ void do_curse_item(item_def &item, bool quiet)
 
         xom_is_stimulated(amusement);
     }
+*/
 }
 
 void do_uncurse_item(item_def &item, bool inscribe, bool no_ash)
 {
+    //Don't do anything.
+/*
     if (no_ash && you.religion == GOD_ASHENZARI)
     {
         simple_god_message(" preserves the curse.");
@@ -587,6 +594,7 @@ void do_uncurse_item(item_def &item, bool inscribe, bool no_ash)
     item.flags &= (~ISFLAG_SEEN_CURSED);
 
     ash_check_bondage();
+*/
 }
 
 // Is item stationary (cannot be picked up)?

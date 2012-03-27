@@ -3118,7 +3118,8 @@ int item_def::book_number() const
 
 bool item_def::cursed() const
 {
-    return (flags & ISFLAG_CURSED);
+    return false;
+    //return (flags & ISFLAG_CURSED);
 }
 
 bool item_def::launched_by(const item_def &launcher) const

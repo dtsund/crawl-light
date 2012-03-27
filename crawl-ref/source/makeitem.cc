@@ -974,18 +974,10 @@ static bool _try_make_weapon_artefact(item_def& item, int force_type,
 
         if (one_chance_in(4))
         {
-            do_curse_item(item);
             item.plus  = -random2(6);
             item.plus2 = -random2(6);
         }
-        else if ((item.plus < 0 || item.plus2 < 0)
-                 && !one_chance_in(3))
-        {
-            do_curse_item(item);
-        }
 
-        if (get_weapon_brand(item) == SPWPN_HOLY_WRATH)
-            item.flags &= (~ISFLAG_CURSED);
         return (true);
     }
 
@@ -1749,8 +1741,6 @@ brand_ok:
         item.plus  -= 1 + random2(3);
         item.plus2 -= 1 + random2(3);
 
-        if (item_level == -5)
-            do_curse_item(item);
     }
     else if ((force_good || is_demonic(item) || forced_ego
                     || x_chance_in_y(51 + item_level, 200))
@@ -1794,8 +1784,7 @@ brand_ok:
     {
         if (one_chance_in(12))
         {
-            // Make a cursed item.
-            do_curse_item(item);
+            // Make an inferior item (might still be worth keeping for some players).
             item.plus  -= random2(4);
             item.plus2 -= random2(4);
             set_item_ego_type(item, OBJ_WEAPONS, SPWPN_NORMAL);
@@ -2095,7 +2084,6 @@ static bool _try_make_armour_artefact(item_def& item, int force_type,
         // Determine enchantment and cursedness.
         if (one_chance_in(5))
         {
-            do_curse_item(item);
             item.plus = -random2(6);
         }
         else
@@ -2108,9 +2096,6 @@ static bool _try_make_armour_artefact(item_def& item, int force_type,
 
             if (one_chance_in(6))
                 item.plus -= random2(max_plus + 6);
-
-            if (item.plus < 0 && !one_chance_in(3))
-                do_curse_item(item);
         }
 
         return (true);
@@ -2492,9 +2477,6 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         }
 
         item.plus -= 1 + random2(3);
-
-        if (item_level == -5)
-            do_curse_item(item);
     }
     else if ((forced_ego || item.sub_type == ARM_WIZARD_HAT
                     || x_chance_in_y(51 + item_level, 250))
@@ -2527,8 +2509,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
     }
     else if (one_chance_in(12))
     {
-        // Make a bad (cursed) item.
-        do_curse_item(item);
+        // Make a bad item.
 
         if (one_chance_in(5))
             item.plus -= random2(3);
@@ -2954,9 +2935,6 @@ static void _generate_staff_item(item_def& item, int force_type, int item_level)
 
     if (item_is_rod(item))
         init_rod_mp(item, -1, item_level);
-
-    if (one_chance_in(16))
-        do_curse_item(item);
 }
 
 static bool _try_make_jewellery_unrandart(item_def& item, int force_type,
@@ -3045,12 +3023,6 @@ static void _generate_jewellery_item(item_def& item, bool allow_uniques,
         && x_chance_in_y(101 + item_level * 3, 4000))
     {
         make_item_randart(item);
-    }
-    else if (item.sub_type == RING_HUNGER || item.sub_type == RING_TELEPORTATION
-             || one_chance_in(50))
-    {
-        // Rings of hunger and teleportation are always cursed {dlb}:
-        do_curse_item(item);
     }
 }
 

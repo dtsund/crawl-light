@@ -712,9 +712,6 @@ static bool _beogh_retribution()
                     set_item_ego_type(wpn, OBJ_WEAPONS, SPWPN_ELECTROCUTION);
                 }
 
-                if (coinflip())
-                    wpn.flags |= ISFLAG_CURSED;
-
                 wpn.plus  = random2(3);
                 wpn.plus2 = random2(3);
                 wpn.sub_type = wpn_type;
