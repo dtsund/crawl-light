@@ -174,17 +174,6 @@ int InventoryRegion::handle_mouse(MouseEvent &event)
     return 0;
 }
 
-// NOTE: Assumes the item is equipped in the first place!
-static bool _is_true_equipped_item(item_def item)
-{
-    // Weapons and staves are only truly equipped if wielded.
-    if (item.link == you.equip[EQ_WEAPON])
-        return (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES);
-
-    // Armour and rings are only truly equipped if *not* wielded.
-    return (item.link != you.equip[EQ_WEAPON]);
-}
-
 // Returns whether there's any action you can take with an item in inventory
 // apart from dropping it.
 static bool _can_use_item(const item_def &item, bool equipped)
