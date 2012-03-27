@@ -962,7 +962,7 @@ KITEM:      | = scroll of acquirement / scroll of enchant weapon III q:2 /\
 :           elseif lrnd == 1 then
 KITEM:      % = any armour
 KITEM:      * = any good_item armour
-KITEM:      | = cursed robe ego:resistance / cursed gold dragon armour
+KITEM:      | = robe ego:resistance / gold dragon armour
 :           else
 KITEM:      % = any / star_item w:2
 KITEM:      * = star_item / superb_item w:2

@@ -655,7 +655,7 @@ TAGS:   bailey_axe no_item_gen no_monster_gen
 ITEM:   potion of healing / potion of heal wounds / potion of resistance w:5 / \
         potion of might w:5 / potion of brilliance w:5 / potion of agility w:5 / \
         potion of magic w:5 / potion of speed w:5 / \
-        scroll of teleportation / scroll of blinking / scroll of identify / \
+        scroll of teleportation / scroll of blinking / scroll of fog / \
         scroll of enchant weapon i w:2 / scroll of enchant weapon ii w:2 / \
         scroll of enchant weapon iii w:1 / scroll of enchant armour w:5
 ITEM:   potion of gain strength / potion of gain intelligence / \

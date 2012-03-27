@@ -254,7 +254,7 @@ function setup_loot (e)
                                  "longbow w:5", "crossbow w:5"}))
     e.item("any")
     e.item([[potion of decay / potion of degeneration / potion of mutation /
-             scroll of immolation / scroll of curse weapon / scroll of curse armour /
+             scroll of immolation /
              potion of confusion / potion of paralysis / scroll of random uselessness]])
 end
 

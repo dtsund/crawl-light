@@ -169,8 +169,8 @@ MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
 KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
  meat ration / bread ration / royal jelly / honeycomb / choko, \
- scroll of remove curse q:2 / scroll of remove curse q:1 / any scroll, \
- scroll of identify q:2 / scroll of identify q:1 / any scroll, \
+ any scroll, \
+ any scroll, \
  scroll of torment / scroll of holy word / scroll of immolation, \
  potion of mutation / potion of decay / potion of strong poison
 SUBST: T = t.
@@ -202,8 +202,8 @@ MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
 KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
  meat ration / bread ration / royal jelly / honeycomb / choko, \
- scroll of remove curse q:2 / scroll of remove curse q:1 / any scroll, \
- scroll of identify q:2 / scroll of identify q:1 / any scroll, \
+ any scroll, \
+ any scroll, \
  scroll of torment / scroll of holy word / scroll of immolation, \
  potion of mutation / potion of decay / potion of strong poison
 
@@ -420,7 +420,7 @@ MONS: deep elf blademaster ; chain mail ego:cold_resistance /\
 NSUBST: $ = 1:b / 1:s / *:|
 : acq_on_sight(_G, 'b', {"book","book","wand"})
 : acq_on_sight(_G, 's', {"staff","jewellery","jewellery"})
-KITEM: | = superb_item, superb_item, superb_item, gold, scroll of amnesia / w:5 scroll of silence
+KITEM: | = superb_item, superb_item, superb_item, gold, scroll of recharging / w:5 scroll of silence
 KFEAT: b = floor
 COLOUR: # = yellow
 KFEAT: # = closed_door
@@ -811,7 +811,7 @@ MONS: spriggan defender hd:5 hp:55 ; dagger
 MONS: silver statue / orange crystal statue
 MONS: crystal golem hd:10 hp:130, skeletal warrior
 KMONS: 2 = giant eyeball
-KITEM: 2 = q:10 scroll of identify
+KITEM: 2 = q:2 scroll of recharging
 KMONS: P = plant
 SUBST: P = PPPPPPPPP.
 

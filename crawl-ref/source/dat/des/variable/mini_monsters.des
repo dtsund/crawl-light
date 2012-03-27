@@ -2446,7 +2446,7 @@ TAGS:   no_monster_gen no_item_gen
 DEPTH:  D:8-, Crypt
 WEIGHT: 3
 MONS:   reaper, reaper; scythe unrand:scythe_of_curses, mummy, guardian mummy
-ITEM:   scroll of curse armour / scroll of curse weapon
+ITEM:   scroll of fear
 KPROP:  1d2 = no_rtele_into
 MAP
 ..............

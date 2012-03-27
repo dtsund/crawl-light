@@ -126,7 +126,6 @@ function trove.get_trove_item(e, value, base_item)
 
        {base="potion", type="cure mutation", quant=2, weight=1},
        {base="scroll", type="acquirement", quant=2, weight=1},
-       {base="scroll", type="identify", quant=12+d(4)+d(4), weight=1},
 
        {base="miscellaneous", type="rune of Zot", quant=3, name="slimy", weight=1},
        {base="miscellaneous", type="rune of Zot", quant=11, name="abyssal", weight=1},
@@ -192,12 +191,12 @@ function trove.milestone(_G)
 end
 
 -- "any scroll good_item" still gets you 'scroll of noise', 'scroll of curse weapon', etc
--- so let's limit it to the enchant/recharge scrolls, tloc scrolls, identify scrolls,
+-- so let's limit it to the enchant/recharge scrolls, tloc scrolls,
 -- mapping scrolls with a low chance of silence, vulnerability or acquirement (lowest)
 function trove.good_scroll (e)
     e.item([[scroll of enchant weapon i / scroll of enchant weapon ii /
              scroll of enchant weapon iii w:5 / scroll of vorpalise weapon w:3 /
-             scroll of enchant armour / scroll of identify w:20 /
+             scroll of enchant armour /
              scroll of magic mapping w:5 / scroll of blinking / scroll of silence w:2 /
              scroll of recharging / scroll of acquirement w:1 / scroll of teleportation w:20 /
              scroll of vulnerability w:2 / scroll of holy word w:8 / scroll of fog w:8]])

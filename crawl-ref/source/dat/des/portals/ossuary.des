@@ -391,16 +391,13 @@ MONS:    gnoll zombie / hobgoblin zombie / orc zombie / \
          human zombie / kobold zombie / goblin zombie / \
          big kobold zombie / centaur zombie
 # mix of strictly good items with strictly useless ones
-ITEM:    scroll of curse armour / scroll of enchant armour w:5 / \
-         scroll of curse weapon / scroll of remove curse       / \
+ITEM:    scroll of enchant armour w:5 / \
          potion of mutation w:5 / potion of cure mutation w:5  / \
          potion of confusion    / potion of healing w:15       / \
          potion of degeneration / potion of restore abilities  / \
-         scroll of immolation   / scroll of identify
+         scroll of immolation   / scroll of fog
 # and sometimes strictly useless ones
-ITEM:    scroll of curse armour / scroll of curse weapon / \
-         scroll of random uselessness / \
-         potion of mutation w:5 / potion of confusion    / \
+ITEM:    potion of mutation w:5 / potion of confusion    / \
          potion of degeneration / scroll of immolation   / \
          potion of confusion    / potion of paralysis
 # occasionally just use this
@@ -677,9 +674,8 @@ TAGS:    ossuary no_item_gen no_monster_gen
 # Most of the loot helps right here, if need be.
 ITEM:    potion of healing / potion of heal wounds / potion of speed / \
          potion of confusion w:5 / potion of mutation w:5 / \
-         scroll of identify / scroll of teleportation w:5 / \
-         scroll of blinking w:5 / scroll of holy word / \
-         scroll of curse armour w:5 / scroll of curse weapon w:5
+         scroll of fog / scroll of teleportation w:5 / \
+         scroll of blinking w:5 / scroll of holy word /
 # There are three setups than can occur:
 # 10% - part of the loot in the closets, secret doors, bit more loot
 # 45% - doors are secret, traps are nasty, monsters asleep

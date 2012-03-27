@@ -81,7 +81,7 @@ function callback.tgw_lugonu_bribe_lugonu_item (data, triggerable,
          Yredelemnul= "scroll of holy word q:2-4 / good_item " .. weapon .. " ego:holy_wrath",
          Zin="good_item " .. weapon .. " ego:draining / good_item " .. weapon .. " ego:pain \
          / good_item " .. weapon .. " ego:chaos / wand of draining w:7 / wand of polymorph other w:14",
-         Ashenzari="scroll of detect curse q:5-10 / amulet of clarity / ring of see invisible",
+         Ashenzari="amulet of clarity / ring of see invisible",
          ["No God"]="amulet of Faith",
        }
          data.triggered = true
