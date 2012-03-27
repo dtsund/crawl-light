@@ -2756,7 +2756,7 @@ static void _generate_scroll_item(item_def& item, int force_type,
         {
             item.sub_type = random_choose_weighted(
                 //1800, SCR_IDENTIFY,
-                1115, SCR_REMOVE_CURSE,
+                //1115, SCR_REMOVE_CURSE,
                  //511, SCR_DETECT_CURSE,
                  331, SCR_FEAR,
                  331, SCR_MAGIC_MAPPING,
