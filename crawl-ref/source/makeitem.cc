@@ -2787,7 +2787,7 @@ static void _generate_scroll_item(item_def& item, int force_type,
                  140, (depth_mod < 7 ? SCR_FOG           : SCR_HOLY_WORD),
 
                  // Balanced by rarity.
-                 10, SCR_SILENCE,
+                 35, SCR_SILENCE,
 
                 // [ds] Zero-weights should always be at the end,
                 // since random_choose_weighted stops at the first
