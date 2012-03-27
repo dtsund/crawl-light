@@ -1124,12 +1124,6 @@ unsigned int item_value(item_def item, bool ident)
         {
             valued += 20;
         }
-
-        if (item_known_cursed(item))
-        {
-            valued *= 6;
-            valued /= 10;
-        }
         break;
 
     case OBJ_MISSILES:          // ammunition
@@ -1437,12 +1431,6 @@ unsigned int item_value(item_def item, bool ident)
         {
             valued += 20;
         }
-
-        if (item_known_cursed(item))
-        {
-            valued *= 6;
-            valued /= 10;
-        }
         break;
     }
 
@@ -1690,8 +1678,6 @@ unsigned int item_value(item_def item, bool ident)
         break;
 
     case OBJ_JEWELLERY:
-        if (item_known_cursed(item))
-            valued -= 10;
 
         if (item.sub_type == RING_PROTECTION
                 || item.sub_type == RING_STRENGTH
@@ -1755,7 +1741,7 @@ unsigned int item_value(item_def item, bool ident)
 
         case RING_SUSTAIN_ABILITIES:
         case RING_SUSTENANCE:
-        case RING_TELEPORTATION: // usually cursed
+        case RING_TELEPORTATION:
             valued += 175;
             break;
 

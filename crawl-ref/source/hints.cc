@@ -1207,18 +1207,6 @@ static void _new_god_conduct()
 
 }
 
-// If the player is wielding a cursed non-slicing weapon then butchery
-// isn't currently possible.
-static bool _cant_butcher()
-{
-    const item_def *wpn = you.weapon();
-
-    if (!wpn || wpn->base_type != OBJ_WEAPONS)
-        return false;
-
-    return (wpn->cursed() && !can_cut_meat(*wpn));
-}
-
 static std::string _describe_portal(const coord_def &gc)
 {
     const std::string desc = feature_description(gc);
@@ -1648,13 +1636,6 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "can <w>%</w>hop it up";
         cmd.push_back(CMD_BUTCHER);
 
-        if (_cant_butcher())
-        {
-            text << " (though unfortunately you can't do that right now, "
-                    "since the cursed weapon you're wielding can't slice up "
-                    "meat, and you can't let go of it to wield your pocket "
-                    "knife)";
-        }
         text << ". Once hungry you can then <w>%</w>at the resulting chunks "
                 "(though they may not be healthful).";
         cmd.push_back(CMD_EAT);
@@ -2295,18 +2276,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "latter, all you need to do is <w>%</w>hop up a corpse. ";
         cmd.push_back(CMD_BUTCHER);
 
-        if (_cant_butcher())
-        {
-            text << "Unfortunately you can't butcher corpses right now, "
-                    "since the cursed weapon you're wielding can't slice up "
-                    "meat, and you can't let go of it to wield your pocket "
-                    "knife. ";
-        }
-        else
-        {
-            text << "Luckily, all adventurers carry a pocket knife with them "
-                    "which is perfect for butchering. ";
-        }
+        text << "Luckily, all adventurers carry a pocket knife with them "
+                "which is perfect for butchering. ";
 
         text << "Try to dine on chunks in order to save permanent food.";
 
@@ -2400,12 +2371,6 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "<w>%</w>hop up";
         cmd.push_back(CMD_BUTCHER);
 
-        if (_cant_butcher())
-        {
-            text << "(or which you <w>could</w> chop up if it weren't for "
-                    "the fact that you can't let go of your cursed "
-                    "non-chopping weapon)";
-        }
         text << ". One or more chunks will appear that you can then "
                 "<w>%</w>at. Beware that some chunks may be, sometimes or "
                 "always, hazardous. You can find out whether that might be the "
@@ -2887,14 +2852,6 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     case HINT_WIELD_WEAPON:
     {
         int wpn = you.equip[EQ_WEAPON];
-        if (wpn != -1
-            && you.inv[wpn].base_type == OBJ_WEAPONS
-            && you.inv[wpn].cursed())
-        {
-            // Don't trigger if the wielded weapon is cursed.
-            Hints.hints_events[seen_what] = true;
-            return;
-        }
 
         if (Hints.hints_type == HINT_RANGER_CHAR && wpn != -1
             && you.inv[wpn].base_type == OBJ_WEAPONS
@@ -3481,8 +3438,6 @@ static std::string _hints_throw_stuff(const item_def &item)
 // before putting on this item.
 void check_item_hint(const item_def &item, unsigned int num_old_talents)
 {
-    if (item.cursed())
-        learned_something_new(HINT_YOU_CURSED);
     else if (Hints.hints_events[HINT_NEW_ABILITY_ITEM]
              && your_talents(false).size() > num_old_talents)
     {
@@ -3634,18 +3589,6 @@ void hints_describe_item(const item_def &item)
 
                 Hints.hints_events[HINT_SEEN_RANDART] = false;
             }
-            if (item_known_cursed(item) && !long_text)
-            {
-                ostr << "\n\nOnce wielded, a cursed weapon won't leave your "
-                        "hands again until the curse has been lifted by "
-                        "reading a scroll of remove curse or one of the "
-                        "enchantment scrolls.";
-
-                if (!wielded && is_throwable(&you, item))
-                    ostr << " (Throwing it is safe, though.)";
-
-                Hints.hints_events[HINT_YOU_CURSED] = false;
-            }
             Hints.hints_events[HINT_SEEN_WEAPON] = false;
             break;
        }
@@ -3774,13 +3717,6 @@ void hints_describe_item(const item_def &item)
             }
             if (wearable)
             {
-                if (item_known_cursed(item))
-                {
-                    ostr << "\nA cursed piece of armour, once worn, cannot be "
-                            "removed again until the curse has been lifted by "
-                            "reading a scroll of remove curse or enchant "
-                            "armour.";
-                }
                 if (gives_resistance(item))
                 {
                     ostr << "\n\nThis armour offers its wearer protection from "
@@ -3890,13 +3826,6 @@ void hints_describe_item(const item_def &item)
             cmd.push_back(CMD_WEAR_JEWELLERY);
             cmd.push_back(CMD_REMOVE_JEWELLERY);
 
-            if (item_known_cursed(item))
-            {
-                ostr << "\nA cursed piece of jewellery will cling to its "
-                        "unfortunate wearer's neck or fingers until the curse "
-                        "is finally lifted when he or she reads a scroll of "
-                        "remove curse.";
-            }
             if (gives_resistance(item))
             {
                     ostr << "\n\nThis "

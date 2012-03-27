@@ -211,11 +211,14 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     notify_stat_change(STAT_INT, proprt[ARTP_INTELLIGENCE], !msg, item);
     notify_stat_change(STAT_DEX,    proprt[ARTP_DEXTERITY], !msg, item);
 
+    //Properly remove this later.
+    /*
     if (!unmeld && !item.cursed() && proprt[ARTP_CURSED] > 0
          && one_chance_in(proprt[ARTP_CURSED]))
     {
         do_curse_item(item, !msg);
     }
+    */
 
     if (proprt[ARTP_NOISES])
         you.attribute[ATTR_NOISES] = 1;
@@ -319,27 +322,6 @@ static void _equip_use_warning(const item_def& item)
         mpr("You really shouldn't be using a poisoned item like this.");
 }
 
-
-static void _wield_cursed(item_def& item, bool known_cursed, bool unmeld)
-{
-    if (!item.cursed() || unmeld)
-        return;
-    mpr("It sticks to your hand!");
-    int amusement = 16;
-    if (!known_cursed)
-    {
-        amusement *= 2;
-        god_type god;
-        if (origin_is_god_gift(item, &god) && god == GOD_XOM)
-            amusement *= 2;
-    }
-    const int wpn_skill = weapon_skill(item.base_type, item.sub_type);
-    if (wpn_skill != SK_FIGHTING && you.skills[wpn_skill] == 0)
-        amusement *= 2;
-
-    xom_is_stimulated(amusement);
-}
-
 // Provide a function for handling initial wielding of 'special'
 // weapons, or those whose function is annoying to reproduce in
 // other places *cough* auto-butchering *cough*.    {gdl}
@@ -348,7 +330,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
     int special = 0;
 
     const bool artefact     = is_artefact(item);
-    const bool known_cursed = item_known_cursed(item);
 
     // And here we finally get to the special effects of wielding. {dlb}
     switch (item.base_type)
@@ -388,8 +369,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
 
             calc_mp();
         }
-
-        _wield_cursed(item, known_cursed, unmeld);
         break;
     }
 
@@ -563,8 +542,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 break;
             }
         }
-
-        _wield_cursed(item, known_cursed || known_recurser, unmeld);
         break;
     }
     default:
@@ -703,7 +680,6 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
 
 static void _equip_armour_effect(item_def& arm, bool unmeld)
 {
-    const bool known_cursed = item_known_cursed(arm);
     int ego = get_armour_ego_type(arm);
     if (ego != SPARM_NORMAL)
     {
@@ -808,31 +784,6 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
     {
         bool show_msgs = true;
         _equip_artefact_effect(arm, &show_msgs, unmeld);
-    }
-
-    if (arm.cursed() && !unmeld)
-    {
-        mpr("Oops, that feels deathly cold.");
-        learned_something_new(HINT_YOU_CURSED);
-
-        if (!known_cursed)
-        {
-            int amusement = 64;
-
-            // Cursed cloaks prevent you from removing body armour.
-            // Cursed gloves prevent switching of rings.
-            if (get_armour_slot(arm) == EQ_CLOAK
-                || get_armour_slot(arm) == EQ_GLOVES)
-            {
-                amusement *= 2;
-            }
-
-            god_type god;
-            if (origin_is_god_gift(arm, &god) && god == GOD_XOM)
-                amusement *= 2;
-
-            xom_is_stimulated(amusement);
-        }
     }
 
     if (get_item_slot(arm) == EQ_SHIELD)
@@ -989,7 +940,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     // by message. (jpeg)
     const bool artefact     = is_artefact(item);
     const bool known_pluses = item_ident(item, ISFLAG_KNOW_PLUSES);
-    const bool known_cursed = item_known_cursed(item);
     const bool known_bad    = (item_value(item) <= 2);
 
     switch (item.sub_type)
@@ -1255,24 +1205,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
         if (ident == ID_KNOWN_TYPE)
             set_ident_flags(item, ISFLAG_EQ_JEWELLERY_MASK);
-    }
-
-    if (item.cursed())
-    {
-        mprf("Oops, that %s feels deathly cold.",
-             jewellery_is_amulet(item)? "amulet" : "ring");
-        learned_something_new(HINT_YOU_CURSED);
-
-        int amusement = 32;
-        if (!known_cursed && !known_bad)
-        {
-            amusement *= 2;
-
-            god_type god;
-            if (origin_is_god_gift(item, &god) && god == GOD_XOM)
-                amusement *= 2;
-        }
-        xom_is_stimulated(amusement);
     }
 
     // Cursed or not, we know that since we've put the ring on.

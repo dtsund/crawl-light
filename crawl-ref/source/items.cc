@@ -2155,14 +2155,6 @@ bool drop_item(int item_dropped, int quant_drop)
         return (false);
     }
 
-    if (item_dropped == you.equip[EQ_WEAPON]
-        && you.inv[item_dropped].base_type == OBJ_WEAPONS
-        && you.inv[item_dropped].cursed())
-    {
-        mpr("That object is stuck to you!");
-        return (false);
-    }
-
     for (int i = EQ_MIN_ARMOUR; i <= EQ_MAX_ARMOUR; i++)
     {
         if (item_dropped == you.equip[i] && you.equip[i] != -1)
@@ -2622,11 +2614,6 @@ static bool _similar_equip(const item_def& pickup_item,
     const equipment_type inv_slot = get_item_slot(inv_item);
 
     if (inv_slot == EQ_NONE)
-        return (false);
-
-    // If it's an unequipped cursed item the player might be looking
-    // for a replacement.
-    if (item_known_cursed(inv_item) && !item_is_equipped(inv_item))
         return (false);
 
     if (get_item_slot(pickup_item) != inv_slot)

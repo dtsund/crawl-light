@@ -2102,8 +2102,6 @@ std::string get_item_description(const item_def &item, bool verbose,
         description << unrandart_descrip(2, item);
     }
 
-    if (!verbose && item_known_cursed(item))
-        description << "\nIt has a curse placed upon it.";
     else
     {
         if (verbose)
@@ -2111,8 +2109,6 @@ std::string get_item_description(const item_def &item, bool verbose,
             if (need_extra_line)
                 description << "\n";
             description << "\nIt";
-            if (item_known_cursed(item))
-                description << " has a curse placed upon it, and it";
 
             const int mass = item_mass(item);
             description << " weighs around " << (mass / 10)

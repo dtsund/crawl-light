@@ -520,13 +520,8 @@ bool InvEntry::get_tiles(std::vector<tile_def>& tileset) const
         const equipment_type eq = item_equip_slot(*item);
         if (eq != EQ_NONE)
         {
-            if (item_known_cursed(*item))
-                tileset.push_back(tile_def(TILE_ITEM_SLOT_EQUIP_CURSED, TEX_DEFAULT));
-            else
-                tileset.push_back(tile_def(TILE_ITEM_SLOT_EQUIP, TEX_DEFAULT));
+            tileset.push_back(tile_def(TILE_ITEM_SLOT_EQUIP, TEX_DEFAULT));
         }
-        else if (item_known_cursed(*item))
-            tileset.push_back(tile_def(TILE_ITEM_SLOT_CURSED, TEX_DEFAULT));
 
         tileset.push_back(tile_def(TILE_ITEM_SLOT, TEX_FEAT));
         tileidx_t base_item = tileidx_known_base_item(idx);
@@ -603,8 +598,6 @@ bool InvMenu::is_selectable(int index) const
     if (type == MT_DROP)
     {
         InvEntry *item = dynamic_cast<InvEntry*>(items[index]);
-        if (item->is_item_cursed() && item->is_item_equipped())
-            return (false);
 
         std::string text = item->get_text();
 
@@ -1612,14 +1605,6 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
         {
             return (true);
         }
-
-        if (item_known_cursed(item) && !_is_wielded(item))
-            return (true);
-    }
-    else if (oper == OPER_PUTON || oper == OPER_WEAR)
-    {
-        if (item_known_cursed(item))
-            return (true);
     }
 
     return (false);
@@ -1669,12 +1654,6 @@ bool check_warning_inscriptions(const item_def& item,
 
             if (equip != -1 && item.link == equip)
                 return (check_old_item_warning(item, oper));
-        }
-        else if (oper == OPER_REMOVE || oper == OPER_TAKEOFF)
-        {
-            // Don't ask if it will fail anyway.
-            if (item.cursed())
-                return (true);
         }
 
         std::string prompt = "Really " + _operation_verb(oper) + " ";
