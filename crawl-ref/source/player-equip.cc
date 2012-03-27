@@ -940,7 +940,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     // by message. (jpeg)
     const bool artefact     = is_artefact(item);
     const bool known_pluses = item_ident(item, ISFLAG_KNOW_PLUSES);
-    const bool known_bad    = (item_value(item) <= 2);
 
     switch (item.sub_type)
     {

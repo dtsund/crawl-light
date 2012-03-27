@@ -804,8 +804,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, " wields %s.",
-                 item.name(DESC_NOCAP_A, false, false, true, false,
-                           ISFLAG_CURSED).c_str());
+                 item.name(DESC_NOCAP_A, false, false, true, false).c_str());
         msg = simple_monster_message(this, info);
     }
 
@@ -926,8 +925,7 @@ void monster::unequip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, " unwields %s.",
-                             item.name(DESC_NOCAP_A, false, false, true, false,
-                             ISFLAG_CURSED).c_str());
+                             item.name(DESC_NOCAP_A, false, false, true, false).c_str());
         msg = simple_monster_message(this, info);
     }
 

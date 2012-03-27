@@ -3438,7 +3438,7 @@ static std::string _hints_throw_stuff(const item_def &item)
 // before putting on this item.
 void check_item_hint(const item_def &item, unsigned int num_old_talents)
 {
-    else if (Hints.hints_events[HINT_NEW_ABILITY_ITEM]
+    if (Hints.hints_events[HINT_NEW_ABILITY_ITEM]
              && your_talents(false).size() > num_old_talents)
     {
         learned_something_new(HINT_NEW_ABILITY_ITEM);
