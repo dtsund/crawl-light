@@ -187,11 +187,9 @@ void handle_behaviour(monster* mon)
         proxPlayer = false;
 #endif
     bool proxFoe;
-    bool isHurt     = (mon->hit_points <= mon->max_hit_points / 4 - 1);
     bool isHealthy  = (mon->hit_points > mon->max_hit_points / 2);
     bool isSmart    = (mons_intel(mon) > I_ANIMAL);
     bool isScared   = mon->has_ench(ENCH_FEAR);
-    bool isMobile   = !mons_is_stationary(mon);
     bool isPacified = mon->pacified();
     bool patrolling = mon->is_patrolling();
     static std::vector<level_exit> e;
@@ -610,16 +608,6 @@ void handle_behaviour(monster* mon)
                 mon->target = menv[mon->foe].pos();
             }
 
-            // Smart monsters, zombified monsters other than spectral
-            // things, plants, and nonliving monsters cannot flee.
-            if (isHurt && !isSmart && isMobile
-                && (!mons_is_zombified(mon) || mon->type == MONS_SPECTRAL_THING)
-                && mon->holiness() != MH_PLANT
-                && mon->holiness() != MH_NONLIVING)
-            {
-                new_beh = BEH_FLEE;
-
-            }
             break;
 
         case BEH_WANDER:
