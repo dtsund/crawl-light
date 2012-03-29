@@ -2554,27 +2554,6 @@ static bool _is_option_autopickup(const item_def &item, std::string &iname)
     return (Options.autopickups & (1L << item.base_type));
 }
 
-bool item_needs_autopickup(const item_def &item)
-{
-    if (item_is_stationary(item))
-        return (false);
-
-    if (item.inscription.find("=g") != std::string::npos)
-        return (true);
-
-    if ((item.flags & ISFLAG_THROWN) && Options.pickup_thrown)
-        return (true);
-
-    if ((item.flags & ISFLAG_DROPPED) && !Options.pickup_dropped)
-        return (false);
-
-    if (item.props.exists("needs_autopickup"))
-        return (true);
-
-    std::string itemname;
-    return _is_option_autopickup(item, itemname);
-}
-
 bool can_autopickup()
 {
     // [ds] Checking for autopickups == 0 is a bad idea because
@@ -2683,6 +2662,33 @@ static bool _item_different_than_inv(const item_def& pickup_item,
     }
 
     return (true);
+}
+
+bool item_needs_autopickup(const item_def &item)
+{
+    if (item_is_stationary(item))
+        return (false);
+
+    if (item.inscription.find("=g") != std::string::npos)
+        return (true);
+
+    if ((item.flags & ISFLAG_THROWN) && Options.pickup_thrown)
+        return (true);
+
+    if ((item.flags & ISFLAG_DROPPED) && !Options.pickup_dropped)
+        return (false);
+
+    if (item.props.exists("needs_autopickup"))
+        return (true);
+
+    std::string itemname;
+    if(_is_option_autopickup(item, itemname))
+        return (true);
+    
+    if(item.base_type == OBJ_JEWELLERY)
+        return _item_different_than_inv(item, _similar_jewellery);
+    
+    return false;
 }
 
 static bool _interesting_explore_pickup(const item_def& item)
