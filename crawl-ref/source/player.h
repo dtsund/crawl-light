@@ -222,6 +222,9 @@ public:
   int           real_time;            // real time played (in seconds)
   int           num_turns;            // number of turns taken
   int           exploration;          // levels explored (16.16 bit real number)
+  
+  int           difficulty_level;     // Difficulty level (how many of the Pandooras
+                                      // have been opened
 
   int           last_view_update;     // what turn was the view last updated?
 

@@ -1,0 +1,156 @@
+##############################################################################
+#
+# Pandoora vault, by dtsund
+#
+# An early portal vault intended to be very difficult for beginning players.
+# The "reward" at the end is a door (the "pandoora") that increases the game's
+# overall difficulty level when opened.  Behind the door is a scroll of
+# acquirement, which can be read or given to an Abyss portal later for a shot
+# at the key to Hell.
+#
+# This portal is currently fixed to appear on D:10.  After the dungeon
+# shortening, it should go immediately after the Ecumenical Temple.
+#
+##############################################################################
+
+{{
+function pandoora_portal(e)
+  local desc_long
+  desc_long = [[This dark portal leads to a place spoken of only in whispers, where great evil is sealed away. Releasing these dark forces would probably be unwise.]]
+  desc_long = string.gsub(desc_long, "\n%s+", "\n")
+
+  local timeout_turns_long = crawl.random_range(2700, 3300)
+  local timeout_turns_short = timeout_turns_long/10;
+
+  local messager =
+    timed_msg {
+      visible = true,
+      -- $F{xxx} will be substituted with the 'entity' property of the timed
+      -- marker, or with the desc property (if entity is not set).
+      messages = time_messages(timeout_turns_short,
+                               "$F{The} slowly begins to fade.",
+                               "$F{The} fades.",
+                               "$F{The} is fading rapidly.",
+                               "$F{The} has nearly vanished.")
+    }
+
+  e.lua_marker('O',
+      timed_marker {
+        disappear = "The portal silently vanishes, perhaps for the better.",
+        desc = "sinister portal",
+        desc_long = desc_long,
+        dst = "pandoora",
+        dstname = "pandoora",
+        dstorigin = "near a Pandoora",
+        overview = "sinister portal",
+        turns = timeout_turns_long,
+        turns_short = timeout_turns_short,
+        floor = "stone_arch",
+        msg = messager })
+  e.kfeat("O = enter_portal_vault")
+  e.colour("O = lightred")
+  e.tile("c = wall_stone_brick")
+end
+
+
+function open_pandoora(data, triggerable, triggerer, marker, ev)
+    if data.trig == true then
+        return
+    else
+        data.trig = true
+    end
+
+    crawl.mpr("You feel as though achieving your goals just got harder.", "warning")
+    you.difficulty_level(you.difficulty_level()+1)
+end
+
+}}
+
+# Basic Pandoora entries ########################################
+
+NAME:   pandoora_entry_dummy
+TAGS:   pandoora_entry transparent chance_pandoora
+ORIENT: float
+PLACE: D:10
+WEIGHT: 0
+:   pandoora_portal(_G)
+MAP
+O
+ENDMAP
+
+NAME:   enter_pandoora_1
+TAGS:   pandoora_entry
+ORIENT: float
+PLACE: D:10
+WEIGHT: 1
+:   pandoora_portal(_G)
+MAP
+...
+.O.
+...
+ENDMAP
+
+NAME:   enter_pandoora_2
+TAGS:   pandoora_entry
+ORIENT: float
+PLACE: D:10
+WEIGHT: 1
+:   pandoora_portal(_G)
+MAP
+x.x
+.O.
+x.x
+ENDMAP
+
+NAME:   enter_pandoora_3
+TAGS:   pandoora_entry
+ORIENT: float
+PLACE: D:10
+WEIGHT: 1
+:   pandoora_portal(_G)
+MAP
+.xxx.
+x.x.x
+xxOxx
+x.x.x
+.xxx.
+ENDMAP
+
+
+# The actual maps ###############################################
+default-depth:
+
+
+############################################################################
+# Pandoora vault 1.
+#
+# Currently, no monsters and no loot.  This will change.
+NAME:   padnoora_vault_1
+TAGS:   pandoora no_rotate allow_dup
+ORIENT: encompass
+MONS:   ancient lich
+KFEAT:  > = exit_portal_vault
+{{
+local pandoora_marker = TriggerableFunction:new {
+    func="open_pandoora"}
+    
+pandoora_marker:add_triggerer(DgnTriggerer:new {
+    type="feat_change",
+    target="door"})
+
+lua_marker("/", pandoora_marker)
+}}
+MARKER:  / = lua:props_marker { \
+             door_open_prompt="You sense great evil behind this door. Open " .. \
+                                         "it anyway?", \
+             door_description_prefix="warning-scrawled " \
+             }
+SUBST:   / = +
+KITEM:   a = scroll of acquirement
+MAP
+xxxxxxxxXXX
+x.......o.X
+x>A...../.X
+x.......oaX
+xxxxxxxxXXX
+ENDMAP
