@@ -493,4 +493,8 @@ void read_manual(skill_type sk)
         _change_skill_level(sk, 27 - you.skills[sk]);
     else
         _change_skill_level(sk, 3);
+    
+    //Set skill points to the necessary level too; otherwise, the skill
+    //will degrade next time it's trained.
+    you.skill_points[sk] = skill_exp_needed(you.skills[sk], sk);
 }
