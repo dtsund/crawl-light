@@ -1192,6 +1192,8 @@ static void tag_construct_you(writer &th)
     marshallInt(th, you.real_time);
     marshallInt(th, you.num_turns);
     marshallInt(th, you.exploration);
+    
+    marshallInt(th, you.difficulty_level);
 
     marshallShort(th, you.magic_contamination);
 
@@ -1845,6 +1847,16 @@ static void tag_read_you(reader &th)
     you.real_time  = unmarshallInt(th);
     you.num_turns  = unmarshallInt(th);
     you.exploration = unmarshallInt(th);
+    
+    //How many pandooras have been opened
+    if(th.getMinorVersion() < TAG_MINOR_ADD_DIFFICULTY)
+    {
+        you.difficulty_level = 0;
+    }
+    else
+    {
+        you.difficulty_level = unmarshallInt(th);
+    }
 
     you.magic_contamination = unmarshallShort(th);
     
