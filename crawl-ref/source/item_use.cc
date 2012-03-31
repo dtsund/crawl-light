@@ -197,18 +197,6 @@ bool can_wield(item_def *weapon, bool say_reason,
         return (false);
     }
 
-    if (!ignore_temporary_disability
-        && you.hunger_state < HS_FULL
-        && get_weapon_brand(*weapon) == SPWPN_VAMPIRICISM
-        && !you.is_undead)
-    {
-        if (say_reason)
-        {
-            mpr("As you grasp it, you feel a great hunger. Being not satiated, you stop.");
-        }
-        return (false);
-    }
-
     if (!ignore_temporary_disability && is_shield_incompatible(*weapon))
     {
         SAY(mpr("You can't wield that with a shield."));
