@@ -562,7 +562,8 @@ monster_type pick_random_monster(const level_id &place, int power,
     const int original_level = lev_mons;
 
     // OODs do not apply to the Abyss, Pan, etc.
-    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 27)
+    // They also don't apply for players at the easiest level.
+    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 27 && you.difficulty_level != 0)
     {
         // Apply moderate OOD fuzz where appropriate.
         lev_mons = _fuzz_mons_level(lev_mons);
