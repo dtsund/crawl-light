@@ -1644,6 +1644,9 @@ static void _setup_generic(const newgame_def& ng)
     set_hp(you.hp_max, false);
     set_mp(you.max_magic_points, false);
     
+    // Initialize difficulty to 0.
+    you.difficulty_level = 0;
+    
     // Set max glow according to race.
     you.max_magic_contamination = get_max_magic_contamination(you.species);
 
