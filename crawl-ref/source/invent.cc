@@ -1593,12 +1593,6 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
         {
             return (true);
         }
-
-        if (get_weapon_brand(item) == SPWPN_VAMPIRICISM
-            && !you.is_undead)
-        {
-            return (true);
-        }
     }
 
     return (false);
