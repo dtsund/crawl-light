@@ -143,7 +143,11 @@ lua_marker("/", pandoora_marker)
 MARKER:  / = lua:props_marker { \
              door_open_prompt="You sense great evil behind this door. Open " .. \
                                          "it anyway?", \
-             door_description_prefix="warning-scrawled " \
+             door_open_verb="unseal" \
+             door_description_noun="Pandoora" \
+             veto_disintegrate="veto" \
+             veto_shatter="veto" \
+             veto_fragmentation="veto" \
              }
 SUBST:   / = +
 KITEM:   a = scroll of acquirement
