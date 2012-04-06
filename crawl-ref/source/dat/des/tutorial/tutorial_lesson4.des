@@ -266,8 +266,8 @@ KFEAT:   S = distillery shop count:8 ; \
          potion of slowing | w:20 potion of confusion | potion of poison | potion of paralysis
 COLOUR:  ABCDdefh = blue
 FTILE:   ABCDdefh = tutorial_pad
-KITEM:   A = scroll of fog q:4, scroll of random uselessness q:4, scroll of curse armour q:4, \
-         scroll of remove curse q:4
+KITEM:   A = scroll of fog q:4, scroll of enchant weapon i q:4, scroll of torment q:4, \
+         scroll of holy word q:4
 ITEM:    randbook numspells:2 spells:magic_dart|evaporate title:Introduction_to_Spellcasting owner:player
 ITEM:    ring of magical power not_cursed
 ITEM:    staff of wizardry not_cursed

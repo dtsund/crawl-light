@@ -1642,7 +1642,6 @@ unsigned int item_value(item_def item, bool ident)
             break;
 
         case SCR_RECHARGING:
-        case SCR_AMNESIA:
         case SCR_ENCHANT_ARMOUR:
         case SCR_ENCHANT_WEAPON_I:
         case SCR_ENCHANT_WEAPON_II:
@@ -1655,22 +1654,15 @@ unsigned int item_value(item_def item, bool ident)
             valued += 35;
             break;
 
-        case SCR_REMOVE_CURSE:
         case SCR_TELEPORTATION:
             valued += 30;
             break;
 
         case SCR_FOG:
-        case SCR_DETECT_CURSE:
-        case SCR_IDENTIFY:
-        case SCR_CURSE_ARMOUR:
-        case SCR_CURSE_WEAPON:
-        case SCR_CURSE_JEWELLERY:
             valued += 20;
             break;
 
         case SCR_NOISE:
-        case SCR_RANDOM_USELESSNESS:
         case SCR_IMMOLATION:
             valued += 10;
             break;

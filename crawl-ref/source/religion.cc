@@ -3213,10 +3213,6 @@ bool god_likes_item(god_type god, const item_def& item)
                     || item.sub_type != MISC_HORN_OF_GERYON
                     || item.plus2));
 
-    case GOD_ASHENZARI:
-        return (item.base_type == OBJ_SCROLLS
-                && item.sub_type == SCR_REMOVE_CURSE);
-
     default:
         return (false);
     }

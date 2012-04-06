@@ -858,9 +858,6 @@ static bool _is_boring_item(int type, int sub_type)
         // These scrolls increase knowledge and thus reduce risk.
         switch (sub_type)
         {
-        case SCR_DETECT_CURSE:
-        case SCR_REMOVE_CURSE:
-        case SCR_IDENTIFY:
         case SCR_MAGIC_MAPPING:
             return (true);
         default:
@@ -2779,7 +2776,7 @@ static void _generate_scroll_item(item_def& item, int force_type,
                  // Medium-level scrolls.
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
-                 140, (depth_mod < 4 ? SCR_REMOVE_CURSE  : SCR_SUMMONING),
+                 140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_SUMMONING),
 
                  // High-level scrolls.
                  140, (depth_mod < 7 ? SCR_TELEPORTATION : SCR_VORPALISE_WEAPON),

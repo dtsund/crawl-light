@@ -554,23 +554,13 @@ static const char* scroll_type_name(int scrolltype)
 {
     switch (static_cast<scroll_type>(scrolltype))
     {
-#if TAG_MAJOR_VERSION == 32
-    case SCR_PAPER:              return "old paper";
-#endif
-    case SCR_IDENTIFY:           return "identify";
     case SCR_TELEPORTATION:      return "teleportation";
     case SCR_FEAR:               return "fear";
     case SCR_NOISE:              return "noise";
-    case SCR_REMOVE_CURSE:       return "remove curse";
-    case SCR_DETECT_CURSE:       return "detect curse";
     case SCR_SUMMONING:          return "summoning";
     case SCR_ENCHANT_WEAPON_I:   return "enchant weapon I";
     case SCR_ENCHANT_ARMOUR:     return "enchant armour";
     case SCR_TORMENT:            return "torment";
-    case SCR_RANDOM_USELESSNESS: return "random uselessness";
-    case SCR_CURSE_WEAPON:       return "curse weapon";
-    case SCR_CURSE_ARMOUR:       return "curse armour";
-    case SCR_CURSE_JEWELLERY:    return "curse jewellery";
     case SCR_IMMOLATION:         return "immolation";
     case SCR_BLINKING:           return "blinking";
     case SCR_MAGIC_MAPPING:      return "magic mapping";
@@ -583,7 +573,6 @@ static const char* scroll_type_name(int scrolltype)
     case SCR_HOLY_WORD:          return "holy word";
     case SCR_VULNERABILITY:      return "vulnerability";
     case SCR_SILENCE:            return "silence";
-    case SCR_AMNESIA:            return "amnesia";
     default:                     return "bugginess";
     }
 }
@@ -1845,10 +1834,6 @@ void check_item_knowledge(bool unknown_items)
     for (int i = 0; i < 5; i++)
         for (int j = 0; j < idx_to_maxtype[i]; j++)
         {
-#if TAG_MAJOR_VERSION == 32
-            if (i == 1 && j == SCR_PAPER)
-                continue;
-#endif
             if (i == 2 && j >= NUM_RINGS && j < AMU_FIRST_AMULET)
                 continue;
 
@@ -2350,10 +2335,6 @@ bool is_bad_item(const item_def &item, bool temp)
     case OBJ_SCROLLS:
         switch (item.sub_type)
         {
-        case SCR_CURSE_ARMOUR:
-        case SCR_CURSE_JEWELLERY:
-        case SCR_CURSE_WEAPON:
-            return (you.religion != GOD_ASHENZARI);
         case SCR_SUMMONING:
             // Summoning will always produce hostile monsters if you
             // worship a good god. (Use temp to allow autopickup to
@@ -2529,24 +2510,17 @@ bool is_useless_item(const item_def &item, bool temp)
 
         switch (item.sub_type)
         {
-        case SCR_RANDOM_USELESSNESS:
         case SCR_NOISE:
             return (true);
         case SCR_TELEPORTATION:
             return (crawl_state.game_is_sprint());
-        case SCR_AMNESIA:
-            return (you.religion == GOD_TROG);
         case SCR_RECHARGING:
-        case SCR_CURSE_WEAPON: // for non-Ashenzari, already handled
-        case SCR_CURSE_ARMOUR:
         case SCR_ENCHANT_WEAPON_I:
         case SCR_ENCHANT_WEAPON_II:
         case SCR_ENCHANT_WEAPON_III:
         case SCR_ENCHANT_ARMOUR:
         case SCR_VORPALISE_WEAPON:
             return (you.species == SP_CAT);
-        case SCR_DETECT_CURSE:
-            return (you.religion == GOD_ASHENZARI);
         default:
             return (false);
         }

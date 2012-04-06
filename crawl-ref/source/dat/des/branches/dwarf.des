@@ -578,8 +578,7 @@ KITEM:   P = potion of porridge
 KITEM:   D = deck of changes / deck of war / deck of defence / \
 deck of destruction w:1 / deck of dungeons w:1 / deck of wonders w:5
 KITEM:   R = any potion / potion of poison w:3 / \
-             potion of strong poison w:1 / any scroll / scroll of acquirement w:1 / \
-             scroll of random uselessness
+             potion of strong poison w:1 / any scroll / scroll of acquirement w:1
 KITEM:   M = manual of Fighting / manual of Dodging / manual of Armour / \
              manual of Unarmed Combat / manual of Spellcasting w:1 / \
              manual of Invocations w:1
@@ -641,8 +640,7 @@ KITEM:   P = potion of porridge
 KITEM:   D = deck of changes / deck of war / deck of defence / \
              deck of destruction w:1 / deck of dungeons w:1 / deck of wonders w:5
 KITEM:   R = any potion / potion of poison w:3 / \
-             potion of strong poison w:1 / any scroll / scroll of acquirement w:1 / \
-             scroll of random uselessness
+             potion of strong poison w:1 / any scroll / scroll of acquirement w:1
 KITEM:   M = manual of Fighting / manual of Dodging / manual of Armour / \
              manual of Unarmed Combat / manual of Spellcasting w:1 / \
              manual of Invocations w:1

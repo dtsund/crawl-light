@@ -376,7 +376,7 @@ FTILE:   defghAC = tutorial_pad
 ITEM:    pair of boots race:no_race mundane not_cursed
 ITEM:    bread ration
 ITEM:    dagger mundane cursed
-ITEM:    scroll of remove curse q:2
+ITEM:    scroll of enchant armour q:2
 ITEM:    scimitar race:none ego:venom not_cursed
 MONS:    goblin ; nothing
 MONS:    rat, giant cockroach, hobgoblin ; nothing
@@ -517,7 +517,7 @@ ITEM:    wand of flame charges:9
 ITEM:    wand of digging charges:15
 ITEM:    gold q:180
 ITEM:    amulet of inaccuracy mundane not_cursed
-ITEM:    scroll of identify q:3
+ITEM:    scroll of fog q:3
 ITEM:    scroll of enchant armour q:3
 ITEM:    scroll of recharging q:3
 SHUFFLE: ijk

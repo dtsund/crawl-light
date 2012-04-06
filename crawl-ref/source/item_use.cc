@@ -4564,11 +4564,8 @@ static void _vulnerability_scroll()
 
 bool _is_cancellable_scroll(scroll_type scroll)
 {
-    return (scroll == SCR_IDENTIFY
-            || scroll == SCR_BLINKING || scroll == SCR_RECHARGING
-            || scroll == SCR_ENCHANT_ARMOUR || scroll == SCR_AMNESIA
-            || scroll == SCR_REMOVE_CURSE || scroll == SCR_CURSE_ARMOUR
-            || scroll == SCR_CURSE_JEWELLERY);
+    return (scroll == SCR_BLINKING || scroll == SCR_RECHARGING
+            || scroll == SCR_ENCHANT_ARMOUR);
 }
 
 void read_scroll(int slot)
@@ -4653,43 +4650,9 @@ void read_scroll(int slot)
         }
         break;
 
-    case SCR_IDENTIFY:
-        if (!any_items_to_select(OSEL_UNIDENT, true))
-            return;
-        break;
-
     case SCR_RECHARGING:
         if (!any_items_to_select(OSEL_RECHARGE, true))
             return;
-        break;
-
-    case SCR_AMNESIA:
-        if (you.spell_no == 0)
-        {
-            canned_msg(MSG_NO_SPELLS);
-            return;
-        }
-        break;
-
-    case SCR_REMOVE_CURSE:
-        if (!any_items_to_select(OSEL_CURSED_WORN, true))
-            return;
-        break;
-
-    case SCR_CURSE_ARMOUR:
-        if (you.religion == GOD_ASHENZARI
-            && !any_items_to_select(OSEL_UNCURSED_WORN_ARMOUR, true))
-        {
-            return;
-        }
-        break;
-
-    case SCR_CURSE_JEWELLERY:
-        if (you.religion == GOD_ASHENZARI
-            && !any_items_to_select(OSEL_UNCURSED_WORN_JEWELLERY, true))
-        {
-            return;
-        }
         break;
 
     default:
@@ -4752,10 +4715,6 @@ void read_scroll(int slot)
 
     switch (which_scroll)
     {
-    case SCR_RANDOM_USELESSNESS:
-        random_uselessness(item_slot);
-        break;
-
     case SCR_BLINKING:
         // XXX Because some checks in blink() are made before player get to
         // choose target location it is possible "abuse" scrolls' free
@@ -4766,15 +4725,6 @@ void read_scroll(int slot)
 
     case SCR_TELEPORTATION:
         you_teleport();
-        break;
-
-    case SCR_REMOVE_CURSE:
-        cancel_scroll = !remove_curse(true, &pre_succ_msg);
-        break;
-
-    case SCR_DETECT_CURSE:
-        if (!detect_curse(item_slot, false))
-            id_the_scroll = false;
         break;
 
     case SCR_ACQUIREMENT:
@@ -4838,24 +4788,6 @@ void read_scroll(int slot)
         immolation(10, IMMOLATION_SCROLL, you.pos(), true, &you);
         bad_effect = true;
         more();
-        break;
-
-    case SCR_CURSE_WEAPON:
-        if (!you.weapon()
-            || you.weapon()->base_type != OBJ_WEAPONS
-               && you.weapon()->base_type != OBJ_STAVES
-            || you.weapon()->cursed())
-        {
-            canned_msg(MSG_NOTHING_HAPPENS);
-            id_the_scroll = false;
-        }
-        else
-        {
-            // Also sets wield_change.
-            do_curse_item(*you.weapon(), false);
-            learned_something_new(HINT_YOU_CURSED);
-            bad_effect = true;
-        }
         break;
 
     // Everything [in the switch] below this line is a nightmare {dlb}:
@@ -4941,28 +4873,12 @@ void read_scroll(int slot)
             canned_msg(MSG_NOTHING_HAPPENS);
         break;
 
-    case SCR_IDENTIFY:
-        cancel_scroll = (identify(-1, -1, &pre_succ_msg) == 0);
-        break;
-
     case SCR_RECHARGING:
         cancel_scroll = (recharge_wand(-1, true, &pre_succ_msg) == -1);
         break;
 
     case SCR_ENCHANT_ARMOUR:
         cancel_scroll = (_handle_enchant_armour(-1, &pre_succ_msg) == -1);
-        break;
-
-    case SCR_CURSE_ARMOUR:
-    case SCR_CURSE_JEWELLERY:
-        if (curse_item(which_scroll == SCR_CURSE_ARMOUR, true,
-                            &pre_succ_msg))
-        {
-            bad_effect = true;
-        }
-        else
-            cancel_scroll = you.religion == GOD_ASHENZARI;
-
         break;
 
     case SCR_HOLY_WORD:
@@ -4996,16 +4912,6 @@ void read_scroll(int slot)
 
     case SCR_VULNERABILITY:
         _vulnerability_scroll();
-        break;
-
-    case SCR_AMNESIA:
-        if (you.spell_no == 0)
-        {
-            canned_msg(MSG_NOTHING_HAPPENS);
-            id_the_scroll = false;
-        }
-        else
-            cancel_scroll = (cast_selective_amnesia(&pre_succ_msg) == -1);
         break;
 
     default:

@@ -359,8 +359,7 @@ ORIENT:   encompass
 WEIGHT:   10
 SUBST:    - = WWW.
 SHUFFLE:  |d
-ITEM:     scroll of teleportation w:2 / scroll of blinking / \
-          scroll of random uselessness w:1
+ITEM:     scroll of teleportation w:2 / scroll of blinking
 MONS:     giant newt / small snake w:5 / giant cockroach / giant mite w:5 / \
           generate_awake giant newt / generate_awake small snake w:5 / \
           generate_awake giant cockroach / generate_awake giant mite w:5 / \
@@ -422,8 +421,7 @@ COLOUR:   ! = green
 KMONS:    ! = giant frog / nothing w:2
 SHUFFLE:  edfgh$*
 ITEM:     nothing, nothing
-ITEM:     scroll of teleportation w:2 / scroll of blinking / \
-          scroll of random uselessness w:1
+ITEM:     scroll of teleportation w:2 / scroll of blinking
 ITEM:     nothing, nothing
 KITEM:    de = *
 : sewer_setup(_G)
@@ -582,7 +580,7 @@ KMONS:  4 = Purgy, giant slug
 ITEM:   potion of levitation / potion of agility / potion of heal wounds / \
         potion of invisibility / potion of mutation / potion of degeneration /\
         scroll of blinking / scroll of teleportation / scroll of fear / \
-        scroll of random uselessness / meat ration / royal jelly / \
+        meat ration / royal jelly / \
         potion of blood / nothing w:140
 : sewer_setup(_G)
 epilogue{{
@@ -760,8 +758,7 @@ ITEM:     scroll of recharging / potion of invisibility / \
 ITEM:     scroll of recharging / \
           potion of resistance / potion of might / potion of berserk rage / \
           buckler / nothing
-KITEM:    ' = scroll of random uselessness w:30 / \
-              scroll of teleportation / \
+KITEM:    ' = scroll of teleportation / \
               potion of confusion w:50 / potion of paralysis w:50 / \
               potion of mutation / potion of levitation / \
               wizard hat / buckler / pair of gloves w:5 / pair of boots w:5

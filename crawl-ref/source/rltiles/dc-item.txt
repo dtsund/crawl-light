@@ -541,22 +541,15 @@ scroll SCROLL UNSEEN_SCROLL
 
 %back scroll
 %sdir item/scroll
-i-identify SCR_IDENTIFY SCR_ID_FIRST
-i-teleportation SCR_TELEPORTATION
+i-teleportation SCR_TELEPORTATION SCR_ID_FIRST
 i-fear SCR_FEAR
 i-noise SCR_NOISE
-i-remove_curse SCR_REMOVE_CURSE
-i-detect_curse SCR_DETECT_CURSE
 i-summoning SCR_SUMMONING
 i-enchant-weapon1 SCR_ENCHANT_WEAPON_I
 i-enchant_armour SCR_ENCHANT_ARMOUR
 i-torment SCR_TORMENT
-i-random_uselessness SCR_RANDOM_USELESSNESS
-i-curse_weapon SCR_CURSE_WEAPON
-i-curse_armour SCR_CURSE_ARMOUR
 i-immolation SCR_IMMOLATION
 i-blinking SCR_BLINKING
-item/scroll/blank_paper SCR_PAPER
 i-magic_mapping SCR_MAGIC_MAPPING
 i-fog SCR_FOG
 i-acquirement SCR_ACQUIREMENT
@@ -566,9 +559,7 @@ i-recharging SCR_RECHARGING
 i-enchant-weapon3 SCR_ENCHANT_WEAPON_III
 i-holy_word SCR_HOLY_WORD
 i-vulnerability SCR_VULNERABILITY
-i-silence SCR_SILENCE
-i-amnesia SCR_AMNESIA
-i-curse-jewellery SCR_CURSE_JEWELLERY SCR_ID_LAST
+i-amnesia SCR_AMNESIA SCR_ID_LAST
 %back none
 
 ##################OBJ_JEWELLERY

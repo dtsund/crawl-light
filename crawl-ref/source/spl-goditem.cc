@@ -39,80 +39,8 @@
 
 int identify(int power, int item_slot, std::string *pre_msg)
 {
-    int id_used = 1;
-    int identified = 0;
-
-    // Scrolls of identify *may* produce "extra" identifications.
-    if (power == -1 && one_chance_in(5))
-        id_used += (coinflip()? 1 : 2);
-
-    do
-    {
-        if (item_slot == -1)
-        {
-            item_slot = prompt_invent_item("Identify which item?", MT_INVLIST,
-                                           OSEL_UNIDENT, true, true, false);
-        }
-        if (prompt_failed(item_slot))
-            return(identified);
-
-        item_def& item(you.inv[item_slot]);
-
-        if (fully_identified(item))
-        {
-            mpr("Choose an unidentified item, or Esc to abort.");
-            if (Options.auto_list)
-                more();
-            item_slot = -1;
-            continue;
-        }
-
-        if (pre_msg && identified == 0)
-            mpr(pre_msg->c_str());
-
-        set_ident_type(item, ID_KNOWN_TYPE);
-        set_ident_flags(item, ISFLAG_IDENT_MASK);
-        if (Options.autoinscribe_artefacts && is_artefact(item))
-            add_autoinscription(item, artefact_auto_inscription(item));
-
-        // For scrolls, now id the scroll, unless already known.
-        if (power == -1
-            && get_ident_type(OBJ_SCROLLS, SCR_IDENTIFY) != ID_KNOWN_TYPE)
-        {
-            set_ident_type(OBJ_SCROLLS, SCR_IDENTIFY, ID_KNOWN_TYPE);
-
-            const int wpn = you.equip[EQ_WEAPON];
-            if (wpn != -1
-                && you.inv[wpn].base_type == OBJ_SCROLLS
-                && you.inv[wpn].sub_type == SCR_IDENTIFY)
-            {
-                you.wield_change = true;
-            }
-        }
-
-        // Output identified item.
-        mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
-        if (item_slot == you.equip[EQ_WEAPON])
-            you.wield_change = true;
-
-        identified++;
-
-        if (item.base_type == OBJ_JEWELLERY
-            && item.sub_type == AMU_INACCURACY
-            && item_slot == you.equip[EQ_AMULET]
-            && !item_known_cursed(item))
-        {
-            learned_something_new(HINT_INACCURACY);
-        }
-
-        if (Options.auto_list && id_used > identified)
-            more();
-
-        // In case we get to try again.
-        item_slot = -1;
-    }
-    while (id_used > identified);
-    return(identified);
+    //Shouldn't do anything now, really.
+    return 0;
 }
 
 static bool _mons_hostile(const monster* mon)

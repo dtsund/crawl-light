@@ -516,24 +516,6 @@ static void _give_sac_group_feedback(int which)
          names[which]);
 }
 
-static void _ashenzari_sac_scroll(const item_def& item)
-{
-    int scr = (you.species == SP_CAT) ? SCR_CURSE_JEWELLERY :
-              random_choose(SCR_CURSE_WEAPON, SCR_CURSE_ARMOUR,
-                            SCR_CURSE_JEWELLERY, -1);
-    int it = items(0, OBJ_SCROLLS, scr, true, 0, MAKE_ITEM_NO_RACE,
-                   0, 0, GOD_ASHENZARI);
-    if (it == NON_ITEM)
-    {
-        mpr("You feel the world is against you.");
-        return;
-    }
-
-    mitm[it].quantity = 1;
-    if (!move_item_to_grid(&it, you.pos(), true))
-        destroy_item(it, true); // can't happen
-}
-
 // Is the destroyed weapon valuable enough to gain piety by doing so?
 // Unholy and evil weapons are handled specially.
 static bool _destroyed_valuable_weapon(int value, int type)
@@ -709,10 +691,6 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
             jiyva_slurp_bonus(div_rand_round(stepped, 50), js);
             break;
         }
-
-        case GOD_ASHENZARI:
-            _ashenzari_sac_scroll(item);
-            break;
 
         default:
             break;
