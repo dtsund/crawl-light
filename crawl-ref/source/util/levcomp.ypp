@@ -42,7 +42,7 @@ NORETURN void yyerror(const char *e)
 %expect 2
 
 %token <i>      DEFAULT_DEPTH SHUFFLE SUBST TAGS KFEAT KITEM KMONS KMASK KPROP
-%token <i>      NAME DEPTH ORIENT PLACE CHANCE WEIGHT MONS ITEM MARKER COLOUR
+%token <i>      NAME DEPTH ORIENT PLACE CHANCE WEIGHT MINDIFF MAXDIFF MONS ITEM MARKER COLOUR
 %token <i>      PRELUDE MAIN VALIDATE VETO EPILOGUE NSUBST WELCOME LFLAGS BFLAGS
 %token <i>      LFLOORCOL LROCKCOL LFLOORTILE LROCKTILE FTILE RTILE TILE
 %token <i>      SUBVAULT FHEIGHT DESC
@@ -146,6 +146,8 @@ metaline        : place
                 | depth
                 | chance
                 | weight
+                | mindiff
+                | maxdiff
                 | orientation
                 | welcome
                 | mons
@@ -586,6 +588,22 @@ depth           : DEPTH {}
 
 chance          : CHANCE chance_specifiers { }
                 | CHANCE { }
+                ;
+
+mindiff         : MINDIFF STRING
+                {
+                    lc_map.main.add(
+                        yylineno,
+                        make_stringf("mindiff(%s)", $2));
+                }
+                ;
+
+maxdiff         : MAXDIFF STRING
+                {
+                    lc_map.main.add(
+                        yylineno,
+                        make_stringf("maxdiff(%s)", $2));
+                }
                 ;
 
 chance_specifiers : chance_specifiers COMMA chance_specifier

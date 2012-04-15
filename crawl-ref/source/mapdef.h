@@ -1096,6 +1096,11 @@ public:
     depth_ranges     depths;
     map_section_type orient;
 
+    //Minimum/maximum values of you.difficulty_level necessary
+    //for the map to be generated.
+    int              mindiff;
+    int              maxdiff;
+
     typedef depth_ranges_X<map_chance> range_chance_t;
     typedef depth_ranges_X<int> range_weight_t;
 

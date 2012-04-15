@@ -334,6 +334,28 @@ static int dgn_depth_weight(lua_State *ls)
     return 0;
 }
 
+static int dgn_minimum_difficulty(lua_State *ls)
+{
+    MAP(ls, 1, map);
+    const std::string minimum_difficulty(luaL_checkstring(ls, 2));
+    const int min_difficulty = luaL_checkint(ls, 2);
+    if(min_difficulty < 0 || min_difficulty > 2)
+        luaL_error(ls, "Bad minimum difficulty: %d (must be between 0 and 2 inclusive)", min_difficulty);
+    map->mindiff = min_difficulty;
+    return 0;
+}
+
+static int dgn_maximum_difficulty(lua_State *ls)
+{
+    MAP(ls, 1, map);
+    const std::string maximum_difficulty(luaL_checkstring(ls, 2));
+    const int max_difficulty = luaL_checkint(ls, 2);
+    if(max_difficulty < 0)
+        luaL_error(ls, "Bad maximum difficulty: %d (must be between 0 and 2 inclusive)", max_difficulty);
+    map->maxdiff = max_difficulty;
+    return 0;
+}
+
 static int dgn_orient(lua_State *ls)
 {
     MAP(ls, 1, map);
@@ -1899,6 +1921,8 @@ const struct luaL_reg dgn_dlib[] =
 { "depth_chance", dgn_depth_chance },
 { "weight", dgn_weight },
 { "depth_weight", dgn_depth_weight },
+{ "mindiff", dgn_minimum_difficulty },
+{ "maxdiff", dgn_maximum_difficulty },
 { "welcome", dgn_welcome },
 { "orient", dgn_orient },
 { "shuffle", dgn_shuffle },

@@ -251,6 +251,8 @@ PLACE:              { CBEGIN(ARGUMENT); return PLACE; }
 WELCOME:            { CBEGIN(ARGUMENT); return WELCOME; }
 CHANCE:             return CHANCE;
 WEIGHT:             return WEIGHT;
+MINDIFF:            { CBEGIN(ARGUMENT); return MINDIFF; }
+MAXDIFF:            { CBEGIN(ARGUMENT); return MAXDIFF; }
 TAGS:               { CBEGIN(KEYWORDS); return TAGS; }
 LFLAGS:             { CBEGIN(ARGUMENT); return LFLAGS; }
 BFLAGS:             { CBEGIN(ARGUMENT); return BFLAGS; }

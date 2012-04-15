@@ -323,6 +323,17 @@ WEIGHT:   (number with 10 being default)
           is
           : depth_weight("D:2-4", 100)
 
+
+MINDIFF:  (number with 0 being default)
+          Used to denote the minimum difficulty level at which a vault may
+          appear. 0 for no Pandooras opened, 1 for one, 2 for two.
+
+
+MAXDIFF:  (number with 2 being default)
+          Used to denote the maximum difficulty level at which a vault may
+          appear.
+
+
 PLACE:    Used to specify certain special levels. Existing special levels
           include most branch ends.
           The branches need to use the official abbreviations also used e.g. in

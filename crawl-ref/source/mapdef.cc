@@ -2113,7 +2113,7 @@ std::string depth_ranges::describe() const
 
 const int DEFAULT_MAP_WEIGHT = 10;
 map_def::map_def()
-    : name(), description(), tags(), place(), depths(), orient(), _chance(),
+    : name(), description(), tags(), place(), depths(), orient(), mindiff(), maxdiff(), _chance(),
       _weight(DEFAULT_MAP_WEIGHT), weight_depth_mult(), weight_depth_div(),
       welcome_messages(), map(), mons(), items(), random_mons(),
       prelude("dlprelude"), mapchunk("dlmapchunk"), main("dlmain"),
@@ -2132,6 +2132,8 @@ void map_def::init()
     description.clear();
     tags.clear();
     place.clear();
+    mindiff = 0;
+    maxdiff = 2;
     depths.clear();
     prelude.clear();
     mapchunk.clear();
@@ -2388,6 +2390,8 @@ void map_def::write_index(writer& outf) const
     marshallShort(outf, static_cast<short>(border_fill_type));
     _chance.write(outf, _marshall_map_chance);
     _weight.write(outf, marshallInt);
+    marshallInt(outf, mindiff);
+    marshallInt(outf, maxdiff);
     marshallInt(outf, cache_offset);
     marshallString4(outf, tags);
     place.save(outf);
@@ -2412,6 +2416,8 @@ void map_def::read_index(reader& inf)
 
     _chance = range_chance_t::read(inf, _unmarshall_map_chance);
     _weight = range_weight_t::read(inf, unmarshallInt);
+    mindiff = unmarshallInt(inf);
+    maxdiff = unmarshallInt(inf);
     cache_offset = unmarshallInt(inf);
     unmarshallString4(inf, tags);
     place.load(inf);
