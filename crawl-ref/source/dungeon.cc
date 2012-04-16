@@ -3235,7 +3235,7 @@ static int _place_uniques(int level_number, level_area_type level_type)
         // B; this only triggers on levels that have less than B uniques to be
         // placed.
         const mapref_vector uniques_available =
-            find_maps_for_tag("place_unique", true, true);
+            find_maps_for_tag("place_unique", true, true, true);
 
         if (random2(B) >= std::min(B, int(uniques_available.size())))
             break;

@@ -599,7 +599,8 @@ std::vector<std::string> find_map_matches(const std::string &name)
 
 mapref_vector find_maps_for_tag(const std::string tag,
                                 bool check_depth,
-                                bool check_used)
+                                bool check_used,
+                                bool check_difficulty)
 {
     mapref_vector maps;
     level_id place = level_id::current();
@@ -611,7 +612,10 @@ mapref_vector find_maps_for_tag(const std::string tag,
             && !mapdef.has_tag("dummy")
             && (!check_depth || !mapdef.has_depth()
                 || mapdef.is_usable_in(place))
-            && (!check_used || !mapdef.map_already_used()))
+            && (!check_used || !mapdef.map_already_used())
+            && (!check_difficulty ||
+                (you.difficulty_level >= mapdef.mindiff &&
+                 you.difficulty_level <= mapdef.maxdiff)))
         {
             maps.push_back(&mapdef);
         }
@@ -913,6 +917,12 @@ _random_chance_maps_in_list(const map_selector &sel,
     for (unsigned f = 0, size = filtered.size(); f < size; ++f)
     {
         const int i = filtered[f];
+        if(you.difficulty_level > vdefs[i].maxdiff ||
+           you.difficulty_level < vdefs[i].mindiff)
+        {
+            //Map isn't eligible because the player isn't in its difficulty range.
+            continue;
+        }
         if (!sel.ignore_chance
             && _vault_chance_new(vdefs[i], sel.place, chance_tags))
         {
@@ -949,6 +959,12 @@ _random_map_in_list(const map_selector &sel,
     for (unsigned f = 0, size = filtered.size(); f < size; ++f)
     {
         const int i = filtered[f];
+        if(you.difficulty_level > vdefs[i].maxdiff ||
+           you.difficulty_level < vdefs[i].mindiff)
+        {
+            //Map isn't eligible because the player isn't in its difficulty range.
+            continue;
+        }
         if (!sel.ignore_chance && vdefs[i].chance(sel.place).valid())
         {
             if (_vault_chance_new(vdefs[i], sel.place, chance_tags))

@@ -54,7 +54,8 @@ std::vector<std::string> find_map_matches(const std::string &name);
 
 mapref_vector find_maps_for_tag (const std::string tag,
                                  bool check_depth = false,
-                                 bool check_used = true);
+                                 bool check_used = true,
+                                 bool check_difficulty = false);
 
 int weight_map_vector (std::vector<map_def> maps);
 
