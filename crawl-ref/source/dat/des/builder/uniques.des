@@ -100,10 +100,12 @@ ENDMAP
 
 NAME:   uniq_agnes
 DEPTH:  14-22, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Agnes")
 
 NAME:   uniq_aizul
 DEPTH:  14-20, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Aizul")
 
 NAME:   uniq_azrael
@@ -121,6 +123,7 @@ DEPTH:  4-9, !Lair, !Slime
 # remove the tag in monstuff.cc:monster_die.
 NAME:   uniq_boris
 DEPTH:  20-27, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Boris")
 
 NAME:   uniq_donald
@@ -142,6 +145,7 @@ DEPTH:  10-16
 
 NAME:   uniq_erolcha
 DEPTH:  8-13, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Erolcha")
 
 NAME:   uniq_eustachio
@@ -154,18 +158,21 @@ DEPTH:  17-27, !Lair, !Slime
 
 NAME:   uniq_frederick
 DEPTH:  20-27, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Frederick")
 
 NAME:   uniq_gastronok_1
 DEPTH:  8-13, !Lair, !Slime
 TAGS:   uniq_gastronok
 WEIGHT: 5
+MINDIFF: 1
 : place_unique(_G, "Gastronok")
 
 NAME:   uniq_gastronok_2
 DEPTH:  Lair:4-8
 TAGS:   uniq_gastronok
 WEIGHT: 15
+MINDIFF: 1
 : place_unique(_G, "Gastronok")
 
 NAME:   uniq_grum
@@ -210,6 +217,7 @@ DEPTH:  14-19, !Lair, !Slime
 
 NAME:   uniq_margery
 DEPTH:  20-27, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Margery band")
 
 NAME:   uniq_maud
@@ -218,6 +226,7 @@ DEPTH:  14-16
 
 NAME:   uniq_mara
 DEPTH:  18-25, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Mara")
 
 NAME:   uniq_maurice
@@ -238,6 +247,7 @@ DEPTH:  11-17, !Lair, !Slime
 
 NAME:   uniq_nikola
 DEPTH:  14-19, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Nikola")
 
 NAME:   uniq_norris
@@ -284,10 +294,12 @@ ENDMAP
 
 NAME:   uniq_rupert
 DEPTH:  14-19
+MINDIFF: 1
 : place_unique(_G, "Rupert")
 
 NAME:   uniq_saint_roka
 DEPTH:  17-27, Orc:4, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Saint Roka band")
 
 NAME:   uniq_sigmund
@@ -320,11 +332,13 @@ DEPTH:  17-27, !Lair, !Slime
 
 NAME:   uniq_xtahua
 DEPTH:  20-27, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Xtahua")
 
 NAME:   uniq_mennas
 # would be cool to get him wandering around Pan too
 DEPTH:  20-27, !Lair, !Slime
+MINDIFF: 1
 : place_unique(_G, "Mennas band")
 
 
