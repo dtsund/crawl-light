@@ -2781,6 +2781,7 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>W</w>      : god wrath\n"
                        "<w>w</w>      : god mollification\n"
                        "<w>Ctrl-V</w> : toggle xray vision\n"
+                       "<w>!</w>      : change difficulty level\n"
                        "\n"
                        "<yellow>Monster related commands</yellow>\n"
                        "<w>D</w>      : detect all monsters\n"

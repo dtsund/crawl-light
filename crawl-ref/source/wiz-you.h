@@ -26,5 +26,6 @@ void wizard_get_god_gift ();
 void wizard_toggle_xray_vision();
 void wizard_god_wrath();
 void wizard_god_mollify();
+void wizard_change_difficulty();
 
 #endif

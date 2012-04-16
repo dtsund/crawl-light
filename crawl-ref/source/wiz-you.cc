@@ -1001,3 +1001,27 @@ void wizard_god_mollify()
             dec_penance((god_type) i, you.penance[i]);
     }
 }
+
+//Change the current difficulty level.
+void wizard_change_difficulty()
+{
+    mprf(MSGCH_PROMPT, "Enter new difficulty (0-2): ");
+    char buf[30];
+    if (cancelable_get_line_autohist(buf, sizeof buf))
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
+
+    const int newdiff = atoi(buf);
+    //Make sure the difficulty level's in the 0-2 range.
+    if (newdiff < 0 || newdiff > 2)
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
+    
+    you.difficulty_level = newdiff;
+    
+    mprf("Difficulty level set to %d.", newdiff);
+}
