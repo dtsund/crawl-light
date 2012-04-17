@@ -80,11 +80,11 @@ colour.add_colour("disco", function(rand, x, y)
 end)
 }}
 
-# 25% chance to appear on D:21-27, and guaranteed on D:24.
+# 25% chance to appear on D:14-18, and guaranteed on D:17.
 NAME: pan_entry
 TAGS: extra allow_dup can_overwrite
-DEPTH: D:21-27
-CHANCE: 100% (D:24), 25%
+DEPTH: D:14-18
+CHANCE: 100% (D:17), 25%
 KFEAT: O = enter_pandemonium
 MAP
 O

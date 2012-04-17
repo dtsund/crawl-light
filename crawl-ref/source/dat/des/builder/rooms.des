@@ -44,11 +44,11 @@ function sroom_kobold_lair(e)
 
     local level_mons = 3
 
-    if level < 4 then
+    if level < 3 then
         level_mons = 0
-    elseif level < 6 then
+    elseif level < 4 then
         level_mons = 1
-    elseif level < 9 then
+    elseif level < 6 then
         level_mons = 2
     end
 
@@ -73,12 +73,12 @@ function sroom_orc_lair(e)
     end
 
     local mon
-    if level > 24 then
+    if level > 16 then
         mon = "orc w:2 / orc warrior w:3 / orc knight w:2 / ogre w:2 / "
               .. "troll w:1"
-    elseif level > 15 then
+    elseif level > 10 then
         mon = "orc w:6 / orc knight w:1 / orc warrior w:2 / ogre w:1"
-    elseif level > 9 then
+    elseif level > 6 then
         mon = "orc w:8 / orc warrior w:2"
     else
         mon = "orc w:9 / orc warrior w:1"
@@ -121,17 +121,17 @@ function sroom_jelly_pit(e)
 
     local mons = {}
 
-    mons[1] = "ooze w:" .. (27 - math.floor(level / 5))
+    mons[1] = "ooze w:" .. (18 - math.floor(level / 7))
     mons[2] = "jelly w:20"
-    mons[3] = "brown_ooze w:" .. (3 + level)
-    mons[4] = "death ooze w:" .. (2 + (2 * math.floor(level / 3)))
+    mons[3] = "brown_ooze w:" .. (2 + level)
+    mons[4] = "death ooze w:" .. (1 + (2 * math.floor(level / 4)))
 
-    if level >= 12 then
-        mons[5] = "azure jelly w:" .. (1 + math.floor((level - 12)/3))
+    if level >= 8 then
+        mons[5] = "azure jelly w:" .. (1 + math.floor((level - 8)/4))
     end
 
-    if level >= 15 then
-        mons[6] = "acid blob w:" .. (1 + math.floor((level - 15) / 4))
+    if level >= 10 then
+        mons[6] = "acid blob w:" .. (1 + math.floor((level - 10) / 6))
     end
 
     fill_special_room(e, mons, nil, true)
@@ -147,7 +147,7 @@ end
 ##########################
 
 NAME:   special_room_kobold
-DEPTH:  6-14, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  4-10, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 11
 : sroom_kobold_lair(_G)
@@ -155,7 +155,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_orc_a
-DEPTH:  8-14, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  5-10, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 59
 : sroom_orc_lair(_G)
@@ -163,7 +163,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_bee_a
-DEPTH:  8-14, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  5-10, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 30
 : sroom_beehive(_G)
@@ -171,7 +171,7 @@ MAP
 ENDMAP
 ################################
 NAME:   special_room_orc_b
-DEPTH:  15-16, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  10, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 50
 : sroom_orc_lair(_G)
@@ -179,7 +179,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_bee_b
-DEPTH:  15-16, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  10, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 25
 : sroom_beehive(_G)
@@ -187,7 +187,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_morgue_b
-DEPTH:  15-16, !Lair
+DEPTH:  10, !Lair
 TAGS:   special_room allow_dup unrand
 WEIGHT: 25
 : sroom_morgue(_G)
@@ -195,7 +195,7 @@ MAP
 ENDMAP
 #################################
 NAME:   special_room_orc_c
-DEPTH:  17, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 40
 : sroom_orc_lair(_G)
@@ -203,7 +203,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_bee_c
-DEPTH:  17, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 25
 : sroom_beehive(_G)
@@ -211,7 +211,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_morgue_c
-DEPTH:  17, !Lair
+DEPTH:  12, !Lair
 TAGS:   special_room allow_dup unrand
 WEIGHT: 27
 : sroom_morgue(_G)
@@ -219,7 +219,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_jelly_c
-DEPTH:  17, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 9
 : sroom_jelly_pit(_G)
@@ -227,7 +227,7 @@ MAP
 ENDMAP
 #################################
 NAME:   special_room_orc_d
-DEPTH:  18-20, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12-13, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 25
 : sroom_orc_lair(_G)
@@ -235,7 +235,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_bee_d
-DEPTH:  18-20, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12-13, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 33
 : sroom_beehive(_G)
@@ -243,7 +243,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_morgue_d
-DEPTH:  18-20, !Lair
+DEPTH:  12-13, !Lair
 TAGS:   special_room allow_dup unrand
 WEIGHT: 29
 : sroom_morgue(_G)
@@ -251,7 +251,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_jelly_d
-DEPTH:  18-20, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  12-13, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 13
 : sroom_jelly_pit(_G)
@@ -259,7 +259,7 @@ MAP
 ENDMAP
 #################################
 NAME:   special_room_orc_e
-DEPTH:  21-, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  14-, !Lair, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 15
 : sroom_orc_lair(_G)
@@ -267,7 +267,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_bee_e
-DEPTH:  21-, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  14-, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 8
 : sroom_beehive(_G)
@@ -275,7 +275,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_morgue_e
-DEPTH:  21-, !Lair
+DEPTH:  14-, !Lair
 TAGS:   special_room allow_dup unrand
 WEIGHT: 32
 : sroom_morgue(_G)
@@ -283,7 +283,7 @@ MAP
 ENDMAP
 
 NAME:   special_room_jelly_e
-DEPTH:  21-, !Crypt, !Geh, !Tar, !Coc, !Dis
+DEPTH:  14-, !Crypt, !Geh, !Tar, !Coc, !Dis
 TAGS:   special_room allow_dup unrand
 WEIGHT: 45
 : sroom_jelly_pit(_G)

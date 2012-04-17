@@ -211,7 +211,7 @@ const int INVALID_ABSDEPTH = -1000;
 const int DEPTH_ABYSS = 51;
 const int DEPTH_PAN   = 52;
 
-const int BRANCH_DUNGEON_DEPTH = 27;
+const int BRANCH_DUNGEON_DEPTH = 18;
 
 const int ANTITRAIN_PENALTY = 2;
 

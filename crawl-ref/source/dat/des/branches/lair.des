@@ -366,7 +366,7 @@ ENDMAP
 #
 NAME:    pond_and_an_island_with_a_cottage
 ORIENT:  float
-DEPTH:   Lair:3-7
+DEPTH:   Lair:2-4
 SUBST:   % = %%%%%$$$**|
 MONS:    patrolling necromancer / necromancer
 SHUFFLE: 23
@@ -800,7 +800,7 @@ ENDMAP
 # Ice dragon lair with assorted imp pets
 #
 NAME:   ice_dragon_lair_bobbens
-DEPTH:  Lair:4-8
+DEPTH:  Lair:3-5
 TAGS:   no_monster_gen
 MONS:   ice dragon
 MONS:   w:9 white imp/w:1 nothing
@@ -835,7 +835,7 @@ ENDMAP
 # Dragon lair embedded in wall
 #
 NAME:   dragon_lair_wall_bobbens
-DEPTH:  Lair:4-8
+DEPTH:  Lair:3-5
 TAGS:   no_monster_gen mini_float
 : if you.absdepth() >= 18 then
 MONS:   dragon
@@ -875,7 +875,7 @@ ENDMAP
 # Drake nest (minmay)
 #
 NAME:   minmay_lair_drake_nest
-DEPTH:  Lair:4-
+DEPTH:  Lair:3-
 MONS:   fire drake / nothing w:20, plant w:20 / fungus w:1 / bush w:1
 SUBST:  . = ...2
 SUBST:  . = ...%
@@ -926,7 +926,7 @@ ENDMAP
 #       Hibernating monster in a tunnel, can be pretty dangerous
 #
 NAME:   hibernation_bobbens
-DEPTH:  Lair:4-8
+DEPTH:  Lair:3-5
 TAGS:   allow_dup no_monster_gen no_item_gen mini_float
 MONS:   w:5 death drake / ice dragon / dragon / swamp dragon
 MONS:   swamp dragon / hydra / anaconda

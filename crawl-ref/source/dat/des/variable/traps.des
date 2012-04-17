@@ -57,13 +57,13 @@ function callback.grate_trap_stepped(data, triggerable, triggerer, marker, ev)
 end
 }}
 
-default-depth: D:9-27, Vault, Elf
+default-depth: D:6-18, Vault, Elf
 
 #############################################
 # a basket of spiders
 #
 NAME:   spider_trap
-DEPTH:  D:9-27, Vault, Elf, Spider, Snake
+DEPTH:  D:6-18, Vault, Elf, Spider, Snake
 TAGS:   allow_dup extra luniq_spider_trap
 WEIGHT: 100
 KFEAT:  ^ = pressure plate trap
@@ -84,7 +84,7 @@ ENDMAP
 # falling grate cutting your retreat off
 #
 NAME:   grate_trap
-DEPTH:  D:4-27, Vault:2-7, Elf:2-5, Snake:2-5, Zot:2-5
+DEPTH:  D:3-18, Vault:2-4, Elf:2-3, Snake:2-3, Zot:2-3
 ORIENT: float
 TAGS:   allow_dup extra luniq_grate_trap layout_rooms layout_caves
 KFEAT:  ^ = pressure plate trap

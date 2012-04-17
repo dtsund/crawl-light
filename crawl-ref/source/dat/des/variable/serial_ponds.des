@@ -7,7 +7,7 @@
 
 NAME:   serial_pond
 TAGS:   allow_dup luniq
-DEPTH:  D:7-14, Lair
+DEPTH:  D:4-10, Lair
 CHANCE: 1%
 {{
   -- between 2 and 8 ponds

@@ -35,13 +35,13 @@
 
 # Default depth for minivaults. If your minivault is suitable for one of the
 # branches, add it via DEPTH: Lair or similar.
-default-depth: D:8-27
+default-depth: D:5-18
 
 ##############################################################################
 # Minivault balancer
 #
 NAME: mini_dummy
-DEPTH: 1-50, !D:1-27
+DEPTH: 1-50, !D:1-18
 TAGS: dummy
 WEIGHT: 90
 MAP

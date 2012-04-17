@@ -68,17 +68,17 @@ end
 
 # Set the default depth for vaults. Be sure to adapt the DEPTH of particulary
 # easy or tough vaults. Also, exlucde unthemely branches with !Lair etc.
-default-depth: D:12-26
+default-depth: D:8-17
 
 ##############################################################################
-# Dummy probability balancer vault for depths 1-11.
+# Dummy probability balancer vault for depths 1-7.
 #
 # Why this is necessary: there are very few vaults in the 1-11 range (entries
 # are not considered here); to avoid too much repetition of the existing vaults,
 # we use this dummy vault.
 #
 NAME: dummy_balancer
-DEPTH: D:1-11
+DEPTH: D:1-7
 # Vaults tagged "dummy" are no-ops when the dungeon builder is looking for maps
 # by depth.
 TAGS: dummy
@@ -106,7 +106,7 @@ ENDMAP
 # Elevator
 #
 NAME:    lemuel_elevator
-DEPTH:   D:2-26, Vault:2-7, Elf:2-4, Crypt:2-4, Zot:2-4, Tar:2-6, Dis:2-6, Geh:2-6, Coc:2-6
+DEPTH:   D:2-17, Vault:2-4, Elf:2, Crypt:2, Zot:2, Tar:2-4, Dis:2-4, Geh:2-4, Coc:2-4
 ORIENT:  float
 TAGS:    allow_dup
 SUBST:   m:mn
@@ -149,7 +149,7 @@ ENDMAP
 # Rooms
 #
 NAME:    minmay_opposing_rooms
-DEPTH:   D:4-
+DEPTH:   D:3-
 ORIENT:  float
 SHUFFLE: 0%
 MAP
@@ -175,7 +175,7 @@ ENDMAP
 #
 NAME:    minmay_klotski
 SHUFFLE: }])>
-DEPTH:   D:6-12
+DEPTH:   D:4-8
 ORIENT:  float
 SUBST:   0 = 0.., 9 = 9., 8 = 88.
 MONS:    bush
@@ -212,7 +212,7 @@ ENDMAP
 # Statue pair
 #
 NAME:    minmay_separated_statues
-DEPTH:   D:8-16
+DEPTH:   D:5-11
 ORIENT:  float
 MONS:    silver statue, orange crystal statue, ice statue
 SHUFFLE: 123
@@ -234,7 +234,7 @@ ENDMAP
 # Statue gallery
 #
 NAME:    minmay_statue_hallways
-DEPTH:   D:8-
+DEPTH:   D:5-
 ORIENT:  float
 MONS:    orange crystal statue / silver statue / ice statue
 MAP
@@ -265,7 +265,7 @@ ENDMAP
 # Stone golems
 #
 NAME:   minmay_stone_box
-DEPTH:  D:10-16
+DEPTH:  D:7-11
 ORIENT: float
 KMONS:  " = stone golem
 KITEM:  " = any scroll / any potion
@@ -286,7 +286,7 @@ ENDMAP
 # Wavy paths in crystal walls
 #
 NAME:   minmay_wavy_crystal
-DEPTH:  D:10-
+DEPTH:  D:7-
 ORIENT: float
 MAP
 bbbbbbbbbbbb@.@bbbbbb
@@ -319,7 +319,7 @@ ENDMAP
 #
 NAME:    minmay_two_paths
 ORIENT:  float
-DEPTH:   D:12-26
+DEPTH:   D:8-17
 MAP
 cccccccccccccccc
 c.9.c......c.9.c
@@ -344,7 +344,7 @@ ENDMAP
 #
 NAME:   minmay_skeletal_surprise
 TAGS:   no_monster_gen no_item_gen
-DEPTH:  D:18-26
+DEPTH:  D:12-17
 ORIENT: float
 MONS:   skeletal warrior
 KMONS:  $ = skeletal warrior / large skeleton / bone dragon w:1 / nothing w:40
@@ -371,7 +371,7 @@ ENDMAP
 #
 NAME:    minmay_staircase_windowed_small
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 WEIGHT:  5
 SHUFFLE: )]}([{
@@ -393,7 +393,7 @@ ENDMAP
 
 NAME:    minmay_staircase_windowed_large
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 WEIGHT:  5
 SHUFFLE: )]}([{
@@ -418,7 +418,7 @@ ENDMAP
 
 NAME:    minmay_staircase_statues
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 WEIGHT:  5
 SHUFFLE: )]}([{
@@ -430,7 +430,7 @@ ENDMAP
 
 NAME:    minmay_staircase_statues_hall_small
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 WEIGHT:  3
 SHUFFLE: )]}([{
@@ -451,7 +451,7 @@ ENDMAP
 
 NAME:    minmay_staircase_statues_hall_large
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 WEIGHT:  2
 SHUFFLE: )]}([{, AB
@@ -481,7 +481,7 @@ ENDMAP
 
 NAME:    minmay_staircase_bubble
 TAGS:    extra luniq_staircase
-DEPTH:   D:2-26
+DEPTH:   D:2-17
 ORIENT:  float
 SUBST:   m = mmmm.
 MAP
@@ -503,7 +503,7 @@ NAME:   erik_1
 ORIENT: float
 WEIGHT: 5
 TAGS:   no_monster_gen
-DEPTH:  D:7-11, Lair
+DEPTH:  D:5-8, Lair
 #
 SHUFFLE: rR/sS/uU/vV/wW/yY/zZ, uU/nN
 SUBST: r=n, R=N, s=n, S=N
@@ -542,7 +542,7 @@ ENDMAP
 # Old Forge (1KB)
 #
 NAME:    old_forge
-DEPTH:   D:4-12
+DEPTH:   D:3-8
 ORIENT:  float
 KITEM:   ? = long sword unrand:singing_sword, damaged short sword, \
              damaged long sword, damaged hand axe
@@ -582,7 +582,7 @@ ENDMAP
 # Moved deeper and minor changes.
 #
 NAME:    erik_ogre
-DEPTH:   D:6-10
+DEPTH:   D:4-7
 ORIENT:  float
 SHUFFLE: 1X / 1X / 2l / 3Y
 SUBST:   X=x, Y:x.
@@ -621,7 +621,7 @@ ENDMAP
 # but since they are normal speed with no range attacks, they can be escaped.
 #
 NAME:   slime_lemuel
-DEPTH:  D:6-16, Lair
+DEPTH:  D:4-11, Lair
 ORIENT: float
 MONS:   w:20 ooze / jelly / fungus
 MONS:   slime creature / giant amoeba / oklob plant
@@ -640,7 +640,7 @@ ENDMAP
 #
 NAME:    MiniTomb
 ORIENT:  float
-DEPTH:   D:15-26, Crypt
+DEPTH:   D:10-17, Crypt
 MONS:    large zombie / nothing
 MONS:    mummy, patrolling guardian mummy, patrolling greater mummy
 MONS:    large zombie
@@ -668,7 +668,7 @@ ENDMAP
 # An old-fashioned vault, by Lemuel
 #
 NAME: traditional_vault_lemuel
-DEPTH: D:12-27, Vault
+DEPTH: D:8-18, Vault
 ORIENT: float
 SUBST: 9 = 9 0 8:2
 SUBST: 0 = 0 .
@@ -710,7 +710,7 @@ ENDMAP
 NAME:   zaba_anthole
 ORIENT: float
 TAGS:   allow_dup
-DEPTH:  D:3-9, Lair
+DEPTH:  D:2-6, Lair
 MONS:   worker ant / nothing w:5
 MAP
    @
@@ -729,7 +729,7 @@ ENDMAP
 NAME:   insect_pit
 TAGS:   no_rotate
 ORIENT: float
-DEPTH:  D:5-12, Elf, Vault
+DEPTH:  D:4-8, Elf, Vault
 SUBST:  1 = 1:70 2:60 3:25
 MONS:   goliath beetle w:20 / giant cockroach w:30 / butterfly w:20
 MONS:   bumblebee / giant centipede / giant mite w:30
@@ -752,7 +752,7 @@ ENDMAP
 # Troll bridge (Lemuel)
 #
 NAME:   troll_bridge
-DEPTH:  D:9-18
+DEPTH:  D:6-12
 ORIENT: float
 TAGS:   no_pool_fixup patrolling
 SUBST:  1 = 1:50 2 3:5
@@ -784,7 +784,7 @@ NAME:    ice1_lemuel
 MONS:    ice statue
 TAGS:    no_pool_fixup
 ORIENT:  float
-DEPTH:   D:7-20, Elf
+DEPTH:   D:5-13, Elf
 SUBST:   * : *$
 SUBST:   * = |:5 * .
 SUBST:   T = TU
@@ -814,7 +814,7 @@ ENDMAP
 #
 NAME:   lemuel_bear_cage
 ORIENT: float
-DEPTH:  D:7-21
+DEPTH:  D:5-14
 MONS:   black bear / grizzly bear / polar bear
 MONS:   hippogriff / griffon
 MONS:   yak / sheep / weight:3 death yak
@@ -844,7 +844,7 @@ ENDMAP
 #
 NAME:    vampire
 ORIENT:  float
-DEPTH:   D:12-26, Vault, Crypt
+DEPTH:   D:8-17, Vault, Crypt
 MONS:    rat / porcupine / w:6 green rat / w:3 orange rat / w:20 megabat
 MONS:    flying skull, human zombie
 MONS:    vampire, vampire mage, vampire knight
@@ -892,7 +892,7 @@ ENDMAP
 # Oklob gauntlet
 # average of 2.3 oklobs, and at most 5 of them
 NAME:    oklob_2
-DEPTH:   D:18-26, Lair, Snake, Elf
+DEPTH:   D:12-17, Lair, Snake, Elf
 MONS:    plant, oklob plant
 ORIENT:  float
 SHUFFLE: ]}) / def
@@ -924,7 +924,7 @@ ENDMAP
 # and the walls are always diggable then.
 #
 NAME:    oklob_3
-DEPTH:   D:18-26, Lair:2-, Elf:2-5
+DEPTH:   D:12-17, Lair:2-, Elf:2-3
 WEIGHT:  2
 ORIENT:  float
 SHUFFLE: ab" / AB'
@@ -936,7 +936,7 @@ SHUFFLE: xcv
 SUBST:   y = x
 #
 NSUBST:  1 = 1:2 1:3 *:1
-: wt = (you.absdepth()-10)/2
+: wt = (you.absdepth()-7)/2
 : mons("oklob plant w:" .. wt .. " / plant")
 MONS:    plant, oklob plant
 MAP
@@ -960,7 +960,7 @@ ENDMAP
 #
 NAME:    onia_ninara_012_swampy_vault
 TAGS:    no_pool_fixup no_monster_gen
-DEPTH:   D:16-20, Lair:3-, Snake
+DEPTH:   D:11-13, Lair:2-, Snake
 ORIENT:  float
 SHUFFLE: AB@
 SUBST: x = .:30 W x:4
@@ -1002,7 +1002,7 @@ ENDMAP
 # Another low-level vault - LP
 
 NAME:    reptile_caves
-DEPTH:   D:10-13, Lair, Snake
+DEPTH:   D:7-9, Lair, Snake
 ORIENT:  float
 MONS:    giant gecko / giant newt, crocodile, iguana
 MONS:    fire drake / swamp drake
@@ -1042,7 +1042,7 @@ ENDMAP
 NAME:    gargoyle_guard
 ORIENT:  float
 TAGS:    patrolling no_monster_gen
-DEPTH:   D:10-18
+DEPTH:   D:7-12
 # you should be able to arrive both via stairs and via corridor
 SUBST:   { = {([)]}
 MONS:    gargoyle, metal gargoyle / gargoyle
@@ -1069,7 +1069,7 @@ ENDMAP
 #
 NAME:    lemuel_ogre_cave
 ORIENT:  float
-DEPTH:   D:9-15, Orc
+DEPTH:   D:6-10, Orc
 TAGS:    no_pool_fixup
 MONS:    ogre, two-headed ogre, ogre mage / Erolcha, plant / fungus
 MONS:    ogre zombie, two-headed ogre zombie
@@ -1108,7 +1108,7 @@ ENDMAP
 # the doors so animals can go for a walk, that's intended.
 #
 NAME:   slaughterhouse
-DEPTH:  Lair:7-, D:11-18
+DEPTH:  Lair:4-, D:8-12
 TAGS:   no_monster_gen
 ORIENT: float
 WEIGHT: 5
@@ -1153,7 +1153,7 @@ NAME:    protected_by_tso_1
 ORIENT:  float
 TAGS:    patrolling no_monster_gen no_item_gen no_pool_fixup allow_dup luniq_protected_by_tso
 WEIGHT:  4
-DEPTH:   23-27
+DEPTH:   16-18
 MONS:    generate_awake angel / generate_awake daeva / w:1 angel / w:1 daeva
 COLOUR:  - : yellow
 SUBST:   - : +
@@ -1198,7 +1198,7 @@ NAME:    protected_by_tso_2
 ORIENT:  float
 TAGS:    patrolling no_monster_gen no_item_gen no_pool_fixup allow_dup luniq_protected_by_tso
 WEIGHT:  4
-DEPTH:   18-27
+DEPTH:   12-18
 MONS:    generate_awake angel / generate_awake daeva / w:1 angel / w:1 daeva
 KFEAT:   A = altar_shining_one
 KITEM:   A = w:1 acquire:the_shining_one any / nothing
@@ -1256,7 +1256,7 @@ NAME:    protected_by_tso_3
 ORIENT:  float
 TAGS:    patrolling no_monster_gen no_item_gen no_pool_fixup allow_dup luniq_protected_by_tso
 WEIGHT:  4
-DEPTH:   18-27
+DEPTH:   12-18
 MONS:    generate_awake angel / generate_awake daeva / w:1 angel / w:1 daeva
 KFEAT:   A = altar_shining_one
 KITEM:   A = w:1 acquire:the_shining_one any / nothing
@@ -1307,7 +1307,7 @@ ENDMAP
 ###########################################################################
 # Eyes! by Minmay
 NAME:   minmay_eyes
-DEPTH:  D:14-24
+DEPTH:  D:10-16
 ORIENT: float
 MONS:   eye of devastation / great orb of eyes w:2
 MONS:   golden eye / shining eye w:2
@@ -1354,7 +1354,7 @@ ENDMAP
 # Elemental Laboratory (by Mu.)
 #
 NAME:   elemental_lab_mu
-DEPTH:  D:13-26, Elf:1-4
+DEPTH:  D:9-17, Elf:1-2
 ORIENT: float
 TAGS:   no_monster_gen no_item_gen no_pool_fixup
 MARKER: ! = lua:fog_machine { \
@@ -1441,7 +1441,7 @@ ENDMAP
 # Ancient Champions (by Mu., lua by due)
 #
 NAME:   ancient_champions_mu
-DEPTH:  D:15-26, Vault:1-7, Crypt:1-4
+DEPTH:  D:10-17, Vault:1-4, Crypt:1-2
 ORIENT: float
 TAGS:   no_item_gen no_monster_gen
 KFEAT:  ABCDEFG = metal_wall
@@ -1526,7 +1526,7 @@ ENDMAP
 # Guardian serpents guard a snake-like passage. (nrook)
 NAME:    guardian_serpent_snake_passage
 ORIENT:  float
-DEPTH:   D:9-27
+DEPTH:   D:6-18
 TAGS:    no_monster_gen no_rotate
 MONS:    patrolling guardian serpent
 SHUFFLE: yY/zZ
@@ -1555,7 +1555,7 @@ ENDMAP
 # Shantytown, noun: An area containing a collection of shacks,
 #                   shanties or makeshift dwellings. By Core Xii
 NAME:   corexii_shantytown
-DEPTH:  D:4-13
+DEPTH:  D:2-8
 ORIENT: float
 TAGS:   no_monster_gen no_item_gen
 NSUBST: + = 1:+ / *:=
@@ -1599,7 +1599,7 @@ ENDMAP
 
 # Cluster of small buildings with basic monsters and loot, by Core Xii
 NAME:   corexii_shack_village
-DEPTH:  D:3-9
+DEPTH:  D:2-6
 ORIENT: float
 TAGS:   no_monster_gen no_item_gen
 NSUBST: A = 1:+ / *:x, B = 1:+ / *:x, C = 1:+ / *:x, D = 1:+ / *:x
@@ -1678,7 +1678,7 @@ ENDMAP
 # then wait. It creates an agreeable sense of tension. -LP
 NAME:    ice_spiral_2
 ORIENT:  float
-DEPTH:   D:5-27, Vault
+DEPTH:   D:3-18, Vault
 TAGS:    no_item_gen uniq_spiral layout_rooms layout_city
 MONS:    nothing
 ITEM:    nothing, nothing
@@ -1704,7 +1704,7 @@ mmmmmmmmmmmmmmmmmmmmm
 ENDMAP
 
 NAME:   Flame_loot_2_lemuel
-DEPTH:  D:9-27
+DEPTH:  D:6-18
 ORIENT: float
 ITEM:   nothing
 SUBST:  * = |**...
@@ -1738,7 +1738,7 @@ ccccccccccccc
 ENDMAP
 
 NAME:    lemuel_firewalk_3
-DEPTH:   D:16-27
+DEPTH:   D:11-18
 TAGS:    uniq_firewalk abyss ruin_abyss
 WEIGHT:  2
 ORIENT:  float
@@ -1786,14 +1786,14 @@ ENDMAP
 NAME:   elephants_graveyard_mu
 ORIENT: float
 TAGS:   no_monster_gen no_rotate no_vmirror
-DEPTH:  D:13-26, Lair:1-7
+DEPTH:  D:9-17, Lair:1-7
 
   # next: we generate more dire elephants at greater depths
   # we also turn the shallow water into deep water at the lowest depths,
   # just in case elephants are ever allowed to drown the unwary
-: if you.absdepth() < 18 then
+: if you.absdepth() < 12 then
 MONS:   elephant, fungus, plant
-: elseif you.absdepth() < 22 then
+: elseif you.absdepth() < 15 then
 MONS:   elephant / dire elephant, fungus, plant
 : else
 MONS:   w:1 elephant / dire elephant, fungus, plant
@@ -1843,7 +1843,7 @@ ENDMAP
 
 NAME: megacathedral
 ORIENT: float
-DEPTH: D:8-14
+DEPTH: D:5-10
 MONS: wraith / freezing wraith w:2
 MONS: eidolon
 TAGS: no_rotate no_vmirror no_hmirror

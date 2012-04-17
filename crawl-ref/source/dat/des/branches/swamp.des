@@ -224,10 +224,10 @@ ENDMAP
 ################################################################################
 
 ################################################################################
-# Swamp:5 standard
+# Swamp:3 standard
 #
 NAME:    swamp
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 ORIENT:  float
 TAGS:    no_rotate
 MONS:    swamp dragon / nothing
@@ -261,10 +261,10 @@ MAP
 ENDMAP
 
 ################################################################################
-# Swamp:5 alternative (dp)
+# Swamp:3 alternative (dp)
 #
 NAME:    swamp_alternative
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 TAGS:    no_pool_fixup no_rotate
 ORIENT:  float
 MONS:    swamp dragon, swamp drake, hydra, fire drake
@@ -298,7 +298,7 @@ ENDMAP
 ###############################################################################
 # Swamp:5 alternative (due)
 NAME:    swamp_fiery
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 TAGS:    no_pool_fixup no_rotate
 ORIENT:  float
 MONS:    dragon, mottled dragon / hydra, fire drake / swamp drake / steam dragon
@@ -337,7 +337,7 @@ ENDMAP
 # The way to icy death!
 #
 NAME:    swamp_icy
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 TAGS:    no_pool_fixup no_rotate
 ORIENT:  southeast
 SHUFFLE: OR
@@ -389,7 +389,7 @@ ENDMAP
 # Alternative swamp end, by Lemuel
 #
 NAME:    swamp_pestilence
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 TAGS:    no_pool_fixup
 ORIENT:  southeast
 MONS:    spectral swamp dragon / spectral hydra
@@ -447,7 +447,7 @@ ENDMAP
 # "Old school" swamp end, by Jude
 #
 NAME:    swamp_old_school
-PLACE:   Swamp:5
+PLACE:   Swamp:3
 TAGS:    no_pool_fixup
 ORIENT:  southeast
 MONS:    swamp dragon, hydra, swamp drake

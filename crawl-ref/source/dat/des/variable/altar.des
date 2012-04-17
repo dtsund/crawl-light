@@ -192,7 +192,7 @@ default-depth: D
 NAME:    jmf_multi_god_temple
 SHUFFLE: abc
 SUBST:   a:=, b:x, c:x
-DEPTH:   D:8-21, Vault
+DEPTH:   D:5-14, Vault
 MAP
 ............
 .axxxxxxxxa.
@@ -209,7 +209,7 @@ MAP
 ENDMAP
 
 NAME:  jmf_multi_god_temple2
-DEPTH: D:8-21, Vault
+DEPTH: D:5-15, Vault
 MAP
 ............
 ..vvvvvvvv..
@@ -232,7 +232,7 @@ ENDMAP
 
 NAME: basic_altar
 TAGS: allow_dup extra no_monster_gen transparent
-DEPTH: 5-
+DEPTH: 3-
 CHANCE: 20% (Orc)
 CHANCE: 10% (Snake, Forest, Dwarf)
 CHANCE: 8% (D, Elf)
@@ -289,7 +289,7 @@ b.b
 ENDMAP
 
 NAME:   lemuel_altar_in_water
-DEPTH:  D:2-18, Swamp, Shoals
+DEPTH:  D:2-12, Swamp, Shoals
 WEIGHT: 9
 : local brnd = crawl.random2(13)
 : if brnd > 10 then
@@ -315,7 +315,7 @@ ENDMAP
 
 NAME:   lemuel_altar_in_water2
 TAGS:   no_pool_fixup no_monster_gen
-DEPTH:  D:2-18, Lair, Snake, Swamp, Shoals
+DEPTH:  D:2-12, Lair, Snake, Swamp, Shoals
 WEIGHT: 1
 MAP
    www
@@ -328,7 +328,7 @@ MAP
 ENDMAP
 
 NAME:  lemuel_oklob_altar
-DEPTH: D:6-18, Lair, Snake, Shoals
+DEPTH: D:4-12, Lair, Snake, Shoals
 MONS:  oklob plant, plant
 MAP
  2
@@ -337,7 +337,7 @@ MAP
 ENDMAP
 
 NAME:    lemuel_hidden_altar
-DEPTH:   D:1-18, Vault, Lair, Elf, Crypt
+DEPTH:   D:1-12, Vault, Lair, Elf, Crypt
 SHUFFLE: XY
 SUBST:   X = .
 SUBST:   Y = =
@@ -355,7 +355,7 @@ ENDMAP
 
 NAME:   lemuel_sealed_altar_a
 WEIGHT: 3
-DEPTH:  D:2-18, Vault, Elf, Crypt
+DEPTH:  D:2-12, Vault, Elf, Crypt
 MAP
 xxxxxxxxxxxxx
 x...........x
@@ -373,7 +373,7 @@ ENDMAP
 
 NAME: lemuel_sealed_altar_b
 WEIGHT: 7
-DEPTH: D:2-18, Vault, Elf, Crypt
+DEPTH: D:2-12, Vault, Elf, Crypt
 MAP
 xxxxxxxxxxx
 x.........x
@@ -386,7 +386,7 @@ xxxxxxxxxxx
 ENDMAP
 
 NAME:  lemuel_tele_altar
-DEPTH: D:2-18, Vault
+DEPTH: D:2-12, Vault
 SUBST: Y = X x
 KFEAT: X = teleport trap
 MAP
@@ -404,7 +404,7 @@ MAP
 ENDMAP
 
 NAME:  lemuel_statue_altar
-DEPTH: 2-18, Vault, Elf
+DEPTH: 2-12, Vault, Elf
 : if you.absdepth() < 10 then
 SUBST: F = G
 : end
@@ -419,7 +419,7 @@ MAP
 ENDMAP
 
 NAME:   lemuel_coloured_pillars_altar
-DEPTH:  D:2-18, Vault, Elf
+DEPTH:  D:2-12, Vault, Elf
 TAGS:   no_rotate
 COLOUR: c = blue / yellow / red / cyan
 MAP
@@ -433,7 +433,7 @@ xxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:   lemuel_upstairs_altar
-DEPTH:  D:2-12, Vault, Elf, Crypt
+DEPTH:  D:2-8, Vault, Elf, Crypt
 ORIENT: float
 SUBST:  T:T., )=)}], c:ccx
 KMASK:  T = no_monster_gen
@@ -452,9 +452,9 @@ ENDMAP
 ######################################
 
 NAME:  lemuel_angel_altar
-DEPTH: D:3-18, Vault
+DEPTH: D:2-12, Vault
 TAGS:  no_trap_gen
-: if you.absdepth() > 12 then
+: if you.absdepth() > 8 then
 MONS: patrolling Daeva / patrolling Angel
 : else
 MONS:  patrolling Angel
@@ -477,13 +477,13 @@ MAP
 ENDMAP
 
 NAME:  lemuel_hellish_altar
-DEPTH: D:2-21, Crypt, Geh
+DEPTH: D:2-14, Crypt, Geh
 TAGS:  no_monster_gen
 MONS:  iron devil/orange demon, hell beast/rotting devil, lemure/iron imp, hellion
 SUBST: 2 = 23
 SUBST: 2 = 12
 SUBST: 3 = 3L
-: if you.absdepth() >14 then
+: if you.absdepth() >10 then
 SUBST: 1 = 1:20 4
 : end
 SUBST: L = l.
@@ -506,7 +506,7 @@ MAP
 ENDMAP
 
 NAME:  david_defended_altar_orc
-DEPTH: D:7-20, Orc
+DEPTH: D:4-13, Orc
 MONS:  patrolling orc priest
 TAGS:  uniq_defended_altar
 KFEAT: _ = altar_beogh / w:1 altar_okawaru / w:1 altar_makhleb / w:1 altar_trog
@@ -519,7 +519,7 @@ ccccc...
 ENDMAP
 
 NAME:  david_defended_altar_elf
-DEPTH: D:7-20, Elf
+DEPTH: D:4-13, Elf
 MONS:  patrolling deep elf priest / w:30 nothing
 TAGS:  uniq_defended_altar
 MAP
@@ -533,7 +533,7 @@ ENDMAP
 # The mix of deep and shallow water is intended to keep the centaurs from
 # escaping without requiring the player to be able to cross deep water.
 NAME:  lemuel_centaur_altar
-DEPTH: D:7-20, Shoals, Lair
+DEPTH: D:4-13, Shoals, Lair
 TAGS:  no_pool_fixup no_monster_gen
 MONS:  patrolling centaur
 MAP
@@ -550,7 +550,7 @@ xxx...@..xxxx
 ENDMAP
 
 NAME:   lemuel_mausoleum_altar
-DEPTH:  D:7-20, Crypt
+DEPTH:  D:4-13, Crypt
 MONS:   w:50 human zombie/orc zombie/elf zombie/w:5 ogre zombie/w:5 troll zombie
 MONS:   w:50 human skeleton/orc skeleton/elf skeleton/w:5 ogre skeleton/\
         w:5 troll skeleton
@@ -612,7 +612,7 @@ ENDMAP
 ###################################################################
 # Distorted/chaotic kobolds (Jude)
 NAME:       due_chaos_kobolds
-DEPTH:      D:13-27, Vault, Elf, Crypt
+DEPTH:      D:9-18, Vault, Elf, Crypt
 TAGS:       no_rotate
 ORIENT:     float
 SUBST:      y  = c.
@@ -654,7 +654,7 @@ cccyy..yycc
 ENDMAP
 
 NAME:  jiyva_altar_1
-DEPTH: D:2-20
+DEPTH: D:2-13
 KFEAT: _ = altar_jiyva
 MONS:  jelly
 MAP
@@ -666,7 +666,7 @@ MAP
 ENDMAP
 
 NAME:  jiyva_altar_2
-DEPTH: D:2-20
+DEPTH: D:2-13
 KFEAT: _ = altar_jiyva
 KITEM: 1 = dart
 KMONS: 1 = jelly
@@ -680,7 +680,7 @@ xxxxx
 ENDMAP
 
 NAME:  fedhas_bush_and_centaur_altar
-DEPTH: D:3-27
+DEPTH: D:2-18
 KFEAT: _ = altar_fedhas
 MONS:  centaur, bush
 MAP
@@ -693,7 +693,7 @@ MAP
 ENDMAP
 
 NAME:   tgw_lugonu_bribe
-DEPTH:  D:12-27
+DEPTH:  D:8-18
 KFEAT:  _ = altar_lugonu
 MARKER: _ = lua:portal_desc {slave_name="altar"}
 
@@ -735,7 +735,7 @@ ENDMAP
 
 NAME:    cheibriados_altar_2
 TAGS:    uniq_altar_cheibriados
-DEPTH:   D:2-20
+DEPTH:   D:2-13
 WEIGHT:  1
 KPROP:   1 = no_rtele_into
 KFEAT:   _ = altar_cheibriados
@@ -756,7 +756,7 @@ ENDMAP
 
 # Golems are slow and they protect an altar to the slow god. (Lemuel)
 NAME:  golem_altar_1
-DEPTH: 8-12
+DEPTH: 5-8
 TAGS:  patrolling no_monster_gen no_item_gen
 TAGS:  uniq_golem_altar temple_overflow_cheibriados
 KMONS: _ = iron golem
@@ -777,7 +777,7 @@ xxx.....xxx
 ENDMAP
 
 NAME:    golem_altar_2
-DEPTH:   8-12
+DEPTH:   5-8
 TAGS:    patrolling no_monster_gen no_item_gen
 TAGS:    uniq_golem_altar temple_overflow_cheibriados
 KMONS:   _ = iron golem
@@ -807,7 +807,7 @@ ENDMAP
 
 NAME:   elyvilon_altar_1
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_elyvilon
 SUBST:  X : T G t 1 2 3
 MONS:   plant, bush, fungus
@@ -834,7 +834,7 @@ ENDMAP
 
 NAME:   elyvilon_altar_2
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon no_pool_fixup no_monster_gen
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_elyvilon
 NSUBST: W = 1:Z / *:W
 KMONS:  Z = big fish att:good_neutral
@@ -849,7 +849,7 @@ ENDMAP
 
 NAME:   elyvilon_altar_3
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon no_pool_fixup
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_elyvilon
 KMASK:  w = no_monster_gen
 KMASK:  W = no_monster_gen
@@ -874,7 +874,7 @@ ENDMAP
 
 NAME:   elyvilon_altar_4
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon no_monster_gen
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_elyvilon
 MONS:   patrolling quokka att:good_neutral
 MAP
@@ -891,7 +891,7 @@ ENDMAP
 
 NAME:   elyvilon_altar_5
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_elyvilon
 KMASK:  T = no_monster_gen
 MAP
@@ -911,7 +911,7 @@ ENDMAP
 
 NAME:   fedhas_altar_1
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_fedhas
 MONS:   plant
 MAP
@@ -924,7 +924,7 @@ ENDMAP
 
 NAME:   fedhas_altar_2
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_fedhas
 NSUBST: w = 2:W / *:w
 SUBST:  . = ..wW
@@ -939,7 +939,7 @@ ENDMAP
 
 NAME:   fedhas_altar_3
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_fedhas
 NSUBST: b = 1:. / *:1
 MONS:   plant w:5 / fungus / nothing w:3
@@ -953,7 +953,7 @@ ENDMAP
 
 NAME:   fedhas_altar_4
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas mini_float
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_fedhas
 FTILE:  . = floor_moss
 FTILE:  t = floor_moss
@@ -976,7 +976,7 @@ ENDMAP
 NAME:    tgw_fedhas
 TAGS:    no_item_gen no_monster_gen
 TAGS:    temple_overflow_fedhas uniq_altar_fedhas
-DEPTH:   Lair, D:2-20
+DEPTH:   Lair, D:2-13
 KFEAT:   _ = altar_fedhas
 KPROP:   xzd3P = no_rtele_into
 MONS:    plant, fungus, oklob plant, big fish, bush, toadstool col:random
@@ -984,7 +984,7 @@ KITEM:   d = apple / apricot / orange / pear / grape / strawberry / nothing w:70
 KFEAT:   d = floor
 SUBST:   x = TTPPPPP.
 # Only make "oklob behind bushes" situation possible a bit deeper.
-: if you.absdepth() > 5 then
+: if you.absdepth() > 4 then
 SHUFFLE: PQR
 SUBST:   Q = 115, R = 11125
 : end
@@ -1024,7 +1024,7 @@ ENDMAP
 
 NAME:  fedhas_ov_isle_minmay
 TAGS:  temple_overflow_fedhas uniq_altar_fedhas no_monster_gen
-DEPTH: D:2-9
+DEPTH: D:2-6
 MONS:  plant / bush w:5
 KPROP: 1_ = no_rtele_into
 SUBST: 1 = 111t...
@@ -1049,7 +1049,7 @@ ENDMAP
 
 NAME:   fedhas_altar_fruit_tree
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas mini_float no_item_gen no_rotate
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 NSUBST: g = 4:f/*:.
 NSUBST: f = 5:A/*:.
 NSUBST: w = 2:4 / *:w
@@ -1089,7 +1089,7 @@ ENDMAP
 # these shows still point out how Kikubaaqudgha enjoys suffering.
 NAME:   tgw_kikubaaqudgha
 TAGS:   uniq_altar_kikubaaqudgha temple_overflow_kikubaaqudgha
-DEPTH:  D:2-10
+DEPTH:  D:2-7
 KFEAT:  _ = altar_kikubaaqudgha
 {{
 local tm = TriggerableFunction:new{
@@ -1124,7 +1124,7 @@ ENDMAP
 ### Makhleb overflow altars ###################################################
 
 NAME:    demons_altar
-DEPTH:   3-11
+DEPTH:   3-8
 TAGS:    no_monster_gen patrolling temple_overflow_makhleb
 TAGS:    layout_rooms layout_city layout_open layout_cross
 KFEAT:   _ = altar_makhleb
@@ -1135,7 +1135,7 @@ SHUFFLE: 1234
 NSUBST:  1 = 1:1 / *:.
 NSUBST:  2 = 1:2 / *:.
 NSUBST:  3 = 2:3 / *:.
-: if you.absdepth() < 9 then
+: if you.absdepth() < 6 then
 SUBST:   3 = 12
 : end
 MONS:    iron devil, demonic crawler, smoke demon, iron imp
@@ -1180,7 +1180,7 @@ ENDMAP
 
 NAME:   okawaru_metal_pillars_1
 WEIGHT: 4
-DEPTH:  2-10
+DEPTH:  2-7
 TAGS:   temple_overflow_okawaru
 KFEAT:  _ = altar_okawaru
 MAP
@@ -1193,7 +1193,7 @@ ENDMAP
 
 NAME:   okawaru_metal_pillars_2
 WEIGHT: 3
-DEPTH:  2-10
+DEPTH:  2-7
 TAGS:   temple_overflow_okawaru
 KFEAT:  _ = altar_okawaru
 MAP
@@ -1206,7 +1206,7 @@ ENDMAP
 
 NAME:   okawaru_metal_pillars_3
 WEIGHT: 3
-DEPTH:  2-10
+DEPTH:  2-7
 TAGS:   temple_overflow_okawaru
 KFEAT:  _ = altar_okawaru
 MAP
@@ -1221,7 +1221,7 @@ ENDMAP
 
 NAME:   okawaru_trees_1
 WEIGHT: 5
-DEPTH:  2-10
+DEPTH:  2-7
 TAGS:   temple_overflow_okawaru
 KFEAT:  _ = altar_okawaru
 MAP
@@ -1238,7 +1238,7 @@ ENDMAP
 
 NAME:   okawaru_trees_2
 WEIGHT: 5
-DEPTH:  2-10
+DEPTH:  2-7
 TAGS:   temple_overflow_okawaru
 KFEAT:  _ = altar_okawaru
 MAP
@@ -1277,7 +1277,7 @@ ENDMAP
 ### Sif Muna overflow altars ##################################################
 
 NAME:   lemuel_blue_sif_altar
-DEPTH:  D:2-18, Elf, Vault
+DEPTH:  D:2-12, Elf, Vault
 TAGS:   no_monster_gen temple_overflow_sif_muna uniq_altar_sif_muna
 COLOUR: . = blue
 FTILE:  . = floor_hall, C = floor_hall, @ = floor_hall, + = floor_hall
@@ -1291,7 +1291,7 @@ xxxxxxxxxxxxxx
 ENDMAP
 
 NAME:       tgw_sif
-DEPTH:      D:3-18, Elf
+DEPTH:      D:2-12, Elf
 TAGS:       no_item_gen no_monster_gen no_pool_fixup
 TAGS:       temple_overflow_sif_muna uniq_altar_sif_muna
 KFEAT:      _ = altar_sif_muna
@@ -1329,7 +1329,7 @@ ENDMAP
 
 NAME:  bloody_trog
 TAGS:  uniq_altar_trog temple_overflow_trog
-DEPTH: D:2-12, Orc, Vault
+DEPTH: D:2-8, Orc, Vault
 KPROP: . = bloody / nothing
 KFEAT: _ = altar_trog
 KITEM: _ = animal skin, dagger
@@ -1341,7 +1341,7 @@ ENDMAP
 
 NAME:   trog_ov_bears_minmay
 TAGS:   temple_overflow_trog uniq_altar_trog
-DEPTH:  D:4-18
+DEPTH:  D:3-12
 : if you.absdepth() < 10 then
 MONS:   black bear
 : else
@@ -1363,7 +1363,7 @@ ENDMAP
 NAME:   tgw_trog
 TAGS:   no_item_gen no_monster_gen patrolling
 TAGS:   temple_overflow_trog uniq_altar_trog
-DEPTH:  D:2-9
+DEPTH:  D:2-6
 KFEAT:  _ = altar_trog
 KPROP:  1 = no_rtele_into
 MONS:   moth of wrath, rat / worm w:5
@@ -1388,7 +1388,7 @@ ENDMAP
 
 NAME:   trog_book
 TAGS:   uniq_altar_trog temple_overflow_trog
-DEPTH:  D:2-10, Orc
+DEPTH:  D:2-7, Orc
 KFEAT:  _ = altar_trog
 {{
 local tm = TriggerableFunction:new{func="callback.trog_book_convert_book",
@@ -1415,7 +1415,7 @@ ENDMAP
 # Maximal damage is 32 per turn (at speed 10). If you want to go safe,
 # wait for resistance (or have more than 32 HP).
 NAME:   fiery_altar_vehumet
-DEPTH:  2-10
+DEPTH:  2-7
 WEIGHT: 8
 TAGS:   temple_overflow_vehumet
 MARKER: _ = lua:fog_machine { cloud_type = "flame", \
@@ -1434,7 +1434,7 @@ ENDMAP
 # The fog generator for the altar has the same parameters as above but the one
 # for the book is more dangerous.
 NAME:   dangerous_book
-DEPTH:  2-10
+DEPTH:  2-7
 WEIGHT: 2
 TAGS:   temple_overflow_vehumet
 MARKER: _ = lua:fog_machine { cloud_type = "freezing vapour", \
@@ -1455,7 +1455,7 @@ MAP
 ENDMAP
 
 NAME:    vehumet_statue
-DEPTH:   4-10
+DEPTH:   3-7
 TAGS:    temple_overflow_vehumet
 SHUFFLE: 12
 MONS:    statue name:charred name_adjective tile:mons_statue_mage \
@@ -1474,7 +1474,7 @@ MAP
 ENDMAP
 
 NAME:    vehumet_crystals
-DEPTH:   2-10
+DEPTH:   2-7
 TAGS:    temple_overflow_vehumet
 KFEAT:   _ = altar_vehumet
 MAP
@@ -1491,7 +1491,7 @@ ENDMAP
 
 # Vehumet wants you to burn the damn trees down.
 NAME:    vehumet_trees
-DEPTH:   2-10
+DEPTH:   2-7
 TAGS:    temple_overflow_vehumet
 KFEAT:   _ = altar_vehumet
 SHUFFLE: ><
@@ -1588,7 +1588,7 @@ ENDMAP
 
 NAME:    xom_shifter_show
 TAGS:    temple_overflow_xom uniq_altar_xom
-DEPTH:   D:7-20
+DEPTH:   D:4-13
 KFEAT:   _ = altar_xom
 FTILE:   ._ = floor_pebble
 COLOUR:  . = random
@@ -1675,7 +1675,7 @@ ENDMAP
 
 NAME:    xom_monty_hall
 TAGS:    no_item_gen no_monster_gen temple_overflow_xom uniq_altar_xom
-DEPTH:   D:2-7
+DEPTH:   D:2-5
 WEIGHT:  1
 SHUFFLE: DE,FG
 NSUBST:  M = 1:2 / *:1
@@ -1706,7 +1706,7 @@ ENDMAP
 
 NAME:   yredelemnul_altar_1
 TAGS:   uniq_altar_yredelemnul temple_overflow_yredelemnul
-DEPTH:  D:2-20
+DEPTH:  D:2-13
 KFEAT:  C = altar_yredelemnul
 KMONS:  f = w:2 col:darkgrey plant name:withered name_adjective               \
             tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
@@ -1735,7 +1735,7 @@ MONS:   angel god:zin name:glowing name_adjective
 :   "with an aura of brilliant white light. This angel's face, though, " ..
 :   "is marked by a scowl, as if its zeal against any real or perceived " ..
 :   "vice overshadows its goodness.\n"
-DEPTH:  2-27
+DEPTH:  2-18
 MAP
 xxxxxxxxx
 xcccccccx
@@ -1776,7 +1776,7 @@ ENDMAP
 ### Variable overflow altars ##################################################
 
 NAME:   lemuel_zombie_altar_kiku
-DEPTH:  D:2-18, Crypt
+DEPTH:  D:2-12, Crypt
 TAGS:   no_pool_fixup uniq_zombie_altar no_monster_gen temple_overflow_kikubaaqudgha
 KFEAT:  _ = altar_kikubaaqudgha
 MONS:   rat zombie / megabat zombie / nothing w:200
@@ -1793,7 +1793,7 @@ xxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:   lemuel_zombie_altar_yred
-DEPTH:  D:2-18, Crypt
+DEPTH:  D:2-12, Crypt
 TAGS:   no_pool_fixup uniq_zombie_altar no_monster_gen temple_overflow_yredelemnul
 KFEAT:  _ = altar_yredelemnul
 SUBST:  1 : 1Ww
@@ -1814,7 +1814,7 @@ ENDMAP
 # General overflow vault, can be used for all gods.
 # B places the altar to a guaranteed god.
 NAME:     general_overflow_altar
-DEPTH:    D:2-16
+DEPTH:    D:2-11
 WEIGHT:   2
 TAGS:     no_monster_gen no_pool_fixup temple_overflow_1
 SHUFFLE:  xXY / xXY / xXY / abc

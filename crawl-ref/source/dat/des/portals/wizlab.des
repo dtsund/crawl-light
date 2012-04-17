@@ -392,7 +392,7 @@ end
 
 }}
 
-default-depth: Vault:2-7, Crypt, D:22-27, Elf:5-7
+default-depth: Vault:2-4, Crypt, D:15-18, Elf:2-3
 
 ###############################################################################
 # Portal entrances.
@@ -947,8 +947,8 @@ KMONS:      * = lorocyproca / reaper / soul eater / ice devil / sun demon
 KMONS:      | = blue death / green death / pit fiend / fiend / shadow fiend /\
                 ice fiend / executioner / balrug / cacodemon
 :           else
-KMONS:      % = place:D:15 zombie / guardian mummy w:2
-KMONS:      * = place:D:27 zombie / greater mummy w:5
+KMONS:      % = place:D:10 zombie / guardian mummy w:2
+KMONS:      * = place:D:18 zombie / greater mummy w:5
 KMONS:      | = ancient lich
 :           end
 #           Loot.

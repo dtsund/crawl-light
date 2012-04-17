@@ -487,7 +487,7 @@ ENDMAP
 NAME:   church_of_pain_bobbens
 ORIENT: float
 TAGS:   no_monster_gen no_item_gen
-PLACE:  Crypt:5
+PLACE:  Crypt:3
 # MONSTER LAYOUT
 # boss (1)
 # boss guard (2)
@@ -600,7 +600,7 @@ ENDMAP
 NAME:   cryptofortress_bobbens
 ORIENT: encompass
 TAGS:   no_monster_gen no_item_gen no_pool_fixup no_rotate no_vmirror
-PLACE:  Crypt:5
+PLACE:  Crypt:3
 KFEAT:  A = w
 KMONS:  A = flying skull
 KFEAT:  B = .
@@ -711,7 +711,7 @@ ENDMAP
 NAME:   david_glass_crypt
 ORIENT: float
 TAGS:   no_item_gen no_rotate
-PLACE:  Crypt:5
+PLACE:  Crypt:3
 MARKER: m = lua:portal_desc {wall_phase = 1}
 SUBST:  m : mnn
 MONS:   patrolling lich / patrolling ancient lich
@@ -755,7 +755,7 @@ ENDMAP
 NAME:   quadcrypt_mu
 ORIENT: encompass
 TAGS:   no_monster_gen no_item_gen no_pool_fixup no_rotate no_vmirror no_hmirror
-PLACE:  Crypt:5
+PLACE:  Crypt:3
 ####### chapel garden
 SUBST:  F = f ?
 SUBST:  f = p:1 .:1
@@ -913,7 +913,7 @@ ENDMAP
 #
 NAME: evilmike_haunted_forest
 ORIENT: encompass
-PLACE: Crypt:5
+PLACE: Crypt:3
 TAGS: no_monster_gen no_item_gen no_pool_fixup no_rotate
 SUBST: T = t., w = Wwww
 SUBST: v = cccc.-

@@ -1,5 +1,5 @@
 ##############################################################################
-# hive.des: Entries to the Hive, and maps for Hive:4
+# hive.des: Entries to the Hive, and maps for Hive:1
 ##############################################################################
 
 
@@ -266,6 +266,8 @@ ENDMAP
 
 ##############################################################################
 # Hive vaults
+# Sadly, these are currently ineligible for generation, because Hive now
+# ends at Hive:1.
 ##############################################################################
 
 NAME:   Hive_Balancer
@@ -484,7 +486,7 @@ ENDMAP
 # Hive:2 beehive
 #
 NAME:   beehive
-PLACE:  Hive:2
+PLACE:  Hive:1
 ORIENT: encompass
 TAGS:   no_dump
 MONS:   queen bee, killer bee, killer bee larva, plant, yellow wasp
@@ -570,7 +572,7 @@ ENDMAP
 # hive by the back (much easier fight) or in the middle to reveal the items
 # stuck in wax
 NAME:   beehive2
-PLACE:  Hive:2
+PLACE:  Hive:1
 ORIENT: encompass
 MONS:   queen bee, killer bee, killer bee larva, plant
 MONS:   random, random
@@ -654,7 +656,7 @@ ENDMAP
 # items there.
 ###
 NAME:   beehive_tunnels
-PLACE:  Hive:2
+PLACE:  Hive:1
 ORIENT: encompass
 MONS:   queen bee, killer bee larva, killer bee, plant
 MONS:   random, random
@@ -739,7 +741,7 @@ ENDMAP
 # be crossed by anyone with a wand of fire.
 #
 NAME:   minmay_beehive_corners
-PLACE:  Hive:2
+PLACE:  Hive:1
 ORIENT: encompass
 MONS:   queen bee, killer bee larva, killer bee, plant, oklob plant
 KITEM:  R = w:2 honeycomb / w:1 royal jelly
@@ -801,7 +803,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:    beehive_diamond
-PLACE:   Hive:2
+PLACE:   Hive:1
 ORIENT:  encompass
 TAGS:    no_rotate
 SHUFFLE: {([

@@ -16,7 +16,7 @@ TAGS:   uniq_lab chance_lab transparent trowel_portal allow_dup extra
 # (1-500/10^4)^24 = ~29% chance of NOT placing a Labyrinth, ~71% chance
 # of getting a Labyrinth every game, skewed towards earlier depths.
 CHANCE: 500
-DEPTH:  10-20, !Orc, !Swamp, !Shoals, !Hive, !Snake, !Slime
+DEPTH:  7-14, !Orc, !Swamp, !Shoals, !Hive, !Snake, !Slime
 {{
   local messager =
     timed_msg {

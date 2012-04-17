@@ -73,7 +73,7 @@ end
 }}
 
 #### Portal entry vaults.
-default-depth: D:4-8
+default-depth: D:3-5
 
 NAME:   enter_ossuary_1
 TAGS:   uniq_ossuary no_monster_gen chance_ossuary

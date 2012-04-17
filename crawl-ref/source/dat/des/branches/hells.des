@@ -5,7 +5,7 @@
 
 {{
 function dis_setup(e)
-   e.place("Dis:7")
+   e.place("Dis:5")
    e.tags("dis", "no_rotate")
    e.lflags("no_tele_control")
    e.lua_marker('O', item_pickup_change_flags {
@@ -20,7 +20,7 @@ function dis_setup(e)
 end
 
 function geh_setup(e)
-   e.place("Geh:7")
+   e.place("Geh:5")
    e.tags("no_rotate")
    e.lflags("no_tele_control")
    e.lua_marker('O', item_pickup_change_flags {
@@ -39,7 +39,7 @@ function geh_setup(e)
 end
 
 function coc_setup(e)
-   e.place("Coc:7")
+   e.place("Coc:5")
    e.tags("no_rotate")
    e.lflags("no_tele_control")
    e.lua_marker('O', item_pickup_change_flags {
@@ -60,7 +60,7 @@ function coc_setup(e)
 end
 
 function tar_setup(e)
-   e.place("Tar:7")
+   e.place("Tar:5")
    e.tags("no_rotate")
    e.lflags("no_tele_control")
    e.lua_marker('O', item_pickup_change_flags {
@@ -98,14 +98,14 @@ end
 # This replaces the hardcoded placement of a hell entrance on D:21-27.
 NAME:   hell_entry
 TAGS:   extra allow_dup luniq
-DEPTH:  D:21-27
+DEPTH:  D:14-18
 CHANCE: 100%
 KFEAT:  O = enter_hell
 MAP
 O
 ENDMAP
 
-default-depth: D:12-26
+default-depth: D:8-17
 
 ##############################################################################
 # Hellmouth (Lemuel)
@@ -295,7 +295,7 @@ ENDMAP
 # There is an 8/27 chance all three downstairs will be here.
 #
 NAME:    Lemuel_Dis_Dragons
-DEPTH:   Dis:2-6
+DEPTH:   Dis:2-4
 ORIENT:  float
 TAGS:    no_rotate
 MONS:    iron dragon, iron dragon

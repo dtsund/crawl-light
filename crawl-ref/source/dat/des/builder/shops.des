@@ -14,7 +14,7 @@ end
 
 NAME: serial_shops
 TAGS: allow_dup extra luniq
-DEPTH: 4-
+DEPTH: 2-
 CHANCE: 20% (D)
 CHANCE: 30% (Orc)
 CHANCE: 40% (Elf)
@@ -29,8 +29,8 @@ CHANCE: 0
 hook("post_place", function()
     local num = num_shops()
 
-    if you.absdepth() > 10 and you.absdepth() <= 27
-      and crawl.one_chance_in(30 - (you.absdepth() - 1))
+    if you.absdepth() > 6 and you.absdepth() <= 18
+      and crawl.one_chance_in(20 - (you.absdepth() - 1))
     then
         dgn.place_maps { tag = "bzr_entry", count = 1 }
         num = num - 1

@@ -26,7 +26,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'D', false, false, 0 },
 
-    { BRANCH_ECUMENICAL_TEMPLE, BRANCH_MAIN_DUNGEON, 4, 7, 1, 5, 0, 0,
+    { BRANCH_ECUMENICAL_TEMPLE, BRANCH_MAIN_DUNGEON, 3, 3, 1, 5, 0, 0,
       DNGN_ENTER_TEMPLE, DNGN_RETURN_FROM_TEMPLE,
       "Temple", "the Ecumenical Temple", "Temple",
       NULL,
@@ -35,7 +35,7 @@ Branch branches[] = {
       traps_zero_number, NULL, NULL, NULL, // No traps in temple
       'T', false, false, 0 },
 
-    { BRANCH_ORCISH_MINES, BRANCH_MAIN_DUNGEON, 6, 11, 4, 6, 0, 0,
+    { BRANCH_ORCISH_MINES, BRANCH_MAIN_DUNGEON, 5, 5, 3, 6, 0, 0,
       DNGN_ENTER_ORCISH_MINES, DNGN_RETURN_FROM_ORCISH_MINES,
       "Orcish Mines", "the Orcish Mines", "Orc",
       NULL,
@@ -44,7 +44,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'O', false, false, 4 },
 
-    { BRANCH_ELVEN_HALLS, BRANCH_ORCISH_MINES, 3, 4, 5, 4, 0, 0,
+    { BRANCH_ELVEN_HALLS, BRANCH_ORCISH_MINES, 3, 3, 3, 4, 0, 0,
       DNGN_ENTER_ELVEN_HALLS, DNGN_RETURN_FROM_ELVEN_HALLS,
       "Elven Halls", "the Elven Halls", "Elf",
       NULL,
@@ -53,7 +53,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'E', false, true, 0 },
 
-    { BRANCH_LAIR, BRANCH_MAIN_DUNGEON, 8, 13, 8, 8, 0, 0,
+    { BRANCH_LAIR, BRANCH_MAIN_DUNGEON, 6, 6, 3, 8, 0, 0,
       DNGN_ENTER_LAIR, DNGN_RETURN_FROM_LAIR,
       "Lair", "the Lair of Beasts", "Lair",
       NULL,
@@ -62,7 +62,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'L', false, false, 4 },
 
-    { BRANCH_SWAMP, BRANCH_LAIR, 2, 5, 5, 3, BFLAG_ISLANDED, 0,
+    { BRANCH_SWAMP, BRANCH_LAIR, 2, 2, 3, 3, BFLAG_ISLANDED, 0,
       DNGN_ENTER_SWAMP, DNGN_RETURN_FROM_SWAMP,
       "Swamp", "the Swamp", "Swamp",
       NULL,
@@ -71,7 +71,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'S', false, true, 0 },
 
-    { BRANCH_SHOALS, BRANCH_LAIR, 3, 6, 5, 4, BFLAG_ISLANDED, 0,
+    { BRANCH_SHOALS, BRANCH_LAIR, 3, 3, 3, 4, BFLAG_ISLANDED, 0,
       DNGN_ENTER_SHOALS, DNGN_RETURN_FROM_SHOALS,
       "Shoals", "the Shoals", "Shoals",
       NULL,
@@ -80,7 +80,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'A', false, true, 3 },
 
-    { BRANCH_SLIME_PITS, BRANCH_LAIR, 6, 8, 6, 4, 0, 0,
+    { BRANCH_SLIME_PITS, BRANCH_LAIR, 4, 4, 4, 4, 0, 0,
       DNGN_ENTER_SLIME_PITS, DNGN_RETURN_FROM_SLIME_PITS,
       "Slime Pits", "the Pits of Slime", "Slime",
       NULL,
@@ -89,7 +89,7 @@ Branch branches[] = {
       NULL, random_trap_slime, NULL, NULL,
       'M', false, true, -5 },
 
-    { BRANCH_SNAKE_PIT, BRANCH_LAIR, 3, 6, 5, 7, 0, 0,
+    { BRANCH_SNAKE_PIT, BRANCH_LAIR, 3, 3, 3, 7, 0, 0,
       DNGN_ENTER_SNAKE_PIT, DNGN_RETURN_FROM_SNAKE_PIT,
       "Snake Pit", "the Snake Pit", "Snake",
       NULL,
@@ -98,7 +98,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'P', false, true, 0 },
 
-    { BRANCH_HIVE, BRANCH_MAIN_DUNGEON, 11, 16, 2, 15, 0, 0,
+    { BRANCH_HIVE, BRANCH_MAIN_DUNGEON, 8, 8, 1, 15, 0, 0,
       DNGN_ENTER_HIVE, DNGN_RETURN_FROM_HIVE,
       "Hive", "the Hive", "Hive",
       "You hear a buzzing sound coming from all directions.",
@@ -107,7 +107,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'H', false, true, 5 },
 
-    { BRANCH_VAULTS, BRANCH_MAIN_DUNGEON, 14, 19, 8, 17, 0, 0,
+    { BRANCH_VAULTS, BRANCH_MAIN_DUNGEON, 10, 10, 5, 17, 0, 0,
       DNGN_ENTER_VAULTS, DNGN_RETURN_FROM_VAULTS,
       "Vaults", "the Vaults", "Vault",
       NULL,
@@ -116,7 +116,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'V', false, true, 0 },
 
-    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 4, 6, 1, 4, 0, 0,
+    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 3, 3, 1, 4, 0, 0,
       DNGN_ENTER_HALL_OF_BLADES, DNGN_RETURN_FROM_HALL_OF_BLADES,
       "Hall of Blades", "the Hall of Blades", "Blade",
       NULL,
@@ -125,7 +125,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'B', false, false, -7 },
 
-    { BRANCH_CRYPT, BRANCH_VAULTS, 2, 4, 5, 3, 0, 0,
+    { BRANCH_CRYPT, BRANCH_VAULTS, 2, 2, 3, 3, 0, 0,
       DNGN_ENTER_CRYPT, DNGN_RETURN_FROM_CRYPT,
       "Crypt", "the Crypt", "Crypt",
       NULL,
@@ -134,7 +134,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'C', false, false, -20 },
 
-    { BRANCH_TOMB, BRANCH_CRYPT, 2, 3, 3, 5,
+    { BRANCH_TOMB, BRANCH_CRYPT, 2, 2, 3, 5,
       BFLAG_ISLANDED | BFLAG_NO_TELE_CONTROL, 0,
       DNGN_ENTER_TOMB, DNGN_RETURN_FROM_TOMB,
       "Tomb", "the Tomb of the Ancients", "Tomb",
@@ -144,7 +144,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'W', false, true, -10 },
 
-    { BRANCH_VESTIBULE_OF_HELL, BRANCH_MAIN_DUNGEON, 21, 27, 1, -1, 0, 0,
+    { BRANCH_VESTIBULE_OF_HELL, BRANCH_MAIN_DUNGEON, 15, 15, 1, -1, 0, 0,
       DNGN_ENTER_HELL, DNGN_EXIT_HELL, // sentinel
       "Hell", "the Vestibule of Hell", "Hell",
       NULL,
@@ -153,7 +153,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'U', false, false, 0 },
 
-    { BRANCH_DIS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 7, -1, BFLAG_ISLANDED, 0,
+    { BRANCH_DIS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, -1, BFLAG_ISLANDED, 0,
       DNGN_ENTER_DIS, NUM_FEATURES, // sentinel
       "Dis", "the Iron City of Dis", "Dis",
       NULL,
@@ -162,7 +162,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'I', true, true, 0 },
 
-    { BRANCH_GEHENNA, BRANCH_VESTIBULE_OF_HELL, 1, 1, 7, -1, BFLAG_ISLANDED, 0,
+    { BRANCH_GEHENNA, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, -1, BFLAG_ISLANDED, 0,
       DNGN_ENTER_GEHENNA, NUM_FEATURES, // sentinel
       "Gehenna", "Gehenna", "Geh",
       NULL,
@@ -171,7 +171,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'G', true, true, 0 },
 
-    { BRANCH_COCYTUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 7, -1, BFLAG_ISLANDED, 0,
+    { BRANCH_COCYTUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, -1, BFLAG_ISLANDED, 0,
       DNGN_ENTER_COCYTUS, NUM_FEATURES, // sentinel
       "Cocytus", "Cocytus", "Coc",
       NULL,
@@ -180,7 +180,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'X', true, true, 0 },
 
-    { BRANCH_TARTARUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 7, -1, BFLAG_ISLANDED, 0,
+    { BRANCH_TARTARUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, -1, BFLAG_ISLANDED, 0,
       DNGN_ENTER_TARTARUS, NUM_FEATURES, // sentinel
       "Tartarus", "Tartarus", "Tar",
       NULL,
@@ -189,7 +189,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'Y', true, true, 0 },
 
-    { BRANCH_HALL_OF_ZOT, BRANCH_MAIN_DUNGEON, 27, 27, 5, 27, BFLAG_HAS_ORB, 0,
+    { BRANCH_HALL_OF_ZOT, BRANCH_MAIN_DUNGEON, 18, 18, 3, 27, BFLAG_HAS_ORB, 0,
       DNGN_ENTER_ZOT, DNGN_RETURN_FROM_ZOT,
       "Zot", "the Realm of Zot", "Zot",
       NULL,
@@ -198,7 +198,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'Z', false, true, 0 },
 
-    { BRANCH_FOREST, BRANCH_MAIN_DUNGEON, 3, 6, 5, 7, 0, 0,
+    { BRANCH_FOREST, BRANCH_MAIN_DUNGEON, 3, 6, 3, 7, 0, 0,
       DNGN_ENTER_FOREST, DNGN_RETURN_FROM_FOREST,
       "Forest", "the Enchanted Forest", "Forest",
       NULL,
@@ -207,7 +207,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'F', false, true, 0 },
 
-    { BRANCH_SPIDER_NEST, BRANCH_LAIR, 3, 6, 5, 7, 0, 0,
+    { BRANCH_SPIDER_NEST, BRANCH_LAIR, 3, 6, 3, 7, 0, 0,
       DNGN_ENTER_SPIDER_NEST, DNGN_RETURN_FROM_SPIDER_NEST,
       "Spider Nest", "the Spider Nest", "Spider",
       NULL,

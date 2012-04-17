@@ -78,7 +78,7 @@ end
 }}
 
 # Basic sewer entries ##########################################
-default-depth: D:3-6
+default-depth: D:2-4
 
 NAME:   portal_sewer_entry_a
 TAGS:   uniq_sewer no_monster_gen mini_float chance_sewer

@@ -24,7 +24,7 @@ O
 ENDMAP
 
 ### Deep entry vaults to ziggurats ############################################
-default-depth: D:21-27
+default-depth: D:15-18
 
 NAME:   enter_ziggurat_a
 CHANCE: 5%
@@ -115,7 +115,7 @@ MAP
 ENDMAP
 
 ### Shallow entry vaults to ziggurats #########################################
-default-depth: D:3-20
+default-depth: D:2-14
 
 NAME:   enter_shallow_ziggurat_a
 CHANCE: 1%

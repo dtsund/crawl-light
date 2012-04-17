@@ -6,20 +6,20 @@
 ###############################################################################
 
 {{
-  -- Vault:8 common loot substitutions
-  function vault8_loot(e)
+  -- Vault:5 common loot substitutions
+  function vault5_loot(e)
     e.subst("? = | * .:40 ^:3")
     e.subst("| = | *:2")
     e.subst("* = * |:2")
   end
 
-  -- Vault:8 cross-vault rune subsitution
+  -- Vault:5 cross-vault rune subsitution
   -- Turn 'O' into a rune (if it doesn't exist yet) or a good item
-  function vault8_rune(e)
-    if dgn.map_by_tag("vault8_rune") then
-      e.subvault("O : vault8_rune")
+  function vault5_rune(e)
+    if dgn.map_by_tag("vault5_rune") then
+      e.subvault("O : vault5_rune")
     else
-      e.subvault("O : vault8_norune")
+      e.subvault("O : vault5_norune")
     end
   end
 
@@ -250,7 +250,7 @@ ENDMAP
 #
 NAME:   metal_show
 ORIENT: float
-DEPTH:  Vault:3-7
+DEPTH:  Vault:2-4
 TAGS:   no_secret_doors no_monster_gen no_item_gen no_wall_fixup
 COLOUR: M = magenta
 COLOUR: K = magenta
@@ -332,7 +332,7 @@ lua_marker('e', portal_desc { teleport_spot=1})
 lua_marker('m', portal_desc { teleport_spot=2})
 }}
 ORIENT:     float
-DEPTH:      Vault:3-7
+DEPTH:      Vault:2-4
 TAGS:       no_secret_doors no_monster_gen no_item_gen uniq_the_teleporter \
             patrolling
 COLOUR:     ME = yellow
@@ -356,7 +356,7 @@ MAP
 ENDMAP
 
 ###############################################################################
-# Vaults:8 last level of the vaults -- dungeon.cc will change all these 'x's
+# Vaults:5 last level of the vaults -- dungeon.cc will change all these 'x's
 ###############################################################################
 #
 # This map traditionally allows controlled teleports. Even with the now
@@ -365,34 +365,34 @@ ENDMAP
 # rune.
 #
 # Vaults:8 extensively uses subvaults. To provide another Vault:8 quadrant
-# variation, create a map tagged vault8_quadrant that is 27x24. It should
+# variation, create a map tagged vault5_quadrant that is 27x24. It should
 # have three blank cells on one corner (see any existing quadrant for an
 # example), which will be used to orient that corner towards the middle of
 # the map. Each quadrant must be capable of generating a rune, which
-# should be done by placing an 'O' glyph and calling vault8_rune(_G).
+# should be done by placing an 'O' glyph and calling vault5_rune(_G).
 #
 # There is a lot of variance among the possible quadrants but we do ensure
 # that (exactly) one quadrant with rich loot is generated. Those are tagged
-# vault8_quadrant_prize and come in their own section below.
+# vault5_quadrant_prize and come in their own section below.
 
 #############################################################
-# The main vault for Vault:8.
+# The main vault for Vault:5.
 #
 NAME:     vaults_vault
-PLACE:    Vault:8
+PLACE:    Vault:5
 ORIENT:   encompass
 TAGS:     no_rotate no_dump
 SHUFFLE:  ABCD
 : if crawl.one_chance_in(36) then
-SUBVAULT: A : vault8_quadrant_prize_mall
-SUBVAULT: B : vault8_quadrant_mall
-SUBVAULT: C : vault8_quadrant_mall
-SUBVAULT: D : vault8_quadrant_mall
+SUBVAULT: A : vault5_quadrant_prize_mall
+SUBVAULT: B : vault5_quadrant_mall
+SUBVAULT: C : vault5_quadrant_mall
+SUBVAULT: D : vault5_quadrant_mall
 : else
-SUBVAULT: A : vault8_quadrant_prize
-SUBVAULT: B : vault8_quadrant
-SUBVAULT: C : vault8_quadrant
-SUBVAULT: D : vault8_quadrant
+SUBVAULT: A : vault5_quadrant_prize
+SUBVAULT: B : vault5_quadrant
+SUBVAULT: C : vault5_quadrant
+SUBVAULT: D : vault5_quadrant
 :end
 SUBST:    ABCD = .
 MONS: vault guard
@@ -470,12 +470,12 @@ ENDMAP
 
 
 ############################################################
-# Vault:8 - the subvault used to place the rune.
+# Vault:5 - the subvault used to place the rune.
 #
-# Used by the 'vault8_rune()' function in the prelude.
+# Used by the 'vault5_rune()' function in the prelude.
 #
-NAME:  vault8_rune
-TAGS:  vault8_rune
+NAME:  vault5_rune
+TAGS:  vault5_rune
 KMONS: O = 8 / 9
 KITEM: O = silver rune of Zot
 MAP
@@ -483,13 +483,13 @@ O
 ENDMAP
 
 ############################################################
-# Vault:8 - the subvault used for potential rune locations that do not
+# Vault:5 - the subvault used for potential rune locations that do not
 # contain the real rune.
 #
-# Used by the 'vault8_rune()' function in the prelude.
+# Used by the 'vault5_rune()' function in the prelude.
 #
-NAME:  vault8_norune
-TAGS:  vault8_norune allow_dup
+NAME:  vault5_norune
+TAGS:  vault5_norune allow_dup
 KMONS: o = 8 / 9
 : if crawl.random2(13) == 12 then
 KFEAT:   o = any shop
@@ -506,13 +506,13 @@ ENDMAP
 
 ############################################################
 # about 2 |
-NAME: vault8_classical_cross
-TAGS: vault8_quadrant
+NAME: vault5_classical_cross
+TAGS: vault5_quadrant
 NSUBST:  U = 1:. / *:xxxx=
 NSUBST:  V = 1:. / *:xxxx=
 SUBST:   - = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -541,14 +541,14 @@ ENDMAP
 
 ############################################################
 # about 4 |
-NAME:    vault8_classical_diamond
-TAGS:    vault8_quadrant
+NAME:    vault5_classical_diamond
+TAGS:    vault5_quadrant
 SHUFFLE: !_
 SUBST:   ! = | * .:20
 SUBST:   _ = 8 9 .:20
 SUBST:   a : x .
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxx.a
 xx!x.x.x!x.x.x.x.x.x.x.x.a
@@ -577,16 +577,16 @@ ENDMAP
 
 ############################################################
 # about 5 |
-NAME: vault8_classical_stripes
-TAGS: vault8_quadrant
+NAME: vault5_classical_stripes
+TAGS: vault5_quadrant
 # double use of Y=Y. and Z=Z. for decreasing variance
 SUBST:   Y = Y ., Z = Z .
 SUBST:   Y = Y ., Z = Z .
 SUBST:   Y = 9:30 8:10 .:40
 SUBST:   Z = 9:10 8:30 .:40
 SUBST:   a : x .
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
   axaxxaaxaxxxxxxxxxxxxxxxx
  .......................??x
@@ -615,13 +615,13 @@ ENDMAP
 
 ############################################################
 # about 4 |
-NAME:   vault8_mu_clover
-TAGS:   vault8_quadrant
+NAME:   vault5_mu_clover
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
 NSUBST: ? = 1:O / *:*
 NSUBST: " = 1:. / *:x
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
   xxxxxxxxxxxxxxxxxxxxxxxxx
  .........................x
@@ -650,11 +650,11 @@ ENDMAP
 
 ############################################################
 # about 8 |
-NAME:   vault8_mu_not_diamond
-TAGS:   vault8_quadrant
+NAME:   vault5_mu_not_diamond
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 *:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xx.x9x.x.x.x.x.x.x.x.x.x..
@@ -683,8 +683,8 @@ ENDMAP
 
 ############################################################
 # about 11 |
-NAME:    vault8_mu_boxes
-TAGS:    vault8_quadrant
+NAME:    vault5_mu_boxes
+TAGS:    vault5_quadrant
 NSUBST:  a = 1:+ / *:x
 NSUBST:  b = 1:+ / *:x
 NSUBST:  c = 1:+ / *:x
@@ -699,8 +699,8 @@ SUBST:   E = |
 SUBST:   F = *
 NSUBST:  G = 1:O / *:9
 SUBST:   9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x.........................x
@@ -729,14 +729,14 @@ ENDMAP
 
 ############################################################
 # about 8 |
-NAME:   vault8_mu_long
-TAGS:   vault8_quadrant
+NAME:   vault5_mu_long
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:10
 NSUBST: $ = 1:O / *:$
 SUBST:  $ = |**$
 SUBST:  a = x.
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxa
 x.........................
@@ -765,13 +765,13 @@ ENDMAP
 
 ############################################################
 # 19 *, 14 monsters
-NAME:   vault8_minmay_circular_pillars
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_circular_pillars
+TAGS:   vault5_quadrant
 NSUBST: a = 1:+ / *:x, b = 1:+ / *:x, c = 1:+ / *:x, d = 1:+ / *:x
 NSUBST: O = 1:O / *:*
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxx9..9xxxx9...9xxxx9.....
@@ -800,11 +800,11 @@ ENDMAP
 
 ############################################################
 # 20 *, 12 monsters
-NAME:   vault8_minmay_hexagonal
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_hexagonal
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxx9............9.....
@@ -833,11 +833,11 @@ ENDMAP
 
 ############################################################
 # 15 *, 10 monsters
-NAME:  vault8_minmay_subdivision
-TAGS:  vault8_quadrant
+NAME:  vault5_minmay_subdivision
+TAGS:  vault5_quadrant
 SUBST: 9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x*....x....*xxx*....x.....
@@ -866,11 +866,11 @@ ENDMAP
 
 ############################################################
 # 14 *, 8 monsters
-NAME:   vault8_minmay_triangle_fans
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_triangle_fans
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxx.....9xxxx.....9xxxx.
@@ -899,11 +899,11 @@ ENDMAP
 
 ############################################################
 # 8 |, 11 monsters
-NAME:   vault8_minmay_pillar_box
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_pillar_box
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x.........................x
@@ -932,11 +932,11 @@ ENDMAP
 
 ############################################################
 # 20 *, 15 monsters
-NAME:   vault8_minmay_partial_spiral
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_partial_spiral
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x.........................x
@@ -965,12 +965,12 @@ ENDMAP
 
 ############################################################
 # 2 |, 18 *, 16 monsters
-NAME:   vault8_minmay_grid2
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_grid2
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:|
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xO.xx**xx**xx**xx**xx**xxOx
@@ -999,12 +999,12 @@ ENDMAP
 
 ############################################################
 # 2 |, 15 *, 14 monsters
-NAME:   vault8_minmay_pluses
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_pluses
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:|
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x.....x......x......x.....
@@ -1033,11 +1033,11 @@ ENDMAP
 
 ############################################################
 # 14 *, 9 monsters
-NAME:   vault8_minmay_broken_diamonds
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_broken_diamonds
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x..xx....9xx...xx9....xx..
@@ -1066,12 +1066,12 @@ ENDMAP
 
 ############################################################
 # 17 *, 10 monsters
-NAME:   vault8_minmay_smooth_crossroads
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_smooth_crossroads
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:*
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x9...*Ox9.....9x9........9
@@ -1100,11 +1100,11 @@ ENDMAP
 
 ############################################################
 # 14 *, 10 monsters
-NAME:   vault8_minmay_diagonal_split
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_diagonal_split
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x9xxx9.......x9...........
@@ -1133,13 +1133,13 @@ ENDMAP
 
 ############################################################
 # 82 $, 16 monsters
-NAME:    vault8_minmay_loops
-TAGS:    vault8_quadrant vault8_quadrant_mall
+NAME:    vault5_minmay_loops
+TAGS:    vault5_quadrant vault5_quadrant_mall
 SHUFFLE: ae / bf / cg / dh
 SUBST:   a = +, e = ., bcdfgh = x
 SUBST:   9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxx$$$$$$$$$xxxxx...
@@ -1168,8 +1168,8 @@ ENDMAP
 
 ############################################################
 # One shop, 16 monsters
-NAME:    vault8_dpeg_shops1
-TAGS:    vault8_quadrant vault8_quadrant_mall
+NAME:    vault5_dpeg_shops1
+TAGS:    vault5_quadrant vault5_quadrant_mall
 KFEAT:   S = any shop
 : if crawl.one_chance_in(4) then
 SUBST:   A = +, a = ., CD = x
@@ -1178,8 +1178,8 @@ SHUFFLE: CD
 SUBST:   C = ., DAa = x
 : end
 SUBST:   9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxx.....xxxx....
@@ -1209,8 +1209,8 @@ ENDMAP
 ############################################################
 # Consumable shops (scrolls, potions, food).
 # Monsters in rooms.
-NAME:    vault8_dpeg_shops2
-TAGS:    vault8_quadrant vault8_quadrant_mall
+NAME:    vault5_dpeg_shops2
+TAGS:    vault5_quadrant vault5_quadrant_mall
 NSUBST:  A = 1:+ / *:x+
 NSUBST:  B = 1:+ / *:x+
 NSUBST:  C = 1:+ / *:x+
@@ -1219,8 +1219,8 @@ KFEAT:   S = scroll shop / distillery shop / food shop
 NSUBST:  ' = 20:9 / *:.
 NSUBST:  . = 5:9 / *:.
 SUBST:   9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x.........................
@@ -1249,12 +1249,12 @@ ENDMAP
 
 ############################################################
 # 20 *, 20 monsters
-NAME:   vault8_minmay_plus_grid
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_plus_grid
+TAGS:   vault5_quadrant
 NSUBST: * = 1:O / *:*
 SUBST:  * = 9 8 *:20 .
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xxxx.x.*.x.xxx.x.*.x.xxx..
@@ -1283,12 +1283,12 @@ ENDMAP
 
 ############################################################
 # 14 *, 12 monsters
-NAME:   vault8_minmay_curved1
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_curved1
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:*
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x.................xxxxxx..
@@ -1317,11 +1317,11 @@ ENDMAP
 
 ############################################################
 # 18 *, 20 monsters
-NAME:   vault8_minmay_broken_lines
-TAGS:   vault8_quadrant
+NAME:   vault5_minmay_broken_lines
+TAGS:   vault5_quadrant
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x.9.x.x.x.x.x.x.x.9.x.x...
@@ -1350,17 +1350,17 @@ ENDMAP
 
 
 ###############################################################################
-# Vaults:8 prize quadrants
+# Vaults:5 prize quadrants
 ###############################################################################
 
 ############################################################
 # 11 |, 12 *, 15 monsters
-NAME:   vault8_minmay_curved2
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_minmay_curved2
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:|
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x......x|**.....9xxx......
@@ -1389,12 +1389,12 @@ ENDMAP
 
 ############################################################
 # 31 *, 18 $, 20 monsters
-NAME:    vault8_minmay_connected_circles
-TAGS:    vault8_quadrant_prize
+NAME:    vault5_minmay_connected_circles
+TAGS:    vault5_quadrant_prize
 SUBST:   9 = 8 9 .:20
 NSUBST:  * = 1:O / *:*
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xx$9$xxxxxx.9xxxxxxxxxxxx.
@@ -1423,12 +1423,12 @@ ENDMAP
 
 ############################################################
 # 3 |, 24 *, 18 monsters
-NAME:   vault8_minmay_x
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_minmay_x
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:20
 NSUBST: O = 1:O / *:|
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
   xxxxxxxxxxxxxxxxxxxxxxxxx
  .........................x
@@ -1457,11 +1457,11 @@ ENDMAP
 
 ############################################################
 # 8 |, 20 *, 16 monsters
-NAME:   vault8_minmay_split_x
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_minmay_split_x
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxx
 xx9......9xxxxxxx9........
@@ -1490,11 +1490,11 @@ ENDMAP
 
 ############################################################
 # 18 |, 12 *, 21 monsters
-NAME:   vault8_minmay_slanted
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_minmay_slanted
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xO|||||||||.....9.....xxxxx
@@ -1523,13 +1523,13 @@ ENDMAP
 
 ############################################################
 # 16 |, 14 *, 20 monsters
-NAME:    vault8_minmay_not_circular
-TAGS:    vault8_quadrant_prize
+NAME:    vault5_minmay_not_circular
+TAGS:    vault5_quadrant_prize
 SHUFFLE: abcd
 SUBST:   a : ., b : x .:1, c : x .:1, d : x .:1
 SUBST:   9 = 8 9 .:20
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
   xxxxxxxxxxxxxxxxxxxxxxxxx
  .................xxxxxxxxx
@@ -1558,14 +1558,14 @@ ENDMAP
 
 ############################################################
 # about 25 |
-NAME:   vault8_mu_corners
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_mu_corners
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:10
 NSUBST: $ = 1:O / *:$
 SUBST:  $ = | *:20 $
 SUBST:  a = x.
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x$$$$x.......x99...x..$$$$x
@@ -1594,8 +1594,8 @@ ENDMAP
 
 ############################################################
 # about 21 |
-NAME:   vault8_mu_flips
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_mu_flips
+TAGS:   vault5_quadrant_prize
 NSUBST: ; = 3:l / 3:z / 3:A / *:.
 SUBST:  9 = 8 9
 SUBST:  $ = | * $
@@ -1604,8 +1604,8 @@ KFEAT:  z = zot trap
 KFEAT:  A = alarm trap
 SUBST:  s = x:250 =:1
 SUBST:  a = x.
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x999......................x
@@ -1634,16 +1634,16 @@ ENDMAP
 
 ############################################################
 # about 21 |
-NAME:   vault8_mu_construction
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_mu_construction
+TAGS:   vault5_quadrant_prize
 NSUBST: $ = 1:O / *:$
 SUBST:  $ = |*$.
 SUBST:  c = xn9.
 SUBST:  9 = 8 9 .
 NSUBST: D = 1:+ / *:x
 SUBST:  a = xn..
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
   axxxxxxxxxxxxxxxxxxxxxxxx
  ..c.c.c.c.c.c.c.c.c.c.c.cx
@@ -1672,14 +1672,14 @@ ENDMAP
 
 ############################################################
 # about 19 |
-NAME:   vault8_mu_triangles
-TAGS:   vault8_quadrant_prize
+NAME:   vault5_mu_triangles
+TAGS:   vault5_quadrant_prize
 SUBST:  9 = 8 9 .:20
 NSUBST: ? = 1:O / *:|
 SUBST:  " = =:1 x:99
 SUBST:  ! = x:20 .
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 x.........................x
@@ -1709,8 +1709,8 @@ ENDMAP
 ############################################################
 # Two guaranteed good shops. Perhaps more shops.
 # Almost all monsters are in the rooms.
-NAME:    vault8_dpeg_mall
-TAGS:    vault8_quadrant_prize vault8_quadrant_prize_mall
+NAME:    vault5_dpeg_mall
+TAGS:    vault5_quadrant_prize vault5_quadrant_prize_mall
 SHUFFLE: AB, CD
 SUBST:   A=+, B:xx+, C:xxx+, D:xxxx+
 NSUBST:  S = 2:S / 1:O / *:RRU9
@@ -1721,8 +1721,8 @@ NSUBST:  ' = 22:9 / *:.
 NSUBST:  . = 2:9 / *:.
 SUBST:   9 = 8 9
 SUBST:   a : x.
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxx'''x...........x
@@ -1750,25 +1750,25 @@ xxxxxxxxxxxxxxxxxxxxxxxaa
 ENDMAP
 
 ############################################################
-# Vault:8 - Rooms Quadrant
+# Vault:5 - Rooms Quadrant
 #
 # This quadrant uses a subvault for each room. Any subvault tagged
-# vault8_room_rune should be guaranteed to provide a rune. Any subvault
-# tagged vault8_room should just provide loot. Note that the rooms
+# vault5_room_rune should be guaranteed to provide a rune. Any subvault
+# tagged vault5_room should just provide loot. Note that the rooms
 # are not all the same sizes.
 #
 # about 24 |
-NAME:     vault8_classical_rooms
-TAGS:     vault8_quadrant_prize
+NAME:     vault5_classical_rooms
+TAGS:     vault5_quadrant_prize
 SHUFFLE:  AC/BD, EG/FH, IKN/MJL
 SUBST:    A=., B=xx=, C=+, D=x, E=+, F=xx=, G=., H=x
 SUBST:    I=., M=xx=, J=x, K=+, N=+, L=xx=
 SUBST:    a:x.
 SHUFFLE:  VXYZ
-SUBVAULT: V : vault8_room_rune
-SUBVAULT: X : vault8_room
-SUBVAULT: Y : vault8_room
-SUBVAULT: Z : vault8_room
+SUBVAULT: V : vault5_room_rune
+SUBVAULT: X : vault5_room
+SUBVAULT: Y : vault5_room
+SUBVAULT: Z : vault5_room
 SUBST:    VXYZ = .
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1796,20 +1796,20 @@ x...........H..B..........
 xxxxxxxxxxxxxxxxxxxxxxxxa
 ENDMAP
 
-# Vault:8 - Rooms Quadrant - Traps and Loot Subvault
+# Vault:5 - Rooms Quadrant - Traps and Loot Subvault
 #           Replace each square with traps or loot, but mostly floor.
-NAME: vault8_room_traps_and_loot
-TAGS: vault8_room
+NAME: vault5_room_traps_and_loot
+TAGS: vault5_room
 : default_subvault_glyphs()
 SUBST: . = ?
-: vault8_loot(_G)
+: vault5_loot(_G)
 MAP
 ENDMAP
 
 # Vault:8 - Rooms Quadrant - Border Subvault
 #           Fill the room with loot, but leave an empty border.
-NAME: vault8_room_border
-TAGS: vault8_room
+NAME: vault5_room_border
+TAGS: vault5_room
 {{
     default_subvault_glyphs()
     local w, h = subvault_size()
@@ -1825,14 +1825,14 @@ TAGS: vault8_room
       end
     end
 }}
-: vault8_loot(_G)
+: vault5_loot(_G)
 MAP
 ENDMAP
 
-# Vault:8 - Rooms Quadrant - Diamond Subvault
+# Vault:5 - Rooms Quadrant - Diamond Subvault
 #           Fill the room with money in a diamond pattern.
-NAME: vault8_room_diamond
-TAGS: vault8_room
+NAME: vault5_room_diamond
+TAGS: vault5_room
 {{
     default_subvault_glyphs()
     local w, h = subvault_size()
@@ -1846,17 +1846,17 @@ TAGS: vault8_room
       end
     end
 }}
-: vault8_loot(_G)
+: vault5_loot(_G)
 MAP
 ENDMAP
 
-# Vault:8 - Rooms Quadrant - Rune Subvault
+# Vault:5 - Rooms Quadrant - Rune Subvault
 #           Potentially contains the rune.
-NAME: vault8_room_rune
-TAGS: vault8_room_rune
+NAME: vault5_room_rune
+TAGS: vault5_room_rune
 SUBST: ^ = ^.
-: vault8_loot(_G)
-: vault8_rune(_G)
+: vault5_loot(_G)
+: vault5_rune(_G)
 MAP
 ......
 .^^^^.

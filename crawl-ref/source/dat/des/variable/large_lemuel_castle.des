@@ -28,7 +28,7 @@ function castle_lemuel_subvault_setup(e)
          e.ftile("= = floor_cobble_blood")
          e.kfeat(", = floor")
          e.kfeat("m = iron_grate")
-	 if you.absdepth() < 7 then
+	 if you.absdepth() < 4 then
             e.subst("*=*.")
             e.subst("*=$")
             e.subst("|=*")
@@ -39,7 +39,7 @@ function castle_lemuel_subvault_setup(e)
             e.mons("jackal")
             e.mons("gnoll")
             e.mons("jackal")
-         elseif you.absdepth() < 16 then
+         elseif you.absdepth() < 11 then
             e.subst("*:*$")
             e.subst("|:*$")
             e.mons("orc");
@@ -48,7 +48,7 @@ function castle_lemuel_subvault_setup(e)
             e.mons("warg")
             e.mons("orc")
             e.mons("warg") 
-         elseif you.absdepth() < 25 then
+         elseif you.absdepth() < 17 then
             e.subst("*:*$")
             e.subst("|=|.")
             e.mons("deep elf soldier / deep elf fighter")
@@ -163,7 +163,7 @@ ENDMAP
 
 ############################################################################
 NAME:     lemuel_castle_with_subvaults
-DEPTH:    D:3-27
+DEPTH:    D:2-18
 ORIENT:   northwest
 : castle_lemuel_subvault_setup(_G)
 SUBVAULT: A : lemuel_castle_interior

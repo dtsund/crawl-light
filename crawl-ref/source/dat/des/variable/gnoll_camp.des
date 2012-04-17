@@ -28,7 +28,7 @@ end
 # range, so the serial vault itself is probably fairly rare.
 
 NAME:   serial_gnoll_camp
-DEPTH:  D:5-10
+DEPTH:  D:3-7
 TAGS:   layout_open layout_caves layout_cross
 CHANCE: 10%
 {{
