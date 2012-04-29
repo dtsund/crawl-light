@@ -3,6 +3,40 @@
  * @brief Functions used when placing monsters in the dungeon.
 **/
 
+/*
+    When placing random monsters on a level:
+    
+    Start in dungeon.cc, with the _builder_monsters function.  That calls 
+    place_monster in mon-place.cc, passing in the level number as mg.power.
+    This is not to be confused with mons_place.  Yeah.
+    
+    place_monster calls _resolve_monster_type, with mg.type being
+    RANDOM_MONSTER or somesuch. It's also given a value of chose_ood_monster
+    as false.
+    
+    _resolve_monster_type, after buggering for nearby stairs, calls 
+    pick_random_monster.  Current floor is still passed in as power.
+    
+    pick_random_monster, in cases we usually don't care about, calls
+    _resolve_monster_type.  Normally (main dungeon) it goes something like this:
+    
+    First, decide whether the monster should be out of depth.  Never at
+    difficulty 0.  Otherwise, _fuzz_mons_level fuzzes the level upward about
+    14% of the time.  This adjusts the value of lev_mons, originally equal to
+    the dungeon level.
+    
+    Then, call _find_valid_monster_types with the current place (NOT 
+    lev_mons) as the argument, storing the result as a vector of monster_type.
+    
+        _find_valid_monster_types basically returns a list of all monsters 
+        that can theoretically be generated at the current location, with the
+        criterion being rarity > 0 for current branch.
+
+    For 10000 tries, pick one from that list.  Roll 2d100 and average them.
+    If the result is below the monster's rarity (for that branch) and the 
+    monster depth is within 3 of the value of lev_mons, keep it.
+*/
+
 #include "AppHdr.h"
 
 #include <algorithm>
@@ -304,7 +338,7 @@ static int _fuzz_mons_level(int level)
             _scale_spawn_parameter(140, 1000, 1000, 3000, 4800),
             1000))
     {
-        const int fuzzspan = 5;
+        const int fuzzspan = 3;
         const int fuzz = std::max(0, random_range(-fuzzspan, fuzzspan, 2));
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -563,7 +597,7 @@ monster_type pick_random_monster(const level_id &place, int power,
 
     // OODs do not apply to the Abyss, Pan, etc.
     // They also don't apply for players at the easiest level.
-    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 27 && you.difficulty_level != 0)
+    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 18 && you.difficulty_level != 0)
     {
         // Apply moderate OOD fuzz where appropriate.
         lev_mons = _fuzz_mons_level(lev_mons);
@@ -571,12 +605,12 @@ monster_type pick_random_monster(const level_id &place, int power,
         // Potentially nasty surprise, but very rare.
         if (_need_super_ood(lev_mons))
         {
-            const int new_level = lev_mons + random2avg(27, 2);
+            const int new_level = lev_mons + random2avg(18, 2);
             dprf("Super OOD roll: Old: %d, New: %d", lev_mons, new_level);
             lev_mons = new_level;
         }
 
-        lev_mons = std::min(30, lev_mons);
+        lev_mons = std::min(20, lev_mons);
     }
 
     // Abyss or Pandemonium. Almost never called from Pan; probably only
@@ -615,7 +649,7 @@ monster_type pick_random_monster(const level_id &place, int power,
     {
         int level = 0, diff, chance;
 
-        lev_mons = std::min(30, lev_mons);
+        lev_mons = std::min(20, lev_mons);
 
         const int n_pick_tries   = 10000;
         const int n_relax_margin = n_pick_tries / 10;
@@ -647,7 +681,7 @@ monster_type pick_random_monster(const level_id &place, int power,
 
             // If we're running low on tries, remove level restrictions.
             if ((monster_pick_tries < n_relax_margin
-                 || std::abs(lev_mons - level) <= 5)
+                 || std::abs(lev_mons - level) <= 3)
                 && random2avg(100, 2) <= chance)
             {
                 break;

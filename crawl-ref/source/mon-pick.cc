@@ -482,12 +482,12 @@ int mons_standard_level(int mcls)
     case MONS_GIANT_COCKROACH:
     case MONS_OOZE:
     case MONS_SMALL_SNAKE:
-        return 2;
+        return 1;
 
     case MONS_MEGABAT:
     case MONS_KOBOLD:
     case MONS_RAT:
-        return 4;
+        return 2;
 
     case MONS_GIANT_GECKO:
     case MONS_GIANT_MITE:
@@ -495,16 +495,16 @@ int mons_standard_level(int mcls)
     case MONS_HOBGOBLIN:
     case MONS_JACKAL:
     case MONS_KILLER_BEE_LARVA:
-        return 5;
+        return 3;
 
     case MONS_WORM:
     case MONS_SNAKE:
     case MONS_QUOKKA:
-        return 6;
+        return 4;
 
     case MONS_ORC:
     case MONS_ORC_PRIEST:
-        return 7;
+        return 4;
 
     case MONS_FUNGUS:
     case MONS_WORKER_ANT:
@@ -516,7 +516,7 @@ int mons_standard_level(int mcls)
     case MONS_PHANTOM:
     case MONS_SCORPION:
     case MONS_SKELETON_SMALL:
-        return 8;
+        return 5;
 
     case MONS_WATER_MOCCASIN:
     case MONS_CENTAUR:
@@ -527,7 +527,7 @@ int mons_standard_level(int mcls)
     case MONS_QUASIT:
     case MONS_ZOMBIE_SMALL:
     case MONS_SKY_BEAST:
-        return 9;
+        return 6;
 
     case MONS_DEEP_ELF_SOLDIER:
     case MONS_GOLIATH_BEETLE:
@@ -537,7 +537,7 @@ int mons_standard_level(int mcls)
     case MONS_ORC_WARRIOR:
     case MONS_STEAM_DRAGON:
     case MONS_WIGHT:
-        return 10;
+        return 7;
 
     case MONS_CROCODILE:
     case MONS_HIPPOGRIFF:
@@ -545,7 +545,7 @@ int mons_standard_level(int mcls)
     case MONS_KILLER_BEE:
     case MONS_SHADOW:
     case MONS_YELLOW_WASP:
-        return 11;
+        return 7;
 
     case MONS_EYE_OF_DRAINING:
     case MONS_GILA_MONSTER:
@@ -558,7 +558,7 @@ int mons_standard_level(int mcls)
     case MONS_POTION_MIMIC:
     case MONS_SCROLL_MIMIC:
     case MONS_WEAPON_MIMIC:
-        return 12;
+        return 8;
 
     case MONS_BIG_KOBOLD:
     case MONS_GIANT_TOAD:
@@ -568,7 +568,7 @@ int mons_standard_level(int mcls)
     case MONS_TWO_HEADED_OGRE:
     case MONS_WOOD_GOLEM:
     case MONS_YAK:
-        return 13;
+        return 9;
 
     case MONS_HILL_GIANT:
     case MONS_KOMODO_DRAGON:
@@ -577,7 +577,7 @@ int mons_standard_level(int mcls)
     case MONS_WRAITH:
     case MONS_UNSEEN_HORROR:
     case MONS_TRAPDOOR_SPIDER:
-        return 14;
+        return 10;
 
     case MONS_BRAIN_WORM:
     case MONS_CYCLOPS:
@@ -591,7 +591,7 @@ int mons_standard_level(int mcls)
     case MONS_STAIR_MIMIC:
     case MONS_SHOP_MIMIC:
     case MONS_FOUNTAIN_MIMIC:
-        return 15;
+        return 10;
 
     case MONS_BLINK_FROG:
     case MONS_BUTTERFLY:
@@ -603,7 +603,7 @@ int mons_standard_level(int mcls)
     case MONS_VAMPIRE:
     case MONS_WANDERING_MUSHROOM:
     case MONS_ZOMBIE_LARGE:
-        return 16;
+        return 11;
 
     case MONS_BOGGART:
     case MONS_CENTAUR_WARRIOR:
@@ -615,14 +615,14 @@ int mons_standard_level(int mcls)
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
     case MONS_ROCK_WORM:
-        return 17;
+        return 11;
 
     case MONS_DRAGON:
     case MONS_GARGOYLE:
     case MONS_GIANT_AMOEBA:
     case MONS_KOBOLD_DEMONOLOGIST:
     case MONS_SKELETON_LARGE: // Higher than actual threat level so that they will still show up in The Vaults
-        return 18;
+        return 12;
 
     case MONS_GIANT_SLUG:
     case MONS_IRON_GOLEM:
@@ -630,7 +630,7 @@ int mons_standard_level(int mcls)
     case MONS_ROCK_TROLL:
     case MONS_TOENAIL_GOLEM:
     case MONS_YAKTAUR:
-        return 19;
+        return 13;
 
     case MONS_AIR_ELEMENTAL:
     case MONS_DEEP_ELF_FIGHTER:
@@ -654,12 +654,12 @@ int mons_standard_level(int mcls)
     case MONS_VERY_UGLY_THING:
     case MONS_HARPY:
     case MONS_FIRE_CRAB:
-        return 20;
+        return 13;
 
     case MONS_BOULDER_BEETLE:
     case MONS_ORC_HIGH_PRIEST:
     case MONS_PULSATING_LUMP:
-        return 21;
+        return 14;
 
     case MONS_BORING_BEETLE:
     case MONS_CRYSTAL_GOLEM:
@@ -668,17 +668,17 @@ int mons_standard_level(int mcls)
     case MONS_REDBACK:
     case MONS_SPHINX:
     case MONS_VAPOUR:
-        return 22;
+        return 15;
 
     case MONS_ORC_SORCERER:
     case MONS_SHINING_EYE:
-        return 23;
+        return 15;
 
     case MONS_BUMBLEBEE:
     case MONS_ORC_WARLORD:
     case MONS_IRON_TROLL:
     case MONS_YAKTAUR_CAPTAIN:
-        return 24;
+        return 16;
 
     case MONS_DANCING_WEAPON:
     case MONS_DEEP_TROLL:
@@ -689,17 +689,17 @@ int mons_standard_level(int mcls)
     case MONS_LICH:
     case MONS_STONE_GIANT:
     case MONS_ETTIN:
-        return 25;
+        return 17;
 
     case MONS_DEEP_ELF_CONJURER:
     case MONS_PHANTASMAL_WARRIOR:
     case MONS_STORM_DRAGON:
-        return 26;
+        return 17;
 
     case MONS_DEEP_ELF_PRIEST:
     case MONS_GLOWING_SHAPESHIFTER:
     case MONS_TENTACLED_MONSTROSITY:
-        return 27;
+        return 18;
 
     case MONS_ANCIENT_LICH:
     case MONS_BONE_DRAGON:
@@ -713,11 +713,11 @@ int mons_standard_level(int mcls)
     case MONS_QUICKSILVER_DRAGON:
     case MONS_SHADOW_DRAGON:
     case MONS_TITAN:
-        return 30;
+        return 20;
 
     case MONS_DEEP_ELF_BLADEMASTER:
     case MONS_DEEP_ELF_MASTER_ARCHER:
-        return 33;
+        return 22;
 
     case MONS_BIG_FISH:
     case MONS_ELECTRIC_EEL:
@@ -731,7 +731,7 @@ int mons_standard_level(int mcls)
         return 500;
 
     default:
-        return 99;
+        return 66;
     }
 }
 
@@ -1083,7 +1083,7 @@ int mons_mineorc_level(int mcls)
     case MONS_WARG:
     case MONS_ORC_KNIGHT:
     case MONS_ORC_WIZARD:
-        mlev += 2;
+        mlev += 1;
         break;
 
     case MONS_CYCLOPS:
@@ -1097,7 +1097,7 @@ int mons_mineorc_level(int mcls)
     case MONS_TROLL:
     case MONS_TWO_HEADED_OGRE:
     case MONS_ETTIN:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_FUNGUS:
@@ -1177,19 +1177,19 @@ int mons_hallelf_level(int mcls)
     case MONS_DEEP_ELF_CONJURER:
     case MONS_SHAPESHIFTER:
     case MONS_ORC_KNIGHT:
-        mlev += 1;
+        mlev += 0;
         break;
 
     case MONS_ORC_SORCERER:
     case MONS_DEEP_ELF_PRIEST:
     case MONS_GLOWING_SHAPESHIFTER:
     case MONS_DEEP_ELF_KNIGHT:
-        mlev += 2;
+        mlev += 1;
         break;
 
     case MONS_ORC_PRIEST:
     case MONS_ORC_HIGH_PRIEST:
-        mlev += 3;
+        mlev += 1;
         break;
 
     case MONS_DEEP_ELF_HIGH_PRIEST:
@@ -1197,12 +1197,12 @@ int mons_hallelf_level(int mcls)
     case MONS_DEEP_ELF_ANNIHILATOR:
     case MONS_DEEP_ELF_SORCERER:
     case MONS_DEEP_ELF_DEATH_MAGE:
-        mlev += 5;
+        mlev += 2;
         break;
 
     case MONS_DEEP_ELF_BLADEMASTER:
     case MONS_DEEP_ELF_MASTER_ARCHER:
-        mlev += 8;
+        mlev += 5;
         break;
 
     default:
@@ -1309,7 +1309,7 @@ int mons_lair_level(int mcls)
     case MONS_GREEN_RAT:
     case MONS_SCORPION:
     case MONS_SNAKE:
-        mlev += 2;
+        mlev += 1;
         break;
 
     case MONS_WATER_MOCCASIN:
@@ -1321,7 +1321,7 @@ int mons_lair_level(int mcls)
     case MONS_SPINY_FROG:
     case MONS_WAR_DOG:
     case MONS_YELLOW_WASP:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_BLINK_FROG:
@@ -1334,7 +1334,7 @@ int mons_lair_level(int mcls)
     case MONS_WOLF_SPIDER:
     case MONS_YAK:
     case MONS_GRIZZLY_BEAR:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_BLACK_MAMBA:
@@ -1346,7 +1346,7 @@ int mons_lair_level(int mcls)
     case MONS_WYVERN:
     case MONS_TRAPDOOR_SPIDER:
     case MONS_ROCK_WORM:
-        mlev += 5;
+        mlev += 4;
         break;
 
     case MONS_ELEPHANT_SLUG:
@@ -1356,7 +1356,7 @@ int mons_lair_level(int mcls)
     case MONS_REDBACK:
     case MONS_WANDERING_MUSHROOM:
     case MONS_ELEPHANT:
-        mlev += 6;
+        mlev += 4;
         break;
 
     case MONS_BORING_BEETLE:
@@ -1365,7 +1365,7 @@ int mons_lair_level(int mcls)
     case MONS_SPINY_WORM:
     case MONS_STAIR_MIMIC:
     case MONS_FIRE_CRAB:
-        mlev += 7;
+        mlev += 5;
         break;
 
     default:
@@ -1548,7 +1548,7 @@ int mons_swamp_level(int mcls)
     case MONS_SWAMP_DRAGON:
     // case MONS_PORTAL_MIMIC:
     case MONS_UGLY_THING:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_BLINK_FROG:
@@ -1556,7 +1556,7 @@ int mons_swamp_level(int mcls)
     case MONS_VERY_UGLY_THING:
     case MONS_VAPOUR:
     case MONS_TENTACLED_MONSTROSITY:
-        mlev += 4;
+        mlev += 3;
         break;
 
     default:
@@ -1683,13 +1683,13 @@ int mons_shoals_level(int mcls)
     case MONS_OKLOB_PLANT:
     case MONS_SHARK:
     case MONS_KRAKEN:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_ALLIGATOR_SNAPPING_TURTLE:
     case MONS_MERFOLK_AQUAMANCER:
     // case MONS_PORTAL_MIMIC:
-        mlev += 4;
+        mlev += 3;
         break;
 
     default:
@@ -1767,16 +1767,16 @@ int mons_pitsnake_level(int mcls)
 
     case MONS_NAGA_WARRIOR:
     case MONS_NAGA_MAGE:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_GUARDIAN_SERPENT:
-        mlev += 4;
+        mlev += 2;
         break;
 
     case MONS_GREATER_NAGA:
     // case MONS_PORTAL_MIMIC:
-        mlev += 5;
+        mlev += 3;
         break;
 
     default:
@@ -1846,18 +1846,18 @@ int mons_spidernest_level(int mcls)
     case MONS_BORING_BEETLE:
     case MONS_BOULDER_BEETLE:
     case MONS_GIANT_CENTIPEDE:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_EMPEROR_SCORPION:
     case MONS_JUMPING_SPIDER:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_TARANTELLA:
     case MONS_GHOST_MOTH:
     case MONS_DEMONIC_CRAWLER:
-        mlev += 5;
+        mlev += 3;
         break;
 
     default:
@@ -1933,23 +1933,23 @@ int mons_pitslime_level(int mcls)
     case MONS_AZURE_JELLY:
     case MONS_SHINING_EYE:
     case MONS_GOLDEN_EYE:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_PULSATING_LUMP:
     case MONS_GREAT_ORB_OF_EYES:
     case MONS_EYE_OF_DEVASTATION:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_DEATH_OOZE:
     case MONS_TENTACLED_MONSTROSITY:
     case MONS_GIANT_ORANGE_BRAIN:
-        mlev += 5;
+        mlev += 3;
         break;
 
     case MONS_ROYAL_JELLY:
-        mlev += 6;
+        mlev += 4;
 
     default:
         mlev += 0;
@@ -2081,7 +2081,7 @@ int mons_crypt_level(int mcls)
     case MONS_SKELETAL_WARRIOR:
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
-        mlev += 2;
+        mlev += 1;
         break;
 
     case MONS_NECROMANCER:
@@ -2093,7 +2093,7 @@ int mons_crypt_level(int mcls)
     case MONS_WRAITH:
     case MONS_FLYING_SKULL:
     case MONS_SILENT_SPECTRE:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_BONE_DRAGON:
@@ -2106,7 +2106,7 @@ int mons_crypt_level(int mcls)
     case MONS_MUMMY:
     case MONS_VAMPIRE:
     case MONS_ABOMINATION_LARGE:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_REAPER:
@@ -2118,7 +2118,7 @@ int mons_crypt_level(int mcls)
     case MONS_STAIR_MIMIC:
     case MONS_SHOP_MIMIC:
     case MONS_FOUNTAIN_MIMIC:
-        mlev += 5;
+        mlev += 3;
         break;
 
     default:
@@ -2322,10 +2322,10 @@ int mons_forest_level(int mcls)
         break;
 
     case MONS_SPRIGGAN_AIR_MAGE:
-        mlev += 3;
+        mlev += 2;
 
     case MONS_SPRIGGAN_DEFENDER:
-        mlev += 5;
+        mlev += 3;
         break;
 
     default:
@@ -2369,7 +2369,7 @@ int mons_hallzot_level(int mcls)
     {
     case MONS_GOLDEN_DRAGON:
     case MONS_GUARDIAN_MUMMY:
-        mlev += 6;
+        mlev += 4;
         break;
     case MONS_BONE_DRAGON:
     case MONS_KILLER_KLOWN:
@@ -2378,12 +2378,12 @@ int mons_hallzot_level(int mcls)
     case MONS_CURSE_TOE:
     case MONS_ORB_GUARDIAN:
     case MONS_GHOST_MOTH:
-        mlev += 5;
+        mlev += 3;
         break;
     case MONS_DEATH_COB:
     case MONS_DRAGON:
     case MONS_ICE_DRAGON:
-        mlev += 4;
+        mlev += 3;
         break;
     case MONS_MOTTLED_DRACONIAN:
     case MONS_YELLOW_DRACONIAN:
@@ -2402,10 +2402,10 @@ int mons_hallzot_level(int mcls)
     case MONS_DRACONIAN_ZEALOT:
     case MONS_DRACONIAN_SHIFTER:
     case MONS_TENTACLED_MONSTROSITY:
-        mlev += 3;
+        mlev += 2;
         break;
     case MONS_MOTH_OF_WRATH:
-        mlev += 2;
+        mlev += 1;
         break;
     case MONS_ORB_OF_FIRE:
     case MONS_ELECTRIC_GOLEM:
@@ -2562,7 +2562,7 @@ int mons_dis_level(int mcls)
     case MONS_HELL_HOG:
     case MONS_IRON_GOLEM:
     case MONS_MUMMY:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_FLAYED_GHOST:
@@ -2573,7 +2573,7 @@ int mons_dis_level(int mcls)
     case MONS_IRON_IMP:
     case MONS_VAMPIRE:
     case MONS_WRAITH:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_BLUE_DEVIL:
@@ -2585,14 +2585,14 @@ int mons_dis_level(int mcls)
     case MONS_PHANTASMAL_WARRIOR:
     case MONS_REAPER:
     case MONS_SOUL_EATER:
-        mlev += 5;
+        mlev += 3;
         break;
 
     case MONS_ANCIENT_LICH:
     case MONS_BONE_DRAGON:
     case MONS_FIEND:
     case MONS_IRON_DRAGON:
-        mlev += 6;
+        mlev += 4;
         break;
 
     default:
@@ -2722,14 +2722,14 @@ int mons_gehenna_level(int mcls)
     case MONS_ROTTING_DEVIL:
     case MONS_SHADOW:
     case MONS_WIGHT:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_HAIRY_DEVIL:
     case MONS_HELL_KNIGHT:
     case MONS_VAMPIRE:
     case MONS_WRAITH:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_EFREET:
@@ -2738,7 +2738,7 @@ int mons_gehenna_level(int mcls)
     case MONS_HELLION:
     case MONS_TORMENTOR:
     case MONS_FIRE_CRAB:
-        mlev += 5;
+        mlev += 4;
         break;
 
     case MONS_ANCIENT_LICH:
@@ -2749,7 +2749,7 @@ int mons_gehenna_level(int mcls)
     case MONS_PIT_FIEND:
     case MONS_REAPER:
     case MONS_SOUL_EATER:
-        mlev += 6;
+        mlev += 4;
         break;
 
     default:
@@ -2876,7 +2876,7 @@ int mons_cocytus_level(int mcls)
     case MONS_ROTTING_DEVIL:
     case MONS_VAMPIRE:
     case MONS_WIGHT:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_FREEZING_WRAITH:
@@ -2885,14 +2885,14 @@ int mons_cocytus_level(int mcls)
     case MONS_MUMMY:
     case MONS_PHANTASMAL_WARRIOR:
     case MONS_WRAITH:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_ICE_DEVIL:
     case MONS_ICE_DRAGON:
     case MONS_TORMENTOR:
     case MONS_WHITE_IMP:
-        mlev += 5;
+        mlev += 3;
         break;
 
     case MONS_ANCIENT_LICH:
@@ -2900,7 +2900,7 @@ int mons_cocytus_level(int mcls)
     case MONS_LICH:
     case MONS_REAPER:
     case MONS_SOUL_EATER:
-        mlev += 6;
+        mlev += 4;
         break;
 
     default:
@@ -3018,7 +3018,7 @@ int mons_tartarus_level(int mcls)
     case MONS_SHADOW_DEMON:
     case MONS_WRAITH:
     case MONS_SILENT_SPECTRE:
-        mlev += 3;
+        mlev += 2;
         break;
 
     case MONS_BLUE_DEVIL:
@@ -3031,7 +3031,7 @@ int mons_tartarus_level(int mcls)
     case MONS_TORMENTOR:
     case MONS_SIMULACRUM_LARGE:
     case MONS_SIMULACRUM_SMALL:
-        mlev += 4;
+        mlev += 3;
         break;
 
     case MONS_FLYING_SKULL:
@@ -3040,14 +3040,14 @@ int mons_tartarus_level(int mcls)
     case MONS_ROTTING_DEVIL:
     case MONS_SHADOW_DRAGON:
     case MONS_VAMPIRE:
-        mlev += 5;
+        mlev += 3;
         break;
 
     case MONS_ANCIENT_LICH:
     case MONS_HAIRY_DEVIL:
     case MONS_LICH:
     case MONS_SOUL_EATER:
-        mlev += 6;
+        mlev += 4;
         break;
 
     default:
