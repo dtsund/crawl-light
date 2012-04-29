@@ -1597,9 +1597,9 @@ int exper_value(const monster* mon)
     // code can't see, so inflate their XP a bit.  Ice statues and Roxanne
     // get plenty of XP for their spells.
     if (mc == MONS_ORANGE_STATUE || mc == MONS_SILVER_STATUE)
-        return (hd * 15);
+        return (hd * 22);
 
-    x_val = (16 + maxhp) * (hd * hd) / 10;
+    x_val = 3 * (16 + maxhp) * (hd * hd) / 20;
 
     // Let's calculate a simple difficulty modifier. - bwr
     int diff = 0;
@@ -1703,16 +1703,16 @@ int exper_value(const monster* mon)
         x_val *= mon->number;
 
     // Reductions for big values. - bwr
-    if (x_val > 100)
-        x_val = 100 + ((x_val - 100) * 3) / 4;
-    if (x_val > 1000)
-        x_val = 1000 + (x_val - 1000) / 2;
+    if (x_val > 150)
+        x_val = 150 + ((x_val - 150) * 3) / 4;
+    if (x_val > 1500)
+        x_val = 1500 + (x_val - 1500) / 2;
 
     // Guarantee the value is within limits.
     if (x_val <= 0)
         x_val = 1;
-    else if (x_val > 15000)
-        x_val = 15000;
+    else if (x_val > 22500)
+        x_val = 22500;
 
     return (x_val);
 }
