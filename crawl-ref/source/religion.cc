@@ -3745,17 +3745,17 @@ void handle_god_time()
         // These gods like long-standing worshippers.
         case GOD_ELYVILON:
             if (_need_free_piety())
-                gain_piety(1, 20);
+                gain_piety(1, 14);
             return;
 
         case GOD_SHINING_ONE:
             if (_need_free_piety())
-                gain_piety(1, 15);
+                gain_piety(1, 10);
             return;
 
         case GOD_ZIN:
             if (_need_free_piety())
-                gain_piety(1, 12);
+                gain_piety(1, 8);
             return;
 
         // All the rest will excommunicate you if piety goes below 1.

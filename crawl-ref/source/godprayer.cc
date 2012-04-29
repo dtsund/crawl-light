@@ -555,11 +555,14 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
     //      item-accepting gods and corpse-accepting gods.
     if (god_likes_fresh_corpses(you.religion))
     {
-        gain_piety(13, 19);
+        // dtsund: Not boosting piety gain by a full 50%, since there's an
+        // innate piety boost from the fact that you're not eating these things
+        // anymore.
+        gain_piety(13, 15);
 
         // The feedback is not accurate any longer on purpose; it only reveals
         // the rate you get piety at.
-        if (x_chance_in_y(13, 19))
+        if (x_chance_in_y(13, 15))
             relative_piety_gain = PIETY_SOME;
     }
     else
@@ -591,8 +594,8 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
                                  GOD_ELYVILON);
                     }
                 }
-
-                gain_piety(1);
+                // Average of 1.5 piety gained.
+                gain_piety(div_rand_round(3,2));
                 relative_piety_gain = PIETY_SOME;
             }
             break;
@@ -616,8 +619,8 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
             else if (item.sub_type == CORPSE_SKELETON)
                 chance -= 2;
 
-            gain_piety(chance, 20);
-            if (x_chance_in_y(chance, 20))
+            gain_piety(chance, 13);
+            if (x_chance_in_y(chance, 13))
                 relative_piety_gain = PIETY_SOME;
             break;
         }
@@ -640,12 +643,12 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
             int piety_change, piety_denom;
             if (item.base_type == OBJ_CORPSES)
             {
-                piety_change = 1;
-                piety_denom = 2 + you.piety/50;
+                piety_change = 2;
+                piety_denom = 3 + you.piety/50;
             }
             else
             {
-                piety_change = value/2 + 1;
+                piety_change = 3 * value/4 + 1;
                 if (is_artefact(item))
                     piety_change *= 2;
                 piety_denom = 30 + you.piety/2;
@@ -685,10 +688,10 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
             const int value = item_value(item) / item.quantity;
             // compress into range 0..250
             const int stepped = stepdown_value(value, 50, 50, 200, 250);
-            gain_piety(stepped, 50);
+            gain_piety(stepped, 35);
             relative_piety_gain = (piety_gain_t)std::min(2,
-                                    div_rand_round(stepped, 50));
-            jiyva_slurp_bonus(div_rand_round(stepped, 50), js);
+                                    div_rand_round(stepped, 35));
+            jiyva_slurp_bonus(div_rand_round(stepped, 35), js);
             break;
         }
 

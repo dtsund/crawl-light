@@ -1651,9 +1651,9 @@ bool trog_burn_spellbooks()
                 continue;
             }
 
-            // Piety increases by 2 for books never cracked open, else 1.
+            // Piety increases by 3 for each book.
             // Conversely, rarity influences the duration of the pyre.
-            totalpiety += 2;
+            totalpiety += 3;
 
             rarity += book_rarity(si->sub_type);
 
@@ -2334,7 +2334,7 @@ int fedhas_fungal_bloom()
 
         int piety_gain = 0;
         for (int i = 0; i < processed_count * 2; i++)
-            piety_gain += random2(15); // avg 1.4 piety per corpse
+            piety_gain += random2(22); // avg 1.4 piety per corpse
         gain_piety(piety_gain, 10);
     }
 

@@ -209,7 +209,7 @@ static int _healing_spell(int healed, bool divine_ability,
 
         int pgain = 0;
         if (!is_holy && !is_summoned && you.piety < MAX_PIETY)
-            pgain = random2(mons->max_hit_points / (2 + you.piety / 20));
+            pgain = 3 * random2(mons->max_hit_points / (2 + you.piety / 20)) / 2;
 
         // The feedback no longer tells you if you gained any piety this time,
         // it tells you merely the general rate.
@@ -242,14 +242,14 @@ static int _healing_spell(int healed, bool divine_ability,
 
         if (you.religion == GOD_ELYVILON && !is_hostile)
         {
-            if (one_chance_in(8))
+            if (one_chance_in(5))
                 simple_god_message(" approves of your healing of a fellow "
                                    "creature.");
             else
                 mpr("Elyvilon appreciates your healing of a fellow creature.");
 
             // Give a small piety return.
-            gain_piety(1, 8);
+            gain_piety(1, 5);
         }
     }
 
