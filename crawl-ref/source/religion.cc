@@ -1323,7 +1323,7 @@ static bool _give_nemelex_gift(bool forced = false)
             canned_msg(MSG_SOMETHING_APPEARS);
 
             you.attribute[ATTR_CARD_COUNTDOWN] = 10;
-            _inc_gift_timeout(5 + random2avg(9, 2));
+            _inc_gift_timeout(8 + random2avg(9, 2));
             you.num_current_gifts[you.religion]++;
             you.num_total_gifts[you.religion]++;
             take_note(Note(NOTE_GOD_GIFT, you.religion));
@@ -1968,7 +1968,7 @@ static void _delayed_gift_callback(const mgen_data &mg, int &midx,
     // Make sure monsters are shown.
     viewwindow();
     more();
-    _inc_gift_timeout(4 + random2avg(7, 2));
+    _inc_gift_timeout(7 + random2avg(7, 2));
     you.num_current_gifts[you.religion]++;
     you.num_total_gifts[you.religion]++;
     take_note(Note(NOTE_GOD_GIFT, you.religion));
@@ -2086,7 +2086,7 @@ bool do_god_gift(bool forced)
                 more();
 
                 if (gift_type == OBJ_MISSILES)
-                    _inc_gift_timeout(4 + roll_dice(2, 4));
+                    _inc_gift_timeout(8 + roll_dice(2, 4));
                 else
                 {
                     // Okawaru charges extra for armour acquirements.
