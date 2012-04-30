@@ -430,7 +430,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 simple_god_message(" accepts your kill.");
                 retval = true;
                 piety_denom = level + 18;
-                piety_change = 3 * piety_denom - 4) / 2;
+                piety_change = 3 * (piety_denom - 4) / 2;
             }
             break;
 
