@@ -2547,21 +2547,33 @@ static monster_type _choose_random_monster_corpse()
 
 static int _random_wand_subtype()
 {
-    int rc = random2(NUM_WANDS);
-
-    // Adjusted distribution here -- bwr
-    // Wands used to be uniform (5.26% each)
-    //
-    // Now:
-    // invis, hasting, healing  (1.11% each)
-    // fireball, teleportaion   (3.74% each)
-    // others                   (6.37% each)
-    if (rc == WAND_INVISIBILITY || rc == WAND_HASTING || rc == WAND_HEALING
-        || (rc == WAND_FIREBALL || rc == WAND_TELEPORTATION) && coinflip())
-    {
-        rc = random2(NUM_WANDS);
-    }
-    return rc;
+    // Adjusted distribution (dtsund):
+    // hasting, healing (1/60 each)
+    // invis (1/30)
+    // teleportation, fireball (1/20 each)
+    // everything else (1/18 each)
+    // Total weight: 180
+    int rc = random_choose_weighted(3,  WAND_HEALING,
+                                    3,  WAND_HASTING
+                                    6,  WAND_INVISIBILITY,
+                                    9,  WAND_TELEPORTATION,
+                                    9,  WAND_FIREBALL,
+                                    10, WAND_FLAME,
+                                    10, WAND_FROST,
+                                    10, WAND_SLOWING,
+                                    10, WAND_MAGIC_DARTS,
+                                    10, WAND_PARALYSIS,
+                                    10, WAND_FIRE,
+                                    10, WAND_COLD,
+                                    10, WAND_CONFUSION,
+                                    10, WAND_DIGGING,
+                                    10, WAND_LIGHTNING,
+                                    10, WAND_POLYMORPH_OTHER,
+                                    10, WAND_ENSLAVEMENT,
+                                    10, WAND_DRAINING,
+                                    10, WAND_RANDOM_EFFECTS,
+                                    10, WAND_DISINTEGRATION,
+                                    0);
 }
 
 // This differs quite a bit from the maximum amount allowed
@@ -2605,69 +2617,6 @@ static void _generate_wand_item(item_def& item, int force_type)
     item.plus2 = 0;
 }
 
-static void _generate_food_item(item_def& item, int force_quant, int force_type)
-{
-    // Determine sub_type:
-    if (force_type == OBJ_RANDOM)
-    {
-        item.sub_type = random_choose_weighted(250, FOOD_MEAT_RATION,
-                                                300, FOOD_BREAD_RATION,
-                                                100, FOOD_PEAR,
-                                                100, FOOD_APPLE,
-                                                100, FOOD_CHOKO,
-                                                 10, FOOD_CHEESE,
-                                                 10, FOOD_PIZZA,
-                                                 10, FOOD_SNOZZCUMBER,
-                                                 10, FOOD_APRICOT,
-                                                 10, FOOD_ORANGE,
-                                                 10, FOOD_BANANA,
-                                                 10, FOOD_STRAWBERRY,
-                                                 10, FOOD_RAMBUTAN,
-                                                 10, FOOD_LEMON,
-                                                 10, FOOD_GRAPE,
-                                                 10, FOOD_SULTANA,
-                                                 10, FOOD_LYCHEE,
-                                                 10, FOOD_BEEF_JERKY,
-                                                 10, FOOD_SAUSAGE,
-                                                  5, FOOD_HONEYCOMB,
-                                                  5, FOOD_ROYAL_JELLY,
-                                                  0);
-    }
-    else
-        item.sub_type = force_type;
-
-    // Happens with ghoul food acquirement -- use place_chunks() outherwise
-    if (item.sub_type == FOOD_CHUNK)
-    {
-        // Set chunk flavour (default to common dungeon rat steaks):
-        item.plus = _choose_random_monster_corpse();
-        // Set duration.
-        item.special = (10 + random2(11)) * 10;
-    }
-
-    // Determine quantity.
-    if (force_quant > 1)
-        item.quantity = force_quant;
-    else
-    {
-        item.quantity = 1;
-
-        if (item.sub_type != FOOD_MEAT_RATION
-            && item.sub_type != FOOD_BREAD_RATION)
-        {
-            if (one_chance_in(80))
-                item.quantity += random2(3);
-
-            if (item.sub_type == FOOD_STRAWBERRY
-                || item.sub_type == FOOD_GRAPE
-                || item.sub_type == FOOD_SULTANA)
-            {
-                item.quantity += 3 + random2avg(15,2);
-            }
-        }
-    }
-}
-
 static void _generate_potion_item(item_def& item, int force_type,
                                   int item_level, int agent)
 {
@@ -2697,24 +2646,22 @@ static void _generate_potion_item(item_def& item, int force_type,
                                              612, POT_MIGHT,
                                              612, POT_AGILITY,
                                              612, POT_BRILLIANCE,
+                                             486, POT_MUTATION,
                                              340, POT_INVISIBILITY,
                                              340, POT_LEVITATION,
                                              340, POT_RESISTANCE,
                                              340, POT_MAGIC,
-                                             324, POT_MUTATION,
+                                             333, POT_CURE_MUTATION,
                                              324, POT_SLOWING,
                                              324, POT_PARALYSIS,
                                              324, POT_CONFUSION,
                                              278, POT_DEGENERATION,
-                                             222, POT_CURE_MUTATION,
                                              162, POT_STRONG_POISON,
                                              136, POT_BERSERK_RAGE,
-                                             111, POT_BLOOD,
-                                              70, POT_PORRIDGE,
-                                              38, POT_GAIN_STRENGTH,
-                                              38, POT_GAIN_DEXTERITY,
-                                              38, POT_GAIN_INTELLIGENCE,
-                                              13, POT_EXPERIENCE,
+                                              57, POT_GAIN_STRENGTH,
+                                              57, POT_GAIN_DEXTERITY,
+                                              57, POT_GAIN_INTELLIGENCE,
+                                              18, POT_EXPERIENCE,
                                               10, POT_DECAY,
                                                0);
         }
@@ -2752,39 +2699,28 @@ static void _generate_scroll_item(item_def& item, int force_type,
         do
         {
             item.sub_type = random_choose_weighted(
-                //1800, SCR_IDENTIFY,
-                //1115, SCR_REMOVE_CURSE,
-                 //511, SCR_DETECT_CURSE,
+                 496, SCR_ENCHANT_ARMOUR,
+                 496, SCR_ENCHANT_WEAPON_I,
+                 496, SCR_ENCHANT_WEAPON_II,
                  331, SCR_FEAR,
                  331, SCR_MAGIC_MAPPING,
                  331, SCR_FOG,
-                 //331, SCR_RANDOM_USELESSNESS,
                  331, SCR_RECHARGING,
                  331, SCR_BLINKING,
-                 331, SCR_ENCHANT_ARMOUR,
-                 331, SCR_ENCHANT_WEAPON_I,
-                 331, SCR_ENCHANT_WEAPON_II,
-                 //331, SCR_AMNESIA,
-
-                 // Don't create ?oImmolation at low levels (encourage read-ID).
-                 331, (item_level < 4 ? SCR_TELEPORTATION : SCR_IMMOLATION),
-
-                 //270, SCR_CURSE_WEAPON,
-                 //270, SCR_CURSE_ARMOUR,
-                 //270, SCR_CURSE_JEWELLERY,
+                 331, SCR_IMMOLATION,
 
                  // Medium-level scrolls.
-                 140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
-                 140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
-                 140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_SUMMONING),
+                 210, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
+                 210, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
+                 140, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_SUMMONING),
 
                  // High-level scrolls.
-                 140, (depth_mod < 7 ? SCR_TELEPORTATION : SCR_VORPALISE_WEAPON),
-                 140, (depth_mod < 7 ? SCR_MAGIC_MAPPING : SCR_TORMENT),
-                 140, (depth_mod < 7 ? SCR_FOG           : SCR_HOLY_WORD),
+                 210, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_VORPALISE_WEAPON),
+                 140, (depth_mod < 4 ? SCR_MAGIC_MAPPING : SCR_TORMENT),
+                 140, (depth_mod < 4 ? SCR_FOG           : SCR_HOLY_WORD),
 
                  // Balanced by rarity.
-                 35, SCR_SILENCE,
+                 140, SCR_SILENCE,
 
                 // [ds] Zero-weights should always be at the end,
                 // since random_choose_weighted stops at the first
@@ -2794,9 +2730,6 @@ static void _generate_scroll_item(item_def& item, int force_type,
 
                 // [Cha] don't generate teleportation scrolls if in sprint
                 (crawl_state.game_is_sprint() ? 0 : 802), SCR_TELEPORTATION,
-
-                // [Cha] don't generate noise scrolls if in sprint
-                //(crawl_state.game_is_sprint() ? 0 : 331), SCR_NOISE,
 
                  0);
         }
@@ -3127,17 +3060,17 @@ int items(int allow_uniques,       // not just true-false,
     else
     {
         ASSERT(force_type == OBJ_RANDOM);
+        // Total weight: 971 for now.  Will probably restore to 1000 eventually.
         item.base_type = static_cast<object_class_type>(
-            random_choose_weighted(5, OBJ_STAVES,
-                                    15, OBJ_BOOKS,
-                                    25, OBJ_JEWELLERY,
-                                    35, OBJ_WANDS,
-                                    70, OBJ_FOOD,
-                                   100, OBJ_ARMOUR,
-                                   100, OBJ_WEAPONS,
+            random_choose_weighted(8, OBJ_STAVES,
+                                    23, OBJ_BOOKS,
+                                    38, OBJ_JEWELLERY,
+                                    37, OBJ_WANDS,
+                                   150, OBJ_ARMOUR,
+                                   150, OBJ_WEAPONS,
                                    100, OBJ_POTIONS,
                                    150, OBJ_MISSILES,
-                                   200, OBJ_SCROLLS,
+                                   115, OBJ_SCROLLS,
                                    200, OBJ_GOLD,
                                      0));
 
@@ -3234,9 +3167,9 @@ int items(int allow_uniques,       // not just true-false,
     default:
         item.base_type = OBJ_GOLD;
         if (force_good)
-            item.quantity = 100 + random2(400);
+            item.quantity = 150 + random2(600);
         else
-            item.quantity = 1 + random2avg(19, 2) + random2(item_level);
+            item.quantity = 2 + random2avg(30, 2) + random2(item_level * 3 / 2);
         break;
     }
 
