@@ -52,9 +52,8 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
 {
     pow = std::min(pow, 150);
 
-    int factor = (you.species == SP_VAMPIRE
-                  && you.hunger_state < HS_SATIATED
-                  && drank_it ? 2 : 1);
+    //Used to be that vampires could have reduced effects; this variable covered it.
+    int factor = 1;
 
     // Knowingly drinking bad potions is much less amusing.
     int xom_factor = factor;
@@ -107,52 +106,6 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
             unrot_hp((2 + random2avg(5, 2)) / factor);
             set_hp(you.hp_max, false);
         }
-        break;
-
-      case POT_BLOOD:
-      case POT_BLOOD_COAGULATED:
-        if (you.species == SP_VAMPIRE)
-        {
-            // No healing anymore! (jpeg)
-            int value = 800;
-            if (pot_eff == POT_BLOOD)
-            {
-                mpr("Yummy - fresh blood!");
-                value += 200;
-            }
-            else // Coagulated.
-                mpr("This tastes delicious!");
-
-            lessen_hunger(value, true);
-        }
-        else
-        {
-            const int value = 200;
-            const int herbivorous = player_mutation_level(MUT_HERBIVOROUS);
-
-            if (herbivorous < 3 && player_likes_chunks())
-            {
-                // Likes it.
-                mpr("This tastes like blood.");
-                lessen_hunger(value, true);
-
-                if (!player_likes_chunks(true))
-                    check_amu_the_gourmand(false);
-            }
-            else
-            {
-                mpr("Yuck - this tastes like blood.");
-                if (x_chance_in_y(herbivorous + 1, 4))
-                {
-                    // Full herbivores always become ill from blood.
-                    you.sicken(50 + random2(100));
-                    xom_is_stimulated(25 / xom_factor);
-                }
-                else
-                    lessen_hunger(value, true);
-            }
-        }
-        did_god_conduct(DID_DRINK_BLOOD, 1 + random2(3), true);
         break;
 
     case POT_SPEED:
@@ -343,19 +296,6 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
 
         break;
 
-    case POT_PORRIDGE:          // oatmeal - always gluggy white/grey?
-        if (you.species == SP_VAMPIRE
-            || player_mutation_level(MUT_CARNIVOROUS) == 3)
-        {
-            mpr("Blech - that potion was really gluggy!");
-        }
-        else
-        {
-            mpr("That potion was really gluggy!");
-            lessen_hunger(6000, true);
-        }
-        break;
-
     case POT_DEGENERATION:
         if (drank_it)
             mpr("There was something very wrong with that liquid!");
@@ -420,22 +360,14 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
     }
 
     case POT_BERSERK_RAGE:
-        if (you.species == SP_VAMPIRE && you.hunger_state <= HS_SATIATED)
+        // Actual contamination is handled in go_berserk.
+        if (!already_warned && !contamination_warning_prompt(BERSERK_GLOW_COST))
         {
-            mpr("You feel slightly irritated.");
-            make_hungry(100, false);
+            canned_msg(MSG_OK);
+            return false;
         }
-        else
-        {
-            // Actual contamination is handled in go_berserk.
-            if (!already_warned && !contamination_warning_prompt(BERSERK_GLOW_COST))
-            {
-                canned_msg(MSG_OK);
-                return false;
-            }
-            if (go_berserk(true, true))
-                xom_is_stimulated(50);
-        }
+        if (go_berserk(true, true))
+            xom_is_stimulated(50);
         break;
 
     case POT_CURE_MUTATION:

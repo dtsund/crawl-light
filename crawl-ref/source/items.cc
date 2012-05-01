@@ -1491,9 +1491,6 @@ void merge_item_stacks(item_def &source, item_def &dest, int quant)
         quant = source.quantity;
 
     ASSERT(quant > 0 && quant <= source.quantity);
-
-    if (is_blood_potion(source) && is_blood_potion(dest))
-       merge_blood_potion_stacks(source, dest, quant);
 }
 
 static int _userdef_find_free_slot(const item_def &i)
@@ -1804,18 +1801,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
     note_inscribe_item(item);
 
     item.quantity = quant_got;
-    if (is_blood_potion(mitm[obj]))
-    {
-        if (quant_got != mitm[obj].quantity)
-        {
-            // Remove oldest timers from original stack.
-            for (int i = 0; i < quant_got; i++)
-                remove_oldest_blood_potion(mitm[obj]);
 
-            // ... and newest ones from picked up stack
-            remove_newest_blood_potion(item);
-        }
-    }
     dec_mitm_item_quantity(obj, quant_got);
     you.m_quiver->on_inv_quantity_changed(freeslot, quant_got);
     burden_change();
@@ -2048,13 +2034,6 @@ bool copy_item_to_grid(const item_def &item, const coord_def& p,
     }
 
     move_item_to_grid(&new_item_idx, p, true);
-    if (is_blood_potion(item)
-        && item.quantity != quant_drop) // partial drop only
-    {
-        // Since only the oldest potions have been dropped,
-        // remove the newest ones.
-        remove_newest_blood_potion(new_item);
-    }
 
     return (true);
 }
@@ -2216,13 +2195,6 @@ bool drop_item(int item_dropped, int quant_drop)
     else if (strstr(you.inv[item_dropped].inscription.c_str(), "=s") != 0)
         StashTrack.add_stash();
 
-    if (is_blood_potion(you.inv[item_dropped])
-        && you.inv[item_dropped].quantity != quant_drop)
-    {
-        // Oldest potions have been dropped.
-        for (int i = 0; i < quant_drop; i++)
-            remove_oldest_blood_potion(you.inv[item_dropped]);
-    }
     dec_inv_item_quantity(item_dropped, quant_drop);
     you.turn_is_over = true;
 
@@ -2581,12 +2553,6 @@ static bool _identical_types(const item_def& pickup_item,
             && (pickup_item.sub_type == inv_item.sub_type));
 }
 
-static bool _edible_food(const item_def& pickup_item,
-                         const item_def& inv_item)
-{
-    return (inv_item.base_type == OBJ_FOOD && !is_inedible(inv_item));
-}
-
 static bool _similar_equip(const item_def& pickup_item,
                            const item_def& inv_item)
 {
@@ -2761,11 +2727,7 @@ static bool _interesting_explore_pickup(const item_def& item)
         if (you.religion == GOD_FEDHAS && is_fruit(item))
             return (true);
 
-        if (is_inedible(item))
-            return (false);
-
-        // Interesting if we don't have any other edible food.
-        return _item_different_than_inv(item, _edible_food);
+        return false;
 
     case OBJ_STAVES:
         // Rods are always interesting, even if you already have one of
@@ -3734,28 +3696,6 @@ bool get_item_by_name(item_def *item, char* specs,
 
     case OBJ_POTIONS:
         item->quantity = 12;
-        if (is_blood_potion(*item))
-        {
-            const char* prompt;
-            if (item->sub_type == POT_BLOOD)
-            {
-                prompt = "# turns away from coagulation? "
-                         "[ENTER for fully fresh] ";
-            }
-            else
-            {
-                prompt = "# turns away from rotting? "
-                         "[ENTER for fully fresh] ";
-            }
-            int age = prompt_for_int(prompt, false);
-
-            if (age <= 0)
-                age = -1;
-            else if (item->sub_type == POT_BLOOD)
-                age += 500;
-
-            init_stack_blood_potions(*item, age);
-        }
         break;
 
     case OBJ_FOOD:

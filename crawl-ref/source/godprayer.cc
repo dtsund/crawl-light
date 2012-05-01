@@ -662,8 +662,7 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
                                     is_artefact(item) ?
                                       PIETY_LOTS : PIETY_SOME : PIETY_NONE;
 
-            if (item.base_type == OBJ_FOOD && item.sub_type == FOOD_CHUNK
-                || is_blood_potion(item))
+            if (item.base_type == OBJ_FOOD && item.sub_type == FOOD_CHUNK)
             {
                 // Count chunks and blood potions towards decks of
                 // Summoning.
@@ -738,8 +737,6 @@ static bool _check_nemelex_sacrificing_item_type(const item_def& item)
         return (you.nemelex_sacrificing[NEM_GIFT_SUMMONING]);
 
     case OBJ_POTIONS:
-        if (is_blood_potion(item))
-            return (you.nemelex_sacrificing[NEM_GIFT_SUMMONING]);
         return (you.nemelex_sacrificing[NEM_GIFT_WONDERS]);
 
     case OBJ_FOOD:

@@ -161,7 +161,6 @@ static std::string shoptype_to_string(shop_type s)
     case SHOP_JEWELLERY:       return "=";
     case SHOP_WAND:            return "/";
     case SHOP_BOOK:            return "+";
-    case SHOP_FOOD:            return "%";
     case SHOP_DISTILLERY:      return "!";
     case SHOP_SCROLL:          return "?";
     default:                   return "x";

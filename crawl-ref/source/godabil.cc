@@ -76,8 +76,7 @@
 
 bool zin_sustenance(bool actual)
 {
-    return (you.piety >= piety_breakpoint(0)
-            && (!actual || you.hunger_state == HS_STARVING));
+    return false;
 }
 
 std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)

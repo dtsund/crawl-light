@@ -70,12 +70,6 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
             type_bad = true;
         break;
 
-    case GOD_ZIN:
-        // Lawful god: no increased hunger.
-        if (item.base_type == OBJ_JEWELLERY && item.sub_type == RING_HUNGER)
-            type_bad = true;
-        break;
-
     case GOD_SIF_MUNA:
     case GOD_VEHUMET:
         // The magic gods: no weapons, no preventing spellcasting.
@@ -488,10 +482,6 @@ void artefact_desc_properties(const item_def &item,
 
     case RING_SEE_INVISIBLE:
         fake_rap = ARTP_EYESIGHT;
-        break;
-
-    case RING_HUNGER:
-        fake_rap = ARTP_METABOLISM;
         break;
 
     case RING_EVASION:
@@ -1066,8 +1056,6 @@ void static _get_randart_properties(const item_def &item,
             proprt[ARTP_COLD] = -1;
             break;
         case 7:                     // speed metabolism
-            if (aclass == OBJ_JEWELLERY && atype == RING_HUNGER)
-                break;              // already is a ring of hunger
             if (aclass == OBJ_JEWELLERY && atype == RING_SUSTENANCE)
                 break;              // already is a ring of sustenance
             proprt[ARTP_METABOLISM] = 1 + random2(3);
@@ -1632,10 +1620,6 @@ static bool _randart_is_redundant(const item_def &item,
 
     case RING_INVISIBILITY:
         provides = ARTP_INVISIBLE;
-        break;
-
-    case RING_HUNGER:
-        provides = ARTP_METABOLISM;
         break;
 
     case RING_TELEPORTATION:

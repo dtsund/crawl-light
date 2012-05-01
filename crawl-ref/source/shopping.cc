@@ -1542,17 +1542,11 @@ unsigned int item_value(item_def item, bool ident)
             valued += 20;
             break;
 
-        case POT_BLOOD:
-        case POT_PORRIDGE:
         case POT_CONFUSION:
         case POT_PARALYSIS:
         case POT_POISON:
         case POT_SLOWING:
             valued += 10;
-            break;
-
-        case POT_BLOOD_COAGULATED:
-            valued += 5;
             break;
 
         case POT_WATER:
@@ -1564,29 +1558,6 @@ unsigned int item_value(item_def item, bool ident)
     case OBJ_FOOD:
         switch (item.sub_type)
         {
-        case FOOD_ROYAL_JELLY:
-            valued = 120;
-            break;
-
-        case FOOD_MEAT_RATION:
-        case FOOD_BREAD_RATION:
-            valued = 40;
-            break;
-
-        case FOOD_HONEYCOMB:
-            valued = 25;
-            break;
-
-        case FOOD_BEEF_JERKY:
-        case FOOD_PIZZA:
-            valued = 18;
-            break;
-
-        case FOOD_CHEESE:
-        case FOOD_SAUSAGE:
-            valued = 15;
-            break;
-
         case FOOD_LEMON:
         case FOOD_ORANGE:
         case FOOD_BANANA:
@@ -1749,11 +1720,6 @@ unsigned int item_value(item_def item, bool ident)
             valued += 70;
             break;
 
-        case RING_HUNGER:
-            valued -= 350;
-            break;
-
-        case AMU_THE_GOURMAND:
         case AMU_GUARDIAN_SPIRIT:
         case AMU_FAITH:
             valued += 245;
@@ -2007,8 +1973,6 @@ std::string shop_type_name (shop_type type)
             return "Magical Wand";
         case SHOP_BOOK:
             return "Book";
-        case SHOP_FOOD:
-            return "Food";
         case SHOP_SCROLL:
             return "Magic Scroll";
         case SHOP_GENERAL_ANTIQUE:

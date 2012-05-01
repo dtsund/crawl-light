@@ -393,65 +393,6 @@ static bool _try_give_plain_armour(item_def &arm)
     return (true);
 }
 
-// Write results into arguments.
-static void _acquirement_determine_food(int& type_wanted, int& quantity,
-                                        const has_vector& already_has)
-{
-    // Food is a little less predictable now. - bwr
-    if (you.species == SP_GHOUL)
-        type_wanted = one_chance_in(10) ? FOOD_ROYAL_JELLY : FOOD_CHUNK;
-    else if (you.species == SP_VAMPIRE)
-    {
-        // Vampires really don't want any OBJ_FOOD but OBJ_CORPSES
-        // but it's easier to just give them a potion of blood
-        // class type is set elsewhere
-        type_wanted = POT_BLOOD;
-    }
-    else if (you.religion == GOD_FEDHAS)
-    {
-        // Fedhas worshippers get fruit to use for growth and evolution
-        type_wanted = one_chance_in(3) ? FOOD_BANANA : FOOD_ORANGE;
-    }
-    else
-    {
-        // Meat is better than bread (except for herbivores), and
-        // by choosing it as the default we don't have to worry
-        // about special cases for carnivorous races (e.g. kobolds)
-        type_wanted = FOOD_MEAT_RATION;
-
-        if (player_mutation_level(MUT_HERBIVOROUS))
-            type_wanted = FOOD_BREAD_RATION;
-
-        // If we have some regular rations, then we're probably more
-        // interested in faster foods (especially royal jelly)...
-        // otherwise the regular rations should be a good enough offer.
-        if (already_has[FOOD_MEAT_RATION]
-            + already_has[FOOD_BREAD_RATION] >= 2 || coinflip())
-        {
-            type_wanted = one_chance_in(5) ? FOOD_HONEYCOMB
-                : FOOD_ROYAL_JELLY;
-        }
-    }
-
-    quantity = 3 + random2(5);
-
-    if (type_wanted == FOOD_BANANA || type_wanted == FOOD_ORANGE)
-    {
-        quantity = 8 + random2avg(15, 2);
-    }
-    // giving more of the lower food value items
-    else if (type_wanted == FOOD_HONEYCOMB || type_wanted == FOOD_CHUNK)
-    {
-        quantity += random2avg(10, 2);
-    }
-    else if (type_wanted == POT_BLOOD)
-    {
-    // this was above in the vampire block, but gets overwritten by line 1371
-    // so moving here {due}
-        quantity = 2 + random2(4);
-    }
-}
-
 //Determine type and quantity for potion acquirement.  Will give either a largish
 //stack of somewhat valuable potions, like heal wounds, or a small stack of highly
 //valuable potions, like cure mutation.  Currently, the acquirable types are weighted
@@ -962,11 +903,6 @@ static int _find_acquirement_subtype(object_class_type class_wanted,
         again:
         switch (class_wanted)
         {
-        case OBJ_FOOD:
-            // set type_wanted and quantity
-            _acquirement_determine_food(type_wanted, quantity, already_has);
-            break;
-
         case OBJ_POTIONS:
             // Need to set both type wanted and quantity
             _acquirement_determine_potion(type_wanted, quantity);
@@ -1380,10 +1316,6 @@ int acquirement_create_item_general(object_class_type class_wanted,
         int type_wanted = _find_acquirement_subtype(class_wanted, quant,
                                                     divine, agent);
 
-        // Clobber class_wanted for vampires.
-        if (you.species == SP_VAMPIRE && class_wanted == OBJ_FOOD)
-            class_wanted = OBJ_POTIONS;
-
         // Don't generate randart books in items(), we do that
         // ourselves.
         int want_arts = (class_wanted == OBJ_BOOKS ? 0 : 1);
@@ -1560,9 +1492,6 @@ int acquirement_create_item_general(object_class_type class_wanted,
     else if (quant > 1)
         thing.quantity = quant;
 
-    if (is_blood_potion(thing))
-        init_stack_blood_potions(thing);
-
     if (thing.base_type == OBJ_BOOKS)
     {
         if (!_do_book_acquirement(thing, agent))
@@ -1593,9 +1522,8 @@ int acquirement_create_item_general(object_class_type class_wanted,
             thing.plus = std::max(abs(thing.plus), 1);
             break;
 
-        case RING_HUNGER:
         case AMU_INACCURACY:
-            // These are the only truly bad pieces of jewellery.
+            // This is the only truly bad piece of jewellery.
             if (!one_chance_in(9))
                 make_item_randart(thing);
             break;
@@ -2004,9 +1932,6 @@ bool acquirement(object_class_type class_wanted, int agent,
             index++;
         }
         stock[index] = acquirement_create_item_general(OBJ_POTIONS, agent, tempQuiet,
-                                                   stock_loc, debug, false);
-        index++;
-        stock[index] = acquirement_create_item_general(OBJ_FOOD, agent, tempQuiet,
                                                    stock_loc, debug, false);
         index++;
         stock[index] = acquirement_create_item_general(OBJ_GOLD, agent, tempQuiet,

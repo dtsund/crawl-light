@@ -1039,7 +1039,6 @@ static void tag_construct_you(writer &th)
     marshallInt(th, you.disease);
     marshallShort(th, you.dead ? 0 : you.hp);
 
-    marshallShort(th, you.hunger);
     marshallBoolean(th, you.fishtail);
     marshallInt(th, you.earth_attunement);
     marshallInt(th, you.form);
@@ -1641,7 +1640,6 @@ static void tag_read_you(reader &th)
     you.disease         = unmarshallInt(th);
 
     you.hp              = unmarshallShort(th);
-    you.hunger          = unmarshallShort(th);
     you.fishtail        = unmarshallBoolean(th);
     you.earth_attunement= unmarshallInt(th);
     you.form            = static_cast<transformation_type>(unmarshallInt(th));

@@ -299,14 +299,8 @@ IDEF(subtype)
         }
         else if (item->base_type == OBJ_POTIONS)
         {
-            if (item->sub_type == POT_BLOOD)
-               s = "blood";
-            else if (item->sub_type == POT_BLOOD_COAGULATED)
-               s = "coagulated blood";
-            else if (item->sub_type == POT_WATER)
+            if (item->sub_type == POT_WATER)
                s = "water";
-            else if (item->sub_type == POT_PORRIDGE)
-               s = "porridge";
             else if (item->sub_type == POT_BERSERK_RAGE)
                s = "berserk";
             else if (item->sub_type == POT_GAIN_STRENGTH

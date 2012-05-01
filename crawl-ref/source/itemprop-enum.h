@@ -168,23 +168,22 @@ enum jewellery_type
     RING_SLAYING,
     RING_SEE_INVISIBLE,
     RING_INVISIBILITY,
-    RING_HUNGER,
-    RING_TELEPORTATION,                //   10
-    RING_EVASION,
+    RING_TELEPORTATION,
+    RING_EVASION,                      //   10
     RING_SUSTAIN_ABILITIES,
     RING_SUSTENANCE,
     RING_DEXTERITY,
-    RING_INTELLIGENCE,                 //   15
-    RING_WIZARDRY,
+    RING_INTELLIGENCE,
+    RING_WIZARDRY,                     //   15
     RING_MAGICAL_POWER,
     RING_LEVITATION,
     RING_LIFE_PROTECTION,
-    RING_PROTECTION_FROM_MAGIC,        //   20
-    RING_FIRE,
+    RING_PROTECTION_FROM_MAGIC,
+    RING_FIRE,                         //   20
     RING_ICE,
     RING_TELEPORT_CONTROL,
 
-    NUM_RINGS,                         //   24, keep as last ring; can overlap
+    NUM_RINGS,                         //   23, keep as last ring; can overlap
                                        //   safely with first amulet.
     // RINGS after num_rings are for unique types for artefacts
     //   (no non-artefact version).
@@ -194,14 +193,13 @@ enum jewellery_type
     AMU_CLARITY,
     AMU_WARDING,
     AMU_RESIST_CORROSION,
-    AMU_THE_GOURMAND,                  //   40
     AMU_CONSERVATION,
-    AMU_CONTROLLED_FLIGHT,
+    AMU_CONTROLLED_FLIGHT,             //   40
     AMU_INACCURACY,
     AMU_RESIST_MUTATION,
     AMU_GUARDIAN_SPIRIT,
     AMU_FAITH,
-    AMU_STASIS,
+    AMU_STASIS,                        //   45
 
     NUM_JEWELLERY
 };

@@ -133,7 +133,6 @@ static bool _fsim_ranged_combat(FILE *out, int wskill, int mi,
 
     no_messages mx;
     const int iter_limit = Options.fsim_rounds;
-    const int hunger = you.hunger;
     for (int i = 0; i < iter_limit; ++i)
     {
         mon = orig;
@@ -147,7 +146,6 @@ static bool _fsim_ranged_combat(FILE *out, int wskill, int mi,
         if (throw_it(beam, thrown, true, DEBUG_COOKIE))
             hits++;
 
-        you.hunger = hunger;
         time_taken += you.time_taken;
 
         int damage = (mon.max_hit_points - mon.hit_points);
@@ -207,7 +205,6 @@ static bool _fsim_melee_combat(FILE *out, int wskill, int mi,
 
     no_messages mx;
     const int iter_limit = Options.fsim_rounds;
-    const int hunger = you.hunger;
     for (int i = 0; i < iter_limit; ++i)
     {
         mon            = orig;
@@ -216,7 +213,6 @@ static bool _fsim_melee_combat(FILE *out, int wskill, int mi,
         if (you_attack(mi, true))
             hits++;
 
-        you.hunger = hunger;
         time_taken += you.time_taken;
 
         int damage = (mon.max_hit_points - mon.hit_points);

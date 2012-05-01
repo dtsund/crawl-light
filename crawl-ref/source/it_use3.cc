@@ -845,9 +845,9 @@ bool evoke_item(int slot)
         }
         else if (item.sub_type == STAFF_CHANNELING)
         {
-            if (!you.is_undead && you.hunger_state == HS_STARVING)
+            if (!contamination_warning_prompt(1))
             {
-                canned_msg(MSG_TOO_HUNGRY);
+                canned_msg(MSG_OK);
                 return (false);
             }
             else if (you.magic_points < you.max_magic_points
@@ -855,7 +855,7 @@ bool evoke_item(int slot)
             {
                 mpr("You channel some magical energy.");
                 inc_mp(1 + random2(3), false);
-                make_hungry(50, false, true);
+                contaminate_player(1);
                 pract = 1;
                 did_work = true;
                 ident = true;

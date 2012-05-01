@@ -2667,7 +2667,6 @@ enum potion_type
     POT_PARALYSIS,
     POT_CONFUSION,
     POT_INVISIBILITY,
-    POT_PORRIDGE,
     POT_DEGENERATION,
     POT_DECAY,
     POT_WATER,
@@ -2679,8 +2678,6 @@ enum potion_type
     POT_CURE_MUTATION,
     POT_MUTATION,
     POT_RESISTANCE,
-    POT_BLOOD,
-    POT_BLOOD_COAGULATED,
     POT_FIZZING,
     NUM_POTIONS
 };
@@ -2747,7 +2744,6 @@ enum shop_type // (uint8_t) env.sh_type[], item_in_shop(), in_a_shop()
     SHOP_JEWELLERY,
     SHOP_WAND,
     SHOP_BOOK,
-    SHOP_FOOD,
     SHOP_DISTILLERY,
     SHOP_SCROLL,
     SHOP_GENERAL,

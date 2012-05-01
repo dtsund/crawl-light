@@ -581,8 +581,6 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
 
                     if (dec_inv_item_quantity(i, 1))
                         break;
-                    else if (is_blood_potion(you.inv[i]))
-                        remove_oldest_blood_potion(you.inv[i]);
                 }
             }
 
@@ -673,11 +671,6 @@ bool expose_items_to_element(beam_type flavour, const coord_def& where,
             if (x_chance_in_y(strength, 100))
             {
                 num_dest++;
-                if (!dec_mitm_item_quantity(si->index(), 1)
-                    && is_blood_potion(*si))
-                {
-                    remove_oldest_blood_potion(*si);
-                }
             }
         }
     }

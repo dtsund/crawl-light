@@ -200,6 +200,8 @@ void turn_corpse_into_skeleton_and_chunks(item_def &item)
 // Initialise blood potions with a vector of timers.
 void init_stack_blood_potions(item_def &stack, int age)
 {
+    //XXX Remove this obsolete stuff.
+/*
     ASSERT(is_blood_potion(stack));
 
     CrawlHashTable &props = stack.props;
@@ -226,6 +228,7 @@ void init_stack_blood_potions(item_def &stack, int age)
     stack.special = 0;
     ASSERT(timer.size() == stack.quantity);
     props.assert_validity();
+*/
 }
 
 // Sort a CrawlVector<int>, should probably be done properly with templates.
@@ -262,6 +265,8 @@ static void _compare_blood_quantity(item_def &stack, int timer_size)
 
 void maybe_coagulate_blood_potions_floor(int obj)
 {
+    //XXX Old junk code here.
+/*
     item_def &blood = mitm[obj];
     ASSERT(blood.defined());
     ASSERT(is_blood_potion(blood));
@@ -426,6 +431,7 @@ void maybe_coagulate_blood_potions_floor(int obj)
 
     dec_mitm_item_quantity(obj, rot_count + coag_count);
     _compare_blood_quantity(blood, timer.size());
+*/
 }
 
 static std::string _get_desc_quantity(const int quant, const int total)
@@ -460,6 +466,9 @@ static void _potion_stack_changed_message(item_def &potion, int num_changed,
 // Also handles coagulation messages.
 bool maybe_coagulate_blood_potions_inv(item_def &blood)
 {
+    return false;
+    //XXX Obsolete stuff here.
+/*
     ASSERT(blood.defined());
     ASSERT(is_blood_potion(blood));
 
@@ -772,12 +781,16 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
             mpr(blood.name(DESC_INVENTORY).c_str());
     }
     return (true);
+*/
 }
 
 // Removes the oldest timer of a stack of blood potions.
 // Mostly used for (q)uaff, (f)ire, and Evaporate.
 int remove_oldest_blood_potion(item_def &stack)
 {
+    //XXX Obsolete stuff here.
+    return 0;
+/*
     ASSERT(stack.defined());
     ASSERT(is_blood_potion(stack));
 
@@ -794,11 +807,14 @@ int remove_oldest_blood_potion(item_def &stack)
 
     // The quantity will be decreased elsewhere.
     return (val);
+*/
 }
 
 // Used whenever copies of blood potions have to be cleaned up.
 void remove_newest_blood_potion(item_def &stack, int quant)
 {
+    //XXX Obsolete stuff here.
+/*
     ASSERT(stack.defined());
     ASSERT(is_blood_potion(stack));
 
@@ -830,10 +846,13 @@ void remove_newest_blood_potion(item_def &stack, int quant)
 
     // ... and re-sort.
     _int_sort(timer);
+*/
 }
 
 void merge_blood_potion_stacks(item_def &source, item_def &dest, int quant)
 {
+    //XXX Obsolete stuff here.
+/*
     if (!source.defined() || !dest.defined())
         return;
 
@@ -862,6 +881,7 @@ void merge_blood_potion_stacks(item_def &source, item_def &dest, int quant)
 
     // Re-sort timer.
     _int_sort(timer2);
+*/
 }
 
 bool check_blood_corpses_on_ground()
@@ -921,6 +941,8 @@ int num_blood_potions_from_corpse(int mons_class, int chunk_type)
 // If autopickup is active, the potions are auto-picked up after creation.
 void turn_corpse_into_blood_potions(item_def &item)
 {
+    //XXX obsolete stuff here
+/*
     ASSERT(item.base_type == OBJ_CORPSES);
     ASSERT(!food_is_rotten(item));
 
@@ -944,6 +966,7 @@ void turn_corpse_into_blood_potions(item_def &item)
     // Happens after the blood has been bottled.
     if (monster_descriptor(mons_class, MDSC_LEAVES_HIDE) && !one_chance_in(3))
         _create_monster_hide(corpse);
+*/
 }
 
 void turn_corpse_into_skeleton_and_blood_potions(item_def &item)
@@ -1991,7 +2014,6 @@ void revive()
     you.disease = 0;
     you.magic_contamination = 0;
     you.redraw_glow = true;
-    set_hunger(6000, true);
     restore_stat(STAT_ALL, 0, true);
     you.rotting = 0;
 

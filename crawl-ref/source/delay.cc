@@ -77,7 +77,6 @@ private:
 
 int interrupt_block::interrupts_blocked = 0;
 
-static void _xom_check_corpse_waste();
 static void _handle_run_delays(const delay_queue_item &delay);
 static void _handle_macro_delay();
 static void _finish_delay(const delay_queue_item &delay);
@@ -299,8 +298,6 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
         mpr("You stop draining the corpse.");
 
         did_god_conduct(DID_DRINK_BLOOD, 8);
-
-        _xom_check_corpse_waste();
 
         item_def &item = (delay.parm1 ? you.inv[delay.parm2]
                                       : mitm[delay.parm2]);
@@ -617,14 +614,6 @@ bool already_learning_spell(int spell)
     return (false);
 }
 
-// Xom is amused by a potential food source going to waste, and is
-// more amused the hungrier you are.
-static void _xom_check_corpse_waste()
-{
-    const int food_need = std::max(7000 - you.hunger, 0);
-    xom_is_stimulated(50 + (151 * food_need / 6000));
-}
-
 void clear_macro_process_key_delay()
 {
     if (current_delay_action() == DELAY_MACRO_PROCESS_KEY)
@@ -725,30 +714,6 @@ void handle_delay()
         return;
     }
 
-    // First check cases where delay may no longer be valid:
-    // XXX: need to handle passwall when monster digs -- bwr
-    if (delay.type == DELAY_FEED_VAMPIRE)
-    {
-        // Vampires stop feeding if ...
-        // * engorged ("alive")
-        // * bat form runs out due to becoming full
-        // * corpse becomes poisonous as the Vampire loses poison resistance
-        // * corpse disappears for some reason (e.g. animated by a monster)
-        if ((!delay.parm1                                         // on floor
-             && ( !(mitm[ delay.parm2 ].defined())                // missing
-                 || mitm[ delay.parm2 ].base_type != OBJ_CORPSES  // noncorpse
-                 || mitm[ delay.parm2 ].pos != you.pos()) )       // elsewhere
-            || you.hunger_state == HS_ENGORGED
-            || you.hunger_state > HS_SATIATED && player_in_bat_form()
-            || (you.hunger_state >= HS_SATIATED
-               && mitm[delay.parm2].defined()
-               && is_poisonous(mitm[delay.parm2])) )
-        {
-            // Messages handled in _food_change() in food.cc.
-            stop_delay();
-            return;
-        }
-    }
     else if (delay.type == DELAY_BUTCHER || delay.type == DELAY_BOTTLE_BLOOD)
     {
         if (delay.type == DELAY_BOTTLE_BLOOD && you.experience_level < 6)
@@ -773,10 +738,6 @@ void handle_delay()
                 if (delay.type == DELAY_BUTCHER
                     || delay.type == DELAY_BOTTLE_BLOOD) // Shouldn't happen.
                 {
-                    if (player_mutation_level(MUT_SAPROVOROUS) == 3)
-                        _xom_check_corpse_waste();
-                    else
-                        xom_is_stimulated(25);
                     delay.duration = 0;
                 }
                 else
@@ -795,11 +756,6 @@ void handle_delay()
                     if (delay.parm2 >= 100)
                     {
                         mpr("The corpse rots.", MSGCH_ROTTEN_MEAT);
-                        if (you.is_undead != US_UNDEAD
-                            && player_mutation_level(MUT_SAPROVOROUS) < 3)
-                        {
-                            _xom_check_corpse_waste();
-                        }
                     }
 
                     delay.parm2 = 99; // Don't give the message twice.
@@ -952,22 +908,6 @@ void handle_delay()
             mpr("You continue eating.", MSGCH_MULTITURN_ACTION);
             break;
 
-        case DELAY_FEED_VAMPIRE:
-        {
-            item_def &corpse = (delay.parm1 ? you.inv[delay.parm2]
-                                            : mitm[delay.parm2]);
-            if (food_is_rotten(corpse))
-            {
-                mpr("This corpse has started to rot.", MSGCH_ROTTEN_MEAT);
-                _xom_check_corpse_waste();
-                stop_delay();
-                return;
-            }
-            mprf(MSGCH_MULTITURN_ACTION, "You continue drinking.");
-            vampire_nutrition_per_turn(corpse, 0);
-            break;
-        }
-
         default:
             break;
         }
@@ -1016,50 +956,10 @@ static void _finish_delay(const delay_queue_item &delay)
 
     case DELAY_EAT:
         mprf("You finish eating.");
-        // For chunks, warn the player if they're not getting much
-        // nutrition. Also, print the other eating messages only now.
-        if (delay.parm1)
-            chunk_nutrition_message(delay.parm1);
-        else if (delay.parm2 != -1)
-            finished_eating_message(delay.parm2);
         break;
 
     case DELAY_FEED_VAMPIRE:
     {
-        mprf("You finish drinking.");
-
-        did_god_conduct(DID_DRINK_BLOOD, 8);
-
-        item_def &item = (delay.parm1 ? you.inv[delay.parm2]
-                                      : mitm[delay.parm2]);
-
-        const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
-        const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
-
-        vampire_nutrition_per_turn(item, 1);
-
-        // Don't try to apply delay end effects if
-        // vampire_nutrition_per_turn did a stop_delay already:
-        if (is_vampire_feeding())
-        {
-            if (mons_skeleton(item.plus) && one_chance_in(3))
-            {
-                turn_corpse_into_skeleton(item);
-                item_check(false);
-            }
-            else
-            {
-                if (delay.parm1)
-                    dec_inv_item_quantity(delay.parm2, 1);
-                else
-                    dec_mitm_item_quantity(delay.parm2, 1);
-            }
-        }
-
-        if (was_orc)
-            did_god_conduct(DID_DESECRATE_ORCISH_REMAINS, 2);
-        if (was_holy)
-            did_god_conduct(DID_VIOLATE_HOLY_CORPSE, 2);
         break;
     }
 
@@ -1145,11 +1045,6 @@ static void _finish_delay(const delay_queue_item &delay)
                      (delay.type == DELAY_BOTTLE_BLOOD ? "bottling its blood"
                                                        : "butchering"));
 
-                if (player_mutation_level(MUT_SAPROVOROUS) == 3)
-                    _xom_check_corpse_waste();
-                else
-                    xom_is_stimulated(50);
-
                 break;
             }
 
@@ -1225,7 +1120,6 @@ static void _finish_delay(const delay_queue_item &delay)
                     || delay.type == DELAY_BOTTLE_BLOOD)
                 && you.delay_queue.size() == 1)
             {
-                if (you.hunger_state > HS_STARVING || you.species == SP_VAMPIRE)
                     autopickup();
             }
 

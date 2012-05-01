@@ -552,9 +552,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
     }
 
     // Catch some conditions which prevent transformation.
-    if (you.is_undead
-        && (you.species != SP_VAMPIRE
-            || which_trans != TRAN_BAT && you.hunger_state <= HS_SATIATED))
+    if (you.is_undead)
     {
         if (!force)
             mpr("Your unliving flesh cannot be transformed in this way.");
@@ -742,7 +740,6 @@ bool transform(int pow, transformation_type which_trans, bool force,
         you.duration[DUR_RESIST_POISON] = 0;
 
         you.is_undead = US_UNDEAD;
-        you.hunger_state = HS_SATIATED;  // no hunger effects while transformed
         set_redraw_status(REDRAW_HUNGER);
         break;
 

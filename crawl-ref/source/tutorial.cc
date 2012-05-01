@@ -42,7 +42,8 @@ void set_tutorial_hunger(int hunger)
     if (!crawl_state.game_is_tutorial())
         return;
 
-    you.hunger = hunger;
+    //XXX Remove this function.
+    //you.hunger = hunger;
 }
 
 void set_tutorial_skill(const char *skill, int level)

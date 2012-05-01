@@ -66,21 +66,6 @@ bool cast_sublimation_of_blood(int pow)
             if (mons_class_holiness(you.inv[wielded].plus) == MH_HOLY)
                 did_god_conduct(DID_VIOLATE_HOLY_CORPSE, 2);
         }
-        else if (is_blood_potion(you.inv[wielded]))
-        {
-            success = true;
-
-            mprf("The blood within %s froths and boils.",
-                 you.inv[wielded].quantity > 1 ? "one of your flasks"
-                                               : "the flask you are holding");
-
-            mpr("A flood of magical energy pours into your mind!");
-
-            inc_mp(7 + random2(7), false);
-
-            remove_oldest_blood_potion(you.inv[wielded]);
-            dec_inv_item_quantity(wielded, 1);
-        }
         else
             wielded = -1;
     }
@@ -92,29 +77,16 @@ bool cast_sublimation_of_blood(int pow)
             mpr("A conflicting enchantment prevents the spell from "
                 "coming into effect.");
         }
-        else if (you.species == SP_VAMPIRE && you.hunger_state <= HS_SATIATED
-                 || you.is_undead == US_UNDEAD)
-        {
-            mpr("You don't have enough blood to draw power from your "
-                "own body.");
-        }
         else if (!enough_hp(2, true))
              mpr("Your attempt to draw power from your own body fails.");
         else
         {
-            // For vampires.
-            int food = 0;
-
-            while (you.magic_points < you.max_magic_points && you.hp > 1
-                   && (you.species != SP_VAMPIRE || you.hunger - food >= 7000))
+            while (you.magic_points < you.max_magic_points && you.hp > 1)
             {
                 success = true;
 
                 inc_mp(1, false);
                 dec_hp(1, false);
-
-                if (you.species == SP_VAMPIRE)
-                    food += 15;
 
                 for (int loopy = 0; loopy < (you.hp > 1 ? 3 : 0); ++loopy)
                     if (x_chance_in_y(6, pow))
@@ -127,8 +99,6 @@ bool cast_sublimation_of_blood(int pow)
                 mpr("You draw magical energy from your own body!");
             else
                 mpr("Your attempt to draw power from your own body fails.");
-
-            make_hungry(food, false);
         }
     }
 

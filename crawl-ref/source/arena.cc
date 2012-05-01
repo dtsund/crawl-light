@@ -852,8 +852,6 @@ namespace arena
 
                 viewwindow();
                 you.time_taken = 10;
-                // Make sure we don't starve.
-                you.hunger = 10999;
                 //report_foes();
                 world_reacts();
                 do_miscasts();

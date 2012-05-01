@@ -401,20 +401,12 @@ struct food_def
     uint32_t    flags;
 };
 
-// NOTE: Any food with special random messages or side effects
-// currently only takes one turn to eat (except ghouls and chunks)...
-// If this changes then those items will have to have special code
-// (like ghoul chunks) to guarantee that the special thing is only
-// done once.  See the ghoul eating code over in food.cc.
+// NOTE: Most of these numbers are pretty much useless now.  Only fruit and
+// chunks matter, and then only for necromancy and Fedhas and the like.
 static int Food_index[NUM_FOODS];
 static food_def Food_prop[NUM_FOODS] =
 {
-    { FOOD_MEAT_RATION,  "meat ration",  5000,   500, -1500,  80, 4, FFL_NONE },
-    { FOOD_SAUSAGE,      "sausage",      1500,   150,  -400,  40, 1, FFL_NONE },
     { FOOD_CHUNK,        "chunk",        1000,   100,  -500, 100, 3, FFL_NONE },
-    { FOOD_BEEF_JERKY,   "beef jerky",    800,   100,  -250,  20, 1, FFL_NONE },
-
-    { FOOD_BREAD_RATION, "bread ration", 4400, -1500,   750,  80, 4, FFL_NONE },
 
     { FOOD_SNOZZCUMBER,  "snozzcumber",  1500,  -500,   500,  50, 1, FFL_FRUIT},
     { FOOD_ORANGE,       "orange",       1000,  -350,   400,  20, 1, FFL_FRUIT},
@@ -429,12 +421,6 @@ static food_def Food_prop[NUM_FOODS] =
     { FOOD_STRAWBERRY,   "strawberry",    200,   -80,   100,   5, 1, FFL_FRUIT},
     { FOOD_GRAPE,        "grape",         100,   -40,    50,   2, 1, FFL_FRUIT},
     { FOOD_SULTANA,      "sultana",        70,   -30,    30,   1, 1, FFL_FRUIT},
-
-    { FOOD_ROYAL_JELLY,  "royal jelly",  4000,     0,     0,  55, 1, FFL_NONE },
-    { FOOD_HONEYCOMB,    "honeycomb",    2000,     0,     0,  40, 1, FFL_NONE },
-    { FOOD_PIZZA,        "pizza",        1500,  -100,     0,  40, 1, FFL_NONE },
-    { FOOD_CHEESE,       "cheese",       1200,   100,     0,  40, 1, FFL_NONE },
-    { FOOD_AMBROSIA,     "ambrosia",     2500,     0,     0,  40, 1, FFL_NONE },
 };
 
 // Must call this functions early on so that the above tables can
@@ -445,7 +431,7 @@ void init_properties()
     COMPILE_CHECK(NUM_ARMOURS  == 39);
     COMPILE_CHECK(NUM_WEAPONS  == 55);
     COMPILE_CHECK(NUM_MISSILES ==  9);
-    COMPILE_CHECK(NUM_FOODS    == 23);
+    COMPILE_CHECK(NUM_FOODS    == 14);
 
     int i;
 
@@ -2139,15 +2125,6 @@ bool food_is_veg(const item_def &item)
 {
     ASSERT(item.defined() && item.base_type == OBJ_FOOD);
     return (Food_prop[Food_index[item.sub_type]].herb_mod > 0);
-}
-
-bool is_blood_potion(const item_def &item)
-{
-    if (item.base_type != OBJ_POTIONS)
-        return (false);
-
-    return (item.sub_type == POT_BLOOD
-            || item.sub_type == POT_BLOOD_COAGULATED);
 }
 
 bool is_fizzing_potion (const item_def &item)

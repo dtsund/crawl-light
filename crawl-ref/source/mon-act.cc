@@ -766,8 +766,6 @@ static bool _handle_potion(monster* mons, bolt & beem)
         // Remove it from inventory.
         if (dec_mitm_item_quantity(potion_idx, 1))
             mons->inv[MSLOT_POTION] = NON_ITEM;
-        else if (is_blood_potion(potion))
-            remove_oldest_blood_potion(potion);
 
         mons->lose_energy(EUT_ITEM);
         rc = true;
@@ -2714,9 +2712,6 @@ static bool _monster_eat_item(monster* mons, bool nearby)
         if (quant >= si->quantity)
             item_was_destroyed(*si, mons->mindex());
 
-        if (is_blood_potion(*si))
-            for (int i = 0; i < quant; ++i)
-                remove_oldest_blood_potion(*si);
         dec_mitm_item_quantity(si.link(), quant);
     }
 

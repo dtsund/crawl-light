@@ -65,7 +65,6 @@ static void _sdump_stats(dump_params &);
 static void _sdump_location(dump_params &);
 static void _sdump_religion(dump_params &);
 static void _sdump_burden(dump_params &);
-static void _sdump_hunger(dump_params &);
 static void _sdump_transform(dump_params &);
 static void _sdump_visits(dump_params &);
 static void _sdump_gold(dump_params &);
@@ -121,7 +120,6 @@ static dump_section_handler dump_handlers[] = {
     { "location",       _sdump_location      },
     { "religion",       _sdump_religion      },
     { "burden",         _sdump_burden        },
-    { "hunger",         _sdump_hunger        },
     { "transform",      _sdump_transform     },
     { "visits",         _sdump_visits        },
     { "gold",           _sdump_gold          },
@@ -216,17 +214,6 @@ static void _sdump_burden(dump_params &par)
     default:
         break;
     }
-}
-
-static void _sdump_hunger(dump_params &par)
-{
-    if (par.se)
-        par.text += "You were ";
-    else
-        par.text += "You are ";
-
-    par.text += hunger_level();
-    par.text += ".\n\n";
 }
 
 static void _sdump_transform(dump_params &par)
@@ -452,7 +439,6 @@ static void _sdump_misc(dump_params &par)
     _sdump_location(par);
     _sdump_religion(par);
     _sdump_burden(par);
-    _sdump_hunger(par);
     _sdump_transform(par);
     _sdump_visits(par);
     _sdump_gold(par);
@@ -786,7 +772,7 @@ static void _sdump_inventory(dump_params &par)
                 case OBJ_MISSILES:   text += "Missiles";        break;
                 case OBJ_ARMOUR:     text += "Armour";          break;
                 case OBJ_WANDS:      text += "Magical devices"; break;
-                case OBJ_FOOD:       text += "Comestibles";     break;
+                case OBJ_FOOD:       text += "Chunks";          break;
                 case OBJ_SCROLLS:    text += "Scrolls";         break;
                 case OBJ_JEWELLERY:  text += "Jewellery";       break;
                 case OBJ_POTIONS:    text += "Potions";         break;
@@ -1180,20 +1166,6 @@ static void _sdump_mutations(dump_params &par)
 // ========================================================================
 //      Public Functions
 // ========================================================================
-
-const char *hunger_level(void)
-{
-    const bool vamp = (you.species == SP_VAMPIRE);
-
-    return ((you.hunger <= 1000) ? (vamp ? "bloodless" : "starving") :
-            (you.hunger <= 1533) ? (vamp ? "near bloodless" : "near starving") :
-            (you.hunger <= 2066) ? (vamp ? "very thirsty" : "very hungry") :
-            (you.hunger <= 2600) ? (vamp ? "thirsty" : "hungry") :
-            (you.hunger <  7000) ? (vamp ? "not thirsty" : "not hungry") :
-            (you.hunger <  9000) ? "full" :
-            (you.hunger < 11000) ? "very full"
-                                 : (vamp ? "almost alive" : "completely stuffed"));
-}
 
 std::string morgue_directory()
 {

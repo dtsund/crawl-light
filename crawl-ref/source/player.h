@@ -61,9 +61,7 @@ public:
   FixedVector<std::string, NUM_STATS> stat_zero_cause;
   stat_type last_chosen;
 
-  int hunger;
   int disease;
-  uint8_t hunger_state;
   uint8_t max_level;
   uint8_t hit_points_regeneration;
   uint8_t magic_points_regeneration;
@@ -307,8 +305,6 @@ public:
   entry_cause_type entry_cause;
   god_type         entry_cause_god;
 
-  int           old_hunger;  // used for hunger delta-meter (see output.cc)
-
   // Set when the character is going to a new level, to guard against levgen
   // failures
   dungeon_feature_type transit_stair;
@@ -526,7 +522,6 @@ public:
     void expose_to_element(beam_type element, int strength = 0);
     void god_conduct(conduct_type thing_done, int level);
 
-    int hunger_level() const { return hunger_state; }
     void make_hungry(int nutrition, bool silent = true);
     void poison(actor *agent, int amount = 1, bool force = false);
     bool sicken(int amount, bool allow_hint = true);
@@ -743,8 +738,6 @@ int player_armour_shield_spell_penalty();
 int player_evasion(ev_ignore_type evit = EV_IGNORE_NONE);
 
 int player_movement_speed(bool ignore_burden = false);
-
-int player_hunger_rate(void);
 
 int calc_hunger(int food_cost);
 

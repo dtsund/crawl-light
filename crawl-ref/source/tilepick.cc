@@ -141,8 +141,6 @@ static tileidx_t _tileidx_shop(coord_def where)
             return TILE_SHOP_JEWELLERY;
         case SHOP_WAND:
             return TILE_SHOP_WANDS;
-        case SHOP_FOOD:
-            return TILE_SHOP_FOOD;
         case SHOP_BOOK:
             return TILE_SHOP_BOOKS;
         case SHOP_SCROLL:
@@ -3111,26 +3109,11 @@ static tileidx_t _tileidx_chunk(const item_def &item)
 {
     if (food_is_rotten(item))
     {
-        if (!is_inedible(item))
-        {
-            if (is_poisonous(item))
-                return TILE_FOOD_CHUNK_ROTTEN_POISONED;
-
-            if (is_mutagenic(item))
-                return TILE_FOOD_CHUNK_ROTTEN_MUTAGENIC;
-
-            if (causes_rot(item))
-                return TILE_FOOD_CHUNK_ROTTEN_ROTTING;
-
-            if (is_forbidden_food(item))
-                return TILE_FOOD_CHUNK_ROTTEN_FORBIDDEN;
-
-            if (is_contaminated(item))
-                return TILE_FOOD_CHUNK_ROTTEN_CONTAMINATED;
-        }
         return TILE_FOOD_CHUNK_ROTTEN;
     }
 
+    //This stuff below is no longer relevant.
+/*
     if (is_inedible(item))
         return TILE_FOOD_CHUNK;
 
@@ -3148,6 +3131,7 @@ static tileidx_t _tileidx_chunk(const item_def &item)
 
     if (is_contaminated(item))
         return TILE_FOOD_CHUNK_CONTAMINATED;
+*/
 
     return TILE_FOOD_CHUNK;
 }
@@ -3156,15 +3140,10 @@ static tileidx_t _tileidx_food(const item_def &item)
 {
     switch (item.sub_type)
     {
-    case FOOD_MEAT_RATION:  return TILE_FOOD_MEAT_RATION;
-    case FOOD_BREAD_RATION: return TILE_FOOD_BREAD_RATION;
     case FOOD_PEAR:         return TILE_FOOD_PEAR;
     case FOOD_APPLE:        return TILE_FOOD_APPLE;
     case FOOD_CHOKO:        return TILE_FOOD_CHOKO;
-    case FOOD_HONEYCOMB:    return TILE_FOOD_HONEYCOMB;
-    case FOOD_ROYAL_JELLY:  return TILE_FOOD_ROYAL_JELLY;
     case FOOD_SNOZZCUMBER:  return TILE_FOOD_SNOZZCUMBER;
-    case FOOD_PIZZA:        return TILE_FOOD_PIZZA;
     case FOOD_APRICOT:      return TILE_FOOD_APRICOT;
     case FOOD_ORANGE:       return TILE_FOOD_ORANGE;
     case FOOD_BANANA:       return TILE_FOOD_BANANA;
@@ -3174,10 +3153,6 @@ static tileidx_t _tileidx_food(const item_def &item)
     case FOOD_GRAPE:        return TILE_FOOD_GRAPE;
     case FOOD_SULTANA:      return TILE_FOOD_SULTANA;
     case FOOD_LYCHEE:       return TILE_FOOD_LYCHEE;
-    case FOOD_BEEF_JERKY:   return TILE_FOOD_BEEF_JERKY;
-    case FOOD_CHEESE:       return TILE_FOOD_CHEESE;
-    case FOOD_SAUSAGE:      return TILE_FOOD_SAUSAGE;
-    case FOOD_AMBROSIA:     return TILE_FOOD_AMBROSIA;
     case FOOD_CHUNK:        return _tileidx_chunk(item);
     }
 

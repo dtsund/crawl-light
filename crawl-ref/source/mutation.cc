@@ -147,10 +147,6 @@ bool mutation_is_fully_active(mutation_type mut)
     if (you.innate_mutations[mut])
         return (true);
 
-    // ... as are all mutations for semi-undead who are fully alive
-    if (you.hunger_state == HS_ENGORGED)
-        return (true);
-
     // ... as are physical mutations.
     if (get_mutation_def(mut).physical)
         return (true);
@@ -160,9 +156,10 @@ bool mutation_is_fully_active(mutation_type mut)
 
 static bool _mutation_is_fully_inactive(mutation_type mut)
 {
-    const mutation_def& mdef = get_mutation_def(mut);
-    return (you.is_undead == US_SEMI_UNDEAD && you.hunger_state < HS_SATIATED
-            && !you.innate_mutations[mut] && !mdef.physical);
+    return (false);
+    //const mutation_def& mdef = get_mutation_def(mut);
+    //return (you.is_undead == US_SEMI_UNDEAD && you.hunger_state < HS_SATIATED
+    //        && !you.innate_mutations[mut] && !mdef.physical);
 }
 
 formatted_string describe_mutations()
@@ -301,6 +298,7 @@ formatted_string describe_mutations()
         have_any = true;
         break;
 
+/*
     case SP_VAMPIRE:
         have_any = true;
         if (you.hunger_state == HS_STARVING)
@@ -320,6 +318,7 @@ formatted_string describe_mutations()
             have_any = true;
         }
         break;
+*/
 
     case SP_DEEP_DWARF:
         result += "You are resistant to damage.\n";
@@ -432,6 +431,8 @@ formatted_string describe_mutations()
 
 static void _display_vampire_attributes()
 {
+    //XXX obsolete code here!
+/*
     ASSERT(you.species == SP_VAMPIRE);
 
     clrscr();
@@ -533,6 +534,7 @@ static void _display_vampire_attributes()
     const int keyin = getchm();
     if (keyin == '!' || keyin == CK_MOUSE_CMD)
         display_mutations();
+*/
 }
 
 void display_mutations()
@@ -1020,6 +1022,7 @@ bool mutate(mutation_type which_mutation, bool failMsg,
 
     bool rotting = you.is_undead;
 
+/*
     if (you.is_undead == US_SEMI_UNDEAD)
     {
         // The stat gain mutations always come through at Satiated or
@@ -1044,6 +1047,7 @@ bool mutate(mutation_type which_mutation, bool failMsg,
             }
         }
     }
+*/
 
     // Undead bodies don't mutate, they fall apart. -- bwr
     // except for demonspawn (or other permamutations) in lichform -- haranp

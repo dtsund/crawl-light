@@ -4040,8 +4040,6 @@ retry:
         if (is_stackable_item(item) && spec.qty > 0)
         {
             item.quantity = spec.qty;
-            if (is_blood_potion(item))
-                init_stack_blood_potions(item);
         }
 
         if (spec.item_special)
@@ -4999,11 +4997,7 @@ void place_spec_shop(int level_number,
         (force_s_type != SHOP_RANDOM) ? force_s_type
                                       : random2(NUM_SHOPS));
 
-    if (env.shop[i].type == SHOP_FOOD)
-    {
-        env.shop[i].greed = 10 + random2(5);
-    }
-    else if (env.shop[i].type != SHOP_WEAPON_ANTIQUE
+    if (env.shop[i].type != SHOP_WEAPON_ANTIQUE
              && env.shop[i].type != SHOP_ARMOUR_ANTIQUE
              && env.shop[i].type != SHOP_GENERAL_ANTIQUE)
     {
@@ -5192,9 +5186,6 @@ static object_class_type _item_in_shop(shop_type shop_type)
 
     case SHOP_BOOK:
         return (OBJ_BOOKS);
-
-    case SHOP_FOOD:
-        return (OBJ_FOOD);
 
     case SHOP_DISTILLERY:
         return (OBJ_POTIONS);

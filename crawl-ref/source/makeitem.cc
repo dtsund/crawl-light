@@ -2725,9 +2725,6 @@ static void _generate_potion_item(item_def& item, int force_type,
     {
         item.quantity = 1;
     }
-
-    if (is_blood_potion(item))
-        init_stack_blood_potions(item);
 }
 
 static void _generate_scroll_item(item_def& item, int force_type,
@@ -3410,7 +3407,6 @@ jewellery_type get_random_amulet_type()
         1, AMU_CLARITY,
         1, AMU_WARDING,
         1, AMU_RESIST_CORROSION,
-        1, AMU_THE_GOURMAND,
         1, AMU_CONSERVATION,
         1, AMU_CONTROLLED_FLIGHT,
         1, AMU_RESIST_MUTATION,

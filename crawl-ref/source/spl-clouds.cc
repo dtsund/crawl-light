@@ -305,14 +305,9 @@ static std::vector<int> _get_evaporate_result(int potion)
         break;
 
     case POT_WATER:
-    case POT_PORRIDGE:
         beams.push_back(BEAM_POTION_STEAM);
         break;
 
-    case POT_BLOOD:
-    case POT_BLOOD_COAGULATED:
-        beams.push_back(BEAM_POTION_STINKING_CLOUD);
-        // deliberate fall through
     case POT_BERSERK_RAGE:
         beams.push_back(BEAM_POTION_FIRE);
         beams.push_back(BEAM_POTION_STEAM);
@@ -446,15 +441,9 @@ bool cast_evaporate(int pow, bolt& beem, int pot_idx)
         break;
 
     case POT_WATER:
-    case POT_PORRIDGE:
         tracer_flavour = beem.flavour = BEAM_POTION_STEAM;
         break;
 
-    case POT_BLOOD:
-    case POT_BLOOD_COAGULATED:
-        if (one_chance_in(3))
-            break; // stinking cloud
-        // deliberate fall through
     case POT_BERSERK_RAGE:
         beem.effect_known = false;
         beem.flavour = (coinflip() ? BEAM_POTION_FIRE : BEAM_POTION_STEAM);
@@ -532,10 +521,6 @@ bool cast_evaporate(int pow, bolt& beem, int pot_idx)
     beem.flavour = real_flavour;
     beem.is_tracer = false;
     beem.fire();
-
-    // Use up a potion.
-    if (is_blood_potion(potion))
-        remove_oldest_blood_potion(potion);
 
     dec_inv_item_quantity(pot_idx, 1);
 

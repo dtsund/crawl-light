@@ -175,22 +175,6 @@ static int calc_your_to_hit_unarmed(int uattack = UNAT_NO_ATTACK,
     if (player_mutation_level(MUT_EYEBALLS))
         your_to_hit += 2 * player_mutation_level(MUT_EYEBALLS) + 1;
 
-    // Vampires know how to bite and aim better when thirsty.
-    if (you.species == SP_VAMPIRE && uattack == UNAT_BITE)
-    {
-        your_to_hit += 1;
-
-        if (vampiric)
-        {
-            if (you.hunger_state == HS_STARVING)
-                your_to_hit += 2;
-            else if (you.hunger_state < HS_SATIATED)
-                your_to_hit += 1;
-        }
-    }
-    else if (you.species != SP_VAMPIRE && you.hunger_state == HS_STARVING)
-        your_to_hit -= 3;
-
     your_to_hit += slaying_bonus(PWPN_HIT);
 
     return your_to_hit;
@@ -545,9 +529,6 @@ bool melee_attack::attack()
         check_autoberserk();
     }
 
-    // The attacker loses nutrition.
-    attacker->make_hungry(3, true);
-
     // Xom thinks fumbles are funny...
     if (attacker->fumbles_attack())
     {
@@ -705,6 +686,9 @@ static int _modify_blood_amount(const int damage, const int dam_type)
 
 static bool _vamp_wants_blood_from_monster(const monster* mon)
 {
+    //Player vampires don't exist anymore!
+    return false;
+/*    
     if (you.species != SP_VAMPIRE)
         return (false);
 
@@ -722,6 +706,7 @@ static bool _vamp_wants_blood_from_monster(const monster* mon)
     // Don't drink poisonous or mutagenic blood.
     return (chunk_type == CE_CLEAN || chunk_type == CE_CONTAMINATED
             || (chunk_is_poisonous(chunk_type) && player_res_poison()));
+*/
 }
 
 // Should life protection protect from this?
@@ -769,27 +754,6 @@ static bool _player_vampire_draws_blood(const monster* mon, const int damage,
             inc_hp(heal, false);
             mprf("You feel %sbetter.", (you.hp == you.hp_max) ? "much " : "");
         }
-    }
-
-    // Gain nutrition.
-    if (you.hunger_state != HS_ENGORGED)
-    {
-        int food_value = 0;
-        if (chunk_type == CE_CLEAN)
-            food_value = 30 + random2avg(59, 2);
-        else if (chunk_type == CE_CONTAMINATED
-                 || chunk_is_poisonous(chunk_type))
-        {
-            food_value = 15 + random2avg(29, 2);
-        }
-
-        // Bats get rather less nutrition out of it.
-        if (player_in_bat_form())
-            food_value /= 2;
-
-        food_value /= reduction;
-
-        lessen_hunger(food_value, false);
     }
 
     did_god_conduct(DID_DRINK_BLOOD, 5 + random2(4));
@@ -898,14 +862,6 @@ bool melee_attack::player_attack()
             do_trample();
 
         player_sustain_passive_damage();
-
-        // Thirsty stabbing vampires get to draw blood.
-        if (you.species == SP_VAMPIRE && you.hunger_state < HS_SATIATED
-            && stab_attempt && stab_bonus > 0)
-        {
-            _player_vampire_draws_blood(defender->as_monster(),
-                                        damage_done, true);
-        }
 
         // At this point, pretend we didn't hit at all.
         if (shield_blocked)
@@ -1051,17 +1007,6 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         aux_damage += you.has_usable_fangs() * 2
                       + you.skill(SK_UNARMED_COMBAT) / 5;
         noise_factor = 75;
-
-        // prob of vampiric bite:
-        // 1/4 when non-thirsty, 1/2 when thirsty, 100% when
-        // bloodless
-        if (_vamp_wants_blood_from_monster(defender->as_monster())
-            && (you.hunger_state == HS_STARVING
-                || you.hunger_state < HS_SATIATED && coinflip()
-                || you.hunger_state >= HS_SATIATED && one_chance_in(4)))
-        {
-            damage_brand = SPWPN_VAMPIRICISM;
-        }
 
         if (player_mutation_level(MUT_ACIDIC_BITE))
         {
@@ -1261,8 +1206,6 @@ bool melee_attack::player_aux_unarmed()
 
         to_hit = random2(calc_your_to_hit_unarmed(atk,
                          damage_brand == SPWPN_VAMPIRICISM));
-
-        make_hungry(2, true);
 
         handle_noise(defender->pos());
         alert_nearby_monsters();
@@ -1608,9 +1551,6 @@ int melee_attack::player_apply_misc_modifiers(int damage)
 {
     if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK])
         damage += 1 + random2(10);
-
-    if (you.species != SP_VAMPIRE && you.hunger_state == HS_STARVING)
-        damage -= random2(5);
         
     // not additive, statues are supposed to be bad with tiny toothpicks but
     // deal crushing blows with big weapons
@@ -2021,25 +1961,7 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
 
     mondied = check_unrand_effects(mondied) || mondied;
 
-    // Thirsty vampires will try to use a stabbing situation to draw blood.
-    if (you.species == SP_VAMPIRE && you.hunger_state < HS_SATIATED
-        && mondied && stab_attempt && stab_bonus > 0
-        && _player_vampire_draws_blood(defender->as_monster(),
-                                       damage_done, true))
-    {
-        // No further effects.
-    }
-    else if (you.species == SP_VAMPIRE
-             && damage_brand == SPWPN_VAMPIRICISM
-             && you.weapon()
-             && _player_vampire_draws_blood(defender->as_monster(),
-                                            damage_done, false,
-                                            (mondied ? 1 : 10)))
-    {
-        // No further effects.
-    }
-    // Vampiric *weapon* effects for the killing blow.
-    else if (mondied && damage_brand == SPWPN_VAMPIRICISM
+    if (mondied && damage_brand == SPWPN_VAMPIRICISM
              && you.weapon()
              && you.species != SP_VAMPIRE) // vampires get their bonus elsewhere
     {
@@ -3950,10 +3872,6 @@ int melee_attack::player_to_hit(bool random_factor)
     // slaying bonus
     your_to_hit += slaying_bonus(PWPN_HIT);
 
-    // hunger penalty
-    if (you.hunger_state == HS_STARVING)
-        your_to_hit -= 3;
-
     // armour penalty
     your_to_hit -= (player_armour_tohit_penalty + player_shield_tohit_penalty);
 
@@ -5120,6 +5038,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
         }
         break;
 
+/*
     case AF_HUNGER:
         if (defender->holiness() == MH_UNDEAD)
             break;
@@ -5127,6 +5046,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
         if (one_chance_in(20) || (damage_done > 0))
             defender->make_hungry(you.hunger / 4, false);
         break;
+*/
 
     case AF_BLINK:
         if (one_chance_in(3))

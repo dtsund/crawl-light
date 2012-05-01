@@ -1253,50 +1253,6 @@ static void _give_species_bonus_mp()
     }
 }
 
-static void _give_starting_food()
-{
-    // These undead start with no food.
-    if (you.species == SP_MUMMY || you.species == SP_GHOUL)
-        return;
-
-    item_def item;
-    item.quantity = 1;
-    if (you.species == SP_SPRIGGAN)
-    {
-        item.base_type = OBJ_POTIONS;
-        item.sub_type  = POT_PORRIDGE;
-    }
-    else if (you.species == SP_VAMPIRE)
-    {
-        item.base_type = OBJ_POTIONS;
-        item.sub_type  = POT_BLOOD;
-        init_stack_blood_potions(item);
-    }
-    else
-    {
-        item.base_type = OBJ_FOOD;
-        if (you.species == SP_HILL_ORC || you.species == SP_KOBOLD
-            || player_genus(GENPC_OGREISH) || you.species == SP_TROLL
-            || you.species == SP_CAT)
-        {
-            item.sub_type = FOOD_MEAT_RATION;
-        }
-        else
-            item.sub_type = FOOD_BREAD_RATION;
-    }
-
-    // Give another one for hungry species.
-    // And healers, to give pacifists a better chance. [rob]
-    if (player_mutation_level(MUT_FAST_METABOLISM)
-        || you.char_class == JOB_HEALER)
-    {
-        item.quantity = 2;
-    }
-
-    const int slot = find_free_slot(item);
-    you.inv[slot]  = item;       // will ASSERT if couldn't find free slot
-}
-
 static void _setup_tutorial_miscs()
 {
     // Allow for a few specific hint mode messages.
@@ -1400,32 +1356,6 @@ static void _give_basic_spells(job_type which_job)
     return;
 }
 
-// Give knowledge of things that aren't in the starting inventory.
-static void _give_basic_knowledge(job_type which_job)
-{
-    if (you.species == SP_VAMPIRE)
-        set_ident_type(OBJ_POTIONS, POT_BLOOD_COAGULATED, ID_KNOWN_TYPE);
-
-    switch (which_job)
-    {
-    case JOB_ASSASSIN:
-    case JOB_VENOM_MAGE:
-        set_ident_type(OBJ_POTIONS, POT_POISON, ID_KNOWN_TYPE);
-        break;
-
-    case JOB_TRANSMUTER:
-        set_ident_type(OBJ_POTIONS, POT_WATER, ID_KNOWN_TYPE);
-        break;
-
-    case JOB_ARTIFICER:
-        set_ident_type(OBJ_SCROLLS, SCR_RECHARGING, ID_KNOWN_TYPE);
-        break;
-
-    default:
-        break;
-    }
-}
-
 // For items that get a random colour, give them a more thematic one.
 static void _apply_job_colour(item_def &item)
 {
@@ -1517,7 +1447,8 @@ void setup_game(const newgame_def& ng)
  */
 static void _setup_normal_game()
 {
-    make_hungry(0, true);
+    //Not really sure why this function needed to be there.
+    //make_hungry(0, true);
 }
 
 /**
@@ -1526,7 +1457,6 @@ static void _setup_normal_game()
 static void _setup_tutorial(const newgame_def& ng)
 {
     set_tutorial_map(ng.map);
-    make_hungry(0, true);
 }
 
 /**
@@ -1588,8 +1518,6 @@ static void _setup_generic(const newgame_def& ng)
     if (you.species == SP_DEMONSPAWN)
         roll_demonspawn_mutations();
 
-    _give_starting_food();
-
     if (crawl_state.game_is_sprint())
         sprint_give_items();
 
@@ -1600,7 +1528,6 @@ static void _setup_generic(const newgame_def& ng)
     _mark_starting_books();
 
     _give_basic_spells(you.char_class);
-    _give_basic_knowledge(you.char_class);
 
     _racialise_starting_equipment();
     initialise_item_descriptions();

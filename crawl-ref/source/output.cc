@@ -1762,17 +1762,9 @@ static std::vector<formatted_string> _get_overview_resistances(
     const char* pregourmand;
     const char* postgourmand;
 
-    if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
-    {
-        pregourmand = "Gourmand  : ";
-        postgourmand = _itosym1(1);
-        saplevel = 1;
-    }
-    else
-    {
-        pregourmand = "Saprovore : ";
-        postgourmand = _itosym3(saplevel);
-    }
+    pregourmand = "Saprovore : ";
+    postgourmand = _itosym3(saplevel);
+
     snprintf(buf, sizeof buf, "%s%s%s",
              _determine_colour_string(saplevel, 3), pregourmand, postgourmand);
     cols.add_formatted(0, buf, false);

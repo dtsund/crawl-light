@@ -145,7 +145,7 @@ static int _make_mimic_item(monster_type type)
         item.base_type = OBJ_POTIONS;
         do
             item.sub_type = random2(NUM_POTIONS);
-        while (is_blood_potion(item) || is_fizzing_potion(item));
+        while (is_fizzing_potion(item));
         break;
 
     case MONS_GOLD_MIMIC:
@@ -478,8 +478,6 @@ bool explode_corpse(item_def& corpse, const coord_def& where)
 
     corpse.base_type = OBJ_FOOD;
     corpse.sub_type  = FOOD_CHUNK;
-    if (is_bad_food(corpse))
-        corpse.flags |= ISFLAG_DROPPED;
 
     int blood = nchunks * 3;
 

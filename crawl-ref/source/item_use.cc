@@ -241,12 +241,6 @@ static bool _valid_weapon_swap(const item_def &item)
     if (item.base_type == OBJ_FOOD)
         return (item.sub_type == FOOD_CHUNK);
 
-    if (item.base_type == OBJ_POTIONS)
-    {
-       return (item.sub_type == POT_BLOOD
-               || item.sub_type == POT_BLOOD_COAGULATED);
-    }
-
     return (false);
 }
 
@@ -2461,15 +2455,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     // Now start real firing!
     origin_set_unknown(item);
 
-    if (is_blood_potion(item) && thrown.quantity > 1)
-    {
-        // Initialise thrown potion with oldest potion in stack.
-        long val = remove_oldest_blood_potion(thrown);
-        val -= you.num_turns;
-        item.props.clear();
-        init_stack_blood_potions(item, val);
-    }
-
     // Even though direction is allowed, we're throwing so we
     // want to use tx, ty to make the missile fly to map edge.
     if (!teleport)
@@ -3959,17 +3944,7 @@ void drink(int slot)
 
     if (potion.base_type != OBJ_POTIONS)
     {
-        if (you.species == SP_VAMPIRE && potion.base_type == OBJ_CORPSES)
-            eat_food(slot);
-        else
-            mpr("You can't drink that!");
-        return;
-    }
-
-    if (you.hunger_state == HS_ENGORGED
-        && (is_blood_potion(potion) || potion.sub_type == POT_PORRIDGE))
-    {
-        mpr("You are much too full right now.");
+        mpr("You can't drink that!");
         return;
     }
 
@@ -3991,17 +3966,8 @@ void drink(int slot)
                       40, true, false))
         return;
 
-    if (is_blood_potion(potion))
-    {
-        // Always drink oldest potion.
-        remove_oldest_blood_potion(potion);
-    }
-
     dec_inv_item_quantity(slot, 1);
     you.turn_is_over = true;
-
-    if (you.species != SP_VAMPIRE)
-        lessen_hunger(40, true);
 
     // This got deferred from the it_use2 switch to prevent SIGHUP abuse.
     if (potion.sub_type == POT_EXPERIENCE)
@@ -4040,8 +4006,8 @@ static bool _drink_fountain()
         if (!yesno("Drink from the fountain of blood?", true, 'n'))
             return (false);
 
-        mpr("You drink the blood.");
-        fountain_effect = POT_BLOOD;
+        mpr("You drink the blood. You're not quite sure why you did that.");
+        // XXX: Currently, the good gods don't punish this.  Should fix this.
     }
     else
     {
@@ -4078,7 +4044,7 @@ static bool _drink_fountain()
                                    0));
     }
 
-    if (fountain_effect != POT_WATER && fountain_effect != POT_BLOOD)
+    if (fountain_effect != POT_WATER)
         xom_is_stimulated(50);
 
     // Good gods do not punish for bad random effects. However, they do
@@ -5048,69 +5014,6 @@ void tile_item_drop(int idx, bool partdrop)
     drop_item(idx, quantity);
 }
 
-static bool _prompt_eat_bad_food(const item_def food)
-{
-    if (food.base_type != OBJ_CORPSES
-        && (food.base_type != OBJ_FOOD || food.sub_type != FOOD_CHUNK))
-    {
-        return (true);
-    }
-
-    if (!is_bad_food(food))
-        return (true);
-
-    const std::string food_colour = menu_colour_item_prefix(food);
-    std::string colour            = "";
-    std::string colour_off        = "";
-
-    const int col = menu_colour(food.name(DESC_NOCAP_A), food_colour, "pickup");
-    if (col != -1)
-        colour = colour_to_str(col);
-
-    if (!colour.empty())
-    {
-        // Order is important here.
-        colour_off  = "</" + colour + ">";
-        colour      = "<" + colour + ">";
-    }
-
-    const std::string qualifier = colour
-                                  + (is_poisonous(food)      ? "poisonous" :
-                                     is_mutagenic(food)      ? "mutagenic" :
-                                     causes_rot(food)        ? "rot-inducing" :
-                                     is_forbidden_food(food) ? "forbidden" : "")
-                                  + colour_off;
-
-    std::string prompt  = "Really ";
-                prompt += (you.species == SP_VAMPIRE ? "drink from" : "eat");
-                prompt += " this " + qualifier;
-                prompt += (food.base_type == OBJ_CORPSES ? " corpse"
-                                                         : " chunk of meat");
-                prompt += "?";
-
-    if (!yesno(prompt.c_str(), false, 'n'))
-    {
-        canned_msg(MSG_OK);
-        return (false);
-    }
-    return (true);
-}
-
-void tile_item_eat_floor(int idx)
-{
-    if (mitm[idx].base_type == OBJ_CORPSES
-            && you.species == SP_VAMPIRE
-        || mitm[idx].base_type == OBJ_FOOD
-            && you.is_undead != US_UNDEAD && you.species != SP_VAMPIRE)
-    {
-        if (can_ingest(mitm[idx], false)
-            && _prompt_eat_bad_food(mitm[idx]))
-        {
-            eat_floor_item(idx);
-        }
-    }
-}
-
 void tile_item_use_secondary(int idx)
 {
     const item_def item = you.inv[idx];
@@ -5214,7 +5117,8 @@ void tile_item_use(int idx)
             {
                 break;
             }
-            // intentional fall-through for Vampires
+            //Change this case below to wielding later.
+/*
         case OBJ_FOOD:
             if (check_warning_inscriptions(item, OPER_EAT)
                 && _prompt_eat_bad_food(item))
@@ -5222,6 +5126,7 @@ void tile_item_use(int idx)
                 eat_food(idx);
             }
             return;
+*/
 
         case OBJ_BOOKS:
             if (!item_is_spellbook(item) || you.skill(SK_SPELLCASTING) == 0)

@@ -14,99 +14,63 @@
 
 static int food_do_eat(lua_State *ls)
 {
+    mpr("food_do_eat in l_food.cc called, please file a bug report.");
     bool eaten = false;
-    if (!you.turn_is_over)
-        eaten = eat_food(-1);
     lua_pushboolean(ls, eaten);
     return (1);
 }
 
 static int food_prompt_eat_chunks(lua_State *ls)
 {
+    mpr("food_prompt_eat_chunks in l_food.cc called, please file a bug report.");
     int eaten = 0;
-    if (!you.turn_is_over)
-        eaten = prompt_eat_chunks();
-
     lua_pushboolean(ls, (eaten != 0));
     return (1);
 }
 
 static int food_prompt_floor(lua_State *ls)
 {
+    mpr("food_prompt_floor in l_food.cc called, please file a bug report.");
     int eaten = 0;
-    if (!you.turn_is_over)
-    {
-        eaten = eat_from_floor();
-        if (eaten == 1)
-            burden_change();
-    }
     lua_pushboolean(ls, (eaten != 0));
     return (1);
 }
 
 static int food_prompt_inventory(lua_State *ls)
 {
+    mpr("food_prompt_floor in l_food.cc called, please file a bug report.");
     bool eaten = false;
-    if (!you.turn_is_over)
-        eaten = eat_from_inventory();
     lua_pushboolean(ls, eaten);
     return (1);
 }
 
 static int food_prompt_inventory_menu(lua_State *ls)
 {
+    mpr("food_prompt_floor in l_food.cc called, please file a bug report.");
     bool eaten = false;
-    if (!you.turn_is_over)
-        eaten = prompt_eat_inventory_item();
     lua_pushboolean(ls, eaten);
     return (1);
 }
 
 static int food_can_eat(lua_State *ls)
 {
+    mpr("food_can_eat in l_food.cc called, please file a bug report.");
     LUA_ITEM(ls, item, 1);
     bool hungercheck = true;
 
     if (lua_isboolean(ls, 2))
         hungercheck = lua_toboolean(ls, 2);
 
-    bool edible = item && can_ingest(*item, true, true, hungercheck);
-    lua_pushboolean(ls, edible);
+    lua_pushboolean(ls, false);
     return (1);
-}
-
-static bool eat_item(const item_def &item)
-{
-    if (in_inventory(item))
-    {
-        eat_inventory_item(item.link);
-        return (true);
-    }
-    else
-    {
-        int ilink = item_on_floor(item, you.pos());
-
-        if (ilink != NON_ITEM)
-        {
-            eat_floor_item(ilink);
-            return (true);
-        }
-        return (false);
-    }
 }
 
 static int food_eat(lua_State *ls)
 {
+    mpr("food_eat in l_food.cc called, please file a bug report.");
     LUA_ITEM(ls, item, 1);
 
     bool eaten = false;
-    if (!you.turn_is_over)
-    {
-        // When we get down to eating, we don't care if the eating is courtesy
-        // an un-ided amulet of the gourmand.
-        if (item && can_ingest(*item, false, false))
-            eaten = eat_item(*item);
-    }
     lua_pushboolean(ls, eaten);
     return (1);
 }

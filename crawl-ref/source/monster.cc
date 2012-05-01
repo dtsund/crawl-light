@@ -6212,9 +6212,6 @@ bool monster::can_drink_potion(potion_type ptype) const
         case POT_HEAL_WOUNDS:
             return (holiness() != MH_NONLIVING
                     && holiness() != MH_PLANT);
-        case POT_BLOOD:
-        case POT_BLOOD_COAGULATED:
-            return (mons_species() == MONS_VAMPIRE);
         case POT_SPEED:
         case POT_MIGHT:
         case POT_BERSERK_RAGE:
@@ -6240,9 +6237,6 @@ bool monster::should_drink_potion(potion_type ptype) const
                 || has_ench(ENCH_CONFUSION)
                 || has_ench(ENCH_ROT);
     case POT_HEAL_WOUNDS:
-        return (hit_points <= max_hit_points / 2);
-    case POT_BLOOD:
-    case POT_BLOOD_COAGULATED:
         return (hit_points <= max_hit_points / 2);
     case POT_SPEED:
         return (!has_ench(ENCH_HASTE));
@@ -6293,15 +6287,6 @@ item_type_id_state_type monster::drink_potion_effect(potion_type pot_eff)
     case POT_HEAL_WOUNDS:
         heal(10 + random2avg(28, 3));
         simple_monster_message(this, " is healed!");
-        break;
-
-    case POT_BLOOD:
-    case POT_BLOOD_COAGULATED:
-        if (mons_species() == MONS_VAMPIRE)
-        {
-            heal(10 + random2avg(28, 3));
-            simple_monster_message(this, " is healed!");
-        }
         break;
 
     case POT_SPEED:

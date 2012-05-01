@@ -180,7 +180,6 @@ const char* jewellery_base_ability_string(int subtype)
     case AMU_CLARITY:            return "Clar";
     case AMU_WARDING:            return "Ward";
     case AMU_RESIST_CORROSION:   return "rCorr";
-    case AMU_THE_GOURMAND:       return "Gourm";
     case AMU_CONSERVATION:       return "Cons";
     case AMU_CONTROLLED_FLIGHT:  return "cFly";
     case AMU_RESIST_MUTATION:    return "rMut";
@@ -1832,7 +1831,7 @@ std::string get_item_description(const item_def &item, bool verbose,
 
             if (item.base_type == OBJ_WANDS
                 || item.base_type == OBJ_MISSILES
-                || item.base_type == OBJ_FOOD && item.sub_type == FOOD_CHUNK)
+                || item.base_type == OBJ_FOOD)
             {
                 // Get rid of newline at end of description, so that
                 // either the wand "no charges left" or the meat chunk
@@ -1925,74 +1924,7 @@ std::string get_item_description(const item_def &item, bool verbose,
             break;
         // intentional fall-through
     case OBJ_FOOD:
-        if (item.base_type == OBJ_CORPSES || item.sub_type == FOOD_CHUNK)
-        {
-            if (food_is_rotten(item))
-            {
-                if (player_mutation_level(MUT_SAPROVOROUS) == 3)
-                    description << "It looks nice and ripe.";
-                else
-                {
-                    description << "In fact, it is rotting away before your "
-                                   "eyes.";
-
-                    if (!you.is_undead
-                        && !player_mutation_level(MUT_SAPROVOROUS))
-                    {
-                        description << " Eating it is completely out of the "
-                                       "question!";
-                    }
-                }
-            }
-            else if (player_mutation_level(MUT_SAPROVOROUS) < 3)
-                description << "It looks rather unpleasant.";
-
-            switch (mons_corpse_effect(item.plus))
-            {
-            case CE_POISONOUS:
-                description << "\n\nThis meat is poisonous.";
-                break;
-            case CE_MUTAGEN_RANDOM:
-                if (you.species != SP_GHOUL)
-                {
-                    description << "\n\nEating this meat will cause random "
-                                   "mutations.";
-                }
-                break;
-            case CE_ROT:
-                if (you.species != SP_GHOUL)
-                    description << "\n\nEating this meat will cause rotting.";
-                break;
-            case CE_CONTAMINATED:
-                if (player_mutation_level(MUT_SAPROVOROUS) < 3)
-                {
-                    description << "\n\nMeat like this may occasionally cause "
-                                   "sickness.";
-                }
-                break;
-            case CE_POISON_CONTAM:
-                description << "\n\nThis meat is poisonous";
-                if (player_mutation_level(MUT_SAPROVOROUS) < 3)
-                {
-                    description << " and may cause sickness even if poison "
-                                   "resistant";
-                }
-                description << ".";
-                break;
-            default:
-                break;
-            }
-
-            if (god_hates_cannibalism(you.religion)
-                   && is_player_same_species(item.plus)
-                || you.religion == GOD_ZIN
-                   && mons_class_intel(item.plus) >= I_NORMAL)
-            {
-                description << "\n\n" << god_name(you.religion) << " disapproves "
-                               "of eating such meat.";
-            }
-            description << "\n";
-        }
+        //Nothing to see here.
         break;
 
     case OBJ_STAVES:
@@ -2523,8 +2455,6 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
             actions.push_back(CMD_WEAR_ARMOUR);
         break;
     case OBJ_FOOD:
-        if (can_ingest(item, true, true, false))
-            actions.push_back(CMD_EAT);
         break;
     case OBJ_SCROLLS:
     case OBJ_BOOKS: // only unknown ones
@@ -2622,10 +2552,6 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
     case CMD_EVOKE:
         redraw_screen();
         evoke_item(slot);
-        return false;
-    case CMD_EAT:
-        redraw_screen();
-        eat_food(slot);
         return false;
     case CMD_READ:
         read_scroll(slot);

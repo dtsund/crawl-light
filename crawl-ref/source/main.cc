@@ -1628,18 +1628,10 @@ static void _toggle_friendly_pickup()
 
 static void _do_rest()
 {
-    if (you.hunger_state == HS_STARVING && !you_min_hunger())
-    {
-        mpr("You're too hungry to rest.");
-        return;
-    }
-
     if (i_feel_safe())
     {
         if ((you.hp == you.hp_max
-                || player_mutation_level(MUT_SLOW_HEALING) == 3
-                || (you.species == SP_VAMPIRE
-                    && you.hunger_state == HS_STARVING))
+                || player_mutation_level(MUT_SLOW_HEALING) == 3)
             && you.magic_points == you.max_magic_points)
         {
             mpr("You start searching.");
@@ -1847,7 +1839,7 @@ void process_command(command_type cmd)
     case CMD_BUTCHER:              butchery();               break;
     case CMD_CAST_SPELL:           do_cast_spell_cmd(false); break;
     case CMD_DISPLAY_SPELLS:       inspect_spells();         break;
-    case CMD_EAT:                  eat_food();               break;
+  //case CMD_EAT:                  eat_food();               break;
     case CMD_EXAMINE_OBJECT:       examine_object();         break;
     case CMD_FIRE:                 fire_thing();             break;
     case CMD_FORCE_CAST_SPELL:     do_cast_spell_cmd(true);  break;
@@ -2133,14 +2125,6 @@ static void _decrement_paralysis(int delay)
 static void _decrement_durations()
 {
     int delay = you.time_taken;
-
-    if (wearing_amulet(AMU_THE_GOURMAND))
-    {
-        if (you.duration[DUR_GOURMAND] < GOURMAND_MAX && coinflip())
-            you.duration[DUR_GOURMAND] += delay;
-    }
-    else
-        you.duration[DUR_GOURMAND] = 0;
 
     if (you.duration[DUR_ICEMAIL_DEPLETED] > 0)
     {
@@ -2460,8 +2444,7 @@ static void _decrement_durations()
     }
 
     if (you.duration[DUR_BERSERK]
-        && (_decrement_a_duration(DUR_BERSERK, delay)
-            || you.hunger <= HUNGER_STARVING + BERSERK_NUTRITION))
+        && (_decrement_a_duration(DUR_BERSERK, delay)))
     {
         mpr("You are no longer berserk.");
         you.duration[DUR_BERSERK] = 0;
@@ -2518,9 +2501,6 @@ static void _decrement_durations()
         Hints.hints_events[HINT_YOU_ENCHANTED] = false;
 
         slow_player(dur);
-
-        make_hungry(BERSERK_NUTRITION, true);
-        you.hunger = std::max(HUNGER_STARVING, you.hunger);
 
         // 1KB: No berserk healing.
         you.hp = (you.hp + 1) * 2 / 3;
@@ -2622,10 +2602,6 @@ static void _decrement_durations()
 
         if (you.religion == GOD_CHEIBRIADOS && you.piety >= piety_breakpoint(0))
             resilience = resilience * 3 / 2;
-
-        // Faster rotting when hungry.
-        if (you.hunger_state < HS_SATIATED)
-            resilience >>= HS_SATIATED - you.hunger_state;
 
         if (one_chance_in(resilience))
         {
@@ -2871,12 +2847,6 @@ static void _player_reacts()
     if (you.walking && capped_time > BASELINE_DELAY)
         capped_time = BASELINE_DELAY;
 
-    int food_use = player_hunger_rate();
-    food_use = div_rand_round(food_use * capped_time, BASELINE_DELAY);
-
-    if (food_use > 0 && you.hunger >= 40)
-        make_hungry(food_use, true);
-
     _regenerate_hp_and_mp(capped_time);
 
     recharge_rods(you.time_taken, false);
@@ -2904,7 +2874,6 @@ static void _player_reacts_to_monsters()
         detect_creatures(1 + you.duration[DUR_TELEPATHY] /
                          (2 * BASELINE_DELAY), true);
 
-    handle_starvation();
     _decrement_paralysis(you.time_taken);
 
 }
@@ -3251,7 +3220,6 @@ static bool _untrap_target(const coord_def move, bool check_confused)
             }
             if (do_msg)
                 mpr("You swing at nothing.");
-            make_hungry(3, true);
             you.turn_is_over = true;
             return (true);
         }
@@ -3351,7 +3319,6 @@ static void _open_door(coord_def move, bool check_confused)
         if (you.confused())
         {
             mpr("You swing at nothing.");
-            make_hungry(3, true);
             you.turn_is_over = true;
             return;
         }

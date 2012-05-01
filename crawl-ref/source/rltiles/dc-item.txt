@@ -489,15 +489,10 @@ i-disintegration WAND_DISINTEGRATION WAND_ID_LAST
 %back none
 #################OBJ_FOOD
 %sdir item/food
-meat_ration FOOD_MEAT_RATION UNSEEN_FOOD
-bread_ration FOOD_BREAD_RATION
-pear FOOD_PEAR
+pear FOOD_PEAR UNSEEN_FOOD
 apple FOOD_APPLE
 choko FOOD_CHOKO
-honeycomb FOOD_HONEYCOMB
-lump_of_royal_jelly FOOD_ROYAL_JELLY
 snozzcumber FOOD_SNOZZCUMBER
-pizza FOOD_PIZZA
 apricot FOOD_APRICOT
 orange FOOD_ORANGE
 banana FOOD_BANANA
@@ -507,10 +502,6 @@ lemon FOOD_LEMON
 grape FOOD_GRAPE
 sultana FOOD_SULTANA
 lychee FOOD_LYCHEE
-beef_jerky FOOD_BEEF_JERKY
-cheese FOOD_CHEESE
-sausage FOOD_SAUSAGE
-piece_of_ambrosia FOOD_AMBROSIA
 bone FOOD_BONE
 chunk FOOD_CHUNK
 chunk_rotten FOOD_CHUNK_ROTTEN
@@ -607,7 +598,6 @@ i-str RING_STRENGTH
 i-slaying RING_SLAYING
 i-see-invis RING_SEE_INVISIBLE
 i-invisibility RING_INVISIBILITY
-i-hunger RING_HUNGER
 i-teleport RING_TELEPORTATION
 i-evasion RING_EVASION
 i-s-abil RING_SUSTAIN_ABILITIES
@@ -663,7 +653,6 @@ i-rage AMU_RAGE AMU_ID_FIRST
 i-clarity AMU_CLARITY
 i-warding AMU_WARDING
 i-r-corrosion AMU_RESIST_CORROSION
-i-gourmand AMU_THE_GOURMAND
 i-conservation AMU_CONSERVATION
 i-c-flight AMU_CONTROLLED_FLIGHT
 i-inaccuracy AMU_INACCURACY
@@ -708,7 +697,6 @@ i-slowing POT_SLOWING
 i-paralysis POT_PARALYSIS
 i-confusion POT_CONFUSION
 i-invisibility POT_INVISIBILITY
-i-porridge POT_PORRIDGE
 i-degeneration POT_DEGENERATION
 i-decay POT_DECAY
 i-water POT_WATER
@@ -720,8 +708,6 @@ i-berserk-rage POT_BERSERK_RAGE
 i-cure-mutation POT_CURE_MUTATION
 i-mutation POT_MUTATION
 i-resistance POT_RESISTANCE
-i-blood POT_BLOOD
-i-coagulated-blood POT_BLOOD_COAGULATED
 i-water POT_FIZZING POT_ID_LAST
 %back none
 %rim 1

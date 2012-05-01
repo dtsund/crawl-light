@@ -464,9 +464,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     if (you.is_undead == US_ALIVE)
                     {
                         mpr("You feel a dreadful hunger.");
-                        // takes player from Full to Hungry
-                        if (!unmeld)
-                            make_hungry(4500, false, false);
                     }
                     else
                         mpr("You feel an empty sense of dread.");
@@ -935,7 +932,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     switch (item.sub_type)
     {
     case RING_FIRE:
-    case RING_HUNGER:
     case RING_ICE:
     case RING_LIFE_PROTECTION:
     case RING_POISON_RESISTANCE:
@@ -1099,18 +1095,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         }
         break;
 
-    case AMU_THE_GOURMAND:
-        // What's this supposed to achieve? (jpeg)
-        you.duration[DUR_GOURMAND] = 0;
-
-        if (you.species != SP_MUMMY
-            && player_mutation_level(MUT_HERBIVOROUS) < 3)
-        {
-            mpr("You feel a craving for the dungeon's cuisine.");
-            ident = ID_KNOWN_TYPE;
-        }
-        break;
-
     case AMU_CONTROLLED_FLIGHT:
         if (you.is_levitating()
             && !extrinsic_amulet_effect(AMU_CONTROLLED_FLIGHT))
@@ -1207,7 +1191,6 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg)
     switch (item.sub_type)
     {
     case RING_FIRE:
-    case RING_HUNGER:
     case RING_ICE:
     case RING_LIFE_PROTECTION:
     case RING_POISON_RESISTANCE:
@@ -1265,10 +1248,6 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg)
 
     case RING_MAGICAL_POWER:
         canned_msg(MSG_MANA_DECREASE);
-        break;
-
-    case AMU_THE_GOURMAND:
-        you.duration[DUR_GOURMAND] = 0;
         break;
 
     case AMU_FAITH:

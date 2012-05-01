@@ -2265,12 +2265,9 @@ bool do_god_gift(bool forced)
 
 bool do_zin_sustenance()
 {
+    //This always returns false, currently.
     if (!zin_sustenance())
         return false;
-    god_speaks(you.religion, "Your stomach feels content.");
-    set_hunger(6000, true);
-    lose_piety(5 + random2avg(10, 2) + (you.gift_timeout ? 5 : 0));
-    _inc_gift_timeout(30 + random2avg(10, 2));
     return true;
 }
 

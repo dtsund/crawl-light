@@ -246,13 +246,14 @@ void wizard_heal(bool super_heal)
     you.duration[DUR_POISONING] = 0;
     set_hp(you.hp_max, false);
     set_mp(you.max_magic_points, false);
-    set_hunger(10999, true);
     you.redraw_hit_points = true;
     you.redraw_glow = true;
 }
 
 void wizard_set_hunger_state()
 {
+    //XXX Obsolete stuff.
+/*
     std::string hunger_prompt =
         "Set hunger state to s(T)arving, (N)ear starving, (H)ungry";
     if (you.species == SP_GHOUL)
@@ -281,6 +282,7 @@ void wizard_set_hunger_state()
 
     if (you.species == SP_GHOUL && you.hunger_state >= HS_SATIATED)
         mpr("Ghouls can never be full or above!");
+*/
 }
 
 void wizard_set_piety()

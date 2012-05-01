@@ -155,7 +155,6 @@ int InventoryRegion::handle_mouse(MouseEvent &event)
             {
                 m_last_clicked_item = item_idx;
                 tiles.set_need_redraw();
-                tile_item_eat_floor(idx);
             }
             else
             {
@@ -449,10 +448,6 @@ bool InventoryRegion::update_tip_text(std::string& tip)
                 // For Sublimation of Blood.
                 if (wielded)
                     _handle_wield_tip(tmp, cmd, "\n[Ctrl + L-Click] ", true);
-                else if (is_blood_potion(item) && you.has_spell(SPELL_SUBLIMATION_OF_BLOOD))
-                {
-                    _handle_wield_tip(tmp, cmd, "\n[Ctrl + L-Click] ");
-                }
                 break;
             case OBJ_FOOD:
                 tmp += "Eat (%)";

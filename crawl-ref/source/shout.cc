@@ -483,53 +483,11 @@ bool fake_noisy(int loudness, const coord_def& where)
     return noisy(loudness, where, NULL, -1, false, false, true);
 }
 
-static const char* _player_vampire_smells_blood(int dist)
-{
-    // non-thirsty vampires get no clear indication of how close the
-    // smell is
-    if (you.hunger_state >= HS_SATIATED)
-        return "";
-
-    if (dist < 16) // 4*4
-        return " near-by";
-
-    if (you.hunger_state <= HS_NEAR_STARVING && dist > get_los_radius_sq())
-        return " in the distance";
-
-    return "";
-}
-
 void blood_smell(int strength, const coord_def& where)
 {
     const int range = strength * strength;
     dprf("blood stain at (%d, %d), range of smell = %d",
          where.x, where.y, range);
-
-    // Of the player species, only Vampires can smell blood.
-    if (you.species == SP_VAMPIRE)
-    {
-        // Whether they actually do so, depends on their hunger state.
-        int vamp_strength = strength - 2 * (you.hunger_state - 1);
-        if (vamp_strength > 0)
-        {
-            int vamp_range = vamp_strength * vamp_strength;
-
-            const int player_distance = distance(you.pos(), where);
-
-            if (player_distance <= vamp_range)
-            {
-                dprf("Player smells blood, pos: (%d, %d), dist = %d)",
-                     you.pos().x, you.pos().y, player_distance);
-                you.check_awaken(range - player_distance);
-                // Don't message if you can see the square.
-                if (!you.see_cell(where))
-                {
-                    mprf("You smell fresh blood%s.",
-                         _player_vampire_smells_blood(player_distance));
-                }
-            }
-        }
-    }
 
     circle_def c(where, range, C_CIRCLE);
     for (monster_iterator mi(&c); mi; ++mi)

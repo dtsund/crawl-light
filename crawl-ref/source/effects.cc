@@ -1930,7 +1930,7 @@ static bool _food_item_needs_time_check(item_def &item)
     if (item.base_type == OBJ_FOOD && item.sub_type != FOOD_CHUNK)
         return (false);
 
-    if (item.base_type == OBJ_POTIONS && !is_blood_potion(item))
+    if (item.base_type == OBJ_POTIONS)
         return (false);
 
     // The object specifically asks not to be checked:
@@ -2204,17 +2204,6 @@ void handle_time()
     if (!you.disease)
     {
         bool recovery = true;
-
-        // The better-fed you are, the faster your stat recovery.
-        if (you.species == SP_VAMPIRE)
-        {
-            if (you.hunger_state == HS_STARVING)
-                // No stat recovery for starving vampires.
-                recovery = false;
-            else if (you.hunger_state <= HS_HUNGRY)
-                // Halved stat recovery for hungry vampires.
-                recovery = coinflip();
-        }
 
         // Slow heal mutation.  Applied last.
         // Each level reduces your stat recovery by one third.

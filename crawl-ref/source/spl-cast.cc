@@ -828,32 +828,6 @@ static void _spellcasting_side_effects(spell_type spell, god_type god)
     alert_nearby_monsters();
 }
 
-static bool _vampire_cannot_cast(spell_type spell)
-{
-    if (you.species != SP_VAMPIRE)
-        return (false);
-
-    if (you.hunger_state > HS_SATIATED)
-        return (false);
-
-    // Satiated or less
-    switch (spell)
-    {
-    case SPELL_BERSERKER_RAGE:
-    case SPELL_BLADE_HANDS:
-    case SPELL_CURE_POISON:
-    case SPELL_DRAGON_FORM:
-    case SPELL_ICE_FORM:
-    case SPELL_RESIST_POISON:
-    case SPELL_SPIDER_FORM:
-    case SPELL_STATUE_FORM:
-    case SPELL_STONESKIN:
-        return (true);
-    default:
-        return (false);
-    }
-}
-
 bool is_prevented_teleport(spell_type spell)
 {
     return ((spell == SPELL_BLINK
@@ -876,12 +850,6 @@ bool spell_is_uncastable(spell_type spell, std::string &msg)
     if (spell != SPELL_NECROMUTATION && you_cannot_memorise(spell))
     {
         msg = "You cannot cast that spell in your current form!";
-        return (true);
-    }
-
-    if (_vampire_cannot_cast(spell))
-    {
-        msg = "Your current blood level is not sufficient to cast that spell.";
         return (true);
     }
 

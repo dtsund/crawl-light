@@ -73,7 +73,6 @@ LUARET1(you_god_likes_fresh_corpses, boolean,
         god_likes_fresh_corpses(you.religion))
 LUARET2(you_hp, number, you.hp, you.hp_max)
 LUARET2(you_mp, number, you.magic_points, you.max_magic_points)
-LUARET1(you_hunger, string, hunger_level())
 LUARET2(you_strength, number, you.strength(), you.max_strength())
 LUARET2(you_intelligence, number, you.intel(), you.max_intel())
 LUARET2(you_dexterity, number, you.dex(), you.max_dex())
@@ -89,7 +88,6 @@ LUARET1(you_res_draining, number, player_prot_life(false))
 LUARET1(you_res_shock, number, player_res_electricity(false))
 LUARET1(you_res_statdrain, number, player_sust_abil(false))
 LUARET1(you_res_mutation, number, wearing_amulet(AMU_RESIST_MUTATION, false))
-LUARET1(you_gourmand, boolean, wearing_amulet(AMU_THE_GOURMAND, false))
 LUARET1(you_saprovorous, number, player_mutation_level(MUT_SAPROVOROUS))
 LUARET1(you_levitating, boolean, you.flight_mode() == FL_LEVITATE)
 LUARET1(you_flying, boolean, you.flight_mode() == FL_FLY)
@@ -172,10 +170,7 @@ static int l_you_abils(lua_State *ls)
 
 static int you_can_consume_corpses(lua_State *ls)
 {
-    lua_pushboolean(ls,
-                    can_ingest(OBJ_FOOD, FOOD_CHUNK, true, false, false)
-                    || can_ingest(OBJ_CORPSES, CORPSE_BODY, true, false, false)
-                  );
+    lua_pushboolean(ls, false);
     return (1);
 }
 
@@ -194,7 +189,6 @@ static const struct luaL_reg you_clib[] =
     { "evil_god"    , you_evil_god },
     { "hp"          , you_hp },
     { "mp"          , you_mp },
-    { "hunger"      , you_hunger },
     { "strength"    , you_strength },
     { "intelligence", you_intelligence },
     { "dexterity"   , you_dexterity },
@@ -209,7 +203,6 @@ static const struct luaL_reg you_clib[] =
     { "res_statdrain", you_res_statdrain },
     { "res_mutation", you_res_mutation },
     { "saprovorous",  you_saprovorous },
-    { "gourmand",     you_gourmand },
     { "levitating",   you_levitating },
     { "flying",       you_flying },
     { "transform",    you_transform },

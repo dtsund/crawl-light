@@ -198,9 +198,6 @@ bool is_evil_item(const item_def& item)
     case OBJ_WANDS:
         retval = (item.sub_type == WAND_DRAINING);
         break;
-    case OBJ_POTIONS:
-        retval = is_blood_potion(item);
-        break;
     case OBJ_SCROLLS:
         retval = (item.sub_type == SCR_TORMENT);
         break;

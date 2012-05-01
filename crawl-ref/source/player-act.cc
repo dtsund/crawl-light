@@ -328,10 +328,13 @@ item_def *player::shield()
 
 void player::make_hungry(int hunger_increase, bool silent)
 {
+    //Do nothing.
+/*
     if (hunger_increase > 0)
         ::make_hungry(hunger_increase, silent);
     else if (hunger_increase < 0)
         ::lessen_hunger(-hunger_increase, silent);
+*/
 }
 
 static std::string _pronoun_you(description_level_type desc)
@@ -564,8 +567,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         return (false);
     }
 
-    if (is_undead
-        && (is_undead != US_SEMI_UNDEAD || hunger_state <= HS_SATIATED))
+    if (is_undead)
     {
         if (verbose)
             mpr("You cannot raise a blood rage in your lifeless body.");
@@ -596,14 +598,6 @@ bool player::can_go_berserk(bool intentional, bool potion) const
             mpr("You're too calm and focused to rage.");
         }
 
-        return (false);
-    }
-
-    ASSERT(HUNGER_STARVING + BERSERK_NUTRITION < 2066);
-    if (you.hunger <= 2066)
-    {
-        if (verbose)
-            mpr("You're too hungry to go berserk.");
         return (false);
     }
 

@@ -180,20 +180,7 @@ static void _give_wand(monster* mon, int level)
 
 static void _give_potion(monster* mon, int level)
 {
-    if (mons_species(mon->type) == MONS_VAMPIRE
-        && (one_chance_in(5) || mon->type == MONS_JORY))
-    {
-        // This handles initialization of stack timer.
-        const int thing_created =
-            items(0, OBJ_POTIONS, POT_BLOOD, true, level, 0);
-
-        if (thing_created == NON_ITEM)
-            return;
-
-        mitm[thing_created].flags = 0;
-        _give_monster_item(mon, thing_created);
-    }
-    else if (mons_species(mon->type) == MONS_DEEP_DWARF && one_chance_in(3))
+    if (mons_species(mon->type) == MONS_DEEP_DWARF && one_chance_in(3))
     {
         const int thing_created =
             items(0, OBJ_POTIONS, coinflip() ? POT_HEAL_WOUNDS

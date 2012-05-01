@@ -2971,9 +2971,7 @@ void start_explore(bool grab_items)
 
 void do_explore_cmd()
 {
-    if (you.hunger_state == HS_STARVING && !you_min_hunger())
-        mpr("You need to eat something NOW!");
-    else if (you.stat(STAT_STR) <= 0)
+    if (you.stat(STAT_STR) <= 0)
         mpr("You're barely strong enough to walk!");
     else if (you.stat(STAT_INT) <= 0)
         mpr("You can't think straight enough!");

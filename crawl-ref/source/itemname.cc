@@ -531,7 +531,6 @@ static const char* potion_type_name(int potiontype)
     case POT_PARALYSIS:         return "paralysis";
     case POT_CONFUSION:         return "confusion";
     case POT_INVISIBILITY:      return "invisibility";
-    case POT_PORRIDGE:          return "porridge";
     case POT_DEGENERATION:      return "degeneration";
     case POT_DECAY:             return "decay";
     case POT_WATER:             return "water";
@@ -542,8 +541,6 @@ static const char* potion_type_name(int potiontype)
     case POT_BERSERK_RAGE:      return "berserk rage";
     case POT_CURE_MUTATION:     return "cure mutation";
     case POT_MUTATION:          return "mutation";
-    case POT_BLOOD:             return "blood";
-    case POT_BLOOD_COAGULATED:  return "coagulated blood";
     case POT_RESISTANCE:        return "resistance";
     case POT_FIZZING:           return "fizzing liquid";
     default:                    return "bugginess";
@@ -590,7 +587,6 @@ static const char* jewellery_type_name(int jeweltype)
     case RING_SLAYING:               return "ring of slaying";
     case RING_SEE_INVISIBLE:         return "ring of see invisible";
     case RING_INVISIBILITY:          return "ring of invisibility";
-    case RING_HUNGER:                return "ring of hunger";
     case RING_TELEPORTATION:         return "ring of teleportation";
     case RING_EVASION:               return "ring of evasion";
     case RING_SUSTAIN_ABILITIES:     return "ring of sustain abilities";
@@ -609,7 +605,6 @@ static const char* jewellery_type_name(int jeweltype)
     case AMU_CLARITY:           return "amulet of clarity";
     case AMU_WARDING:           return "amulet of warding";
     case AMU_RESIST_CORROSION:  return "amulet of resist corrosion";
-    case AMU_THE_GOURMAND:      return "amulet of the gourmand";
     case AMU_CONSERVATION:      return "amulet of conservation";
     case AMU_CONTROLLED_FLIGHT: return "amulet of controlled flight";
     case AMU_INACCURACY:        return "amulet of inaccuracy";
@@ -1307,15 +1302,10 @@ std::string item_def::name_aux(description_level_type desc,
     case OBJ_FOOD:
         switch (item_typ)
         {
-        case FOOD_MEAT_RATION: buff << "meat ration"; break;
-        case FOOD_BREAD_RATION: buff << "bread ration"; break;
         case FOOD_PEAR: buff << "pear"; break;
         case FOOD_APPLE: buff << "apple"; break;
         case FOOD_CHOKO: buff << "choko"; break;
-        case FOOD_HONEYCOMB: buff << "honeycomb"; break;
-        case FOOD_ROYAL_JELLY: buff << "royal jelly"; break;
         case FOOD_SNOZZCUMBER: buff << "snozzcumber"; break;
-        case FOOD_PIZZA: buff << "slice of pizza"; break;
         case FOOD_APRICOT: buff << "apricot"; break;
         case FOOD_ORANGE: buff << "orange"; break;
         case FOOD_BANANA: buff << "banana"; break;
@@ -1325,10 +1315,6 @@ std::string item_def::name_aux(description_level_type desc,
         case FOOD_GRAPE: buff << "grape"; break;
         case FOOD_SULTANA: buff << "sultana"; break;
         case FOOD_LYCHEE: buff << "lychee"; break;
-        case FOOD_BEEF_JERKY: buff << "beef jerky"; break;
-        case FOOD_CHEESE: buff << "cheese"; break;
-        case FOOD_SAUSAGE: buff << "sausage"; break;
-        case FOOD_AMBROSIA: buff << "piece of ambrosia"; break;
         case FOOD_CHUNK:
             if (!basename && !dbname)
             {
@@ -2362,9 +2348,7 @@ bool is_bad_item(const item_def &item, bool temp)
             return (!player_res_poison(false)
                     || !temp && you.species == SP_VAMPIRE);
         case POT_MUTATION:
-            return (you.is_undead
-                    && (temp || you.species != SP_VAMPIRE
-                        || you.hunger_state < HS_SATIATED));
+            return (you.is_undead);
         default:
             return (false);
         }
@@ -2373,9 +2357,6 @@ bool is_bad_item(const item_def &item, bool temp)
         {
         case AMU_INACCURACY:
             return (true);
-        case RING_HUNGER:
-            // Even Vampires can use this ring.
-            return (!you.is_undead || you.is_undead == US_HUNGRY_DEAD);
         case RING_EVASION:
         case RING_PROTECTION:
         case RING_STRENGTH:
@@ -2418,9 +2399,7 @@ bool is_dangerous_item(const item_def &item, bool temp)
         {
         case POT_MUTATION:
             // Only living characters can mutate.
-            return (!you.is_undead
-                    || temp && you.species == SP_VAMPIRE
-                       && you.hunger_state >= HS_SATIATED);
+            return (!you.is_undead);
         default:
             return (false);
         }
@@ -2551,26 +2530,20 @@ bool is_useless_item(const item_def &item, bool temp)
         switch (item.sub_type)
         {
         case POT_BERSERK_RAGE:
-            return (you.is_undead
-                        && (you.species != SP_VAMPIRE
-                            || temp && you.hunger_state <= HS_SATIATED));
+            return (you.is_undead);
 
         case POT_CURE_MUTATION:
         case POT_GAIN_STRENGTH:
         case POT_GAIN_INTELLIGENCE:
         case POT_GAIN_DEXTERITY:
-            return (you.is_undead
-                        && (you.species != SP_VAMPIRE
-                            || temp && you.hunger_state < HS_SATIATED));
+            return (you.is_undead);
 
         case POT_LEVITATION:
             return (you.permanent_levitation() || you.permanent_flight());
 
-        case POT_PORRIDGE:
         case POT_WATER:
-        case POT_BLOOD:
-        case POT_BLOOD_COAGULATED:
-            return (!can_ingest(item, true, true, false));
+            // Always useless without Evaporate.
+            return (true);
         case POT_POISON:
         case POT_STRONG_POISON:
             // If you're poison resistant, poison is only useless.
@@ -2597,17 +2570,7 @@ bool is_useless_item(const item_def &item, bool temp)
         switch (item.sub_type)
         {
         case AMU_RAGE:
-            return (you.is_undead
-                        && (you.species != SP_VAMPIRE
-                            || temp && you.hunger_state <= HS_SATIATED));
-
-        case AMU_THE_GOURMAND:
-            return (player_likes_chunks(true)
-                      && player_mutation_level(MUT_SAPROVOROUS) == 3
-                      && you.species != SP_GHOUL // makes clean chunks
-                                                 // contaminated
-                    || player_mutation_level(MUT_HERBIVOROUS) == 3
-                    || you.species == SP_MUMMY);
+            return (you.is_undead);
 
         case AMU_FAITH:
             return (you.species == SP_DEMIGOD);
@@ -2615,16 +2578,11 @@ bool is_useless_item(const item_def &item, bool temp)
         case RING_LIFE_PROTECTION:
             return (player_prot_life(false, temp, false) == 3);
 
-        case RING_HUNGER:
         case RING_SUSTENANCE:
-            return (you.species == SP_MUMMY
-                    || temp && you.species == SP_VAMPIRE
-                       && you.hunger_state == HS_STARVING);
+            return (you.species == SP_MUMMY);
 
         case RING_REGENERATION:
-            return ((player_mutation_level(MUT_SLOW_HEALING) == 3)
-                    || temp && you.species == SP_VAMPIRE
-                       && you.hunger_state == HS_STARVING);
+            return (player_mutation_level(MUT_SLOW_HEALING) == 3);
 
         case RING_SEE_INVISIBLE:
             return (player_mutation_level(MUT_ACUTE_VISION));
@@ -2663,17 +2621,9 @@ bool is_useless_item(const item_def &item, bool temp)
             return (true);
         if (item.sub_type == STAFF_ENERGY && you.species == SP_MUMMY)
             return (true);
-        if (item.sub_type == STAFF_ENERGY && temp && (you.form == TRAN_LICH
-            || you.species == SP_VAMPIRE && you.hunger_state == HS_STARVING))
-        {
-            return (true);
-        }
         break;
 
     case OBJ_FOOD:
-        if (!is_inedible(item))
-            return (false);
-
         if (item.sub_type == FOOD_CHUNK
             && (you.has_spell(SPELL_SUBLIMATION_OF_BLOOD)
                 || you.has_spell(SPELL_SIMULACRUM)
@@ -2784,11 +2734,6 @@ static const std::string _item_prefix(const item_def &item, bool temp,
         if (is_forbidden_food(item))
             prefixes.push_back("evil_eating");
 
-        if (is_inedible(item))
-            prefixes.push_back("inedible");
-        else if (is_preferred_food(item))
-            prefixes.push_back("preferred");
-
         // Don't include these for filtering, since the user might want
         // to use "muta" to search for "potion of cure mutation", and
         // similar.
@@ -2802,15 +2747,6 @@ static const std::string _item_prefix(const item_def &item, bool temp,
             prefixes.push_back("contaminated");
         else if (causes_rot(item))
             prefixes.push_back("rot-inducing");
-        break;
-
-    case OBJ_POTIONS:
-        if (is_good_god(you.religion) && is_blood_potion(item))
-        {
-            prefixes.push_back("evil_eating");
-        }
-        if (is_preferred_food(item))
-            prefixes.push_back("preferred");
         break;
 
     case OBJ_WEAPONS:

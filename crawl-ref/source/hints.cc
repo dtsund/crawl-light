@@ -426,13 +426,6 @@ void hints_death_screen()
     {
         text = "Don't forget to go berserk when fighting particularly "
                "difficult foes. It's risky, but makes you faster and beefier.";
-
-        if (you.hunger_state < HS_HUNGRY)
-        {
-            text += " Berserking is impossible while very hungry or worse, "
-                    "so make sure to stay fed at all times, just in case "
-                    "you need to berserk.";
-        }
     }
     else if (Hints.hints_type == HINT_RANGER_CHAR
              && 2*Hints.hints_throw_counter < Hints.hints_melee_counter)
@@ -645,14 +638,6 @@ void hints_dissection_reminder(bool healthy)
 
     if (Hints.hints_just_triggered)
         return;
-
-    // When hungry, give appropriate message or at least don't suggest
-    // sacrifice.
-    if (you.hunger_state < HS_SATIATED && healthy)
-    {
-        learned_something_new(HINT_MAKE_CHUNKS);
-        return;
-    }
 
     if (!god_likes_fresh_corpses(you.religion))
         return;
@@ -2387,8 +2372,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_OFFER_CORPSE:
-        if (!god_likes_fresh_corpses(you.religion)
-            || you.hunger_state < HS_SATIATED)
+        if (!god_likes_fresh_corpses(you.religion))
         {
             return;
         }
