@@ -531,21 +531,13 @@ void item_colour(item_def &item)
     case OBJ_FOOD:
         switch (item.sub_type)
         {
-        case FOOD_BEEF_JERKY:
-        case FOOD_BREAD_RATION:
         case FOOD_LYCHEE:
-        case FOOD_MEAT_RATION:
         case FOOD_RAMBUTAN:
-        case FOOD_SAUSAGE:
         case FOOD_SULTANA:
             item.colour = BROWN;
             break;
         case FOOD_BANANA:
-        case FOOD_CHEESE:
-        case FOOD_HONEYCOMB:
         case FOOD_LEMON:
-        case FOOD_PIZZA:
-        case FOOD_ROYAL_JELLY:
             item.colour = YELLOW;
             break;
         case FOOD_PEAR:
@@ -2553,27 +2545,28 @@ static int _random_wand_subtype()
     // teleportation, fireball (1/20 each)
     // everything else (1/18 each)
     // Total weight: 180
-    int rc = random_choose_weighted(3,  WAND_HEALING,
-                                    3,  WAND_HASTING
-                                    6,  WAND_INVISIBILITY,
-                                    9,  WAND_TELEPORTATION,
-                                    9,  WAND_FIREBALL,
-                                    10, WAND_FLAME,
-                                    10, WAND_FROST,
-                                    10, WAND_SLOWING,
-                                    10, WAND_MAGIC_DARTS,
-                                    10, WAND_PARALYSIS,
-                                    10, WAND_FIRE,
-                                    10, WAND_COLD,
-                                    10, WAND_CONFUSION,
-                                    10, WAND_DIGGING,
-                                    10, WAND_LIGHTNING,
-                                    10, WAND_POLYMORPH_OTHER,
-                                    10, WAND_ENSLAVEMENT,
-                                    10, WAND_DRAINING,
-                                    10, WAND_RANDOM_EFFECTS,
-                                    10, WAND_DISINTEGRATION,
-                                    0);
+    int subtype = random_choose_weighted(3,  WAND_HEALING,
+                                         3,  WAND_HASTING,
+                                         6,  WAND_INVISIBILITY,
+                                         9,  WAND_TELEPORTATION,
+                                         9,  WAND_FIREBALL,
+                                         10, WAND_FLAME,
+                                         10, WAND_FROST,
+                                         10, WAND_SLOWING,
+                                         10, WAND_MAGIC_DARTS,
+                                         10, WAND_PARALYSIS,
+                                         10, WAND_FIRE,
+                                         10, WAND_COLD,
+                                         10, WAND_CONFUSION,
+                                         10, WAND_DIGGING,
+                                         10, WAND_LIGHTNING,
+                                         10, WAND_POLYMORPH_OTHER,
+                                         10, WAND_ENSLAVEMENT,
+                                         10, WAND_DRAINING,
+                                         10, WAND_RANDOM_EFFECTS,
+                                         10, WAND_DISINTEGRATION,
+                                         0);
+    return subtype;
 }
 
 // This differs quite a bit from the maximum amount allowed
@@ -2615,6 +2608,57 @@ static void _generate_wand_item(item_def& item, int force_type)
     // (presumably by recharging), so don't bother to display
     // the count.
     item.plus2 = 0;
+}
+
+static void _generate_food_item(item_def& item, int force_quant, int force_type)
+{
+    // Determine sub_type:
+    if (force_type == OBJ_RANDOM)
+    {
+        item.sub_type = random_choose_weighted( 100, FOOD_PEAR,
+                                                100, FOOD_APPLE,
+                                                100, FOOD_CHOKO,
+                                                 10, FOOD_SNOZZCUMBER,
+                                                 10, FOOD_APRICOT,
+                                                 10, FOOD_ORANGE,
+                                                 10, FOOD_BANANA,
+                                                 10, FOOD_STRAWBERRY,
+                                                 10, FOOD_RAMBUTAN,
+                                                 10, FOOD_LEMON,
+                                                 10, FOOD_GRAPE,
+                                                 10, FOOD_SULTANA,
+                                                 10, FOOD_LYCHEE,
+                                                  0);
+    }
+    else
+        item.sub_type = force_type;
+
+    // Happens with ghoul food acquirement -- use place_chunks() outherwise
+    if (item.sub_type == FOOD_CHUNK)
+    {
+        // Set chunk flavour (default to common dungeon rat steaks):
+        item.plus = _choose_random_monster_corpse();
+        // Set duration.
+        item.special = (10 + random2(11)) * 10;
+    }
+
+    // Determine quantity.
+    if (force_quant > 1)
+        item.quantity = force_quant;
+    else
+    {
+        item.quantity = 1;
+
+        if (one_chance_in(80))
+            item.quantity += random2(3);
+
+        if (item.sub_type == FOOD_STRAWBERRY
+            || item.sub_type == FOOD_GRAPE
+            || item.sub_type == FOOD_SULTANA)
+        {
+            item.quantity += 3 + random2avg(15,2);
+        }
+    }
 }
 
 static void _generate_potion_item(item_def& item, int force_type,
@@ -3060,12 +3104,13 @@ int items(int allow_uniques,       // not just true-false,
     else
     {
         ASSERT(force_type == OBJ_RANDOM);
-        // Total weight: 971 for now.  Will probably restore to 1000 eventually.
+        // Total weight: 1000.
         item.base_type = static_cast<object_class_type>(
             random_choose_weighted(8, OBJ_STAVES,
                                     23, OBJ_BOOKS,
                                     38, OBJ_JEWELLERY,
-                                    37, OBJ_WANDS,
+                                    38, OBJ_WANDS,
+                                    28, OBJ_FOOD,
                                    150, OBJ_ARMOUR,
                                    150, OBJ_WEAPONS,
                                    100, OBJ_POTIONS,
