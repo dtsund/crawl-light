@@ -1895,7 +1895,7 @@ bool acquirement(object_class_type class_wanted, int agent,
 
         const std::string hello = "What would you like to acquire?";
         
-        std::vector<int> stock(9);
+        std::vector<int> stock(8);
         
         if(you.species == SP_CAT)
         {
