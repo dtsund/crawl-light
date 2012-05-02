@@ -339,11 +339,6 @@ function TroveMarker:check_item(marker, pname, position, dry_run)
     else
     if dry_run ~= nil then crawl.mpr("Checking item: " .. it.name()) end
 
-    --if not it.identified("type properties pluses") then
-    --  if dry_run ~= nil then crawl.mpr("Item not identified.") end
-    --  this_item = false
-    --end
-
     local jwith_pluses = {"ring of protection", "ring of evasion",
                         "ring of strength", "ring of intelligence",
                         "ring of dexterity", "ring of slaying"}
@@ -519,7 +514,7 @@ function TroveMarker:check_veto(marker, pname)
       return
     else
       crawl.mpr("You don't have the item" .. self:plural() ..
-                " to give! Perhaps you haven't completely identified the item yet?")
+                " to give!")
       return "veto"
     end
   end
