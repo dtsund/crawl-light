@@ -53,7 +53,7 @@ The Snake Pit is five levels deep and contains the serpentine rune. A dungeon fe
 %%%%
 Hive
 
-You hear a manifold buzzing.
+You hear a malignant drone indicating the presence of dungeon bees. Like all bees, these insects gather nectar from their surroundings and convert it into honey; alone among their kind, dungeon bees also generate elixirs of wondrous power.
 
 The Hive is two levels deep. The entry is located between dungeon levels 11 and 16.
 %%%%

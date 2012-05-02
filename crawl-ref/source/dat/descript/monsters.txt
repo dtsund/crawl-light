@@ -1160,11 +1160,11 @@ A bird-brained creature that looks at you with hatred.
 %%%%
 killer bee
 
-A giant bee, bearing a deadly barb which can sting repeatedly.
+A dungeon bee, bearing both a deadly barb which can sting repeatedly and a vicious disposition. Some particularly daring apiarists have unsuccessfully tried to domesticate them, as they convert nectar into potent magical tonics.
 %%%%
 killer bee larva
 
-A small, powerless larva of a killer bee.
+A small, powerless larva of a dungeon bee.
 %%%%
 Killer Klown
 

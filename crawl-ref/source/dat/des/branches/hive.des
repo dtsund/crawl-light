@@ -23,7 +23,7 @@ ENDMAP
 NAME: david_hive_1
 TAGS: hive_entry
 MONS: queen bee, killer bee, killer bee larva
-KITEM: R = w:2 honeycomb / w:1 royal jelly
+KITEM: R = w:4 nothing / w:1 any potion
 ORIENT: float
 KFEAT: O = enter_hive
 MAP
@@ -68,7 +68,7 @@ ENDMAP
 NAME:    hive_david_3
 TAGS:    hive_entry
 ORIENT:  float
-ITEM:    honeycomb, royal jelly
+ITEM:    w:4 nothing / w:1 any potion, w:4 nothing / w:1 any potion
 MONS:    killer bee larva / killer bee, queen bee
 MONS:    worker ant / soldier ant, queen ant
 MONS:    yellow wasp / nothing, red wasp / yellow wasp
@@ -103,7 +103,7 @@ TAGS:    hive_entry
 ORIENT:  float
 MONS:    polar bear / grizzly bear w:200 / black bear w:100
 MONS:    killer bee, queen bee, killer bee larva
-ITEM:    honeycomb, royal jelly
+ITEM:    w:4 nothing / w:1 any potion, w:4 nothing / w:1 any potion
 SUBST:   ? = a.
 SUBST:   ; = 1:1 .
 SHUFFLE: deO
@@ -190,7 +190,7 @@ MONS:      killer bee / killer bee larva w:2
 MONS:      queen bee / killer bee w:2
 MONS:      oklob plant / plant w:1
 MONS:      plant / nothing
-KITEM:     R = w:2 honeycomb / w:1 royal jelly
+KITEM:     R = w:4 nothing / w:1 any potion
 KMONS:     R = killer bee / killer bee larva w:2
 KFEAT:     R = .
 KMONS:     M = plant
@@ -491,7 +491,7 @@ ORIENT: encompass
 TAGS:   no_dump
 MONS:   queen bee, killer bee, killer bee larva, plant, yellow wasp
 MONS:   random, random
-KITEM:  R = w:2 honeycomb / w:1 royal jelly
+KITEM:  R = w:1 nothing / w:1 any potion
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -580,7 +580,7 @@ ITEM:   wand of fire
 NSUBST: M = 10:N / *:R
 SUBST:  N = *:30 |
 SUBST:  X = xx.
-KITEM:  R = w:2 honeycomb / w:1 royal jelly
+KITEM:  R = w:1 nothing / w:1 any potion
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -663,7 +663,7 @@ MONS:   random, random
 NSUBST: M = 1:. / *:a
 NSUBST: N = 10:% / 6:* / 2:| / *:.
 SUBST:  X = xx.
-KITEM:  R = w:2 honeycomb / w:1 royal jelly
+KITEM:  R = w:1 nothing / w:1 any potion
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxXXXXxxXXxxxxxxxxxxxxxxxxxxxxxxxxxxXXxxXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -744,7 +744,7 @@ NAME:   minmay_beehive_corners
 PLACE:  Hive:1
 ORIENT: encompass
 MONS:   queen bee, killer bee larva, killer bee, plant, oklob plant
-KITEM:  R = w:2 honeycomb / w:1 royal jelly
+KITEM:  R = w:1 nothing / w:1 any potion
 SUBST:  w = w:20 W:1
 SUBST:  Y = wW
 # Add one escape hatch, so that players using teleportation won't strand in
@@ -811,9 +811,9 @@ SUBST:   A = a:3 .:2, B = a:3 x:2, ' = . 1:3 d:1
 KMONS:   1 = killer bee
 KMONS:   2 = queen bee
 KMONS:   3 = oklob plant
-ITEM:    honeycomb / royal jelly w:4
-KITEM:   1 = nothing / honeycomb w:5 / royal jelly w:2
-KITEM:   2 = nothing / royal jelly
+ITEM:    w:1 nothing / w:1 any potion
+KITEM:   1 = w:1 nothing / w:1 any potion
+KITEM:   2 = w:1 nothing / w:1 any potion
 : spotty_map { boxy = false, iterations = 400 + crawl.random2(300) }
 MAP
                    aaaaa
