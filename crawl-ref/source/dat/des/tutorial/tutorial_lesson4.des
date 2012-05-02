@@ -272,7 +272,7 @@ ITEM:    randbook numspells:2 spells:magic_dart|evaporate title:Introduction_to_
 ITEM:    ring of magical power not_cursed
 ITEM:    staff of wizardry not_cursed
 ITEM:    gold q:20
-ITEM:    bread ration
+ITEM:    staff of energy
 MONS:    training dummy ; stone q:20
 MONS:    megabat skeleton, goblin skeleton
 MONS:    rat, goblin

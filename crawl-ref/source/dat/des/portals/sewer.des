@@ -580,8 +580,7 @@ KMONS:  4 = Purgy, giant slug
 ITEM:   potion of levitation / potion of agility / potion of heal wounds / \
         potion of invisibility / potion of mutation / potion of degeneration /\
         scroll of blinking / scroll of teleportation / scroll of fear / \
-        meat ration / royal jelly / \
-        potion of blood / nothing w:140
+        nothing w:140
 : sewer_setup(_G)
 epilogue{{
 sewer_milestone(_G)

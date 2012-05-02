@@ -186,7 +186,7 @@ TAGS:    entry no_monster_gen no_rotate
 ORIENT:  west
 WEIGHT:  2
 MONS:    rat, goblin, megabat, kobold
-ITEM:    sausage / beef jerky, nothing, nothing
+ITEM:    nothing, nothing, nothing
 SHUFFLE: {[(, 234, ef~
 MAP
 xxxxxxxxxxxxxxxxxxxxxxx@x

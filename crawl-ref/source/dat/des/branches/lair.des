@@ -239,7 +239,7 @@ MONS:    steam dragon / mottled dragon / swamp drake
 MONS:    w:20 iguana / komodo dragon / giant gecko / crocodile / nothing
 SUBST:   ? = x.c
 SHUFFLE: %*RO
-KITEM:   R = w:2 honeycomb / w:1 royal jelly
+KITEM:   R = w:2 nothing / w:1 any potion
 KFEAT:   O = enter_lair
 
 MAP
@@ -1199,7 +1199,7 @@ NAME:   minmay_lair_goldilocks
 WEIGHT: 5
 DEPTH:  Lair
 MONS:   black bear, grizzly bear, polar bear
-ITEM:   potion of porridge / honeycomb
+ITEM:   apple / pear
 MAP
 .......
 .xxxxx.
@@ -1383,7 +1383,7 @@ MONS:   plant
 MONS:   grizzly bear, polar bear, black bear
 SUBST:  X = xx.
 SUBST:  P = 1111.
-KITEM:  % = honeycomb q:3 / star_item
+KITEM:  % = any potion q:3 / star_item
 MAP
             xXXxxxXXXxxx
        @...xxxxxxxxxxxxx

@@ -168,7 +168,7 @@ MONS: patrolling phantom hd:2 / patrolling wolf hd:2 / patrolling scorpion / \
 MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
 KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
- meat ration / bread ration / royal jelly / honeycomb / choko, \
+ choko, \
  any scroll, \
  any scroll, \
  scroll of torment / scroll of holy word / scroll of immolation, \
@@ -201,7 +201,7 @@ MONS: patrolling phantom hd:2 / patrolling wolf hd:2 / patrolling scorpion / \
 MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
 KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
- meat ration / bread ration / royal jelly / honeycomb / choko, \
+ choko, \
  any scroll, \
  any scroll, \
  scroll of torment / scroll of holy word / scroll of immolation, \
@@ -269,7 +269,7 @@ MARKER:  X = lua:fog_machine { \
                  size = 1, size_buildup_amnt = 5, \
                  size_buildup_time = 25, cloud_type = "seething chaos" \
              }
-KITEM: * = royal jelly
+KITEM: * = choko
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
@@ -446,9 +446,9 @@ ENDMAP
 NAME: sprint_mu_hive_nellie
 TAGS: sprint_mu_hive no_rotate no_hmirror no_vmirror no_dup
 KMONS: 1 = killer bee
-KITEM: 1 = honeycomb / w:2 royal jelly / w:4 nothing
+KITEM: 1 = w:2 any potion / w:4 nothing
 KMONS: 2 = queen bee
-KITEM: 2 = royal jelly
+KITEM: 2 = any potion
 KMONS: 3 = generate_awake Nellie
 KITEM: 3 = demonic rune of zot
 : acq_on_sight(_G, '3', {"food","misc","wand"})

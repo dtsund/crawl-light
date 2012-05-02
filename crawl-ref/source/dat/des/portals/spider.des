@@ -205,7 +205,7 @@ ENDMAP
 ###############################################################################
 # Layout: Octagonal rooms.
 # Foes:   A ghost moth and trapdoor spiders.
-# Loot:   Random good items, possibility of ambrosia.
+# Loot:   Random good items, possibility of acquirement.
 NAME:   spiders_nest_the_unseen
 TAGS:   spiders_nest no_item_gen no_monster_gen
 ORIENT: encompass
@@ -217,7 +217,7 @@ spiders_nest_milestone(_G)
 }}
 MONS:   trapdoor spider, ghost moth
 SUBST:  * = **d
-ITEM:   piece of ambrosia
+ITEM:   scroll of acquirement
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxx$$$$xxxxxxxxx$$$$xxxxxxxxx$$$$xxxxx
@@ -238,7 +238,7 @@ ENDMAP
 ###############################################################################
 # Layout: Octagonal room with a pillar and water.
 # Foes:   A ghost moth with a few tarantellas.
-# Loot:   Ambrosia.
+# Loot:   Potions.
 NAME:   spiders_nest_ghost_moth_duel
 TAGS:   spiders_nest no_item_gen no_monster_gen generate_awake
 ORIENT: encompass
@@ -249,7 +249,7 @@ epilogue{{
 spiders_nest_milestone(_G)
 }}
 MONS:   ghost moth, tarantella
-ITEM:   piece of ambrosia
+ITEM:   any potion
 MAP
 xxxxxxxxxxxxxx
 xxxxx.<A.xxxxx
@@ -289,7 +289,7 @@ KMONS:  6 = emperor scorpion
 KMONS:  M = fungus
 KFEAT: 14 = W
 SUBST:  W = WW. , * = ||**WM , X = xxW
-KITEM:  t = piece of ambrosia
+KITEM:  t = any potion
 SUBST:  _ : __x     , - : --x     , ' : ''x     , " : ""x
 NSUBST: _ = 2:x/*:. , - = 1:x/*:. , ' = 1:x/*:. , " = 2:x/*:.
 MAP
@@ -332,7 +332,7 @@ epilogue{{
 spiders_nest_milestone(_G)
 }}
 NSUBST: * = 1:z / *:*
-KITEM:  t = piece of ambrosia
+KITEM:  t = any potion
 KMONS:  M = fungus
 {{
  local tm = TriggerableFunction:new{func="callback.spider_nest_trap"}
@@ -409,7 +409,7 @@ SUBST:   6 = 6 *:2
 KMONS:   6 = spider / wolf spider w:4 / jumping spider w:1
 SUBST:   7 = 7 .:50
 KMONS:   7 = trapdoor spider
-KITEM:   t = piece of ambrosia
+KITEM:   t = any potion
 : spiders_nest_colours(_G)
 : spiders_nest_random_monster_set(_G)
 epilogue{{

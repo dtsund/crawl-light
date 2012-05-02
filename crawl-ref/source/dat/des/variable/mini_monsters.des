@@ -91,7 +91,7 @@ SUBST: ? : .w
 SUBST: 1 = 1 a:2
 SUBST: 1 : 1:15 2 3:2 4:1
 SUBST: * : * R:3
-KITEM: R = w:2 honeycomb / w:1 royal jelly
+KITEM: R = w:2 nothing / w:1 any potion
 MAP
   ????????
  ??????????
@@ -111,7 +111,7 @@ ENDMAP
 NAME:  minivault_7
 TAGS:  allow_dup
 MONS:  patrolling queen bee, patrolling killer bee, killer bee larva
-KITEM: R = w:2 honeycomb / w:1 royal jelly
+KITEM: R = w:2 nothing / w:1 any potion
 MAP
 ............
 ....aaaa....
@@ -332,7 +332,7 @@ ENDMAP
 NAME:  minmay_rats_cheese
 DEPTH: D:2
 MONS:  rat
-ITEM:  cheese
+ITEM:  pear
 MAP
 xxxxx+xxxxxxx
 x1....xd1111x
@@ -352,7 +352,7 @@ ENDMAP
 NAME:  minmay_rat_hole
 DEPTH: D:2-3
 MONS:  rat / grey rat w:1
-ITEM:  cheese w:30 / bread ration / meat ration / nothing w:60
+ITEM:  apple w:30 / pear / sultana / nothing w:60
 MAP
  xxx
 xxdx
@@ -792,7 +792,7 @@ NAME:   minmay_ogre_servants
 DEPTH:  D:2-4
 MONS:   ogre
 NSUBST: " = 6:" / *:'
-KITEM:  ' = meat ration
+KITEM:  ' = nothing
 KMONS: "' = goblin
 MAP
 xxxxx
@@ -1157,7 +1157,7 @@ NAME:   minmay_hunger
 DEPTH:  D:7-11
 WEIGHT: 5
 MONS:   hungry ghost
-ITEM:   ring of hunger / any jewellery
+ITEM:   nothing / any jewellery
 MAP
 ccc+ccc
 c.1.1.c
@@ -1849,12 +1849,12 @@ bb..bbbbbb.bbb..bb
     bbbbbbbb@b
 ENDMAP
 
+# Alas, no more royal jelly in the middle.  Was a good gag while it lasted.
 NAME:    minislime_mu
 DEPTH:   D:9-17, Vault
 TAGS:    no_monster_gen no_item_gen
 MONS:    slime creature, giant eyeball, eye of draining
 SUBST:   J = 1111111123
-KITEM:   R = royal jelly
 SUBST:   m : xxxm
 SHUFFLE: %!'"
 NSUBST:  % = 1:d / *:%
@@ -1877,7 +1877,7 @@ MAP
 ..m%%%%%mm.m''''m..
 ..mmmmmmm..mmmmmm..
 ...J..mJm.....mJ...
-..mmm.....R.mJ..m..
+..mmm.......mJ..m..
 ..m!mmmmm...mmmmm..
 ..m!!!!!m..mm"""m..
 ..mm!!!!m.mm""""m..

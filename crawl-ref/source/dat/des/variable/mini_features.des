@@ -1333,7 +1333,7 @@ ENDMAP
 NAME:   supply_closet_lemuel
 DEPTH:  D:1-6
 TAGS:   no_monster_gen allow_dup extra luniq_mini
-ITEM:   potion of water w:20 / bread ration / meat ration / arrow /\
+ITEM:   potion of water w:20 / arrow /\
         bolt / spear / any potion w:5
 NSUBST: x = 1:= / *:x
 SUBST:  = = +===
