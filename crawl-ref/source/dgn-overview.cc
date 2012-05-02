@@ -368,9 +368,9 @@ static std::string _get_seen_branches(bool display)
     {
         snprintf(buffer, sizeof(buffer),
                 dungeon_lid.depth < 10 ?
-                        "<yellow>Dungeon</yellow> <darkgrey>(%d/27)</darkgrey>            " :
-                        "<yellow>Dungeon</yellow> <darkgrey>(%d/27)</darkgrey>           ",
-                dungeon_lid.depth);
+                        "<yellow>Dungeon</yellow> <darkgrey>(%d/%d)</darkgrey>            " :
+                        "<yellow>Dungeon</yellow> <darkgrey>(%d/%d)</darkgrey>           ",
+                dungeon_lid.depth, BRANCH_DUNGEON_DEPTH);
     }
     disp += buffer;
 
