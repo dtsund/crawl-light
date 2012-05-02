@@ -3,83 +3,83 @@ Dungeon
 
 It is still a mystery how this bizarre place was created. Some claim that it is the playground of bored gods, whereas others maintain that it was shaped by all kinds of species who fled the overworld and shunned the light. No matter what the origin of this cave is, it is filled with riches unheard of as well as with ample dangers to any intruder. Few have escaped alive, and even fewer have kept some sliver of sanity to tell the tale.
 
-The dungeon is 27 levels deep, but, honestly, this is only the beginning.
+The dungeon is 18 levels deep, but, honestly, this is only the beginning.
 %%%%
 Temple
 
-A Temple of Gods, a place of peace and refuge from the insanity of the dungeon. It is located between the levels 4 and 7 of the main dungeon.
+A Temple of Gods, a place of peace and refuge from the insanity of the dungeon. It is located on level 3 of the main dungeon.
 %%%%
 Orcish Mines
 
 The mines of the orcs, filled with their gold, but treacherous and easy to get trapped in.
 
-The Orcish Mines are four levels deep and contain the entrance to the Elven Halls.
+The Orcish Mines are three levels deep and contain the entrance to the Elven Halls. They are located on level 5 of the main dungeon.
 %%%%
 Elven Halls
 
 Whereas most elven folk would never move into a dark subterranean complex like this, the deep elves did. Their halls are filled with riches, but any passers-by should be aware of the legendary magical prowess of this species.
 
-The Elven Halls are five levels deep.
+The Elven Halls are three levels deep. They are located on level 3 of the Orcish Mines.
 %%%%
 Lair
 
 Most adventurers find the Lair of Beasts to be an exciting change of climate. And indeed, there is something to be said about getting gored, mauled and eaten rather than sliced, burnt or stabbed.
 
-The Lair is eight levels deep and contains the stairs to three more branches.
+The Lair is five levels deep and contains the stairs to three more branches. It can be found on level 6 of the main dungeon.
 %%%%
 Swamp
 
 A swampy wasteland, complete with ooze, muck, flies and large slavering carnivorous monsters.
 
-The Swamp is five levels deep and contains the decaying rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Swamp is present, the entrance is located between Lair:2 and Lair:5.
+The Swamp is three levels deep and contains the decaying rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Swamp is present, the entrance is located on Lair:2.
 %%%%
 Shoals
 
 From afar you hear the steady sounds of waves and smell the salty spray. Upon reaching the Shoals, you are impressed by exotic underground beaches, making up a few islands in a vast sea. All of a sudden, a bloodcurdling scream fills the air, followed by a gurgle. Anxiously, you look around and wonder: Who is the predator? And who is the prey?
 
-The Shoals are five levels deep and contain the barnacled rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Shoals are present, the entrance is located between Lair:3 and Lair:6.
+The Shoals are three levels deep and contain the barnacled rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Shoals are present, the entrance is located on Lair:3.
 %%%%
 Slime Pits
 
 The amorphous realm of acids, jellies and slimes. Any trace of intelligent beings has long been dissolved. Still, there are rumours of great treasures deep down, hidden safely away in secret chambers without door or window for acid to leak in.
 
-The Slime Pits are six levels deep and contain the slimy rune. The entry is between Lair:6 and Lair:8.
+The Slime Pits are four levels deep and contain the slimy rune. The entry is on Lair:4.
 %%%%
 Snake Pit
 
 Home of the serpent, lair of the naga.
 
-The Snake Pit is five levels deep and contains the serpentine rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Snake Pit is present, the entrance is located between Lair:3 and Lair:6.
+The Snake Pit is three levels deep and contains the serpentine rune. A dungeon features only two of the Snake Pit, Swamp and Shoals branches. If the Snake Pit is present, the entrance is located on Lair:3.
 %%%%
 Hive
 
 You hear a malignant drone indicating the presence of dungeon bees. Like all bees, these insects gather nectar from their surroundings and convert it into honey; alone among their kind, dungeon bees also generate elixirs of wondrous power.
 
-The Hive is two levels deep. The entry is located between dungeon levels 11 and 16.
+The Hive is one level deep. The entry is located on dungeon level 8.
 %%%%
 Vaults
 
 Possibly constructed by some powerful madman, the Vaults are said to be home to great treasures. The blood spots all around the entrance indicate that there is a certain amount of violence, too.
 
-The Vaults are eight levels deep and contain the silver rune. The entrance can be found between levels 14 and 19 of the main dungeon.
+The Vaults are five levels deep and contain the silver rune. The entrance can be found on level 10 of the main dungeon.
 %%%%
 Hall of Blades
 
 Once upon a time, all the daggers and axes and polearms would gather at the time of night and dance the waltz, dreaming of battlefields void of man and beast. That time is no more, yet the weapons are still there.
 
-The Hall of Blades is a single level and can be found between Vault:4 and Vault:6.
+The Hall of Blades is a single level and can be found on Vault:3.
 %%%%
 Crypt
 
 You hear moans and shrieks of tortured souls, suffering in acts of the unspeakable.
 
-The Crypt is five levels deep and can be found between Vault:2 and Vault:4.
+The Crypt is three levels deep and can be found on Vault:2.
 %%%%
 Tomb
 
 The Tomb of the Ancients, a place of damnation, of horrors animated by the vilest necromancy.
 
-The Tomb is three levels deep and contains the golden rune. Its entry is either on Crypt:2 or Crypt:3.
+The Tomb is three levels deep and contains the golden rune. Its entry is on Crypt:2.
 %%%%
 Hell
 
@@ -91,25 +91,25 @@ Dis
 
 The Iron City of Dis. Who will stand the test of iron?
 
-Dis is seven levels deep and contains the iron rune. It can be accessed via the Vestibule of Hell.
+Dis is five levels deep and contains the iron rune. It can be accessed via the Vestibule of Hell.
 %%%%
 Gehenna
 
 The fires of Gehenna burnt many a confident hero, and they will burn evermore.
 
-Gehenna is seven levels deep and contains the obsidian rune. It can be accessed via the Vestibule of Hell.
+Gehenna is five levels deep and contains the obsidian rune. It can be accessed via the Vestibule of Hell.
 %%%%
 Cocytus
 
 A grim and frost-bitten wasteland.
 
-Cocytus is seven levels deep and contains the icy rune. It can be accessed via the Vestibule of Hell.
+Cocytus is five levels deep and contains the icy rune. It can be accessed via the Vestibule of Hell.
 %%%%
 Tartarus
 
 A decaying netherworld. Over time, the undead, demons and devils of this place drain all life out of treasure-craving visitors.
 
-Tartarus is seven levels deep and contains the bone rune. It can be accessed via the Vestibule of Hell.
+Tartarus is five levels deep and contains the bone rune. It can be accessed via the Vestibule of Hell.
 %%%%
 Pan
 
@@ -127,5 +127,5 @@ Zot
 
 A region of the dungeon complex, safely locked away and referred to usually by madness, frenzy, lunacy. Only the most demented adventurers would dare to break the seal and press deeper - in the vain hope for a fabled artefact no one has ever laid eyes on before.
 
-The Realm of Zot is five levels deep and can only be entered when carrying at least three runes.
+The Realm of Zot is three levels deep and can only be entered when carrying at least three runes.
 %%%%
