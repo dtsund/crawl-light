@@ -1224,7 +1224,7 @@ static void tag_construct_you(writer &th)
     marshallString(th, you.zotdef_wave_name);
 
     for (unsigned int k = 0; k < ARRAYSZ(you.montiers); k++)
-        marshallInt(th, you.montiers[k]);f
+        marshallInt(th, you.montiers[k]);
 
     if (!dlua.callfn("dgn_save_data", "u", &th))
         mprf(MSGCH_ERROR, "Failed to save Lua data: %s", dlua.error.c_str());
