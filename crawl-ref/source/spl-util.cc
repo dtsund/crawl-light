@@ -401,13 +401,26 @@ int spell_glow(spell_type which_spell, bool rod)
 
     if (hunger < 0)
         hunger = 0;
-    
-    //The ration, honeycomb, and choko breakpoints.
+
+    //Before settling on final glow costs, I'll keep all the old
+    //cost drafts around for posterity.
+/*
+    //Draft 1: The ration, honeycomb, and choko breakpoints.
     if (hunger > 400)
         return 3;
     else if (hunger > 120)
         return 2;
     else if (hunger > 40)
+        return 1;
+    
+    return 0;
+*/
+    //Draft 2: Considerably more lenient than draft 1.
+    if (hunger > 600)
+        return 3;
+    else if (hunger > 300)
+        return 2;
+    else if (hunger > 175)
         return 1;
     
     return 0;

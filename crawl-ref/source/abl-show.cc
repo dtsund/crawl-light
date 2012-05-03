@@ -250,21 +250,21 @@ static const ability_def Ability_List[] =
     { ABIL_TELEPORTATION, "Teleportation", 0, 100, 1, 0, ABFLAG_NONE },
     { ABIL_BLINK, "Blink", 0, 50, 1, 0, ABFLAG_NONE },
 
-    { ABIL_BREATHE_FIRE, "Breathe Fire", 0, 0, 1, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_FROST, "Breathe Frost", 0, 0, 1, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POISON, "Breathe Poison Gas", 0, 0, 1, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_FIRE, "Breathe Fire", 0, 0, 0, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_FROST, "Breathe Frost", 0, 0, 0, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_POISON, "Breathe Poison Gas", 0, 0, 0, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_MEPHITIC, "Breathe Noxious Fumes",
-      0, 0, 1, 0, ABFLAG_BREATH },
+      0, 0, 0, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_LIGHTNING, "Breathe Lightning",
-      0, 0, 1, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POWER, "Breathe Energy", 0, 0, 1, 0, ABFLAG_BREATH },
+      0, 0, 0, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_POWER, "Breathe Energy", 0, 0, 0, 0, ABFLAG_BREATH },
     { ABIL_BREATHE_STICKY_FLAME, "Breathe Sticky Flame",
-      0, 0, 1, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_STEAM, "Breathe Steam", 0, 0, 1, 0, ABFLAG_BREATH },
+      0, 0, 0, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_STEAM, "Breathe Steam", 0, 0, 0, 0, ABFLAG_BREATH },
     { ABIL_TRAN_BAT, "Bat Form", 2, 0, 0, 0, ABFLAG_NONE },
     { ABIL_BOTTLE_BLOOD, "Bottle Blood", 0, 0, 0, 0, ABFLAG_NONE }, // no costs
 
-    { ABIL_SPIT_ACID, "Spit Acid", 0, 0, 1, 0, ABFLAG_BREATH },
+    { ABIL_SPIT_ACID, "Spit Acid", 0, 0, 0, 0, ABFLAG_BREATH },
 
     { ABIL_FLY, "Fly", 3, 0, 1, 0, ABFLAG_NONE },
     { ABIL_STOP_FLYING, "Stop Flying", 0, 0, 0, 0, ABFLAG_NONE },
@@ -380,7 +380,7 @@ static const ability_def Ability_List[] =
       ABFLAG_CONF_OK },
 
     // Lugonu
-    { ABIL_LUGONU_ABYSS_EXIT, "Depart the Abyss", 1, 0, 1, 10, ABFLAG_NONE },
+    { ABIL_LUGONU_ABYSS_EXIT, "Depart the Abyss", 1, 0, 0, 10, ABFLAG_NONE },
     { ABIL_LUGONU_BEND_SPACE, "Bend Space", 1, 0, 1, 0, ABFLAG_PAIN },
     { ABIL_LUGONU_BANISH, "Banish",
       4, 0, 2, generic_cost::range(3, 4), ABFLAG_NONE },
@@ -400,7 +400,7 @@ static const ability_def Ability_List[] =
     { ABIL_BEOGH_SMITING, "Smiting",
       3, 0, 1, generic_cost::fixed(3), ABFLAG_NONE },
     { ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS, "Recall Orcish Followers",
-      2, 0, 1, 0, ABFLAG_NONE },
+      2, 0, 0, 0, ABFLAG_NONE },
 
     // Jiyva
     { ABIL_JIYVA_CALL_JELLY, "Request Jelly", 2, 0, 0, 1, ABFLAG_NONE },
