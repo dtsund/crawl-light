@@ -1270,7 +1270,7 @@ static int _num_items_wanted(int level_number)
         // No random items in hell, the slime pits, the temple, the hall.
         return 0;
     }
-    else if (level_number > 5 && one_chance_in(500 - 5 * level_number))
+    else if (level_number > 3 && one_chance_in(500 - 8 * level_number))
         return (10 + random2avg(90, 2)); // rich level!
     else
         return (3 + roll_dice(3, 11));

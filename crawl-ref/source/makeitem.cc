@@ -883,12 +883,12 @@ static weapon_type _determine_weapon_subtype(int item_level)
         WPN_TRIPLE_SWORD
     };
 
-    if (item_level > 6 && one_chance_in(30)
-        && x_chance_in_y(10 + item_level, 100))
+    if (item_level > 4 && one_chance_in(30)
+        && x_chance_in_y(16 + item_level, 100))
     {
         rc = RANDOM_ELEMENT(rare_subtypes);
     }
-    else if (x_chance_in_y(20 - item_level, 20))
+    else if (x_chance_in_y(13 - item_level, 13))
         rc = RANDOM_ELEMENT(common_subtypes);
     else
     {
@@ -927,7 +927,7 @@ static bool _try_make_item_unrand(item_def& item, int force_type)
 static bool _try_make_weapon_artefact(item_def& item, int force_type,
                                       int item_level, bool force_randart = false)
 {
-    if (item_level > 2 && x_chance_in_y(101 + item_level * 3, 4000)
+    if (item_level > 2 && x_chance_in_y(116 + item_level * 3, 4000)
         || force_randart)
     {
         // Make a randart or unrandart.
@@ -1193,7 +1193,7 @@ static brand_type _determine_weapon_brand(const item_def& item, int item_level)
     for (int count = 0; count < tries && rc == SPWPN_NORMAL; ++count)
     {
         if (!force_good && !is_demonic(item)
-            && !x_chance_in_y(101 + item_level, 300))
+            && !x_chance_in_y(106 + item_level, 300))
         {
             continue;
         }
@@ -1732,7 +1732,7 @@ brand_ok:
 
     }
     else if ((force_good || is_demonic(item) || forced_ego
-                    || x_chance_in_y(51 + item_level, 200))
+                    || x_chance_in_y(56 + item_level, 200))
                 && (!item.is_mundane() || force_good))
     {
         // Make a better item (possibly ego).
@@ -1808,7 +1808,7 @@ static special_missile_type _determine_missile_brand(const item_def& item,
     special_missile_type rc = SPMSL_NORMAL;
 
     // "Normal weight" of SPMSL_NORMAL.
-    int nw = force_good ? 0 : random2(2000 - 55 * item_level);
+    int nw = force_good ? 0 : random2(2000 - 83 * item_level);
 
     switch (item.sub_type)
     {
@@ -2035,14 +2035,14 @@ static void _generate_missile_item(item_def& item, int force_type,
     else
         item.quantity = 1 + random2(9) + random2(12) + random2(12) + random2(15);
 
-    if (x_chance_in_y(11 + item_level, 100))
+    if (x_chance_in_y(16 + item_level, 100))
         item.plus += random2(5);
 }
 
 static bool _try_make_armour_artefact(item_def& item, int force_type,
                                       int item_level, bool force_randart = false)
 {
-    if (item_level > 2 && x_chance_in_y(101 + item_level * 3, 4000)
+    if (item_level > 2 && x_chance_in_y(116 + item_level * 3, 4000)
         || force_randart)
     {
         // Make a randart or unrandart.
@@ -2289,7 +2289,7 @@ static special_armour_type _determine_armour_ego(const item_def& item,
         // Only ever generate robes of archmagi for random pieces of armour,
         // for whatever reason.
         if (rc == SPARM_ARCHMAGI
-            && (force_type != OBJ_RANDOM || !x_chance_in_y(11 + item_level, 50)))
+            && (force_type != OBJ_RANDOM || !x_chance_in_y(16 + item_level, 50)))
         {
             rc = SPARM_NORMAL;
         }
@@ -2468,20 +2468,20 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         item.plus -= 1 + random2(3);
     }
     else if ((forced_ego || item.sub_type == ARM_WIZARD_HAT
-                    || x_chance_in_y(51 + item_level, 250))
+                    || x_chance_in_y(56 + item_level, 250))
                 && !item.is_mundane() || force_good)
     {
         // Make a good item...
         item.plus += random2(3);
 
         if (item.sub_type <= ARM_PLATE_MAIL
-            && x_chance_in_y(21 + item_level, 300))
+            && x_chance_in_y(26 + item_level, 300))
         {
             item.plus += random2(3);
         }
 
         if (!no_ego
-            && x_chance_in_y(31 + item_level, 350)
+            && x_chance_in_y(36 + item_level, 350)
             && (force_good
                 || forced_ego
                 || get_equip_race(item) != ISFLAG_ORCISH
@@ -2710,7 +2710,7 @@ static void _generate_potion_item(item_def& item, int force_type,
                                                0);
         }
         while (stype == POT_POISON && item_level < 1
-               || stype == POT_STRONG_POISON && item_level < 11
+               || stype == POT_STRONG_POISON && item_level < 7
                || (agent == GOD_XOM && _is_boring_item(OBJ_POTIONS, stype)
                    && --tries > 0));
 
@@ -2824,7 +2824,7 @@ static void _generate_book_item(item_def& item, int allow_uniques,
             }
 
             if (!one_chance_in(100)
-                && x_chance_in_y(book_rarity(item.sub_type)-1, item_level+1))
+                && x_chance_in_y(book_rarity(item.sub_type)-1, item_level * 3 / 2 +1))
             {
                 // If this book is really rare for this depth, continue trying.
                 continue;
@@ -2833,11 +2833,11 @@ static void _generate_book_item(item_def& item, int allow_uniques,
         while (book_rarity(item.sub_type) == 100);
 
         // Tome of destruction: rare!
-        if (item_level > 10 && x_chance_in_y(21 + item_level, 7000))
+        if (item_level > 10 && x_chance_in_y(26 + item_level, 7000))
             item.sub_type = BOOK_DESTRUCTION;
 
         // Skill manuals - also rare.
-        if (item_level > 6 && x_chance_in_y(21 + item_level, 4000))
+        if (item_level > 6 && x_chance_in_y(26 + item_level, 4000))
             item.sub_type = BOOK_MANUAL;
     }
 
@@ -2861,7 +2861,7 @@ static void _generate_book_item(item_def& item, int allow_uniques,
     // spellbooks aren't merely of-the-same-type-but-better, but
     // have an entirely different set of spells.
     if (allow_uniques && item_level > 2 && force_type == OBJ_RANDOM
-        && x_chance_in_y(101 + item_level * 3, 4000))
+        && x_chance_in_y(116 + item_level * 3, 4000))
     {
         int choice = random_choose_weighted(
             58, BOOK_RANDART_THEME,
@@ -2875,7 +2875,7 @@ static void _generate_book_item(item_def& item, int allow_uniques,
         make_book_theme_randart(item, 0, 0, 5 + coinflip(), 20);
     else if (item.sub_type == BOOK_RANDART_LEVEL)
     {
-        int max_level  = std::min(9, std::max(1, item_level / 3));
+        int max_level  = std::min(9, std::max(1, item_level * 2 / 9));
         int spl_level  = random_range(1, max_level);
         int max_spells = 5 + spl_level/3;
         make_book_level_randart(item, spl_level, max_spells);
@@ -2913,7 +2913,7 @@ static bool _try_make_jewellery_unrandart(item_def& item, int force_type,
 {
     if (item_level > 2
         && one_chance_in(20)
-        && x_chance_in_y(101 + item_level * 3, 2000))
+        && x_chance_in_y(116 + item_level * 3, 2000))
     {
         if (_try_make_item_unrand(item, force_type))
             return (true);
@@ -2991,7 +2991,7 @@ static void _generate_jewellery_item(item_def& item, bool allow_uniques,
 
     // All jewellery base types should now work. - bwr
     if (allow_uniques && item_level > 2
-        && x_chance_in_y(101 + item_level * 3, 4000))
+        && x_chance_in_y(116 + item_level * 3, 4000))
     {
         make_item_randart(item);
     }
@@ -3117,14 +3117,14 @@ int items(int allow_uniques,       // not just true-false,
                                      0));
 
         // misc items placement wholly dependent upon current depth {dlb}:
-        if (item_level > 7 && x_chance_in_y(21 + item_level, 3500))
+        if (item_level > 4 && x_chance_in_y(26 + item_level, 3500))
             item.base_type = OBJ_MISCELLANY;
 
-        if (item_level < 7
+        if (item_level < 4
             && (item.base_type == OBJ_BOOKS
                 || item.base_type == OBJ_STAVES
                 || item.base_type == OBJ_WANDS)
-            && random2(7) >= item_level)
+            && random2(4) >= item_level)
         {
             item.base_type = coinflip() ? OBJ_POTIONS : OBJ_SCROLLS;
         }
@@ -3485,7 +3485,7 @@ armour_type get_random_armour_type(int item_level)
 
     int armtype = RANDOM_ELEMENT(defarmours);
 
-    if (x_chance_in_y(11 + item_level, 35))
+    if (x_chance_in_y(16 + item_level, 35))
     {
         // Low-level armours.
         const armour_type lowarmours[] = { ARM_ROBE, ARM_LEATHER_ARMOUR,
@@ -3498,7 +3498,7 @@ armour_type get_random_armour_type(int item_level)
             armtype = ARM_ANIMAL_SKIN;
     }
 
-    if (x_chance_in_y(11 + item_level, 60))
+    if (x_chance_in_y(16 + item_level, 60))
     {
         // Medium-level armours.
         const armour_type medarmours[] = { ARM_ROBE, ARM_LEATHER_ARMOUR,
@@ -3509,7 +3509,7 @@ armour_type get_random_armour_type(int item_level)
         armtype = RANDOM_ELEMENT(medarmours);
     }
 
-    if (one_chance_in(20) && x_chance_in_y(11 + item_level, 400))
+    if (one_chance_in(20) && x_chance_in_y(16 + item_level, 400))
     {
         // High-level armours, including troll and some dragon armours.
         const armour_type hiarmours[] = { ARM_CRYSTAL_PLATE_MAIL,
@@ -3522,7 +3522,7 @@ armour_type get_random_armour_type(int item_level)
         armtype = RANDOM_ELEMENT(hiarmours);
     }
 
-    if (one_chance_in(20) && x_chance_in_y(11 + item_level, 500))
+    if (one_chance_in(20) && x_chance_in_y(16 + item_level, 500))
     {
         // Animal skins and high-level armours, including the rest of
         // the dragon armours.
