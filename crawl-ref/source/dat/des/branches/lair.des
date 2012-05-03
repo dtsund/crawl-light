@@ -207,6 +207,7 @@ ENDMAP
 NAME:   erik_lair_3
 TAGS:   lair_entry
 ORIENT: float
+MINDIFF: 1
 MONS:   w:60 troll / Snorg
 MONS:   w:30 hound / jackal / w:20 war dog
 SUBST:  ? = w.
