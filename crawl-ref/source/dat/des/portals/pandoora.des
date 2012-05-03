@@ -8,7 +8,7 @@
 # acquirement, which can be read or given to an Abyss portal later for a shot
 # at the key to Hell.
 #
-# This portal is currently fixed to appear on D:4, immediately after the 
+# This portal is currently fixed to appear on D:5, shortly after the 
 # Ecumenical Temple.
 #
 ##############################################################################
@@ -71,7 +71,7 @@ end
 NAME:   pandoora_entry_dummy
 TAGS:   pandoora_entry transparent chance_pandoora
 ORIENT: float
-PLACE: D:4
+PLACE: D:5
 WEIGHT: 0
 :   pandoora_portal(_G)
 MAP
@@ -81,7 +81,7 @@ ENDMAP
 NAME:   enter_pandoora_1
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:4
+PLACE: D:5
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP
@@ -93,7 +93,7 @@ ENDMAP
 NAME:   enter_pandoora_2
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:4
+PLACE: D:5
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP
@@ -105,7 +105,7 @@ ENDMAP
 NAME:   enter_pandoora_3
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:4
+PLACE: D:5
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP

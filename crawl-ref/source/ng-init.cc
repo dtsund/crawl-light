@@ -92,7 +92,7 @@ void initialise_branch_depths()
     initialise_branches_for_game_type();
 }
 
-#define MAX_OVERFLOW_LEVEL 9
+#define MAX_OVERFLOW_LEVEL 4
 
 // Determine which altars go into the Ecumenical Temple, which go into
 // overflow temples, and on what level the overflow temples are.

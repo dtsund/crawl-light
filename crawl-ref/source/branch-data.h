@@ -35,7 +35,7 @@ Branch branches[] = {
       traps_zero_number, NULL, NULL, NULL, // No traps in temple
       'T', false, false, 0 },
 
-    { BRANCH_ORCISH_MINES, BRANCH_MAIN_DUNGEON, 5, 5, 3, 6, 0, 0,
+    { BRANCH_ORCISH_MINES, BRANCH_MAIN_DUNGEON, 6, 6, 3, 6, 0, 0,
       DNGN_ENTER_ORCISH_MINES, DNGN_RETURN_FROM_ORCISH_MINES,
       "Orcish Mines", "the Orcish Mines", "Orc",
       NULL,
@@ -189,7 +189,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'Y', true, true, 0 },
 
-    { BRANCH_HALL_OF_ZOT, BRANCH_MAIN_DUNGEON, 18, 18, 3, 27, BFLAG_HAS_ORB, 0,
+    { BRANCH_HALL_OF_ZOT, BRANCH_MAIN_DUNGEON, 18, 18, 3, 18, BFLAG_HAS_ORB, 0,
       DNGN_ENTER_ZOT, DNGN_RETURN_FROM_ZOT,
       "Zot", "the Realm of Zot", "Zot",
       NULL,
