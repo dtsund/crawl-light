@@ -9,27 +9,6 @@ enum tag_minor_version
 {
     TAG_MINOR_INVALID         = -1,
     TAG_MINOR_RESET           = 0, // Minor tags were reset
-    TAG_MINOR_DETECTED_MONSTER,    // Detected monsters keep more than a flag.
-    TAG_MINOR_FIRING_POS,          // Store firing position for monsters.
-    TAG_MINOR_FOE_MEMORY,          // Save monster's foe_memory.
-    TAG_MINOR_SHOPS,               // Store shop_name and shop_type_name in shop_struct.
-    TAG_MINOR_MON_TIER_STATS,      // Gather stats about monsters people kill.
-    TAG_MINOR_MFLAGS64,            // Extend mon.flags to 64 bits.
-    TAG_MINOR_ENCH_MID,            // Store sources of monster enchantments.
-    TAG_MINOR_CLOUD_BUG,           // Shim to recover bugged saves.
-    TAG_MINOR_MINFO_PROP,          // Add a props hash to monster_info.
-    TAG_MINOR_MON_INV_ORDER,       // Change the order of the monster's inventory.
-    TAG_MINOR_ASH_PENANCE,         // Ashenzari's wrath counter.
-    TAG_MINOR_BOOK_ZOOLOGY,        // Addition of the book of zoology.
-    TAG_MINOR_64_MB,               // More than 64 monster info flags.
-    TAG_MINOR_SEEN_MISC,           // Record misc items seen.
-    TAG_MINOR_ZIG_COUNT,           // Count completed Ziggurats and max level of partials.
-    TAG_MINOR_ZIG_FIX,             // Zero out junk ziggurat variable values.
-    TAG_MINOR_DECK_RARITY,         // Make item.special=0 not clash with real rarities.
-    TAG_MINOR_PIETY_MAX,           // Remember the maximum piety attained with each god.
-    TAG_MINOR_MONSTER_TILES,       // Throw away monster tiles when their number changes.
-    TAG_MINOR_RESTORE_REAVER,      // Add Reavers back to the game.
-    TAG_MINOR_ADD_DIFFICULTY,  // Add you.difficulty_level variable.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
