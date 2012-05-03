@@ -854,10 +854,6 @@ int artefact_value(const item_def &item)
     if (prop[ ARTP_MUTAGENIC ])
         ret -= (5 + 3 * prop[ ARTP_MUTAGENIC ]);
 
-    // ranges from 1-3
-    if (prop[ ARTP_METABOLISM ])
-        ret -= (2 * prop[ ARTP_METABOLISM ]);
-
     return ((ret > 0) ? ret : 0);
 }
 

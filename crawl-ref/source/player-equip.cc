@@ -376,9 +376,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         if (artefact)
         {
             special = artefact_wpn_property(item, ARTP_BRAND);
-
-            known_recurser = artefact_known_wpn_property(item,
-                                                         ARTP_CURSED);
         }
 
         if (special != SPWPN_NORMAL)

@@ -217,7 +217,6 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "MUT",    ARTP_MUTAGENIC,             2 }, // handled specially
         { "*Rage",  ARTP_ANGRY,                 2 },
         { "*TELE",  ARTP_CAUSE_TELEPORTATION,   2 },
-        { "Hunger", ARTP_METABOLISM,            2 }, // handled specially
         { "Noisy",  ARTP_NOISES,                2 },
         { "Slow",   ARTP_PONDEROUS,             2 },
 
@@ -248,7 +247,6 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "MP",     ARTP_MAGICAL_POWER,         0 },
         { "SInv",   ARTP_EYESIGHT,              2 },
         { "Stlth",  ARTP_STEALTH,               2 }, // handled specially
-        { "Curse",  ARTP_CURSED,                2 },
     };
 
     // For randart jewellery, note the base jewellery type if it's not
@@ -322,14 +320,10 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
                 break;
             }
             case 2: // e.g. rPois or SInv
-                if (propanns[i].prop == ARTP_CURSED && val < 1)
-                    continue;
-
                 work << propanns[i].name;
 
                 // these need special handling, so we don't give anything away
-                if (propanns[i].prop == ARTP_METABOLISM && val > 2
-                    || propanns[i].prop == ARTP_MUTAGENIC && val > 3)
+                if (propanns[i].prop == ARTP_MUTAGENIC && val > 3)
                 {
                     work << "+";
                 }
@@ -450,7 +444,6 @@ static std::string _randart_descrip(const item_def &item)
         { ARTP_PREVENT_TELEPORTATION, "It prevents most forms of teleportation.",
           false},
         { ARTP_ANGRY,  "It makes you angry.", false},
-        { ARTP_CURSED, "It may recurse itself.", false},
         { ARTP_PONDEROUS, "It slows your movement.", false},
     };
 
@@ -458,13 +451,6 @@ static std::string _randart_descrip(const item_def &item)
     {
         if (proprt[propdescs[i].property])
         {
-            // Only randarts with ARTP_CURSED > 0 may recurse themselves.
-            if (propdescs[i].property == ARTP_CURSED
-                && proprt[propdescs[i].property] < 1)
-            {
-                continue;
-            }
-
             std::string sdesc = propdescs[i].desc;
 
             // FIXME Not the nicest hack.
@@ -496,14 +482,6 @@ static std::string _randart_descrip(const item_def &item)
     }
 
     // Some special cases which don't fit into the above.
-    if (proprt[ARTP_METABOLISM])
-    {
-        if (proprt[ ARTP_METABOLISM ] >= 3)
-            description += "\nIt greatly speeds your metabolism.";
-        else if (proprt[ ARTP_METABOLISM ])
-            description += "\nIt speeds your metabolism. ";
-    }
-
     if (proprt[ARTP_STEALTH])
     {
         const int stval = proprt[ARTP_STEALTH];

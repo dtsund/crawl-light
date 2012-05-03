@@ -295,11 +295,9 @@ const char* _prop_name[ARTP_NUM_PROPERTIES] = {
     "RndTl",
     "NoTel",
     "Anger",
-    "Metab",
     "Mut",
     "Acc",
     "Dam",
-    "Curse",
     "Stlth",
     "MP",
     "Slow"
@@ -332,11 +330,9 @@ int8_t _prop_type[ARTP_NUM_PROPERTIES] = {
     ARTP_VAL_BOOL, //CAUSE_TELEPORTATION
     ARTP_VAL_BOOL, //PREVENT_TELEPORTATION
     ARTP_VAL_POS,  //ANGRY
-    ARTP_VAL_POS,  //METABOLISM
     ARTP_VAL_POS,  //MUTAGENIC
     ARTP_VAL_ANY,  //ACCURACY
     ARTP_VAL_ANY,  //DAMAGE
-    ARTP_VAL_POS,  //CURSED
     ARTP_VAL_ANY,  //STEALTH
     ARTP_VAL_ANY,  //MAGICAL_POWER
     ARTP_VAL_BOOL  //PONDEROUS
@@ -1321,11 +1317,9 @@ static void _debug_rap_stats(FILE *ostat)
         -1, //ARTP_CAUSE_TELEPORTATION
         -1, //ARTP_PREVENT_TELEPORTATION
         -1, //ARTP_ANGRY
-        -1, //ARTP_METABOLISM
         -1, //ARTP_MUTAGENIC
          0, //ARTP_ACCURACY
          0, //ARTP_DAMAGE
-        -1, //ARTP_CURSED
          0, //ARTP_STEALTH
          0, //ARTP_MAGICAL_POWER
          -1
@@ -1372,7 +1366,6 @@ static void _debug_rap_stats(FILE *ostat)
         }
 
         num_randarts++;
-        proprt[ARTP_CURSED] = 0;
 
         int num_props = 0, num_good_props = 0, num_bad_props = 0;
         for (int j = 0; j < ARTP_NUM_PROPERTIES; ++j)
@@ -1463,11 +1456,9 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_CAUSE_TELEPORTATION",
         "ARTP_PREVENT_TELEPORTATION",
         "ARTP_ANGRY",
-        "ARTP_METABOLISM",
         "ARTP_MUTAGENIC",
         "ARTP_ACCURACY",
         "ARTP_DAMAGE",
-        "ARTP_CURSED",
         "ARTP_STEALTH",
         "ARTP_MAGICAL_POWER",
         "ARTP_PONDEROUS"

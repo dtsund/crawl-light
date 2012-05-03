@@ -121,8 +121,7 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
              && (brand == SPWPN_DRAINING || brand == SPWPN_PAIN
                  || brand == SPWPN_VAMPIRICISM || brand == SPWPN_REAPING
                  || brand == SPWPN_CHAOS
-                 || is_demonic(item)
-                 || artefact_wpn_property(item, ARTP_CURSED) != 0))
+                 || is_demonic(item)))
     {
         return (false);
     }
@@ -612,9 +611,6 @@ static int _need_bonus_stat_props(const artefact_properties_t &proprt)
 
     for (int i = 0; i < ARTP_NUM_PROPERTIES; i++)
     {
-        if (i == ARTP_CURSED)
-            continue;
-
         if (proprt[i] == 0)
             continue;
 
@@ -996,7 +992,7 @@ void static _get_randart_properties(const item_def &item,
 
     if (power_level >= 2 && x_chance_in_y(power_level, 17))
     {
-        switch (random2(9))
+        switch (random2(8))
         {
         case 0:                     // makes noise
             if (aclass != OBJ_WEAPONS)
@@ -1055,12 +1051,7 @@ void static _get_randart_properties(const item_def &item,
             }
             proprt[ARTP_COLD] = -1;
             break;
-        case 7:                     // speed metabolism
-            if (aclass == OBJ_JEWELLERY && atype == RING_SUSTENANCE)
-                break;              // already is a ring of sustenance
-            proprt[ARTP_METABOLISM] = 1 + random2(3);
-            break;
-        case 8:
+        case 7:
             // emits mutagenic radiation - increases
             // magic_contamination; property is chance (1 in ...) of
             // increasing magic_contamination
@@ -1093,14 +1084,6 @@ void static _get_randart_properties(const item_def &item,
     int add_prop = _need_bonus_stat_props(proprt);
     while (0 < add_prop--)
         power_level += _randart_add_one_property(item, proprt);
-
-    if ((power_level < 2 && one_chance_in(5)) || one_chance_in(30))
-    {
-        if (one_chance_in(4))
-            proprt[ARTP_CURSED] = 1 + random2(5);
-        else
-            proprt[ARTP_CURSED] = -1;
-    }
 }
 
 static bool _redo_book(item_def &book)
@@ -1192,11 +1175,6 @@ static bool _init_artefact_properties(item_def &item)
 
     for (int i = 0; i < ART_PROPERTIES; i++)
     {
-        if (i == ARTP_CURSED && prop[i] < 0)
-        {
-            do_curse_item(item);
-            continue;
-        }
         rap[i] = static_cast<short>(prop[i]);
     }
 
@@ -1294,7 +1272,7 @@ static int _artefact_num_props(const artefact_properties_t &proprt)
 
     // Count all properties, but exclude self-cursing.
     for (int i = 0; i < ARTP_NUM_PROPERTIES; ++i)
-        if (i != ARTP_CURSED && proprt[i] != 0)
+        if (proprt[i] != 0)
             num++;
 
     return num;
@@ -1687,8 +1665,7 @@ static bool _randart_is_conflicting(const item_def &item,
 {
     if (item.base_type == OBJ_WEAPONS
         && get_weapon_brand(item) == SPWPN_HOLY_WRATH
-        && (is_demonic(item)
-            || proprt[ARTP_CURSED] != 0))
+        && (is_demonic(item)))
     {
         return (true);
     }
@@ -1709,10 +1686,6 @@ static bool _randart_is_conflicting(const item_def &item,
 
     switch (item.sub_type)
     {
-    case RING_SUSTENANCE:
-        conflicts = ARTP_METABOLISM;
-        break;
-
     case RING_FIRE:
     case RING_ICE:
     case RING_WIZARDRY:
@@ -1922,9 +1895,6 @@ bool make_item_unrandart(item_def &item, int unrand_index)
     item.flags |= ISFLAG_UNRANDART;
     _artefact_setup_prop_vectors(item);
     _init_artefact_properties(item);
-
-    if (unrand->prpty[ARTP_CURSED] != 0)
-        do_curse_item(item);
 
     // get true artefact name
     ASSERT(!item.props.exists(ARTEFACT_NAME_KEY));
