@@ -557,7 +557,7 @@ void autotrain()
         
         //If this maxed out the skill, stop autotraining it.  Might need to break the loop
         //if we weren't autotraining anything else.
-        if(you.skills[current_autotrain_skill] == 27)
+        if(you.skills[current_autotrain_skill] == MAX_SKILL_LEVEL)
         {
             you.num_autotrained_skills--;
             you.autotrain_skill[current_autotrain_skill] = false;
