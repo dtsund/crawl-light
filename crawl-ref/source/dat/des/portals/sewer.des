@@ -1052,7 +1052,7 @@ SUBST:   X = xx"
 NSUBST:  Y = 2:. /*:c
 SUBST:   d = e
 KMONS:   Z = nothing w:60 / rat w:2 / grey rat / green rat w:7
-KITEM:   Z = cheese w:2 / nothing
+KITEM:   Z = nothing
 KMONS:   R = orange rat
 KFEAT:   ' = .
 : else
