@@ -416,11 +416,11 @@ int spell_glow(spell_type which_spell, bool rod)
     return 0;
 */
     //Draft 2: Considerably more lenient than draft 1.
-    if (hunger > 600)
+    if (hunger > 500)
         return 3;
-    else if (hunger > 300)
+    else if (hunger > 275)
         return 2;
-    else if (hunger > 175)
+    else if (hunger > 100)
         return 1;
     
     return 0;
