@@ -510,45 +510,6 @@ int detect_creatures(int pow, bool telepathic)
     return (creatures_found);
 }
 
-static bool _selectively_remove_curse(std::string *pre_msg)
-{
-    bool used = false;
-
-    while(1)
-    {
-        if (!any_items_to_select(OSEL_CURSED_WORN, false) && used)
-        {
-            mpr("You have uncursed all your worn items.");
-            return used;
-        }
-
-        int item_slot = prompt_invent_item("Uncurse which item?", MT_INVLIST,
-                                           OSEL_CURSED_WORN, true, true, false);
-        if (prompt_failed(item_slot))
-            return used;
-
-        item_def& item(you.inv[item_slot]);
-
-        if (!item.cursed()
-            || !item_is_equipped(item)
-            || &item == you.weapon()
-               && item.base_type != OBJ_WEAPONS
-               && item.base_type != OBJ_STAVES)
-        {
-            mpr("Choose a cursed equipped item, or Esc to abort.");
-            if (Options.auto_list)
-                more();
-            continue;
-        }
-
-        if (!used && pre_msg)
-            mpr(*pre_msg);
-
-        do_uncurse_item(item);
-        used = true;
-    }
-}
-
 bool remove_curse(bool alreadyknown, std::string *pre_msg)
 {
     bool success = false;
@@ -593,38 +554,6 @@ bool remove_curse(bool alreadyknown, std::string *pre_msg)
     }
 
     return (success);
-}
-
-static bool _selectively_curse_item(bool armour, std::string *pre_msg)
-{
-    while(1)
-    {
-        int item_slot = prompt_invent_item("Curse which item?", MT_INVLIST,
-                                           armour ? OSEL_UNCURSED_WORN_ARMOUR
-                                                  : OSEL_UNCURSED_WORN_JEWELLERY,
-                                           true, true, false);
-        if (prompt_failed(item_slot))
-            return false;
-
-        item_def& item(you.inv[item_slot]);
-
-        if (item.cursed()
-            || !item_is_equipped(item)
-            || armour && item.base_type != OBJ_ARMOUR
-            || !armour && item.base_type != OBJ_JEWELLERY)
-        {
-            mprf("Choose an uncursed equipped piece of %s, or Esc to abort.",
-                 armour ? "armour" : "jewellery");
-            if (Options.auto_list)
-                more();
-            continue;
-        }
-
-        if (pre_msg)
-            mpr(*pre_msg);
-        do_curse_item(item, false);
-        return true;
-    }
 }
 
 bool curse_item(bool armour, bool alreadyknown, std::string *pre_msg)

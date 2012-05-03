@@ -367,8 +367,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         if (artefact)
             _equip_artefact_effect(item, &showMsgs, unmeld);
 
-              bool known_recurser = false;
-
         set_ident_flags(item, ISFLAG_EQ_WEAPON_MASK);
 
         special = item.special;

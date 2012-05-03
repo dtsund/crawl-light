@@ -258,43 +258,6 @@ enum eq_type
     NUM_ET
 };
 
-static bool is_ash_portal(dungeon_feature_type feat)
-{
-    switch (feat)
-    {
-    case DNGN_ENTER_HELL:
-    case DNGN_ENTER_LABYRINTH:
-    case DNGN_ENTER_ABYSS: // for completeness/Pan
-    case DNGN_EXIT_ABYSS:
-    case DNGN_ENTER_PANDEMONIUM:
-    case DNGN_EXIT_PANDEMONIUM:
-    // DNGN_TRANSIT_PANDEMONIUM is too mundane
-    case DNGN_ENTER_PORTAL_VAULT:
-        return true;
-    default:
-        return false;
-    }
-}
-
-// Yay for rectangle_iterator and radius_iterator not sharing a base type
-static bool _check_portal(coord_def where)
-{
-    const dungeon_feature_type feat = grd(where);
-    if (feat != env.map_knowledge(where).feat() && is_ash_portal(feat))
-    {
-        env.map_knowledge(where).set_feature(feat);
-        env.map_knowledge(where).flags |= MAP_MAGIC_MAPPED_FLAG;
-
-        if (!testbits(env.pgrid(where), FPROP_SEEN_OR_NOEXP))
-        {
-            env.pgrid(where) |= FPROP_SEEN_OR_NOEXP;
-            if (!you.see_cell(where))
-                return true;
-        }
-    }
-    return false;
-}
-
 #if 0
 int ash_detect_portals(bool all)
 {

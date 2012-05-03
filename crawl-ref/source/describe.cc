@@ -4111,13 +4111,6 @@ static void _detailed_god_description(god_type which_god)
         describe_god(which_god, true);
 }
 
-#define NUM_BONDAGE 3
-static const char* bondage_parts[2][NUM_BONDAGE] =
-{
-  { "weapon", "armour", "magic", },         // normal races
-  { "left ring", "right ring", "amulet", }, // felids
-};
-
 void describe_god(god_type which_god, bool give_title)
 {
     int colour;              // Colour used for some messages.

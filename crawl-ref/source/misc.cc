@@ -232,6 +232,7 @@ void init_stack_blood_potions(item_def &stack, int age)
 }
 
 // Sort a CrawlVector<int>, should probably be done properly with templates.
+#if 0
 static void _int_sort(CrawlVector &vec)
 {
     std::vector<int> help;
@@ -249,19 +250,7 @@ static void _int_sort(CrawlVector &vec)
         help.pop_back();
     }
 }
-
-static void _compare_blood_quantity(item_def &stack, int timer_size)
-{
-    if (timer_size != stack.quantity)
-    {
-        mprf(MSGCH_WARN,
-             "ERROR: blood potion quantity (%d) doesn't match timer (%d)",
-             stack.quantity, timer_size);
-
-        // sanity measure
-        stack.quantity = timer_size;
-    }
-}
+#endif
 
 void maybe_coagulate_blood_potions_floor(int obj)
 {
@@ -432,34 +421,6 @@ void maybe_coagulate_blood_potions_floor(int obj)
     dec_mitm_item_quantity(obj, rot_count + coag_count);
     _compare_blood_quantity(blood, timer.size());
 */
-}
-
-static std::string _get_desc_quantity(const int quant, const int total)
-{
-    if (total == quant)
-        return "Your";
-    else if (quant == 1)
-        return "One of your";
-    else if (quant == 2)
-        return "Two of your";
-    else if (quant >= (total * 3) / 4)
-        return "Most of your";
-    else
-        return "Some of your";
-}
-
-// Prints messages for blood potions coagulating in inventory (coagulate = true)
-// or whenever potions are cursed into potions of decay (coagulate = false).
-static void _potion_stack_changed_message(item_def &potion, int num_changed,
-                                          std::string verb)
-{
-    ASSERT(num_changed > 0);
-
-    verb = replace_all(verb, "%s", num_changed == 1 ? "s" : "");
-    mprf(MSGCH_ROTTEN_MEAT, "%s %s %s.",
-         _get_desc_quantity(num_changed, potion.quantity).c_str(),
-         potion.name(DESC_PLAIN, false).c_str(),
-         verb.c_str());
 }
 
 // Returns true if "equipment weighs less" message needed.
