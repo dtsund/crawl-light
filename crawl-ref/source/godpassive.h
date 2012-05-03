@@ -41,8 +41,6 @@ monster_type che_monster_tier(const monster *mon);
 void jiyva_eat_offlevel_items();
 void jiyva_slurp_bonus(int item_value, int *js);
 void jiyva_slurp_message(int js);
-int ash_bondage_level(int type_only = 0);
-void ash_check_bondage();
 int ash_detect_portals(bool all);
 //int ash_skill_boost(skill_type sk);
 

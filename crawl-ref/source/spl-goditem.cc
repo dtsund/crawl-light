@@ -378,7 +378,7 @@ int detect_items(int pow)
         map_radius = 8 + random2(8) + pow;
     else
     {
-        ASSERT(you.religion == GOD_ASHENZARI);
+        //ASSERT(you.religion == GOD_ASHENZARI);
         map_radius = std::min(you.piety / 20, LOS_RADIUS);
         if (map_radius <= 0)
             return 0;
@@ -551,9 +551,6 @@ static bool _selectively_remove_curse(std::string *pre_msg)
 
 bool remove_curse(bool alreadyknown, std::string *pre_msg)
 {
-    if (you.religion == GOD_ASHENZARI && alreadyknown)
-        return _selectively_remove_curse(pre_msg);
-
     bool success = false;
 
     // Only cursed *weapons* in hand count as cursed. - bwr
@@ -652,23 +649,13 @@ bool curse_item(bool armour, bool alreadyknown, std::string *pre_msg)
 
     if (affected == EQ_WEAPON)
     {
-        if (you.religion == GOD_ASHENZARI && alreadyknown)
-        {
-            mprf(MSGCH_PROMPT, "You aren't wearing any piece of uncursed %s.",
-                 armour ? "armour" : "jewellery");
-        }
-        else
-        {
-            if (pre_msg)
-                mpr(*pre_msg);
-            canned_msg(MSG_NOTHING_HAPPENS);
-        }
+
+        if (pre_msg)
+            mpr(*pre_msg);
+        canned_msg(MSG_NOTHING_HAPPENS);
 
         return false;
     }
-
-    if (you.religion == GOD_ASHENZARI && alreadyknown)
-        return _selectively_curse_item(armour, pre_msg);
 
     if (pre_msg)
         mpr(*pre_msg);

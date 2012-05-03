@@ -1262,9 +1262,6 @@ bool is_enchantable_weapon(const item_def &wpn, bool uncurse, bool first)
         return (false);
     }
 
-    if (uncurse && wpn.cursed() && you.religion != GOD_ASHENZARI)
-        return true;
-
     // Artefacts or highly enchanted weapons cannot be enchanted,
     // only uncursed.
     if (wpn.base_type == OBJ_WEAPONS)
@@ -1296,10 +1293,9 @@ bool is_enchantable_armour(const item_def &arm, bool uncurse, bool unknown)
     if (item_is_melded(arm))
         return (false);
 
-    // Artefacts or highly enchanted armour cannot be enchanted, only
-    // uncursed.
+    // Artefacts or highly enchanted armour cannot be enchanted.
     if (is_artefact(arm) || arm.plus >= armour_max_enchant(arm))
-        return (uncurse && arm.cursed() && you.religion != GOD_ASHENZARI);
+        return (false);
 
     return (true);
 }

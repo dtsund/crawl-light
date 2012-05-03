@@ -3944,10 +3944,11 @@ const char *divine_title[NUM_GODS][8] =
     // Cheibriados -- slow theme
     {"Unwound %s",         "Timekeeper",            "Righteous Timekeeper",     "Chronographer",
      "Splendid Chronographer", "Chronicler",        "Eternal Chronicler",       "Ticktocktomancer"},
-
+/*
     // Ashenzari -- divination theme
     {"Star-crossed",       "Cursed",                "Initiated",                "Seer",
      "Soothsayer",         "Oracle",                "Illuminatus",              "Omniscient"},
+*/
 };
 
 static int _piety_level()
@@ -4139,33 +4140,6 @@ static const char* bondage_parts[2][NUM_BONDAGE] =
   { "left ring", "right ring", "amulet", }, // felids
 };
 
-static std::string _describe_bondage()
-{
-    int bondage_types[NUM_BONDAGE];
-    int sum = 0;
-    for (int i = 0; i < NUM_BONDAGE; i++)
-    {
-        sum += bondage_types[i] = ash_bondage_level(i+1);
-        ASSERT(bondage_types[i] == 0 || bondage_types[i] == 1);
-    }
-
-    if (!sum)
-        return "You are not bound.";
-    if (sum == NUM_BONDAGE)
-        return "You are completely bound.";
-
-    const char** names = bondage_parts[you.species == SP_CAT];
-    std::vector<const char*> parts[2];
-    for (int i = 0; i < NUM_BONDAGE; i++)
-        parts[bondage_types[i]].push_back(names[i]);
-    if (sum == 1)
-        return make_stringf("You are bound in %s but not %s or %s.",
-                            parts[1][0], parts[0][0], parts[0][1]);
-    else
-        return make_stringf("You are bound in %s and %s but not %s.",
-                            parts[1][0], parts[1][1], parts[0][0]);
-}
-
 void describe_god(god_type which_god, bool give_title)
 {
     int colour;              // Colour used for some messages.
@@ -4250,8 +4224,6 @@ void describe_god(god_type which_god, bool give_title)
     else
     {
         cprintf(describe_favour(which_god).c_str());
-        if (which_god == GOD_ASHENZARI)
-            cprintf("\n%s", _describe_bondage().c_str());
 
         //mv: The following code shows abilities given by your god (if any).
 
@@ -4376,18 +4348,12 @@ void describe_god(god_type which_god, bool give_title)
                                        "fire through allied plants.",
                                        ABIL_NON_ABILITY);
         }
-        else if (which_god == GOD_ASHENZARI)
+        else if (which_god == GOD_CHEIBRIADOS)
         {
             have_any = true;
             _print_final_god_abil_desc(which_god,
-                "You are provided with a bounty of information.",
+                "You can sense nearby danger.",
                 ABIL_NON_ABILITY);
-            std::string buf = "You can pray to bestow "
-                              + apostrophise(god_name(which_god))
-                              + " curse upon scrolls that usually remove "
-                                "them.";
-            _print_final_god_abil_desc(which_god, buf,
-                                       ABIL_NON_ABILITY);
         }
 
         // mv: No abilities (except divine protection) under penance

@@ -98,7 +98,6 @@ bool god_accepts_prayer(god_type god)
     case GOD_ELYVILON:
     case GOD_BEOGH:
     case GOD_NEMELEX_XOBEH:
-    case GOD_ASHENZARI:
         return (true);
 
     default:
@@ -869,8 +868,6 @@ static bool _offer_items()
                 simple_god_message(" does not care about gold!");
             else
                 simple_god_message(" expects you to use your decks, not offer them!");
-        else if (you.religion == GOD_ASHENZARI)
-            simple_god_message(" can corrupt only scrolls of remove curse.");
     }
     if (num_sacced == 0 && you.religion == GOD_ELYVILON)
         mpr("There are no weapons here to destroy!");

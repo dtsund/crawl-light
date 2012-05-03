@@ -210,12 +210,6 @@ static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
         " freeze% in place and disappear%.",
         " freeze% in place and slowly fade%.",
     },
-    // Ashenzari
-    {
-        " flicker% black.",
-        " pulsate% black.",          // unused
-        " strongly pulsate% black.", // unused
-    },
 };
 
 const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
@@ -324,13 +318,6 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "inflict damage to those overly hasty",
       "step out of the time flow"
     },
-    // Ashenzari
-    { "",
-      "The more cursed you are, the more Ashenzari helps you learn.",
-      "Ashenzari keeps your vision and mind clear.",
-      "scry through walls",
-      "Ashenzari helps you to reconsider your skills."
-    },
 };
 
 const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
@@ -438,13 +425,6 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "",
       "inflict damage to those overly hasty",
       "step out of the time flow"
-    },
-    // Ashenzari
-    { "",
-      "Ashenzari no longer helps you learn.",
-      "Ashenzari no longer keeps your vision and mind clear.",
-      "scry through walls",
-      "Ashenzari no longer helps you to reconsider your skills."
     },
 };
 
@@ -557,12 +537,6 @@ std::string get_god_likes(god_type which_god, bool verbose)
         likes.push_back(info);
         break;
 
-    case GOD_ASHENZARI:
-        snprintf(info, INFO_SIZE, "you explore the world (preferably while "
-                                  "bound by curses)");
-        likes.push_back(info);
-        break;
-
     default:
         break;
     }
@@ -586,11 +560,6 @@ std::string get_god_likes(god_type which_god, bool verbose)
     case GOD_NEMELEX_XOBEH:
         snprintf(info, INFO_SIZE, "you sacrifice items%s",
                  verbose ? " (by standing over them and <w>p</w>raying)" : "");
-        likes.push_back(info);
-        break;
-
-    case GOD_ASHENZARI:
-        snprintf(info, INFO_SIZE, "you obtain runes of Zot");
         likes.push_back(info);
         break;
 
@@ -940,12 +909,6 @@ void dec_penance(god_type god, int val)
             {
                 mpr("Your divine halo returns!");
                 invalidate_agrid(true);
-            }
-            else if (god == GOD_ASHENZARI
-                && you.piety >= piety_breakpoint(2))
-            {
-                mpr("Your vision regains its divine sight.");
-                autotoggle_autopickup(false);
             }
             else if (god == GOD_CHEIBRIADOS && che_boost_level())
             {
@@ -2314,8 +2277,6 @@ std::string god_name(god_type which_god, bool long_name)
     case GOD_FEDHAS:        return "Fedhas";
     case GOD_CHEIBRIADOS: return "Cheibriados";
     case GOD_XOM: return "Xom";
-    case GOD_ASHENZARI:
-        return "Ashenzari";
     case NUM_GODS: return "Buggy";
     }
     return ("");
@@ -3024,16 +2985,6 @@ void excommunication(god_type new_god)
         _inc_penance(old_god, 30);
         break;
 
-    case GOD_ASHENZARI:
-        if (you.transfer_skill_points > 0)
-            ashenzari_end_transfer(false, true);
-        // max_level can be much higher, multi-Zig felids may lose millions
-        you.exp_docked = exp_needed(you.max_level + 1)
-                       - exp_needed(you.max_level);
-        you.exp_docked_total = you.exp_docked;
-        _inc_penance(old_god, 50);
-        break;
-
     case GOD_CHEIBRIADOS:
     default:
         _inc_penance(old_god, 25);
@@ -3161,7 +3112,6 @@ bool god_likes_items(god_type god)
     case GOD_ZIN:
     case GOD_BEOGH:
     case GOD_NEMELEX_XOBEH:
-    case GOD_ASHENZARI:
     case GOD_ELYVILON:
         return (true);
 
@@ -3381,7 +3331,6 @@ void god_pitch(god_type which_god)
     }
 
     god_welcome_identify_gear();
-    ash_check_bondage();
 
     // When you start worshipping a good god, you make all non-hostile
     // unholy and evil beings hostile; when you start worshipping Zin,
@@ -3804,11 +3753,6 @@ void handle_god_time()
             // avoid the error message below.
             break;
 
-        case GOD_ASHENZARI:
-            if (one_chance_in(25))
-                lose_piety(1);
-            break;
-
         default:
             die("Bad god, no bishop!");
             return;
@@ -3845,7 +3789,6 @@ int god_colour(god_type god) // mv - added
     case GOD_TROG:
     case GOD_BEOGH:
     case GOD_LUGONU:
-    case GOD_ASHENZARI:
         return (LIGHTRED);
 
     case GOD_XOM:

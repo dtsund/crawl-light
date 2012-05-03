@@ -2041,7 +2041,7 @@ static void _prep_input()
 
     if (you.seen_portals)
     {
-        ASSERT(you.religion == GOD_ASHENZARI);
+        //ASSERT(you.religion == GOD_ASHENZARI);
         if (you.seen_portals == 1)
             mpr("You have a vision of a gate.", MSGCH_GOD);
         else
@@ -2867,8 +2867,10 @@ static void _player_reacts_to_monsters()
     if (player_mutation_level(MUT_ANTENNAE) || you.religion == GOD_CHEIBRIADOS)
         check_antennae_detect();
 
+/*
     if (you.religion == GOD_ASHENZARI && !player_under_penance())
         detect_items(-1);
+*/
 
     if (you.duration[DUR_TELEPATHY] && player_in_mappable_area())
         detect_creatures(1 + you.duration[DUR_TELEPATHY] /

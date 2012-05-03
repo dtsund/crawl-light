@@ -811,8 +811,7 @@ static int _acquirement_misc_subtype()
         result = MISC_CRYSTAL_BALL_OF_ENERGY;
     }
     if (x_chance_in_y(you.skills[SK_EVOCATIONS], 27)
-        && !you.seen_misc[MISC_CRYSTAL_BALL_OF_SEEING]
-        && you.religion != GOD_ASHENZARI)
+        && !you.seen_misc[MISC_CRYSTAL_BALL_OF_SEEING])
     {
         result = MISC_CRYSTAL_BALL_OF_SEEING;
     }
@@ -1015,7 +1014,6 @@ static bool _skill_useless_with_god(int skill)
     case GOD_NEMELEX_XOBEH:
     case GOD_KIKUBAAQUDGHA:
     case GOD_VEHUMET:
-    case GOD_ASHENZARI:
     case GOD_NO_GOD:
         return (skill == SK_INVOCATIONS);
     default:

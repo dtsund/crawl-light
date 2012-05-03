@@ -1268,7 +1268,7 @@ int SkillMenu::_get_next_display() const
 
 bool SkillMenu::_skill_enhanced() const
 {
-    if (you.religion != GOD_OKAWARU && you.religion != GOD_ASHENZARI)
+    if (you.religion != GOD_OKAWARU)
         return false;
 
     for (unsigned int i = 0; i < NUM_SKILLS; ++i)

@@ -1547,7 +1547,6 @@ enum god_type
     GOD_JIYVA,
     GOD_FEDHAS,
     GOD_CHEIBRIADOS,
-    GOD_ASHENZARI,
     NUM_GODS,                          // always after last god
 
     GOD_RANDOM = 100,

@@ -101,21 +101,14 @@ static void _automap_from(int x, int y, int mutated)
 {
     if (mutated)
     {
-        magic_mapping(8 * mutated,
-                      you.religion == GOD_ASHENZARI ? 25 + you.piety / 8 : 25,
-                      true, you.religion == GOD_ASHENZARI,
-                      true, true, coord_def(x,y));
+        magic_mapping(8 * mutated, 25, true, false, true,
+                      true, coord_def(x,y));
     }
 }
 
 static int _map_quality()
 {
-    int passive = player_mutation_level(MUT_PASSIVE_MAPPING);
-    // the explanation of this 51 vs max_piety of 200 is left as
-    // an exercise to the reader
-    if (you.religion == GOD_ASHENZARI && !player_under_penance())
-        passive = std::max(passive, you.piety / 51);
-    return passive;
+    return player_mutation_level(MUT_PASSIVE_MAPPING);
 }
 
 void reautomap_level()

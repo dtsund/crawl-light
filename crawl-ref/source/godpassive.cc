@@ -258,79 +258,6 @@ enum eq_type
     NUM_ET
 };
 
-int ash_bondage_level(int type_only)
-{
-    if (you.religion != GOD_ASHENZARI)
-        return (0);
-
-    int cursed[NUM_ET] = {0}, slots[NUM_ET] = {0};
-
-    for (int i = EQ_WEAPON; i < NUM_EQUIP; i++)
-    {
-        eq_type s;
-        if (i == EQ_WEAPON)
-            s = ET_WEAPON;
-        else if (i <= EQ_MAX_ARMOUR)
-            s = ET_ARMOUR;
-        else
-            s = ET_JEWELS;
-
-        // kittehs don't obey hoomie rules!
-        if (you.species == SP_CAT)
-        {
-            if (i >= EQ_LEFT_RING)
-                s = (eq_type)(i - EQ_LEFT_RING);
-            else
-                ASSERT(!you_can_wear(i, true));
-        }
-
-        // transformed away slots are still considered to be possibly bound
-        if (you_can_wear(i, true))
-        {
-            slots[s]++;
-            if (you.equip[i] != -1)
-            {
-                const item_def& item = you.inv[you.equip[i]];
-                if (item.cursed()
-                    && (i != EQ_WEAPON
-                        || item.base_type == OBJ_WEAPONS
-                        || item.base_type == OBJ_STAVES))
-                {
-                    cursed[s]++;
-                }
-            }
-        }
-    }
-
-    int bonus = 0;
-    for (int s = ET_WEAPON; s < NUM_ET; s++)
-    {
-        if (type_only && s+1 != type_only)
-            continue;
-        if (cursed[s] > slots[s] / 2)
-            bonus++;
-    }
-    return bonus;
-}
-
-void ash_check_bondage()
-{
-    int new_level = ash_bondage_level();
-
-    if (new_level == you.bondage_level)
-        return;
-
-    if (new_level > you.bondage_level)
-        mprf(MSGCH_GOD, "You feel %s bound.",
-             (new_level == 1) ? "slightly" :
-             (new_level == 2) ? "seriously" :
-             (new_level == 3) ? "completely" :
-                                "buggily");
-    else
-        mprf(MSGCH_GOD, "You feel less bound.");
-    you.bondage_level = new_level;
-}
-
 static bool is_ash_portal(dungeon_feature_type feat)
 {
     switch (feat)
@@ -368,6 +295,7 @@ static bool _check_portal(coord_def where)
     return false;
 }
 
+#if 0
 int ash_detect_portals(bool all)
 {
     if (you.religion != GOD_ASHENZARI)
@@ -396,6 +324,7 @@ int ash_detect_portals(bool all)
     you.seen_portals += portals_found;
     return (portals_found);
 }
+#endif
 
 #if 0
 int ash_skill_boost(skill_type sk)

@@ -1145,7 +1145,7 @@ ENDMAP
 #    Total weight: 30 = 15+5+2+2+3+3
 #    Trees, sometimes other plants.
 
-# 15 gods
+# 14 gods
 NAME:    kilobyte_mini_greek_temple
 PLACE:   Temple
 WEIGHT:  15
@@ -1167,7 +1167,7 @@ tt.....{..21...t...............''ccccccccccccccc.....22.tttt
 ttt...........ttt.......(......''G'c"""""""""""ctt..t..ttttt
 tttt......2....................''''c"B"B"B"B"B"ctt......tttt
 tttttt.....................t...''G'c"""""""""""cttt.....tttt
-ttttttttt..1.....2...t.........''''+"B"B"B"B"B"ctt...t....tt
+ttttttttt..1.....2...t.........''''+""B"B"B"B"ctt...t....tt
 tttttttt.....[.................''G'c"""""""""""ct...ttt..ttt
 ttttttttt...................1..''''c"B"B"B"B"B"ct..tttt.tttt
 ttttttttttttttt....2....t......''G'c"""""""""""ct....t..tttt
@@ -2333,7 +2333,7 @@ ENDMAP
 #   These are intentionally rare, just like crystal is.
 #   Crystal walls, so green colour.
 
-# 15 gods
+# 14 gods
 NAME:   dpeg_three_leaves_temple
 PLACE:  Temple
 TAGS:   no_rotate
@@ -2357,7 +2357,7 @@ bb........B...{.....[...B........bb
            bb.........bb
           bb...........bb
          bb....B...B....bb
-        bb.......B.......bb
+        bb...............bb
          bbb...........bbb
            bbbb.....bbbb
               bbbbbbb
@@ -2534,7 +2534,7 @@ bbbbb.B....bb...bb....B.bbbbb
             bbbbb
 ENDMAP
 
-# 15 gods
+# 14 gods
 NAME:    temple_minmay_crystal_snake
 TAGS:    no_rotate
 PLACE:   Temple
@@ -2547,13 +2547,13 @@ MAP
       b..B.....B.....(..b
       bb...bbb...bbb...bb
        bb.bb bb.bb bb.bb
-  bbb   b.b   bbb   b.b
- bb.bb bb.bb       bb.bb
-bb...bbb...bb     bb...bb
-b..B.....B..b     b..B..b
-bb...bbb...bb     bb...bb
- bb.bb bb.bb       bb.bb
-  bbb   bbb   bbb   b.b
+        b.b   bbb   b.b
+       bb.bb       bb.bb
+      bb...bb     bb...bb
+      b..B..b     b..B..b
+      bb...bb     bb...bb
+       bb.bb       bb.bb
+        bbb   bbb   b.b
              bb.bb bb.bb
             bb...bbb...bb
             b..B.....B..b
@@ -2709,7 +2709,7 @@ xx...x...x.x...x.x.x.x.x...x.x...x...xx
             xxxxx     xxxxx
 ENDMAP
 
-# 15 gods
+# 14 gods
 NAME:    temple_eino_rhombus_b
 PLACE:   Temple
 TAGS:    no_rotate
@@ -2746,12 +2746,7 @@ xx..x.x..x.x..x.x..x..x.x..x.x..x.x..xx
         xx..x...x..x..x...x..xx
          xx..x.x..x.x..x.x..xx
           xx..x..x...x..x..xx
-           xx...x..B..x...xx
-            xx...x...x...xx
-             xx...x.x...xx
-              xx...x...xx
-               xx.....xx
-                xxxxxxx
+           xxxxxxxxxxxxxxxxx
 ENDMAP
 
 # 12 gods

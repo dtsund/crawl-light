@@ -986,7 +986,6 @@ void viewwindow(bool show_updates)
         if (!player_in_mappable_area())
         {
             env.map_knowledge.init(map_cell());
-            ash_detect_portals(false);
         }
 
 #ifdef USE_TILE

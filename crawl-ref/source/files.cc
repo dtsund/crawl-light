@@ -1514,8 +1514,6 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
         // But do not reset the weapon swap if we swapped weapons
         // because of a transformation.
         maybe_clear_weapon_swap();
-
-        ash_detect_portals(player_in_mappable_area());
     }
     // Initialize halos, etc.
     invalidate_agrid(true);

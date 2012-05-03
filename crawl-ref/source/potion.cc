@@ -333,8 +333,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
         }
         else
             mpr("A flood of memories washes over you.");
-        you.exp_available += 750 * you.experience_level
-                           - ash_reduce_xp(750 * you.experience_level);
+        you.exp_available += 750 * you.experience_level;
         autotrain();
         break;
 

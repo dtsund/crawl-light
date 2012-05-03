@@ -47,7 +47,6 @@ void equip_item(equipment_type slot, int item_slot, bool msg)
     you.equip[slot] = item_slot;
 
     _equip_effect(slot, item_slot, false, msg);
-    ash_check_bondage();
 }
 
 // Clear an equipment slot (possibly melded).
@@ -66,7 +65,6 @@ bool unequip_item(equipment_type slot, bool msg)
             _unequip_effect(slot, item_slot, false, msg);
         else
             you.melded[slot] = false;
-        ash_check_bondage();
         return (true);
     }
 }

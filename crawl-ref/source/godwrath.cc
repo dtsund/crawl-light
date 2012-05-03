@@ -1237,10 +1237,6 @@ bool divine_retribution(god_type god, bool no_bonus, bool force)
     case GOD_FEDHAS:        do_more = _fedhas_retribution(); break;
     case GOD_CHEIBRIADOS:   do_more = _cheibriados_retribution(); break;
 
-    case GOD_ASHENZARI:
-        // No reduction with time.
-        return (false);
-
     default:
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_RELIGION)
         mprf(MSGCH_DIAGNOSTICS, "No retribution defined for %s.",
@@ -1452,6 +1448,7 @@ static void _god_smites_you(god_type god, const char *message,
     }
 }
 
+#if 0
 int ash_reduce_xp(int amount)
 {
     if (!you.penance[GOD_ASHENZARI] || !you.exp_docked_total)
@@ -1469,3 +1466,4 @@ int ash_reduce_xp(int amount)
 
     return lost;
 }
+#endif

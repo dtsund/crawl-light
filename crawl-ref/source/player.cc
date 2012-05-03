@@ -2533,7 +2533,6 @@ void forget_map(int chance_forgotten, bool force)
         }
     }
 
-    ash_detect_portals(player_in_mappable_area());
 #ifdef USE_TILE
     tiles.update_minimap_bounds();
 #endif
@@ -2546,10 +2545,6 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
         return;
     if (crawl_state.game_is_sprint() && you.level_type == LEVEL_ABYSS)
         return;
-
-    if (you.religion == GOD_ASHENZARI && you.piety > piety_breakpoint(0))
-        exp_gained = div_rand_round(exp_gained * (8 + ash_bondage_level()), 8);
-    exp_gained -= ash_reduce_xp(exp_gained);
 
     const unsigned int  old_exp   = you.experience;
     const int           old_avail = you.exp_available;
@@ -3825,12 +3820,6 @@ int player_mental_clarity(bool calc_unid, bool items)
 {
     int ret = 3 * player_equip(EQ_AMULET, AMU_CLARITY, calc_unid) * items
               + player_mutation_level(MUT_CLARITY);
-
-    if (you.religion == GOD_ASHENZARI && you.piety >= piety_breakpoint(2)
-        && !player_under_penance())
-    {
-        ret++;
-    }
 
     return ((ret > 3) ? 3 : ret);
 }
@@ -5571,8 +5560,6 @@ int player::skill(skill_type sk) const
 {
     if (you.duration[DUR_HEROISM] && sk <= SK_LAST_MUNDANE)
         return std::min(skills[sk] + 5, 27);
-//    else if (you.religion == GOD_ASHENZARI)
-//        return ash_skill_boost(sk);
 
     return skills[sk];
 }
@@ -5581,9 +5568,6 @@ int player::skill(skill_type sk) const
 int player::traps_skill() const
 {
     int val = skill(SK_TRAPS_DOORS);
-
-    if (you.religion == GOD_ASHENZARI && !player_under_penance())
-        val += you.piety / 15;
 
     return val;
 }
@@ -6519,12 +6503,6 @@ bool player::can_see_invisible(bool calc_unid, bool transient) const
 
     if (artefacts > 0)
         si += artefacts;
-
-    if (you.religion == GOD_ASHENZARI && you.piety >= piety_breakpoint(2)
-        && !player_under_penance())
-    {
-        si++;
-    }
 
     if (si > 1)
         si = 1;

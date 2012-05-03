@@ -954,8 +954,11 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
             }
             break;
-
+        
+        //This case below should be repurposed for the good gods.
         case DID_EXPLORATION:
+            break;
+/*
             if (you.religion == GOD_ASHENZARI)
             {
                 // levels: x1, x2, x3, x4
@@ -965,6 +968,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
             }
             break;
+*/
 
         case DID_NOTHING:
         case NUM_CONDUCTS:

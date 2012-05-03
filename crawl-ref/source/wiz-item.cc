@@ -543,9 +543,6 @@ void wizard_tweak_object(void)
             you.inv[item].flags = new_val;
         else
             die("unhandled keyin");
-
-        // cursedness might have changed
-        ash_check_bondage();
     }
 }
 
