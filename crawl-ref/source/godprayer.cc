@@ -326,6 +326,47 @@ static bool _altar_prayer()
     return (did_bless);
 }
 
+// Sacrifice corpses to the blood gods: Trog, Okawaru, Lugonu, Makhleb, and Beogh.
+// Never call this function for the other gods!  It sacrifices all applicable
+// items in LOS, which would be undesirable in the case of, say, Nemelex.
+// Returns -1 if no sacrifices occurred, but there was a corpse in LOS;
+// this can happen with Beogh and non-orc corpses, as well as with the other gods
+// and rotten corpses.
+static int _sacrifice_all_in_los()
+{
+    int num_sacrificed = 0;
+    bool rejected_a_corpse = false;
+    // Iterate over every square in LOS
+    for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
+    {
+        // For each such square, iterate over every item in it
+        for (stack_iterator j(*i); j; ++j)
+        {
+            item_def item = mitm[j->index()];
+            if (god_likes_item(you.religion, item))
+            {
+                //Gain piety, then print sacrifice message, then destroy the item and
+                //record the sacrifice.
+                piety_gain_t relative_gain = sacrifice_item_stack(item);
+                print_sacrifice_message(you.religion, item, relative_gain);
+                item_was_destroyed(item);
+                destroy_item(item);
+                num_sacrificed++;
+            }
+            else if (item.base_type == OBJ_CORPSES)
+            {
+                // It's a corpse, but our god doesn't like it.
+                rejected_a_corpse = true;
+            }
+        }
+    }
+    // Return -1 if the only corpses around were ones our god doesn't like.
+    if (rejected_a_corpse && num_sacrificed == 0)
+        return -1;
+
+    return num_sacrificed;
+}
+
 void pray()
 {
     if (silenced(you.pos()))
@@ -402,11 +443,36 @@ void pray()
             something_happened = true;
         break;
 
+    case GOD_TROG:
+    case GOD_MAKHLEB:
+    case GOD_OKAWARU:
+    case GOD_LUGONU:
+    {
+        int sacrifice_result = _sacrifice_all_in_los();
+        if (sacrifice_result > 0)
+            something_happened = true;
+        else if (sacrifice_result < 0)
+            simple_god_message(" only cares about fresh corpses!");
+        break;
+    }
+
+    case GOD_BEOGH:
+    {
+        int sacrifice_result = _sacrifice_all_in_los();
+        if (sacrifice_result > 0)
+            something_happened = true;
+        else if (sacrifice_result < 0)
+            simple_god_message(" only cares about orcish remains!");
+        break;
+    }
+
     default:
         ;
     }
 
     // All sacrifices affect items you're standing on.
+    // Except for the blood gods and Beogh, anyway, but those cases
+    // are handled above in _sacrifice_corpses and _sacrifice_orcs.
     something_happened |= _offer_items();
 
     if (you.religion == GOD_XOM)
@@ -857,12 +923,8 @@ static bool _offer_items()
         else if (disliked_item->base_type == OBJ_MISCELLANY
                  && disliked_item->sub_type == MISC_HORN_OF_GERYON)
             simple_god_message(" doesn't want your path blocked.");
-        // Zin was handled above, and the other gods don't care about
-        // sacrifices.
-        else if (god_likes_fresh_corpses(you.religion))
-            simple_god_message(" only cares about fresh corpses!");
-        else if (you.religion == GOD_BEOGH)
-            simple_god_message(" only cares about orcish remains!");
+        // Zin and the blood gods were handled above, and the other gods don't 
+        //care about sacrifices.
         else if (you.religion == GOD_NEMELEX_XOBEH)
             if (disliked_item->base_type == OBJ_GOLD)
                 simple_god_message(" does not care about gold!");
