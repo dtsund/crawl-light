@@ -350,7 +350,7 @@ static int _sacrifice_all_in_los()
                 piety_gain_t relative_gain = sacrifice_item_stack(item);
                 print_sacrifice_message(you.religion, item, relative_gain);
                 item_was_destroyed(item);
-                destroy_item(item);
+                destroy_item(j->index());
                 num_sacrificed++;
             }
             else if (item.base_type == OBJ_CORPSES)
