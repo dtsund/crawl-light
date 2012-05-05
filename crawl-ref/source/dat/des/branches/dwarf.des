@@ -647,7 +647,7 @@ KITEM:   M = manual of Fighting / manual of Dodging / manual of Armour / \
 KITEM:   Q = potion of water / potion of poison / potion of strong poison / \
              bottled efreet w:1
 KFEAT:   ? = any shop
-KFEAT:   & = food shop
+KFEAT:   & = any shop
 MARKER:  = = lua:restrict_door()
 KFEAT:   8 = granite_statue
 : dhfh.colors(_G)
