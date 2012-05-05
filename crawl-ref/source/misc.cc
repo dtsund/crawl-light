@@ -1648,7 +1648,6 @@ static const char *shop_types[] = {
     "jewellery",
     "wand",
     "book",
-    "food",
     "distillery",
     "scroll",
     "general"
