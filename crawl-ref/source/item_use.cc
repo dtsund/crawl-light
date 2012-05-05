@@ -1971,7 +1971,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     ASSERT(!exploding || !is_artefact(item));
 
-    beam.name = item.name(DESC_NOPRONOUN, false, false, false);
+    beam.name = item.name(DESC_NO_ARTICLE, false, false, false);
 
     // Note that bow_brand is known since the bow is equipped.
 
@@ -2033,9 +2033,9 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     }
 
     if (beam_changed)
-        beam.name = item.name(DESC_NOPRONOUN, false, false, false);
+        beam.name = item.name(DESC_NO_ARTICLE, false, false, false);
 
-    ammo_name = item.name(DESC_NOPRONOUN);
+    ammo_name = item.name(DESC_NO_ARTICLE);
 
     ASSERT(beam.flavour == BEAM_MISSILE || !is_artefact(item));
 

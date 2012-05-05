@@ -4245,14 +4245,14 @@ void explore_discoveries::add_item(const item_def &i)
 {
     item_def copy = i;
     copy.quantity = 1;
-    const std::string cname = copy.name(DESC_NOPRONOUN);
+    const std::string cname = copy.name(DESC_NO_ARTICLE);
 
     // Try to find something to stack it with, stacking by name.
     for (int j = 0, size = items.size(); j < size; ++j)
     {
         const int orig_quantity = items[j].thing.quantity;
         items[j].thing.quantity = 1;
-        if (cname == items[j].thing.name(DESC_NOPRONOUN))
+        if (cname == items[j].thing.name(DESC_NO_ARTICLE))
         {
             items[j].thing.quantity = orig_quantity + i.quantity;
             items[j].name =

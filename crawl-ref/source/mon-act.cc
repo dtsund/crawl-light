@@ -1656,7 +1656,7 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
         msg += item.name(DESC_NOCAP_A, false, false, false);
 
         // build beam name
-        pbolt.name = item.name(DESC_NOPRONOUN, false, false, false);
+        pbolt.name = item.name(DESC_NO_ARTICLE, false, false, false);
     }
     msg += ".";
 
