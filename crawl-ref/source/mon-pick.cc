@@ -491,12 +491,12 @@ int mons_standard_level(int mcls)
 
     case MONS_GIANT_GECKO:
     case MONS_GIANT_MITE:
-    case MONS_GNOLL:
     case MONS_HOBGOBLIN:
     case MONS_JACKAL:
     case MONS_KILLER_BEE_LARVA:
         return 3;
 
+    case MONS_GNOLL:
     case MONS_WORM:
     case MONS_SNAKE:
     case MONS_QUOKKA:
