@@ -1497,10 +1497,6 @@ int acquirement_create_item_general(object_class_type class_wanted,
             destroy_item(thing, true);
             return _failed_acquirement(quiet);
         }
-        // Don't mark books as seen if only generated for the
-        // acquirement statistics.
-        if (!debug)
-            mark_had_book(thing);
     }
     else if (thing.base_type == OBJ_JEWELLERY)
     {
