@@ -357,11 +357,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "Vehumet will no longer reduce the cost of your destructive magics.",
       "" },
     // Okawaru
-    { "gain great but temporary skills",
+    { "gain great but temporary strength.",
       "",
       "",
       "",
-      "speed up your combat" },
+      "haste yourself." },
     // Makhleb
     { "gain power from killing",
       "harness Makhleb's destructive might",
