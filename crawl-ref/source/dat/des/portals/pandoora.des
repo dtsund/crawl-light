@@ -151,10 +151,12 @@ MARKER:  / = lua:props_marker { \
              }
 SUBST:   / = +
 KITEM:   a = scroll of acquirement
+KPROP:   "a = no_tele_into
+SUBST:   " = .
 MAP
 xxxxxxxxXXX
-x.......o.X
-x>A...../.X
+x.......o"X
+x>A...../"X
 x.......oaX
 xxxxxxxxXXX
 ENDMAP

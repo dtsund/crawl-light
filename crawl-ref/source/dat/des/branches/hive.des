@@ -937,6 +937,8 @@ MARKER:  / = lua:props_marker { \
              veto_fragmentation="veto", \
              }
 SUBST:   / = +
+KPROP:   "3 = no_tele_into
+SUBST:   " = .
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXX
 xxxxxxxwwwwwwwww.............................................wwwwwwwwwXXXXXXX
@@ -945,13 +947,13 @@ x..1..xwadd...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...ddawXXXXXXX
 x.xxx.xwa11111+...............................................+11111awXXXXXXX
 x..xx.xwa11111+...............................................+11111awXXXXXXX
 xx.xx.xwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa+aaaaaaaaaaaaaaaaaaaaaaaaaaaaawXXXXXXX
-x.1.x.xwwwwwwa..1.1...a111111111.............add111..a.a....111awwwwwwXX....X
-x..xx.x.....wa.1...1..a111111111.a...........add111..a.a....111aw.....aX....X
-x.xxx1x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX....X
-x.xx..x..11..+........+..........+.........2.+.................+....../.3...X
-x.x...x..11..+........+..........+...........+.................+......aX....X
-x.x...x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX....X
-x.xx........wa.1...1..a111111111.a...........add111..a.a....111aw.....aX....X
+x.1.x.xwwwwwwa..1.1...a111111111.............add111..a.a....111awwwwwwXX""""X
+x..xx.x.....wa.1...1..a111111111.a...........add111..a.a....111aw.....aX""""X
+x.xxx1x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX""""X
+x.xx..x..11..+........+..........+.........2.+.................+....../"3"""X
+x.x...x..11..+........+..........+...........+.................+......aX""""X
+x.x...x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX""""X
+x.xx........wa.1...1..a111111111.a...........add111..a.a....111aw.....aX""""X
 x.xxxxxwwwwwwa..1.1...a111111111.............add111..a.a....111awwwwwwXXXXXXX
 x...1.xwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa+aaaaaaaaaaaaaaaaaaaaaaaaaaaaawXXXXXXX
 x.....xwa11111+...............................................+11111awXXXXXXX
