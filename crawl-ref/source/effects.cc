@@ -2205,24 +2205,9 @@ void handle_time()
     if (player_in_hell() && coinflip())
         _hell_effects();
 
-    // Adjust the player's stats if s/he's diseased (or recovering).
-    if (!you.disease)
-    {
-        bool recovery = true;
-
-        // Slow heal mutation.  Applied last.
-        // Each level reduces your stat recovery by one third.
-        if (player_mutation_level(MUT_SLOW_HEALING) > 0
-            && x_chance_in_y(player_mutation_level(MUT_SLOW_HEALING), 3))
-        {
-            recovery = false;
-        }
-
-        // Rate of recovery equals one level of MUT_DETERIORATION.
-        if (recovery && x_chance_in_y(4, 200))
-            restore_stat(STAT_RANDOM, 1, false, true);
-    }
-    else
+    // Adjust the player's stats if s/he's diseased. Stats used to slowly
+    // recover over time, but now they don't.
+    if (you.disease)
     {
         // If Cheibriados has slowed your biology, disease might
         // not actually do anything.
