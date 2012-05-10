@@ -677,14 +677,42 @@ monster_type pick_random_monster(const level_id &place, int power,
             if (monster_pick_tries < n_relax_margin)
                 diff = 0;
 
-            chance = mons_rarity(mon_type, place) - (diff * diff);
-
             // If we're running low on tries, remove level restrictions.
-            if ((monster_pick_tries < n_relax_margin
-                 || std::abs(lev_mons - level) <= 3)
-                && random2avg(100, 2) <= chance)
+            if (you.difficulty_level <= 1)
             {
-                break;
+                // Easy and normal mode here.
+                
+                // Scale down monster chance based on how far we are from
+                // default depth.
+                chance = mons_rarity(mon_type, place) - (diff * diff);
+                if ((monster_pick_tries < n_relax_margin
+                     || std::abs(lev_mons - level) <= 3)
+                    && random2avg(100, 2) <= chance)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                // Hard mode.
+                
+                // Only scale down chance for shallower monsters!
+                // Note that diff can be extremely high for monsters
+                // that aren't supposed to show up in the current branch, so
+                // such monsters should still be scaled down anyway.
+                if (lev_mons > level || diff > 20)
+                    chance = mons_rarity(mon_type, place) - (diff * diff);
+                else
+                    chance = mons_rarity(mon_type, place);
+                
+                // We can pick monsters from deeper depths than we otherwise
+                // could, but not shallower.
+                if ((monster_pick_tries < n_relax_margin
+                    || (lev_mons - level < 6 && level - lev_mons < 3))
+                    && random2avg(100, 2) <= chance)
+                {
+                    break;
+                }
             }
         }
 
