@@ -2223,7 +2223,7 @@ void handle_time()
 
     // Adjust the player's stats if s/he has the deterioration mutation.
     if (player_mutation_level(MUT_DETERIORATION)
-        && x_chance_in_y(player_mutation_level(MUT_DETERIORATION) * 5 - 1, 200))
+        && x_chance_in_y(player_mutation_level(MUT_DETERIORATION) * 2 - 1, 200))
     {
         lose_stat(STAT_RANDOM, 1, false, "deterioration mutation");
     }
