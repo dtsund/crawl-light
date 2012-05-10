@@ -213,6 +213,15 @@ const int DEPTH_PAN   = 52;
 
 const int BRANCH_DUNGEON_DEPTH = 18;
 
+// The Dungeon breakpoint where a transition between Easy and
+// Medium difficulty occurs; where the first Pandoora is.
+const int EASY_CHECKPOINT = 5;
+
+// The Dungeon breakpoint where a transition between Medium and
+// Hard difficulty occurs; where the Abyss portal in which the key
+// to Hell will be located.
+const int HARD_CHECKPOINT = 9;
+
 const int ANTITRAIN_PENALTY = 2;
 
 #define TORNADO_RADIUS 6

@@ -71,7 +71,7 @@ end
 NAME:   pandoora_entry_dummy
 TAGS:   pandoora_entry transparent chance_pandoora
 ORIENT: float
-PLACE: D:5
+PLACE: D:easy_checkpoint
 WEIGHT: 0
 :   pandoora_portal(_G)
 MAP
@@ -81,7 +81,7 @@ ENDMAP
 NAME:   enter_pandoora_1
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:5
+PLACE: D:easy_checkpoint
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP
@@ -93,7 +93,7 @@ ENDMAP
 NAME:   enter_pandoora_2
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:5
+PLACE: D:easy_checkpoint
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP
@@ -105,7 +105,7 @@ ENDMAP
 NAME:   enter_pandoora_3
 TAGS:   pandoora_entry
 ORIENT: float
-PLACE: D:5
+PLACE: D:easy_checkpoint
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP

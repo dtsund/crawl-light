@@ -3116,8 +3116,10 @@ level_id level_id::parse_level_id(const std::string &s) throw (std::string)
                            brname.c_str(), s.c_str());
     }
 
-    const int dep = (brdepth.empty() ? 1 :
-                     brdepth == "$"  ? branches[br].depth
+    const int dep = (brdepth.empty()              ? 1 :
+                     brdepth == "$"               ? branches[br].depth :
+                     brdepth == "easy_checkpoint" ? EASY_CHECKPOINT :
+                     brdepth == "hard_checkpoint" ? HARD_CHECKPOINT
                                      : atoi(brdepth.c_str()));
 
     if (dep < 0 || dep > branches[br].depth)
