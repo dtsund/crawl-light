@@ -2,6 +2,19 @@
 # hive.des: Entries to the Hive, and maps for Hive:1
 ##############################################################################
 
+{{
+function open_pandoora(data, triggerable, triggerer, marker, ev)
+    if data.trig == true then
+        return
+    else
+        data.trig = true
+    end
+
+    crawl.mpr("You feel as though achieving your goals just got harder.", "warning")
+    you.difficulty_level(you.difficulty_level()+1)
+end
+}}
+
 
 ##############################################################################
 # Hive entries
@@ -479,7 +492,8 @@ ENDMAP
 
 
 ##############################################################################
-# Hive branch end maps
+# Hive branch end maps, easy mode.
+# Every one of these must have MAXDIFF set to 0.
 ##############################################################################
 
 ############################################################################
@@ -489,6 +503,7 @@ NAME:   beehive
 PLACE:  Hive:1
 ORIENT: encompass
 TAGS:   no_dump
+MAXDIFF: 0
 MONS:   queen bee, killer bee, killer bee larva, plant, yellow wasp
 MONS:   random, random
 KITEM:  R = w:1 nothing / w:1 any potion
@@ -574,6 +589,7 @@ ENDMAP
 NAME:   beehive2
 PLACE:  Hive:1
 ORIENT: encompass
+MAXDIFF: 0
 MONS:   queen bee, killer bee, killer bee larva, plant
 MONS:   random, random
 ITEM:   wand of fire
@@ -658,6 +674,7 @@ ENDMAP
 NAME:   beehive_tunnels
 PLACE:  Hive:1
 ORIENT: encompass
+MAXDIFF: 0
 MONS:   queen bee, killer bee larva, killer bee, plant
 MONS:   random, random
 NSUBST: M = 1:. / *:a
@@ -743,6 +760,7 @@ ENDMAP
 NAME:   minmay_beehive_corners
 PLACE:  Hive:1
 ORIENT: encompass
+MAXDIFF: 0
 MONS:   queen bee, killer bee larva, killer bee, plant, oklob plant
 KITEM:  R = w:1 nothing / w:1 any potion
 SUBST:  w = w:20 W:1
@@ -806,6 +824,7 @@ NAME:    beehive_diamond
 PLACE:   Hive:1
 ORIENT:  encompass
 TAGS:    no_rotate
+MAXDIFF: 0
 SHUFFLE: {([
 SUBST:   A = a:3 .:2, B = a:3 x:2, ' = . 1:3 d:1
 KMONS:   1 = killer bee
@@ -879,4 +898,66 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ENDMAP
+
+##############################################################################
+# Hive branch end maps, normal.
+# Note that each of these *must* contain a Pandoora. Opening this one is how
+# the player activates hard-mode.
+# Additionally, you *must* include a MINDIFF: 1 setting.
+##############################################################################
+
+NAME:    bee_castle_nethack
+PLACE:   Hive:1
+ORIENT:  encompass
+MINDIFF: 1
+SHUFFLE: {([
+SUBST:   A = a:3 .:2, B = a:3 x:2, ' = . 1:3 d:1
+KMONS:   1 = killer bee
+KMONS:   2 = queen bee
+ITEM:    w:1 any potion
+KITEM:   3 = scroll of acquirement
+{{
+local pandoora_marker = TriggerableFunction:new {
+    func="open_pandoora"}
+    
+pandoora_marker:add_triggerer(DgnTriggerer:new {
+    type="feat_change",
+    target="door"})
+
+lua_marker("/", pandoora_marker)
+}}
+MARKER:  / = lua:props_marker { \
+             door_open_prompt="You sense great evil behind this door. Open " .. \
+                                         "it anyway?", \
+             door_open_verb="unseal", \
+             door_description_noun="wax-encrusted Pandoora", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
+SUBST:   / = +
+MAP
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXX
+xxxxxxxwwwwwwwww.............................................wwwwwwwwwXXXXXXX
+xxxxxxxwaaaaaaawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwaaaaaaawXXXXXXX
+x..1..xwadd...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...ddawXXXXXXX
+x.xxx.xwa11111+...............................................+11111awXXXXXXX
+x..xx.xwa11111+...............................................+11111awXXXXXXX
+xx.xx.xwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa+aaaaaaaaaaaaaaaaaaaaaaaaaaaaawXXXXXXX
+x.1.x.xwwwwwwa..1.1...a111111111.............add111..a.a....111awwwwwwXX....X
+x..xx.x.....wa.1...1..a111111111.a...........add111..a.a....111aw.....aX....X
+x.xxx1x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX....X
+x.xx..x..11..+........+..........+.........2.+.................+....../.3...X
+x.x...x..11..+........+..........+...........+.................+......aX....X
+x.x...x.....wa........aaaaaaaaaaaa...........aaaaaaaa...aaaaaaaaw.....aX....X
+x.xx........wa.1...1..a111111111.a...........add111..a.a....111aw.....aX....X
+x.xxxxxwwwwwwa..1.1...a111111111.............add111..a.a....111awwwwwwXXXXXXX
+x...1.xwaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa+aaaaaaaaaaaaaaaaaaaaaaaaaaaaawXXXXXXX
+x.....xwa11111+...............................................+11111awXXXXXXX
+x.....xwa11111+...............................................+11111awXXXXXXX
+x.1..1xwadd...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...ddawXXXXXXX
+x.....xwaaaaaaawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwaaaaaaawXXXXXXX
+x.({[.xwwwwwwwww.............................................wwwwwwwwwXXXXXXX
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXX
 ENDMAP
