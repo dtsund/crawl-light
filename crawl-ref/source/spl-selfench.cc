@@ -17,6 +17,7 @@
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
+#include "player-stats.h"
 #include "potion.h"
 #include "religion.h"
 #include "spl-cast.h"
@@ -140,6 +141,21 @@ void cast_regen(int pow, bool divine_ability)
 
 void cast_berserk(void)
 {
+    // Lose a point of strength or dexterity.
+    if (you.can_go_berserk())
+    {
+        mpr("The spell rips violently through your body!");
+        
+        // Randomly pick one stat to lose. We don't just take one or the other
+        // because that would unfairly favor some weapons over others for crusaders.
+        stat_type stat_to_lose = STAT_STR;
+        if (coinflip())
+            stat_to_lose = STAT_DEX;
+        
+        lose_stat(stat_to_lose, 1, true, "casting Berserker Rage");
+    }
+    
+    // Now actually go berserk.
     go_berserk(true);
 }
 

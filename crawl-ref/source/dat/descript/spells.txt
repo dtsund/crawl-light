@@ -31,7 +31,7 @@ Extremely powerful magical items, such as the Orb of Zot, may actively resist th
 %%%%
 Berserker Rage
 
-This spell sends the caster into a temporary psychotic rage.
+This spell sends the caster into a temporary psychotic rage. Its effect is violent enough to cause a certain amount of harm to the caster, adversely affecting his or her strength or dexterity.
 %%%%
 Blade Hands
 
