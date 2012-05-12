@@ -10,9 +10,11 @@
 #include "colour.h"
 #include "coord.h"
 #include "coordit.h"
+#include "dactions.h"
 #include "directn.h"
 #include "dungeon.h"
 #include "dgn-shoals.h"
+#include "enum.h"
 #include "env.h"
 #include "flood_find.h"
 #include "l_defs.h"
@@ -1778,6 +1780,50 @@ LUAFN(_dgn_find_markers_by_prop)
     return (1);
 }
 
+LUAFN(_dgn_add_directed_abyss_daction)
+{
+    //Note that the directed abyss portal should appear now.
+    add_daction(DACT_ADD_DIRECTED_ABYSS);
+    return (0);
+}
+
+LUAFN(_dgn_check_directed_abyss_daction)
+{
+    //Check whether the directed abyss portal should be placed.
+    //Dactions don't get done on level generation, so need to do that in the
+    //.des lua code.
+    for(unsigned int i = 0; i < you.dactions.size(); i++)
+    {
+        if(you.dactions[i] == DACT_ADD_DIRECTED_ABYSS)
+            lua_pushboolean(ls, true);
+            return 1;
+    }
+    lua_pushboolean(ls, false);
+    return 1;
+}
+
+LUAFN(_dgn_seal_pandoora_daction)
+{
+    //Note that the pandoora must be sealed now.
+    add_daction(DACT_SEAL_PANDOORA);
+    return (0);
+}
+
+LUAFN(_dgn_check_pandoora_daction)
+{
+    //Check whether the pandoora should be sealed; used in Hive generation.
+    //Dactions don't get done on level generation, so need to do that in the
+    //.des lua code.
+    for(unsigned int i = 0; i < you.dactions.size(); i++)
+    {
+        if(you.dactions[i] == DACT_SEAL_PANDOORA)
+            lua_pushboolean(ls, true);
+            return 1;
+    }
+    lua_pushboolean(ls, false);
+    return 1;
+}
+
 LUAFN(_dgn_marker_at_pos)
 {
     const int x = luaL_checkint(ls, 1);
@@ -2005,6 +2051,11 @@ const struct luaL_reg dgn_dlib[] =
 { "find_marker_position_by_prop", _dgn_find_marker_position_by_prop },
 { "find_marker_positions_by_prop", _dgn_find_marker_positions_by_prop },
 { "find_markers_by_prop", _dgn_find_markers_by_prop },
+
+{ "seal_pandoora_daction", _dgn_seal_pandoora_daction },
+{ "check_pandoora_daction", _dgn_check_pandoora_daction },
+{ "add_directed_abyss_daction", _dgn_add_directed_abyss_daction },
+{ "check_directed_abyss_daction", _dgn_check_directed_abyss_daction },
 
 { "marker_at_pos", _dgn_marker_at_pos },
 

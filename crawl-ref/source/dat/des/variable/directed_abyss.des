@@ -1,0 +1,95 @@
+###############################################################################
+# directed_abyss.des: This is where the Abyss portal with the key to Hell
+#                     is generated.
+# 
+# It works like this: there is a portal, a doorway, and the three stairs onward
+# after the doorway. If both Pandooras are open, the portal will be open until
+# the doorway is opened (after which it permanently closes). If the first one
+# is open, the player can make the portal open by opening the second Pandoora
+# in the Hive. If the player opens the doorway here to move on, the portal is
+# permanently sealed.
+#
+# This code makes use of an ugly, ugly hack to distinguish the stone arch from
+# all of the other stone arches scattered throughout the dungeon; it marks the
+# arch that should turn into an Abyss portal by setting the
+# door_description_noun to be "directed_abyss". This will normally not be
+# noticeable unless the player puts a door on that square in wizmode, but it
+# allows the code in dactions.cc to note that that arch, and only that one, is
+# the one to turn into an Abyss portal.
+###############################################################################
+
+{{
+function open_sealed_door(data, triggerable, triggerer, marker, ev)
+    if data.trig == true then
+        return
+    else
+        data.trig = true
+    end
+    
+    if dgn.check_directed_abyss_daction() then
+        crawl.mpr("The portal in the room vanishes without a trace.")
+    else
+        crawl.mpr("The archway in the room crumbles to dust.")
+    end
+  
+    dgn.seal_pandoora_daction()
+    for slave in iter.slave_iterator("portal_phase", 1) do
+        dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
+    end
+end
+}}
+
+NAME:   directed_abyss_1
+PLACE:  D:hard_checkpoint
+ORIENT: float
+MARKER: A = lua:portal_desc {portal_phase = 1}
+:if dgn.check_directed_abyss_daction() then
+KFEAT:  A = enter_abyss
+:else
+KFEAT:  A = stone_arch
+:end
+{{
+local sealed_door_marker = TriggerableFunction:new {
+    func="open_sealed_door"}
+    
+sealed_door_marker:add_triggerer(DgnTriggerer:new {
+    type="feat_change",
+    target="door"})
+
+lua_marker("/", sealed_door_marker)
+}}
+MARKER:  A = lua:props_marker { \
+             door_description_noun="directed_abyss",\
+             }
+MARKER:  / = lua:props_marker { \
+             door_open_prompt="This door seems to be protecting the " .. \
+                              "portal from the energy of the Realm of " ..\
+                              "Zot. Open it anyway?", \
+             door_open_verb="unseal", \
+             door_description_noun="heavy, sealed door", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
+KPROP:   "]}) = no_tele_into
+SUBST:   " = .
+SUBST:   / = +
+MAP
+ XXXXXXX
+ X""}""X
+ X"]")"X
+ X"""""X
+ XXX"XXX
+   X"X
+   X"X
+   X"X
+cccX/Xccc
+c.......c
+c.......c
+c.......c
+c...A...c
+c.......c
+c.......c
+c.......c
+cccc+cccc
+ENDMAP

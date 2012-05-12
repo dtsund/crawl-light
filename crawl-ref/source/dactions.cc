@@ -17,6 +17,7 @@
 #include "mon-util.h"
 #include "player.h"
 #include "religion.h"
+#include "terrain.h"
 #include "travel.h"
 #include "view.h"
 
@@ -41,6 +42,8 @@ static const char *daction_names[] =
     "reapply passive mapping",
     "remove Jiyva altars",
     "Pikel's slaves go good-neutral",
+    "add directed Abyss portal",
+    "seal the Pandoora in the Hive",
 };
 
 static bool _mons_matches_counter(const monster* mon, daction_type act)
@@ -202,6 +205,42 @@ static void _apply_daction(daction_type act)
                 grd(*ri) = DNGN_FLOOR;
         }
         break;
+    case DACT_SEAL_PANDOORA:
+        // Don't seal anything unless the player's in Hive and didn't already
+        // open that Pandoora at least once.
+        if (player_in_branch(BRANCH_HIVE) && you.difficulty_level < 2)
+        {
+            for (rectangle_iterator ri(1); ri; ++ri)
+            {
+                dungeon_feature_type grid = grd(*ri);
+                if (grid == DNGN_OPEN_DOOR || feat_is_closed_door(grid))
+                {
+                    // There may be other doors present; only permanently seal the
+                    // Pandoora.
+                    if(env.markers.property_at(*ri, MAT_ANY,
+                                               "door_description_noun") == "wax-encrusted Pandoora")
+                    {
+                        grd(*ri) = DNGN_PERMAROCK_WALL;
+                        mpr("You sense that great evil has been sealed away permanently.");
+                    }
+                }
+            }
+        }
+    case DACT_ADD_DIRECTED_ABYSS:
+        for (rectangle_iterator ri(1); ri; ++ri)
+        {
+            dungeon_feature_type grid = grd(*ri);
+            // Ugly hack! The lua code for vaults placing the archway that becomes
+            // the directed abyss portal mark door_description_noun for that square
+            // as "directed_abyss". This is normally invisible, unless a door gets
+            // placed on that square in wizmode. This tag lets us distinguish that
+            // particular arch from any other arch that may be on the floor.
+            if(grid == DNGN_STONE_ARCH && 
+               env.markers.property_at(*ri, MAT_ANY, "door_description_noun") == "directed_abyss")
+            {
+                grd(*ri) = DNGN_ENTER_ABYSS;
+            }
+        }
     case NUM_DA_COUNTERS:
     case NUM_DACTIONS:
         ;
