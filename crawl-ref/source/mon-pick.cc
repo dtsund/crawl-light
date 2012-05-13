@@ -55,6 +55,7 @@ int mons_rarity(int mcls, const level_id &place)
 // Hard-mode functions. Hard uses a different distribution, one that
 // is (hopefully) more painful to the player.
 static int _mons_rare_abyss_hard(int mcls);
+static int _mons_standard_rare_hard(int mcls);
 
 // level_area_type != LEVEL_DUNGEON
 // NOTE: Labyrinths and portal vaults have no random monster generation.
@@ -1210,6 +1211,290 @@ int mons_standard_rare(int mcls)
     case MONS_DEEP_ELF_DEMONOLOGIST:
     case MONS_DEEP_ELF_PRIEST:
     case MONS_DEEP_ELF_SORCERER:
+    case MONS_GUARDIAN_SERPENT:
+        return 3;
+
+    case MONS_PULSATING_LUMP:
+    case MONS_SHINING_EYE:
+    case MONS_TOENAIL_GOLEM:
+        return 2;
+
+    default:
+        return 0;
+    }
+}
+
+static int _mons_standard_rare_hard(int mcls)
+{
+    switch (mcls)
+    {
+    case MONS_BIG_FISH:
+    case MONS_ELECTRIC_EEL:
+    case MONS_GIANT_GOLDFISH:
+    case MONS_JELLYFISH:
+    case MONS_LAVA_FISH:
+    case MONS_LAVA_SNAKE:
+    case MONS_LAVA_WORM:
+    case MONS_SWAMP_WORM:
+    case MONS_WATER_ELEMENTAL:
+    case MONS_SALAMANDER:
+        return 500;
+
+    case MONS_CENTAUR_WARRIOR:
+        return 99;
+
+    case MONS_WORKER_ANT:
+    case MONS_SNAKE:
+    case MONS_STONE_GIANT:
+        return 80;
+
+    case MONS_MERFOLK:
+    case MONS_MERMAID:
+    case MONS_SLIME_CREATURE:
+        return 75;
+
+    case MONS_HELL_HOUND:
+        return 71;
+
+    case MONS_HELLION:
+    case MONS_YAKTAUR_CAPTAIN:
+        return 70;
+
+    case MONS_JELLY:
+    case MONS_ORC_KNIGHT:
+    case MONS_ROTTING_DEVIL:
+        return 60;
+
+    case MONS_BOGGART:
+    case MONS_EYE_OF_DRAINING:
+    case MONS_FIRE_GIANT:
+    case MONS_FROST_GIANT:
+    case MONS_SHAPESHIFTER:
+        return 59;
+
+    case MONS_DRAGON:
+    case MONS_ICE_DRAGON:
+    case MONS_LICH:
+    case MONS_OGRE_MAGE:
+    case MONS_SKELETAL_WARRIOR:
+    case MONS_SOUL_EATER:
+    case MONS_SPINY_WORM:
+        return 53;
+
+    case MONS_VAMPIRE_MOSQUITO:
+    case MONS_HYDRA:
+    case MONS_ICE_BEAST:
+    case MONS_SKY_BEAST:
+    case MONS_KILLER_BEE:
+    case MONS_TORMENTOR:
+    case MONS_UNSEEN_HORROR:
+        return 50;
+
+    case MONS_ROCK_TROLL:
+        return 48;
+
+    case MONS_MANTICORE:
+    case MONS_RAKSHASA:
+    case MONS_SHADOW_DRAGON:
+    case MONS_SPHINX:
+    case MONS_STORM_DRAGON:
+        return 45;
+
+    case MONS_HUNGRY_GHOST:
+    case MONS_SHADOW:
+        return 41;
+
+    case MONS_CENTAUR:
+    case MONS_CYCLOPS:
+    case MONS_GIANT_TOAD:
+    case MONS_HOUND:
+    case MONS_OGRE:
+    case MONS_ORC_WARRIOR:
+    case MONS_TROLL:
+    case MONS_YAK:
+    case MONS_REAPER:
+    case MONS_YAKTAUR:
+        return 40;
+
+    case MONS_WOLF_SPIDER:
+        return 36;
+
+    case MONS_MEGABAT:
+    case MONS_GIANT_FROG:
+    case MONS_GOBLIN:
+    case MONS_HILL_GIANT:
+    case MONS_HOBGOBLIN:
+    case MONS_IMP:
+    case MONS_KOBOLD:
+    case MONS_SKELETON_LARGE:
+    case MONS_ORC:
+    case MONS_RAT:
+    case MONS_RED_DEVIL:
+    case MONS_SKELETON_SMALL:
+    case MONS_UGLY_THING:
+    case MONS_ZOMBIE_LARGE:
+    case MONS_ZOMBIE_SMALL:
+    case MONS_FREEZING_WRAITH:
+    case MONS_GIANT_AMOEBA:
+    case MONS_GILA_MONSTER:
+    case MONS_GLOWING_SHAPESHIFTER:
+    case MONS_SOLDIER_ANT:
+        return 35;
+
+    case MONS_BOULDER_BEETLE:
+        return 34;
+
+    case MONS_ROCK_WORM:
+    case MONS_TRAPDOOR_SPIDER:
+        return 33;
+
+    case MONS_EYE_OF_DEVASTATION:
+    case MONS_GIANT_SLUG:
+        return 32;
+
+    case MONS_BIG_KOBOLD:
+    case MONS_GOLIATH_BEETLE:
+    case MONS_GIANT_COCKROACH:
+    case MONS_GIANT_GECKO:
+    case MONS_IGUANA:
+    case MONS_GIANT_NEWT:
+    case MONS_HIPPOGRIFF:
+    case MONS_ORC_WIZARD:
+    case MONS_QUOKKA:
+    case MONS_SCORPION:
+    case MONS_WORM:
+
+    case MONS_WATER_MOCCASIN:
+    case MONS_ETTIN:
+    case MONS_FIRE_VORTEX:
+    case MONS_CROCODILE:
+    case MONS_GIANT_MITE:
+    case MONS_GNOLL:
+    case MONS_GOLDEN_DRAGON:
+    case MONS_KOMODO_DRAGON:
+    case MONS_MUMMY:
+    case MONS_NECROPHAGE:
+    case MONS_ORC_WARLORD:
+    case MONS_QUASIT:
+    case MONS_SMALL_SNAKE:
+    case MONS_VAMPIRE:
+    case MONS_YELLOW_WASP:
+        return 30;
+
+    case MONS_BONE_DRAGON:
+    case MONS_CRYSTAL_GOLEM:
+    case MONS_FLYING_SKULL:
+    case MONS_FLAYED_GHOST:
+    case MONS_HELL_KNIGHT:
+    case MONS_IRON_DRAGON:
+    case MONS_IRON_GOLEM:
+    case MONS_STONE_GOLEM:
+    case MONS_TITAN:
+        return 29;
+
+    case MONS_ANCIENT_LICH:
+    case MONS_BRAIN_WORM:
+    case MONS_DEEP_ELF_ANNIHILATOR:
+    case MONS_DEEP_ELF_DEATH_MAGE:
+    case MONS_DEEP_ELF_DEMONOLOGIST:
+    case MONS_DEEP_ELF_PRIEST:
+    case MONS_DEEP_ELF_SORCERER:
+    case MONS_ORC_HIGH_PRIEST:
+    case MONS_ORC_SORCERER:
+        return 26;
+
+    case MONS_GIANT_CENTIPEDE:
+    case MONS_GIANT_EYEBALL:
+    case MONS_GIANT_SPORE:
+    case MONS_GRIFFON:
+    case MONS_HAIRY_DEVIL:
+    case MONS_JACKAL:
+    case MONS_MOTTLED_DRAGON:
+    case MONS_PHANTOM:
+    case MONS_TWO_HEADED_OGRE:
+    case MONS_WIGHT:
+    case MONS_WRAITH:
+    case MONS_WYVERN:
+    case MONS_DEEP_ELF_FIGHTER:
+    case MONS_DEEP_ELF_KNIGHT:
+    case MONS_DEEP_TROLL:
+    case MONS_GREAT_ORB_OF_EYES:
+    case MONS_IRON_TROLL:
+    case MONS_OOZE:
+    case MONS_ORC_PRIEST:
+    case MONS_PLANT:
+    case MONS_RED_WASP:
+    case MONS_SIMULACRUM_SMALL:
+    case MONS_SIMULACRUM_LARGE:
+    // item mimics
+    case MONS_ARMOUR_MIMIC:
+    case MONS_GOLD_MIMIC:
+    case MONS_POTION_MIMIC:
+    case MONS_SCROLL_MIMIC:
+    case MONS_WEAPON_MIMIC:
+    // feature mimics
+    // case MONS_PORTAL_MIMIC:
+    case MONS_STAIR_MIMIC:
+    case MONS_SHOP_MIMIC:
+    case MONS_FOUNTAIN_MIMIC:
+        return 25;
+
+    case MONS_BUTTERFLY:
+    case MONS_FUNGUS:
+    case MONS_AGATE_SNAIL:
+    case MONS_INSUBSTANTIAL_WISP:
+    case MONS_PHANTASMAL_WARRIOR:
+    case MONS_QUICKSILVER_DRAGON:
+    case MONS_REDBACK:
+    case MONS_STEAM_DRAGON:
+    case MONS_VERY_UGLY_THING:
+    case MONS_WIZARD:
+    case MONS_HARPY:
+    case MONS_FIRE_CRAB:
+        return 20;
+
+    case MONS_BORING_BEETLE:
+    case MONS_TENTACLED_MONSTROSITY:
+        return 17;
+
+    case MONS_BLINK_FROG:
+    case MONS_CLAY_GOLEM:
+    case MONS_EFREET:
+    case MONS_NECROMANCER:
+    case MONS_WOOD_GOLEM:
+        return 15;
+
+    case MONS_KOBOLD_DEMONOLOGIST:
+        return 13;
+
+    case MONS_BUMBLEBEE:
+        return 12;
+
+    case MONS_DEEP_ELF_SOLDIER:
+    case MONS_GIANT_ORANGE_BRAIN:
+    case MONS_OKLOB_PLANT:
+    case MONS_SHADOW_WRAITH:
+    case MONS_WANDERING_MUSHROOM:
+        return 10;
+
+    case MONS_GARGOYLE:
+        return 6;
+
+    case MONS_DANCING_WEAPON:
+    case MONS_DEEP_ELF_HIGH_PRIEST:
+    case MONS_DEEP_ELF_MAGE:
+    case MONS_DEEP_ELF_SUMMONER:
+    case MONS_NAGA_MAGE:
+    case MONS_NAGA_WARRIOR:
+    case MONS_VAPOUR:
+        return 5;
+
+    case MONS_AIR_ELEMENTAL:
+    case MONS_DEEP_ELF_CONJURER:
+    case MONS_EARTH_ELEMENTAL:
+    case MONS_FIRE_ELEMENTAL:
+        return 4;
+
     case MONS_GUARDIAN_SERPENT:
         return 3;
 
