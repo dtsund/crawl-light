@@ -678,7 +678,7 @@ monster_type pick_random_monster(const level_id &place, int power,
                 diff = 0;
 
             // If we're running low on tries, remove level restrictions.
-            if (you.difficulty_level <= 1)
+            if (!player_in_hard_mode())
             {
                 // Easy and normal mode here.
                 
