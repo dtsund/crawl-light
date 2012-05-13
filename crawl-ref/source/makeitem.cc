@@ -2545,10 +2545,15 @@ static int _random_wand_subtype()
     // teleportation, fireball (1/20 each)
     // everything else (1/18 each)
     // Total weight: 180
-    int subtype = random_choose_weighted(3,  WAND_HEALING,
-                                         3,  WAND_HASTING,
+    // Note that these figures are for Easy and Normal.
+    // In Hard, some of the wands have their weights reduced.
+    int hardmode_factor = 1;
+    if(player_in_hard_mode())
+        hardmode_factor = 2;
+    int subtype = random_choose_weighted(3 / hardmode_factor,  WAND_HEALING,
+                                         3 / hardmode_factor,  WAND_HASTING,
                                          6,  WAND_INVISIBILITY,
-                                         9,  WAND_TELEPORTATION,
+                                         9 / hardmode_factor,  WAND_TELEPORTATION,
                                          9,  WAND_FIREBALL,
                                          10, WAND_FLAME,
                                          10, WAND_FROST,
@@ -2678,12 +2683,17 @@ static void _generate_potion_item(item_def& item, int force_type,
     {
         int stype;
         int tries = 500;
+        
+        // In hardmode, the weights of some valuable potions go down.
+        int hardmode_factor = 1;
+        if(player_in_hard_mode())
+            hardmode_factor = 2;
         do
         {
             // total weight is NOT 10000
             // fizzing potions are not generated {due jan2011}
-            stype = random_choose_weighted(2815, POT_HEALING,
-                                            1407, POT_HEAL_WOUNDS,
+            stype = random_choose_weighted(2815 / hardmode_factor, POT_HEALING,
+                                            1407 / hardmode_factor, POT_HEAL_WOUNDS,
                                             1100, POT_RESTORE_ABILITIES,
                                              612, POT_SPEED,
                                              612, POT_MIGHT,
@@ -2695,7 +2705,7 @@ static void _generate_potion_item(item_def& item, int force_type,
                                              340, POT_LEVITATION,
                                              340, POT_RESISTANCE,
                                              340, POT_MAGIC,
-                                             333, POT_CURE_MUTATION,
+                                             333 / hardmode_factor, POT_CURE_MUTATION,
                                              324, POT_SLOWING,
                                              324, POT_PARALYSIS,
                                              324, POT_CONFUSION,
@@ -2737,21 +2747,26 @@ static void _generate_scroll_item(item_def& item, int force_type,
     {
         const int depth_mod = random2(1 + item_level);
         int tries = 500;
+        
+        // In hardmode, the weights of some valuable scrolls go down.
+        int hardmode_factor = 1;
+        if(player_in_hard_mode())
+            hardmode_factor = 2;
         do
         {
             item.sub_type = random_choose_weighted(
-                 496, SCR_ENCHANT_ARMOUR,
+                 496 / hardmode_factor, SCR_ENCHANT_ARMOUR,
                  496, SCR_ENCHANT_WEAPON_I,
                  496, SCR_ENCHANT_WEAPON_II,
                  331, SCR_FEAR,
                  331, SCR_MAGIC_MAPPING,
                  331, SCR_FOG,
-                 331, SCR_RECHARGING,
-                 331, SCR_BLINKING,
+                 331 / hardmode_factor, SCR_RECHARGING,
+                 331 / hardmode_factor, SCR_BLINKING,
                  331, SCR_IMMOLATION,
 
                  // Medium-level scrolls.
-                 210, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
+                 210 / hardmode_factor, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
                  210, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
                  140, (depth_mod < 3 ? SCR_TELEPORTATION : SCR_SUMMONING),
 
