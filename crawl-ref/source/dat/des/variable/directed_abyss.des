@@ -39,9 +39,14 @@ function open_sealed_door(data, triggerable, triggerer, marker, ev)
 end
 }}
 
+############################################################################
+# Directed Abyss vault 1.
+# Yes, the door needs to be that big. Sadly, the Crawl code chokes and
+# vomits when you put a triggerable and a restrict_door on the same square.
 NAME:   directed_abyss_1
 PLACE:  D:hard_checkpoint
 ORIENT: float
+TAGS:   no_rotate
 MARKER: A = lua:portal_desc {portal_phase = 1}
 :if dgn.check_directed_abyss_daction() then
 KFEAT:  A = enter_abyss
@@ -61,6 +66,16 @@ lua_marker("/", sealed_door_marker)
 MARKER:  A = lua:props_marker { \
              door_description_noun="directed_abyss",\
              }
+MARKER:  B = lua:props_marker { \
+             door_open_prompt="This door seems to be protecting the " .. \
+                              "portal from the energy of the Realm of " ..\
+                              "Zot. Open it anyway?", \
+             door_open_verb="unseal", \
+             door_description_noun="heavy, sealed door", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
 MARKER:  / = lua:props_marker { \
              door_open_prompt="This door seems to be protecting the " .. \
                               "portal from the energy of the Realm of " ..\
@@ -71,9 +86,10 @@ MARKER:  / = lua:props_marker { \
              veto_shatter="veto", \
              veto_fragmentation="veto", \
              }
+MARKER:  B = lua:restrict_door {}
 KPROP:   "]}) = no_tele_into
 SUBST:   " = .
-SUBST:   / = +
+SUBST:   /B = +
 MAP
  XXXXXXX
  X""}""X
@@ -81,9 +97,9 @@ MAP
  X"""""X
  XXX"XXX
    X"X
-   X"X
-   X"X
-cccX/Xccc
+   XBX
+   X/X
+cccXBXccc
 c.......c
 c.......c
 c.......c

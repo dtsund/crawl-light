@@ -124,7 +124,9 @@ default-depth:
 ############################################################################
 # Pandoora vault 1.
 #
-# Currently, no monsters and no loot.  This will change.
+# Currently, no monsters and no loot. This will change.
+# Yes, the door needs to be that big. Sadly, the Crawl code chokes and
+# vomits when you put a triggerable and a restrict_door on the same square.
 NAME:   pandoora_vault_1
 TAGS:   pandoora no_rotate allow_dup
 ORIENT: encompass
@@ -149,14 +151,24 @@ MARKER:  / = lua:props_marker { \
              veto_shatter="veto", \
              veto_fragmentation="veto", \
              }
-SUBST:   / = +
+MARKER:  B = lua:props_marker { \
+             door_open_prompt="You sense great evil behind this door. Open " .. \
+                                         "it anyway?", \
+             door_open_verb="unseal", \
+             door_description_noun="Pandoora", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
+MARKER:  B = lua:restrict_door {}
+SUBST:   /B = +
 KITEM:   a = scroll of acquirement
 KPROP:   "a = no_tele_into
 SUBST:   " = .
 MAP
-xxxxxxxxXXX
-x.......o"X
-x>A...../"X
-x.......oaX
-xxxxxxxxXXX
+xxxxxxxxXXXXX
+x.......ooo"X
+x>A.....B/B"X
+x.......oooaX
+xxxxxxxxXXXXX
 ENDMAP
