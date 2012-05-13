@@ -1281,10 +1281,23 @@ static int _num_items_wanted(int level_number)
         // No random items in hell, the slime pits, the temple, the hall.
         return 0;
     }
-    else if (level_number > 3 && one_chance_in(500 - 8 * level_number))
-        return (10 + random2avg(90, 2)); // rich level!
+    
+    int num_items = 0;
+    
+    if (level_number > 3 && one_chance_in(500 - 8 * level_number))
+        num_items = 10 + random2avg(90, 2); // rich level!
     else
-        return (3 + roll_dice(3, 11));
+        num_items = 3 + roll_dice(3, 11);
+    
+    // ~20% bonus when playing on Easy.
+    if(you.difficulty_level == 0)
+        return num_items * 6 / 5;
+    
+    // ~30% malus in Hard mode.
+    if(player_in_hard_mode())
+        return num_items * 7 / 10;
+        
+    return num_items;
 }
 
 static int _num_mons_wanted(level_area_type level_type)
