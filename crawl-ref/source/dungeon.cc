@@ -916,6 +916,17 @@ static void _fixup_hell_stairs()
     }
 }
 
+static void _convert_down_hatches_to_up()
+{
+    for (rectangle_iterator ri(1); ri; ++ri)
+    {
+        if (grd(*ri) == DNGN_ESCAPE_HATCH_DOWN)
+        {
+            grd(*ri) = DNGN_ESCAPE_HATCH_UP;
+        }
+    }
+}
+
 static void _fixup_pandemonium_stairs()
 {
     for (rectangle_iterator ri(1); ri; ++ri)
@@ -2089,6 +2100,11 @@ static void _build_dungeon_level(int level_number, level_area_type level_type)
 
     if (player_in_hell())
         _fixup_hell_stairs();
+    
+    // Don't let the player bypass the medium-hard difficulty gate
+    // with an escape hatch.
+    if(player_in_branch(BRANCH_MAIN_DUNGEON) && level_number == HARD_CHECKPOINT - 1)
+        _convert_down_hatches_to_up();
 }
 
 static uint8_t _fix_black_colour(uint8_t incol)
