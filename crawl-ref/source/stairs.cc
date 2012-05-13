@@ -876,6 +876,14 @@ void down_stairs(dungeon_feature_type force_stair,
             MSGCH_ERROR);
         return;
     }
+    
+    // Block the player from entering Pandemonium if playing on Easy.
+    if (stair_find == DNGN_ENTER_PANDEMONIUM && you.difficulty_level == 0)
+    {
+        mpr("The gate appears to be sealed; there isn't enough ambient evil "
+            "to pass through it.");
+        return;
+    }
 
     if (stair_find > DNGN_ENTER_LABYRINTH
         && stair_find <= DNGN_ESCAPE_HATCH_DOWN

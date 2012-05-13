@@ -1273,10 +1273,18 @@ static bool _prompt_dangerous_portal(dungeon_feature_type ftype)
 {
     switch(ftype)
     {
-    case DNGN_ENTER_PANDEMONIUM:
     case DNGN_ENTER_ABYSS:
         return yesno("If you enter this portal you will not be able to return "
                      "immediately. Continue?", false, 'n');
+    
+    // Pandemonium portals are only dangerous on Medium or Hard; you can't take
+    // them on Easy.                 
+    case DNGN_ENTER_PANDEMONIUM:
+        if(you.difficulty_level >= 1)
+            return yesno("If you enter this portal you will not be able to return "
+                         "immediately. Continue?", false, 'n');
+        else
+            return true;
 
     case DNGN_TEMP_PORTAL:
         return yesno("Are you sure you wish to approach this portal? There's no "
