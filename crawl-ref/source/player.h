@@ -706,6 +706,7 @@ bool player_in_mappable_area(void);
 bool player_in_branch(int branch);
 bool player_in_level_area(level_area_type area);
 bool player_in_hell(void);
+bool player_in_hard_mode(void);
 
 bool berserk_check_wielded_weapon(void);
 int player_equip(equipment_type slot, int sub_type, bool calc_unid = true);

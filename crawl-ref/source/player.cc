@@ -477,6 +477,27 @@ bool player_in_hell(void)
             && is_hell_subbranch(you.where_are_you));
 }
 
+// Returns whether we should consider the game to be hard mode
+// for the purposes of level and monster generation and the like.
+// Note that this will still be false even if you.difficulty_level
+// is 2 if the player somewhere before the midgame "checkpoint".
+bool player_in_hard_mode(void)
+{
+    // This is one heck of a return statement.
+    return (you.difficulty_level == 2 &&
+               (player_in_branch(BRANCH_VAULTS) ||
+               player_in_branch(BRANCH_CRYPT) ||
+               player_in_branch(BRANCH_TOMB) ||
+               player_in_branch(BRANCH_HALL_OF_BLADES) ||
+               player_in_branch(BRANCH_VESTIBULE_OF_HELL) ||
+               player_in_branch(BRANCH_HALL_OF_ZOT) ||
+               (player_in_branch(BRANCH_MAIN_DUNGEON) &&
+                   you.absdepth0 >= HARD_CHECKPOINT - 1) ||
+               you.level_type == LEVEL_ABYSS ||
+               you.level_type == LEVEL_PANDEMONIUM));
+}
+             
+
 bool player_likes_water(bool permanently)
 {
     return (!permanently && beogh_water_walk()
