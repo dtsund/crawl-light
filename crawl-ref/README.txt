@@ -63,7 +63,7 @@ The official webpage can be found at:
       http://crawl.aerdan.org/
 
 And the official development site is located at:
-      https://github.com/dtsund/dtsund-crawl-mod
+      https://github.com/dtsund/crawl-light
 
 At the latter, you may submit issues pertaining to bugs or what you feel to be
 badly-designed elements of the game. 
