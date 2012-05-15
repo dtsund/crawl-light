@@ -57,6 +57,7 @@ int mons_rarity(int mcls, const level_id &place)
 static int _mons_rare_abyss_hard(int mcls);
 static int _mons_standard_rare_hard(int mcls);
 static int _mons_crypt_rare_hard(int mcls);
+static int _mons_tomb_rare_hard(int mcls);
 
 // level_area_type != LEVEL_DUNGEON
 // NOTE: Labyrinths and portal vaults have no random monster generation.
@@ -2838,6 +2839,10 @@ int mons_tomb_level(int mcls)
 
 int mons_tomb_rare(int mcls)
 {
+    //Hard mode has a different distribution.
+    if(player_in_hard_mode())
+        return _mons_tomb_rare_hard(mcls);
+
     switch (mcls)
     {
     case MONS_MUMMY:
@@ -2870,6 +2875,49 @@ int mons_tomb_rare(int mcls)
     case MONS_ANCIENT_LICH:
         return 2;
 
+    // A nod to the fabled pyramid traps, these should be really rare.
+    case MONS_TRAPDOOR_SPIDER:
+        return 1;
+
+    default:
+        return 0;
+    }
+}
+
+static int _mons_tomb_rare_hard(int mcls)
+{
+    switch (mcls)
+    {
+    //Yeah, less cannon fodder for you.
+    case MONS_MUMMY:
+        return 40;
+
+    case MONS_GUARDIAN_MUMMY:
+        return 80;
+
+    case MONS_MUMMY_PRIEST:
+        return 70;
+        
+    case MONS_GREATER_MUMMY:
+        return 50;
+
+    case MONS_FLYING_SKULL:
+        return 33;
+
+    case MONS_SIMULACRUM_SMALL:
+    case MONS_SIMULACRUM_LARGE:
+        return 20;
+
+    case MONS_LICH:
+        return 35;
+
+    case MONS_ANCIENT_LICH:
+        return 25;
+
+    case MONS_ZOMBIE_LARGE:
+    case MONS_SKELETON_SMALL:
+    case MONS_SKELETON_LARGE:
+    case MONS_ZOMBIE_SMALL:
     // A nod to the fabled pyramid traps, these should be really rare.
     case MONS_TRAPDOOR_SPIDER:
         return 1;
