@@ -2505,7 +2505,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_CENTAUR_WARRIOR:
         natural_leader = true;
     case MONS_CENTAUR:
-        if (power > 9 && one_chance_in(3) && you.where_are_you != BRANCH_SHOALS)
+        if (power > 6 && one_chance_in(3) && you.where_are_you != BRANCH_SHOALS)
         {
             band = BAND_CENTAURS;
             band_size = 2 + random2(4);
@@ -2721,7 +2721,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_GREEN_DRACONIAN:
     case MONS_GREY_DRACONIAN:
     case MONS_PALE_DRACONIAN:
-        if (power > 18 && one_chance_in(3) && you.level_type == LEVEL_DUNGEON)
+        if (power > 12 && one_chance_in(3) && you.level_type == LEVEL_DUNGEON)
         {
             band = BAND_DRACONIAN;
             band_size = random_range(2, 4);
@@ -2735,7 +2735,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_DRACONIAN_ANNIHILATOR:
     case MONS_DRACONIAN_ZEALOT:
     case MONS_DRACONIAN_SHIFTER:
-        if ((power > 20 && you.level_type == LEVEL_DUNGEON) || player_in_hard_mode())
+        if ((power > 14 && you.level_type == LEVEL_DUNGEON) || player_in_hard_mode())
         {
             band = BAND_DRACONIAN;
             band_size = random_range(3, 6);
@@ -2897,7 +2897,7 @@ static monster_type _band_member(band_type band, int power)
         break;
 
     case BAND_UGLY_THINGS:
-        mon_type = ((power > 21 && one_chance_in(4)) ?
+        mon_type = ((power > 14 && one_chance_in(4)) ?
                        MONS_VERY_UGLY_THING : MONS_UGLY_THING);
         break;
 
@@ -3112,7 +3112,7 @@ static monster_type _band_member(band_type band, int power)
         if(!player_in_hard_mode())
         {
             //Easy and normal.
-            temp_rand = random2((power < 24) ? 27 : 40);
+            temp_rand = random2((power < 16) ? 27 : 40);
             mon_type =
                     ((temp_rand > 38) ? MONS_DRACONIAN_CALLER :     // 1
                      (temp_rand > 36) ? MONS_DRACONIAN_KNIGHT :     // 2
