@@ -2416,9 +2416,9 @@ TAGS:   no_monster_gen no_item_gen
 WEIGHT: 3
 # Is there a better way to do this?
 : if you.absdepth() > 11 then
-MONS:   place:D:27 zombie / place:D:27 skeleton, bone dragon
-: else
 MONS:   place:D:18 zombie / place:D:18 skeleton, bone dragon
+: else
+MONS:   place:D:12 zombie / place:D:12 skeleton, bone dragon
 : end
 ITEM:   long sword unrand:sword_of_zonguldrok
 MAP
