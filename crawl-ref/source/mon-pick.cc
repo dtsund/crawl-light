@@ -58,6 +58,7 @@ static int _mons_rare_abyss_hard(int mcls);
 static int _mons_standard_rare_hard(int mcls);
 static int _mons_crypt_rare_hard(int mcls);
 static int _mons_tomb_rare_hard(int mcls);
+static int _mons_hallzot_rare_hard(int mcls);
 
 // level_area_type != LEVEL_DUNGEON
 // NOTE: Labyrinths and portal vaults have no random monster generation.
@@ -3046,23 +3047,33 @@ int mons_hallzot_level(int mcls)
 
 int mons_hallzot_rare(int mcls)
 {
+
+    //Hard mode has a different distribution.
+    if(player_in_hard_mode())
+        return _mons_hallzot_rare_hard(mcls);
+
     switch (mcls)
     {
     case MONS_MOTH_OF_WRATH:
         return 88;
+
     case MONS_STORM_DRAGON:
     case MONS_TENTACLED_MONSTROSITY:
         return 50;
+
     case MONS_GOLDEN_DRAGON:
         return 42;
+
     case MONS_BONE_DRAGON:
     case MONS_DEATH_COB:
     case MONS_DRAGON:
     case MONS_ICE_DRAGON:
         return 40;
+
     case MONS_SHADOW_DRAGON:
     case MONS_GHOST_MOTH:
         return 30;
+
     case MONS_GUARDIAN_MUMMY:
     case MONS_ELECTRIC_GOLEM:
     case MONS_CURSE_TOE:
@@ -3091,6 +3102,67 @@ int mons_hallzot_rare(int mcls)
     case MONS_KILLER_KLOWN:
     case MONS_ORB_OF_FIRE:
         return 15;
+
+    default:
+        return 0;
+    }
+}
+
+int _mons_hallzot_rare_hard(int mcls)
+{
+    switch (mcls)
+    {
+    case MONS_MOTH_OF_WRATH:
+        return 88;
+
+    case MONS_STORM_DRAGON:
+    case MONS_TENTACLED_MONSTROSITY:
+        return 50;
+
+    case MONS_GOLDEN_DRAGON:
+        return 42;
+
+    case MONS_BONE_DRAGON:
+    case MONS_DEATH_COB:
+    case MONS_DRAGON:
+    case MONS_ICE_DRAGON:
+    case MONS_CURSE_TOE:
+        return 40;
+
+    case MONS_SHADOW_DRAGON:
+    case MONS_GHOST_MOTH:
+    case MONS_ORB_OF_FIRE:
+        return 30;
+
+    case MONS_GUARDIAN_MUMMY:
+    case MONS_ELECTRIC_GOLEM:
+        return 20;
+
+/*All dracs are now classed!  mon-place.cc has been altered accordingly.
+    case MONS_MOTTLED_DRACONIAN:
+    case MONS_YELLOW_DRACONIAN:
+    case MONS_BLACK_DRACONIAN:
+    case MONS_WHITE_DRACONIAN:
+    case MONS_RED_DRACONIAN:
+    case MONS_PURPLE_DRACONIAN:
+    case MONS_PALE_DRACONIAN:
+    case MONS_GREEN_DRACONIAN:
+    case MONS_GREY_DRACONIAN:
+        return 18;
+*/
+
+    case MONS_DRACONIAN_CALLER:
+    case MONS_DRACONIAN_MONK:
+    case MONS_DRACONIAN_SCORCHER:
+    case MONS_DRACONIAN_KNIGHT:
+    case MONS_DRACONIAN_ANNIHILATOR:
+    case MONS_DRACONIAN_ZEALOT:
+    case MONS_DRACONIAN_SHIFTER:
+        return 35;
+
+    case MONS_KILLER_KLOWN:
+        return 15;
+
     default:
         return 0;
     }

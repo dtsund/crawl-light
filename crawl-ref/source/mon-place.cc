@@ -2735,7 +2735,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_DRACONIAN_ANNIHILATOR:
     case MONS_DRACONIAN_ZEALOT:
     case MONS_DRACONIAN_SHIFTER:
-        if (power > 20 && you.level_type == LEVEL_DUNGEON)
+        if ((power > 20 && you.level_type == LEVEL_DUNGEON) || player_in_hard_mode())
         {
             band = BAND_DRACONIAN;
             band_size = random_range(3, 6);
@@ -3109,24 +3109,41 @@ static monster_type _band_member(band_type band, int power)
         break;
     case BAND_DRACONIAN:
     {
-        temp_rand = random2((power < 24) ? 27 : 40);
-        mon_type =
-                ((temp_rand > 38) ? MONS_DRACONIAN_CALLER :     // 1
-                 (temp_rand > 36) ? MONS_DRACONIAN_KNIGHT :     // 2
-                 (temp_rand > 34) ? MONS_DRACONIAN_MONK :       // 2
-                 (temp_rand > 32) ? MONS_DRACONIAN_SHIFTER :    // 2
-                 (temp_rand > 30) ? MONS_DRACONIAN_ANNIHILATOR :// 2
-                 (temp_rand > 28) ? MONS_DRACONIAN_SCORCHER :   // 2
-                 (temp_rand > 26) ? MONS_DRACONIAN_ZEALOT :     // 2
-                 (temp_rand > 23) ? MONS_GREY_DRACONIAN :       // 3
-                 (temp_rand > 20) ? MONS_YELLOW_DRACONIAN :     // 3
-                 (temp_rand > 17) ? MONS_GREEN_DRACONIAN :      // 3
-                 (temp_rand > 14) ? MONS_BLACK_DRACONIAN :      // 3
-                 (temp_rand > 11) ? MONS_WHITE_DRACONIAN :      // 3
-                 (temp_rand >  8) ? MONS_PALE_DRACONIAN :       // 3
-                 (temp_rand >  5) ? MONS_PURPLE_DRACONIAN :     // 3
-                 (temp_rand >  2) ? MONS_MOTTLED_DRACONIAN :    // 3
-                                    MONS_RED_DRACONIAN);        // 3
+        if(!player_in_hard_mode())
+        {
+            //Easy and normal.
+            temp_rand = random2((power < 24) ? 27 : 40);
+            mon_type =
+                    ((temp_rand > 38) ? MONS_DRACONIAN_CALLER :     // 1
+                     (temp_rand > 36) ? MONS_DRACONIAN_KNIGHT :     // 2
+                     (temp_rand > 34) ? MONS_DRACONIAN_MONK :       // 2
+                     (temp_rand > 32) ? MONS_DRACONIAN_SHIFTER :    // 2
+                     (temp_rand > 30) ? MONS_DRACONIAN_ANNIHILATOR :// 2
+                     (temp_rand > 28) ? MONS_DRACONIAN_SCORCHER :   // 2
+                     (temp_rand > 26) ? MONS_DRACONIAN_ZEALOT :     // 2
+                     (temp_rand > 23) ? MONS_GREY_DRACONIAN :       // 3
+                     (temp_rand > 20) ? MONS_YELLOW_DRACONIAN :     // 3
+                     (temp_rand > 17) ? MONS_GREEN_DRACONIAN :      // 3
+                     (temp_rand > 14) ? MONS_BLACK_DRACONIAN :      // 3
+                     (temp_rand > 11) ? MONS_WHITE_DRACONIAN :      // 3
+                     (temp_rand >  8) ? MONS_PALE_DRACONIAN :       // 3
+                     (temp_rand >  5) ? MONS_PURPLE_DRACONIAN :     // 3
+                     (temp_rand >  2) ? MONS_MOTTLED_DRACONIAN :    // 3
+                                        MONS_RED_DRACONIAN);        // 3
+        }
+        else
+        {
+            //Hard.  Hope you like classed draconians!
+            temp_rand = random2(13);
+            mon_type =
+                    ((temp_rand > 11) ? MONS_DRACONIAN_CALLER :     // 1
+                     (temp_rand >  9) ? MONS_DRACONIAN_KNIGHT :     // 2
+                     (temp_rand >  7) ? MONS_DRACONIAN_MONK :       // 2
+                     (temp_rand >  5) ? MONS_DRACONIAN_SHIFTER :    // 2
+                     (temp_rand >  3) ? MONS_DRACONIAN_ANNIHILATOR :// 2
+                     (temp_rand >  1) ? MONS_DRACONIAN_SCORCHER :   // 2
+                                        MONS_DRACONIAN_ZEALOT);     // 2
+        }
         break;
     }
     case BAND_ILSUIW:
