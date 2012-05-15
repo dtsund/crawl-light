@@ -44,7 +44,7 @@ struct Branch
     bool has_uniques;
     uint8_t floor_colour;          // Zot needs special handling.
     uint8_t rock_colour;
-    int       (*mons_rarity_function)(int);
+    int       (*mons_rarity_function)(int, bool);
     int       (*mons_level_function)(int);
     int       (*num_traps_function)(int);
     trap_type (*rand_trap_function)(int);

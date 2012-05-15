@@ -116,7 +116,8 @@ static monster_type _resolve_monster_type(monster_type mon_type,
                                           unsigned mmask,
                                           dungeon_char_type *stair_type,
                                           int *lev_mons,
-                                          bool *chose_ood_monster);
+                                          bool *chose_ood_monster,
+                                          bool force_normal);
 
 static monster_type _band_member(band_type band, int power);
 static band_type _choose_band(int mon_type, int power, int &band_size,
@@ -487,6 +488,8 @@ monster_type pick_random_monster(const level_id &place,
     return pick_random_monster(place, level, level, chose_ood_monster);
 }
 
+
+
 // HACK: The shop probabilities are defined in dat/des/builders/shops.des.
 // Once mimics replace actual features, this sort of hackery will become
 // unnecessary.
@@ -545,7 +548,8 @@ static bool _is_random_monster(int mt)
 monster_type pick_random_monster(const level_id &place, int power,
                                  int &lev_mons,
                                  bool *chose_ood_monster,
-                                 bool force_mobile)
+                                 bool force_mobile,
+                                 bool force_normal)
 {
     bool ood_dummy = false;
     bool *isood = chose_ood_monster? chose_ood_monster : &ood_dummy;
@@ -573,7 +577,7 @@ monster_type pick_random_monster(const level_id &place, int power,
         monster_type type =
             _resolve_monster_type(RANDOM_MONSTER, PROX_ANYWHERE, base_type,
                                   dummy1, 0, &dummy2, &lev_mons,
-                                  chose_ood_monster);
+                                  chose_ood_monster, false);
 
 #if defined(DEBUG) || defined(DEBUG_DIAGNOSTICS)
         if (base_type != 0 && base_type != MONS_PROGRAM_BUG)
@@ -597,7 +601,8 @@ monster_type pick_random_monster(const level_id &place, int power,
 
     // OODs do not apply to the Abyss, Pan, etc.
     // They also don't apply for players at the easiest level.
-    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 18 && you.difficulty_level != 0)
+    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 18 && 
+        (you.difficulty_level != 0 || force_normal))
     {
         // Apply moderate OOD fuzz where appropriate.
         lev_mons = _fuzz_mons_level(lev_mons);
@@ -678,13 +683,13 @@ monster_type pick_random_monster(const level_id &place, int power,
                 diff = 0;
 
             // If we're running low on tries, remove level restrictions.
-            if (!player_in_hard_mode())
+            if (!player_in_hard_mode() || force_normal)
             {
                 // Easy and normal mode here.
                 
                 // Scale down monster chance based on how far we are from
                 // default depth.
-                chance = mons_rarity(mon_type, place) - (diff * diff * diff);
+                chance = mons_rarity(mon_type, place, force_normal) - (diff * diff * diff);
                 if ((monster_pick_tries < n_relax_margin
                      || std::abs(lev_mons - level) <= 3)
                     && random2avg(100, 2) <= chance)
@@ -733,6 +738,15 @@ monster_type pick_random_monster(const level_id &place, int power,
 #endif
 
     return (mon_type);
+}
+
+monster_type pick_random_monster(const level_id &place, int power,
+                                 int &lev_mons,
+                                 bool *chose_ood_monster,
+                                 bool force_mobile)
+{
+    return pick_random_monster(place, power, lev_mons, chose_ood_monster,
+                               force_mobile, false);
 }
 
 bool can_place_on_trap(int mon_type, trap_type trap)
@@ -791,7 +805,8 @@ static monster_type _resolve_monster_type(monster_type mon_type,
                                           unsigned mmask,
                                           dungeon_char_type *stair_type,
                                           int *lev_mons,
-                                          bool *chose_ood_monster)
+                                          bool *chose_ood_monster,
+                                          bool force_normal)
 {
     if (mon_type == RANDOM_DRACONIAN)
     {
@@ -889,7 +904,8 @@ static monster_type _resolve_monster_type(monster_type mon_type,
                         _resolve_monster_type(mon_type, proximity,
                                               base_type, pos, mmask,
                                               stair_type, lev_mons,
-                                              chose_ood_monster);
+                                              chose_ood_monster,
+                                              force_normal);
                 }
                 return (mon_type);
             }
@@ -909,7 +925,8 @@ static monster_type _resolve_monster_type(monster_type mon_type,
             // Now pick a monster of the given branch and level.
             mon_type = pick_random_monster(place, *lev_mons, *lev_mons,
                                        chose_ood_monster,
-                                       mon_type == RANDOM_MOBILE_MONSTER);
+                                       mon_type == RANDOM_MOBILE_MONSTER,
+                                       force_normal);
 
             // Don't allow monsters too stupid to use stairs (e.g.
             // non-spectral zombified undead) to be placed near
@@ -934,7 +951,8 @@ static monster_type _resolve_monster_type(monster_type mon_type,
 
             mon_type = pick_random_monster(place, *lev_mons, *lev_mons,
                                        chose_ood_monster,
-                                       mon_type == RANDOM_MOBILE_MONSTER);
+                                       mon_type == RANDOM_MOBILE_MONSTER,
+                                       force_normal);
         }
     }
     return (mon_type);
@@ -991,7 +1009,7 @@ monster_type resolve_monster_type(monster_type mon_type,
 
     return _resolve_monster_type(mon_type, PROX_ANYWHERE, base,
                                  dummy, 0, &stair_type, &level,
-                                 &chose_ood);
+                                 &chose_ood, false);
 }
 
 // Converts a randomised monster_type into a concrete monster_type, optionally
@@ -1097,7 +1115,7 @@ static bool _in_ood_pack_protected_place()
     return (env.turns_on_level < 1400 - you.absdepth0 * 117);
 }
 
-int place_monster(mgen_data mg, bool force_pos, bool dont_place)
+int place_monster(mgen_data mg, bool force_pos, bool dont_place, bool force_normal)
 {
 #ifdef DEBUG_MON_CREATION
     mpr("in place_monster()", MSGCH_DIAGNOSTICS);
@@ -1115,7 +1133,7 @@ int place_monster(mgen_data mg, bool force_pos, bool dont_place)
     mg.cls = _resolve_monster_type(mg.cls, mg.proximity, mg.base_type,
                                    mg.pos, mg.map_mask,
                                    &stair_type, &mg.power,
-                                   &chose_ood_monster);
+                                   &chose_ood_monster, force_normal);
 
     if (mg.cls == MONS_NO_MONSTER || mg.cls == MONS_PROGRAM_BUG)
         return (-1);
@@ -1434,6 +1452,13 @@ int place_monster(mgen_data mg, bool force_pos, bool dont_place)
 
     // Placement of first monster, at least, was a success.
     return (id);
+}
+
+//Wrapper, for all the things that called place_monster before we
+//needed to force summons to pick from the Normal-difficulty monsters.
+int place_monster(mgen_data mg, bool force_pos, bool dont_place)
+{
+    return place_monster(mg, force_pos, dont_place, false);
 }
 
 monster* get_free_monster()
@@ -3293,7 +3318,7 @@ static monster_type _pick_zot_exit_defender()
     return static_cast<monster_type>(mon_type);
 }
 
-int mons_place(mgen_data mg)
+int mons_place(mgen_data mg, bool force_normal)
 {
 #ifdef DEBUG_MON_CREATION
     mpr("in mons_place()", MSGCH_DIAGNOSTICS);
@@ -3356,7 +3381,7 @@ int mons_place(mgen_data mg)
                             : SAME_ATTITUDE((&menv[mg.summoner->mindex()]));
     }
 
-    int mid = place_monster(mg);
+    int mid = place_monster(mg, false, false, force_normal);
     if (mid == -1)
         return (-1);
 
@@ -3393,6 +3418,13 @@ int mons_place(mgen_data mg)
     }
 
     return (mid);
+}
+
+//Wrapper, for all the things that called mons_place before we
+//needed to force summons to pick from the Normal-difficulty monsters.
+int mons_place(mgen_data mg)
+{
+    return mons_place(mg, false);
 }
 
 static dungeon_feature_type _monster_primary_habitat_feature(int mc)
@@ -3655,7 +3687,10 @@ int create_monster(mgen_data mg, bool fail_msg)
 
     if (in_bounds(mg.pos))
     {
-        summd = mons_place(mg);
+        //Force selection of random monsters to choose as though the difficulty
+        //is Normal.  Shadow Creatures was crazy broken when choosing from Hard
+        //monsters.
+        summd = mons_place(mg, true);
         // If the arena vetoed the placement then give no fail message.
         if (crawl_state.game_is_arena())
             fail_msg = false;

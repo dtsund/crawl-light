@@ -43,13 +43,13 @@ int mons_level(int mcls, const level_id &place)
 
 // NOTE: Higher values returned means the monster is "more common".
 // A return value of zero means the monster will never appear. {dlb}
-int mons_rarity(int mcls, const level_id &place)
+int mons_rarity(int mcls, const level_id &place, bool force_normal)
 {
     // now, what about pandemonium ??? {dlb}
     if (place.level_type == LEVEL_ABYSS)
-        return mons_rare_abyss(mcls);
+        return mons_rare_abyss(mcls, force_normal);
     else
-        return branches[place.branch].mons_rarity_function(mcls);
+        return branches[place.branch].mons_rarity_function(mcls, force_normal);
 }
 
 // Hard-mode functions. Hard uses a different distribution, one that
@@ -204,10 +204,10 @@ bool mons_abyss(int mcls)
     }
 }
 
-int mons_rare_abyss(int mcls)
+int mons_rare_abyss(int mcls, bool force_normal)
 {
     //Hard mode has a different distribution.
-    if(player_in_hard_mode())
+    if(player_in_hard_mode() && !force_normal)
         return _mons_rare_abyss_hard(mcls);
 
     switch (mcls)
@@ -938,10 +938,10 @@ int mons_standard_level(int mcls)
     }
 }
 
-int mons_standard_rare(int mcls)
+int mons_standard_rare(int mcls, bool force_normal)
 {
     //Hard mode has a different distribution.
-    if(player_in_hard_mode())
+    if(player_in_hard_mode() && !force_normal)
         return _mons_standard_rare_hard(mcls);
 
     switch (mcls)
@@ -1516,13 +1516,13 @@ int mons_dwarf_level(int mcls)
 {
     int mlev = absdungeon_depth(BRANCH_DWARVEN_HALL, 1);
 
-    if (!mons_dwarf_rare(mcls))
+    if (!mons_dwarf_rare(mcls, false))
         return mlev + 99;
     // Depths are irrelevant for a depth-1 branch.
     return mlev + 1;
 }
 
-int mons_dwarf_rare(int mcls)
+int mons_dwarf_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -1601,7 +1601,7 @@ int mons_mineorc_level(int mcls)
     return (mlev);
 }
 
-int mons_mineorc_rare(int mcls)
+int mons_mineorc_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -1704,7 +1704,7 @@ int mons_hallelf_level(int mcls)
     return (mlev);
 }
 
-int mons_hallelf_rare(int mcls)
+int mons_hallelf_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -1866,7 +1866,7 @@ int mons_lair_level(int mcls)
     return (mlev);
 }
 
-int mons_lair_rare(int mcls)
+int mons_lair_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2057,7 +2057,7 @@ int mons_swamp_level(int mcls)
     return (mlev);
 }
 
-int mons_swamp_rare(int mcls)
+int mons_swamp_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2189,7 +2189,7 @@ int mons_shoals_level(int mcls)
     return mlev;
 }
 
-int mons_shoals_rare(int mcls)
+int mons_shoals_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2277,7 +2277,7 @@ int mons_pitsnake_level(int mcls)
     return (mlev);
 }
 
-int mons_pitsnake_rare(int mcls)
+int mons_pitsnake_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2358,7 +2358,7 @@ int mons_spidernest_level(int mcls)
     return (mlev);
 }
 
-int mons_spidernest_rare(int mcls)
+int mons_spidernest_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2450,7 +2450,7 @@ int mons_pitslime_level(int mcls)
     return (mlev);
 }
 
-int mons_pitslime_rare(int mcls)
+int mons_pitslime_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2515,7 +2515,7 @@ int mons_hive_level(int mcls)
     return (mlev);
 }
 
-int mons_hive_rare(int mcls)
+int mons_hive_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -2542,7 +2542,7 @@ int mons_hallblade_level(int mcls)
         return 0;
 }
 
-int mons_hallblade_rare(int mcls)
+int mons_hallblade_rare(int mcls, bool force_normal)
 {
     return ((mcls == MONS_DANCING_WEAPON) ? 1000 : 0);
 }
@@ -2619,10 +2619,10 @@ int mons_crypt_level(int mcls)
     return (mlev);
 }
 
-int mons_crypt_rare(int mcls)
+int mons_crypt_rare(int mcls, bool force_normal)
 {
     //Hard mode has a different distribution.
-    if(player_in_hard_mode())
+    if(player_in_hard_mode() && !force_normal)
         return _mons_crypt_rare_hard(mcls);
 
     switch (mcls)
@@ -2838,10 +2838,10 @@ int mons_tomb_level(int mcls)
     return (mlev);
 }
 
-int mons_tomb_rare(int mcls)
+int mons_tomb_rare(int mcls, bool force_normal)
 {
     //Hard mode has a different distribution.
-    if(player_in_hard_mode())
+    if(player_in_hard_mode() && !force_normal)
         return _mons_tomb_rare_hard(mcls);
 
     switch (mcls)
@@ -2961,7 +2961,7 @@ int mons_forest_level(int mcls)
     return (mlev);
 }
 
-int mons_forest_rare(int mcls)
+int mons_forest_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -3045,11 +3045,11 @@ int mons_hallzot_level(int mcls)
     return (mlev);
 }
 
-int mons_hallzot_rare(int mcls)
+int mons_hallzot_rare(int mcls, bool force_normal)
 {
 
     //Hard mode has a different distribution.
-    if(player_in_hard_mode())
+    if(player_in_hard_mode() && !force_normal)
         return _mons_hallzot_rare_hard(mcls);
 
     switch (mcls)
@@ -3175,13 +3175,13 @@ int mons_vestibule_level(int mcls)
 {
     int mlev = absdungeon_depth(BRANCH_VESTIBULE_OF_HELL, 1);
 
-    if (!mons_vestibule_rare(mcls))
+    if (!mons_vestibule_rare(mcls, false))
         return mlev + 99;
     // Depths are irrelevant for a depth-1 branch.
     return mlev + 1;
 }
 
-int mons_vestibule_rare(int mcls)
+int mons_vestibule_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -3299,7 +3299,7 @@ int mons_dis_level(int mcls)
     return (mlev);
 }
 
-int mons_dis_rare(int mcls)
+int mons_dis_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -3456,7 +3456,7 @@ int mons_gehenna_level(int mcls)
     return (mlev);
 }
 
-int mons_gehenna_rare(int mcls)
+int mons_gehenna_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -3607,7 +3607,7 @@ int mons_cocytus_level(int mcls)
     return (mlev);
 }
 
-int mons_cocytus_rare(int mcls)
+int mons_cocytus_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
@@ -3754,7 +3754,7 @@ int mons_tartarus_level(int mcls)
     return (mlev);
 }
 
-int mons_tartarus_rare(int mcls)
+int mons_tartarus_rare(int mcls, bool force_normal)
 {
     switch (mcls)
     {
