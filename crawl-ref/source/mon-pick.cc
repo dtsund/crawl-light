@@ -56,6 +56,7 @@ int mons_rarity(int mcls, const level_id &place)
 // is (hopefully) more painful to the player.
 static int _mons_rare_abyss_hard(int mcls);
 static int _mons_standard_rare_hard(int mcls);
+static int _mons_crypt_rare_hard(int mcls);
 
 // level_area_type != LEVEL_DUNGEON
 // NOTE: Labyrinths and portal vaults have no random monster generation.
@@ -2618,6 +2619,10 @@ int mons_crypt_level(int mcls)
 
 int mons_crypt_rare(int mcls)
 {
+    //Hard mode has a different distribution.
+    if(player_in_hard_mode())
+        return _mons_crypt_rare_hard(mcls);
+
     switch (mcls)
     {
     case MONS_ZOMBIE_SMALL:
@@ -2695,6 +2700,90 @@ int mons_crypt_rare(int mcls)
 
     case MONS_ABOMINATION_LARGE:
         return 4;
+
+    case MONS_PULSATING_LUMP:
+        return 3;
+
+    default:
+        return 0;
+    }
+}
+
+static int _mons_crypt_rare_hard(int mcls)
+{
+    switch (mcls)
+    {
+    case MONS_ZOMBIE_SMALL:
+    case MONS_SKELETON_SMALL:
+    case MONS_SKELETON_LARGE:
+    case MONS_ZOMBIE_LARGE:
+        return 40;
+
+    case MONS_ABOMINATION_LARGE:
+    case MONS_SKELETAL_WARRIOR:
+        return 75;
+
+    case MONS_BONE_DRAGON:
+    case MONS_LICH:
+    case MONS_NECROPHAGE:
+    case MONS_SILENT_SPECTRE:
+        return 50;
+
+    case MONS_NECROMANCER:
+    case MONS_ANCIENT_LICH:
+    case MONS_VAMPIRE_KNIGHT:
+    case MONS_VAMPIRE_MAGE:
+        return 40;
+
+    case MONS_WIGHT:
+        return 35;
+
+    case MONS_WRAITH:
+        return 33;
+
+    case MONS_SHADOW:
+    case MONS_SIMULACRUM_SMALL:
+    case MONS_SIMULACRUM_LARGE:
+        return 30;
+
+    case MONS_GHOUL:
+    case MONS_REAPER:
+        return 25;
+
+    case MONS_MUMMY:
+        return 24;
+
+    case MONS_PHANTOM:
+        return 21;
+
+    case MONS_ROTTING_HULK:
+        return 17;
+
+    case MONS_PHANTASMAL_WARRIOR:
+    case MONS_VAMPIRE:
+        return 14;
+
+    case MONS_FLYING_SKULL:
+    case MONS_FLAYED_GHOST:
+    case MONS_FREEZING_WRAITH:
+        return 13;
+
+    case MONS_FLAMING_CORPSE:
+    case MONS_HUNGRY_GHOST:
+        return 12;
+
+    case MONS_SHADOW_WRAITH:
+        return 10;
+
+    // feature mimics
+    // case MONS_PORTAL_MIMIC:
+    case MONS_STAIR_MIMIC:
+    case MONS_SHOP_MIMIC:
+    case MONS_FOUNTAIN_MIMIC:
+        return 8;
+
+    case MONS_ABOMINATION_SMALL:
+        return 5;
 
     case MONS_PULSATING_LUMP:
         return 3;
