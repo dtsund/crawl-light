@@ -708,7 +708,7 @@ monster_type pick_random_monster(const level_id &place, int power,
                 // We can pick monsters from deeper depths than we otherwise
                 // could, but not shallower.
                 if ((monster_pick_tries < n_relax_margin
-                    || (lev_mons - level < 6 && level - lev_mons < 3))
+                    || (lev_mons - level < 3 && level - lev_mons < 6))
                     && random2avg(100, 2) <= chance)
                 {
                     break;
