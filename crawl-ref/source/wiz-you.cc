@@ -1007,7 +1007,7 @@ void wizard_god_mollify()
 //Change the current difficulty level.
 void wizard_change_difficulty()
 {
-    mprf(MSGCH_PROMPT, "Enter new difficulty (0-2): ");
+    mprf(MSGCH_PROMPT, "Enter new difficulty (0-2) (currently %d): ", you.difficulty_level);
     char buf[30];
     if (cancelable_get_line_autohist(buf, sizeof buf))
     {
