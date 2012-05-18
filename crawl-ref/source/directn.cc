@@ -3029,6 +3029,8 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return ("gateway to the decaying netherworld of Tartarus");
     case DNGN_ENTER_ABYSS:
         return ("one-way gate to the infinite horrors of the Abyss");
+    case DNGN_ENTER_ABYSS_DIRECTED:
+        return ("homing gate to the infinite horrors of the Abyss");
     case DNGN_EXIT_ABYSS:
         return ("gateway leading out of the Abyss");
     case DNGN_STONE_ARCH:

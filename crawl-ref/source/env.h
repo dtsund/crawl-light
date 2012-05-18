@@ -101,6 +101,7 @@ struct crawl_environment
     int sanctuary_time;
     int forest_awoken_until;
     int density;
+    bool can_find_hell_key;
 
     // Temp stuff.
     std::vector<final_effect> final_effects;

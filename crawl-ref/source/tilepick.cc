@@ -250,6 +250,8 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
         return TILE_DNGN_ENTER_TARTARUS;
     case DNGN_ENTER_ABYSS:
         return TILE_DNGN_ENTER_ABYSS;
+    case DNGN_ENTER_ABYSS_DIRECTED:
+        return TILE_DNGN_ENTER_ABYSS_DIRECTED;
     case DNGN_EXIT_ABYSS:
     case DNGN_EXIT_HELL:
     case DNGN_EXIT_PANDEMONIUM:

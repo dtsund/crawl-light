@@ -1274,6 +1274,7 @@ static bool _prompt_dangerous_portal(dungeon_feature_type ftype)
     switch(ftype)
     {
     case DNGN_ENTER_ABYSS:
+    case DNGN_ENTER_ABYSS_DIRECTED:
         return yesno("If you enter this portal you will not be able to return "
                      "immediately. Continue?", false, 'n');
     

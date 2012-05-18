@@ -1194,7 +1194,8 @@ enum dungeon_feature_type
     DNGN_STONE_ARCH,
     DNGN_ENTER_PANDEMONIUM,
     DNGN_EXIT_PANDEMONIUM,             //  100
-    DNGN_TRANSIT_PANDEMONIUM,          //  101
+    DNGN_TRANSIT_PANDEMONIUM,
+    DNGN_ENTER_ABYSS_DIRECTED,         //  102
 
     // Entrances to various branches
     DNGN_ENTER_FIRST_BRANCH = 110,     //  110

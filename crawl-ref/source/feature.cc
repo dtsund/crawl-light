@@ -371,6 +371,15 @@ static void _init_feat(feature_def &f, dungeon_feature_type feat)
             f.seen_colour = ETC_RANDOM;
             f.minimap     = MF_STAIR_BRANCH;
             break;
+            
+        case DNGN_ENTER_ABYSS_DIRECTED:
+            f.colour      = ETC_FIRE;
+            f.dchar       = DCHAR_ARCH;
+            f.flags      |= FFT_NOTABLE;
+            f.map_colour  = LIGHTGREY;
+            f.seen_colour = ETC_RANDOM;
+            f.minimap     = MF_STAIR_BRANCH;
+            break;
 
         case DNGN_EXIT_ABYSS:
             f.colour     = ETC_RANDOM;

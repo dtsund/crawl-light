@@ -2203,6 +2203,7 @@ static void tag_construct_level(writer &th)
     marshallInt(th, env.forest_awoken_until);
     marshall_level_vault_data(th);
     marshallInt(th, env.density);
+    marshallBoolean(th, env.can_find_hell_key);
 }
 
 void marshallItem(writer &th, const item_def &item)
@@ -2834,6 +2835,10 @@ static void tag_read_level(reader &th)
     env.forest_awoken_until = unmarshallInt(th);
     unmarshall_level_vault_data(th);
     env.density = unmarshallInt(th);
+    if(th.getMinorVersion() >= TAG_MINOR_DIRECTED_ABYSS)
+        env.can_find_hell_key = unmarshallBoolean(th);
+    else
+        env.can_find_hell_key = false;
 }
 
 static void tag_read_level_items(reader &th)

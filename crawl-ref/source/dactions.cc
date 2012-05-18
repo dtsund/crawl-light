@@ -238,7 +238,7 @@ static void _apply_daction(daction_type act)
             if(grid == DNGN_STONE_ARCH && 
                env.markers.property_at(*ri, MAT_ANY, "door_description_noun") == "directed_abyss")
             {
-                grd(*ri) = DNGN_ENTER_ABYSS;
+                grd(*ri) = DNGN_ENTER_ABYSS_DIRECTED;
             }
         }
     case NUM_DA_COUNTERS:

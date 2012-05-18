@@ -771,6 +771,13 @@ static void _player_change_level_downstairs(dungeon_feature_type stair_find,
         you.level_type = LEVEL_LABYRINTH;
     else if (stair_find == DNGN_ENTER_ABYSS)
         you.level_type = LEVEL_ABYSS;
+    else if (stair_find == DNGN_ENTER_ABYSS_DIRECTED)
+    {
+        you.level_type = LEVEL_ABYSS;
+        //Let the player find the hell key from directed portals,
+        //but not the Abyssal rune.
+        env.can_find_hell_key = true;
+    }
     else if (stair_find == DNGN_ENTER_PANDEMONIUM)
         you.level_type = LEVEL_PANDEMONIUM;
     else if (stair_find == DNGN_ENTER_PORTAL_VAULT)
@@ -1083,6 +1090,13 @@ void down_stairs(dungeon_feature_type force_stair,
         mpr("You pass through the gate.");
         if (!you.wizard || !crawl_state.is_replaying_keys())
             more();
+    }
+    
+    if (stair_find == DNGN_EXIT_ABYSS)
+    {
+        //Make sure the player can't automatically find the key to hell on future
+        //Abyss trips.
+        env.can_find_hell_key = false;
     }
 
     if (old_level.level_type != you.level_type && you.level_type == LEVEL_DUNGEON)

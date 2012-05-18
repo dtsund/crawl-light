@@ -48,8 +48,8 @@ PLACE:  D:hard_checkpoint
 ORIENT: float
 TAGS:   no_rotate
 MARKER: A = lua:portal_desc {portal_phase = 1}
-:if dgn.check_directed_abyss_daction() then
-KFEAT:  A = enter_abyss
+:if you.difficulty_level() > 1 then
+KFEAT:  A = enter_abyss_directed
 :else
 KFEAT:  A = stone_arch
 :end

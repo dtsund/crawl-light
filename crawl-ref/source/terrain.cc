@@ -312,6 +312,7 @@ command_type feat_stair_direction(dungeon_feature_type feat)
     case DNGN_ENTER_COCYTUS:
     case DNGN_ENTER_TARTARUS:
     case DNGN_ENTER_ABYSS:
+    case DNGN_ENTER_ABYSS_DIRECTED:
     case DNGN_EXIT_ABYSS:
     case DNGN_ENTER_PANDEMONIUM:
     case DNGN_EXIT_PANDEMONIUM:
@@ -1606,7 +1607,7 @@ const char *dngn_feature_names[] =
 "", "enter_dis", "enter_gehenna", "enter_cocytus",
 "enter_tartarus", "enter_abyss", "exit_abyss", "stone_arch",
 "enter_pandemonium", "exit_pandemonium", "transit_pandemonium",
-"", "", "", "", "", "",
+"enter_abyss_directed", "", "", "", "", "",
 "", "", "enter_dwarven_hall", "enter_orcish_mines", "enter_hive", "enter_lair",
 "enter_slime_pits", "enter_vaults", "enter_crypt",
 "enter_hall_of_blades", "enter_zot", "enter_temple",

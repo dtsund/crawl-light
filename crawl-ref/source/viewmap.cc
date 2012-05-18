@@ -193,6 +193,7 @@ bool is_feature(wchar_t feature, const coord_def& where)
         case DNGN_ENTER_COCYTUS:
         case DNGN_ENTER_TARTARUS:
         case DNGN_ENTER_ABYSS:
+        case DNGN_ENTER_ABYSS_DIRECTED:
         case DNGN_EXIT_ABYSS:
         case DNGN_ENTER_PANDEMONIUM:
         case DNGN_EXIT_PANDEMONIUM:
