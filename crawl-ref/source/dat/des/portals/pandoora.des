@@ -62,6 +62,7 @@ function open_pandoora(data, triggerable, triggerer, marker, ev)
 
     crawl.mpr("You feel as though achieving your goals just got harder.", "warning")
     you.difficulty_level(you.difficulty_level()+1)
+    crawl.mark_milestone("difficulty", "opened the first Pandoora.")
 end
 
 }}
