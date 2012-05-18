@@ -19,8 +19,8 @@ function pandoora_portal(e)
   desc_long = [[This dark portal leads to a place spoken of only in whispers, where great evil is sealed away. Releasing these dark forces would probably be unwise.]]
   desc_long = string.gsub(desc_long, "\n%s+", "\n")
 
-  local timeout_turns_long = crawl.random_range(2700, 3300)
-  local timeout_turns_short = timeout_turns_long/10;
+  local timeout_turns_long = 30
+  local timeout_turns_short = 30;
 
   local messager =
     timed_msg {
@@ -68,52 +68,22 @@ end
 
 # Basic Pandoora entries ########################################
 
-NAME:   pandoora_entry_dummy
-TAGS:   pandoora_entry transparent chance_pandoora
-ORIENT: float
-PLACE: D:easy_checkpoint
-WEIGHT: 0
-:   pandoora_portal(_G)
-MAP
-O
-ENDMAP
-
-NAME:   enter_pandoora_1
+NAME:   enter_pandoora_stairs
 TAGS:   pandoora_entry
 ORIENT: float
 PLACE: D:easy_checkpoint
 WEIGHT: 1
 :   pandoora_portal(_G)
 MAP
-...
-.O.
-...
-ENDMAP
-
-NAME:   enter_pandoora_2
-TAGS:   pandoora_entry
-ORIENT: float
-PLACE: D:easy_checkpoint
-WEIGHT: 1
-:   pandoora_portal(_G)
-MAP
-x.x
-.O.
-x.x
-ENDMAP
-
-NAME:   enter_pandoora_3
-TAGS:   pandoora_entry
-ORIENT: float
-PLACE: D:easy_checkpoint
-WEIGHT: 1
-:   pandoora_portal(_G)
-MAP
-.xxx.
-x.x.x
-xxOxx
-x.x.x
-.xxx.
+xxxxx
+x(.[x
+x.{.x
+x...x
+x.O.x
+xx.xx
+ x.x
+ x.x
+ x.x
 ENDMAP
 
 

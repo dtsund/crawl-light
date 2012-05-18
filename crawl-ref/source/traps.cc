@@ -1579,7 +1579,7 @@ bool is_valid_shaft_level(const level_id &place)
     // Don't generate shafts that will let the player bypass difficulty-change
     // levels.
     if(place.branch == BRANCH_MAIN_DUNGEON &&
-       (place.depth == EASY_CHECKPOINT || place.depth == HARD_CHECKPOINT))
+       (place.depth == EASY_CHECKPOINT - 1 || place.depth == HARD_CHECKPOINT))
        return (false);
 
     const Branch &branch = branches[place.branch];
@@ -1637,9 +1637,9 @@ level_id generic_shaft_dest(level_pos lpos, bool known = false)
     }
     
     // If a multi-floor shafting will take the player past a difficulty changing
-    // floor, make it only drop the player by one floor.
+    // checkpoint, make it only drop the player by one floor.
     if(lid.branch == BRANCH_MAIN_DUNGEON &&
-       (curr_depth == EASY_CHECKPOINT - 1 || curr_depth == HARD_CHECKPOINT - 1))
+       (curr_depth == EASY_CHECKPOINT - 2 || curr_depth == HARD_CHECKPOINT - 1))
        lid.depth = curr_depth + 1;
 
     if (lid.depth > branch.depth)
