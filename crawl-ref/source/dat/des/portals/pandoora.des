@@ -53,7 +53,7 @@ function pandoora_portal(e)
 end
 
 
-function open_pandoora(data, triggerable, triggerer, marker, ev)
+function open_first_pandoora(data, triggerable, triggerer, marker, ev)
     if data.trig == true then
         return
     else
@@ -105,7 +105,7 @@ MONS:   ancient lich
 KFEAT:  > = exit_portal_vault
 {{
 local pandoora_marker = TriggerableFunction:new {
-    func="open_pandoora"}
+    func="open_first_pandoora"}
     
 pandoora_marker:add_triggerer(DgnTriggerer:new {
     type="feat_change",

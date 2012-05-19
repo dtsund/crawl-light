@@ -3,7 +3,7 @@
 ##############################################################################
 
 {{
-function open_pandoora(data, triggerable, triggerer, marker, ev)
+function open_second_pandoora(data, triggerable, triggerer, marker, ev)
     if data.trig == true then
         return
     else
@@ -921,7 +921,7 @@ ITEM:    w:1 any potion
 KITEM:   3 = scroll of acquirement
 {{
 local pandoora_marker = TriggerableFunction:new {
-    func="open_pandoora"}
+    func="open_second_pandoora"}
     
 pandoora_marker:add_triggerer(DgnTriggerer:new {
     type="feat_change",
