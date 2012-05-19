@@ -65,6 +65,10 @@ function open_first_pandoora(data, triggerable, triggerer, marker, ev)
     crawl.mark_milestone("difficulty", "opened the first Pandoora.")
 end
 
+function open_pandoora(data, triggerable, triggerer, marker, ev)
+-- Just here to maintain save compatibility.
+end
+
 }}
 
 # Basic Pandoora entries ########################################
