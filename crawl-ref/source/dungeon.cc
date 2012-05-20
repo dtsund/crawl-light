@@ -1315,6 +1315,10 @@ static int _num_mons_wanted(level_area_type level_type)
 
     if (mon_wanted > 60)
         mon_wanted = 60;
+    
+    //No easy floors for you in hard mode.
+    while (player_in_hard_mode() && mon_wanted < 22)
+        mon_wanted += random2(5);
 
     return mon_wanted;
 }
