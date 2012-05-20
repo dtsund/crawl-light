@@ -6953,3 +6953,44 @@ bool contamination_warning_prompt(int cost)
     
     return yesno("This will incur dangerous levels of magical contamination. Continue?");
 }
+
+//Check whether all the monsters on the floor are friendly or dead,
+//possibly print a message telling the player that he's safe now.
+//Also call print_stats_level to possibly update the color of "Place:".
+void check_relatively_safe(bool maybe_print_message)
+{
+    //Never relatively safe where/when monsters can respawn.
+    if(monsters_can_respawn())
+    {
+        you.feel_relatively_safe = false;
+        print_stats_level();
+        return;
+    }
+    
+    for(int i = 0; i < MAX_MONSTERS; ++i)
+    {
+        //No monster in this slot, keep going.
+        if(env.mons[i].type == MONS_NO_MONSTER)
+            continue;
+        
+        //Monster in this slot is something we don't care about, keep going.
+        if(mons_is_firewood(&env.mons[i]))
+            continue;
+        
+        if(env.mons[i].attitude == ATT_HOSTILE)
+        {
+            you.feel_relatively_safe = false;
+            print_stats_level();
+            return;
+        }
+    }
+    
+    //All of the monsters are friendly or dead; now, maybe print a message.
+    //Don't print a message if we were already safe or if we're suppressing
+    //messages here (as we might when, say, changing levels).
+    if(!you.feel_relatively_safe && maybe_print_message)
+        mpr("You feel relatively safe now.", MSGCH_DURATION);
+    
+    you.feel_relatively_safe = true;
+    print_stats_level();
+}

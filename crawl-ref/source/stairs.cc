@@ -721,6 +721,8 @@ void up_stairs(dungeon_feature_type force_stair,
 
     if (!allow_control_teleport(true))
         mpr("You sense a powerful magical force warping space.", MSGCH_WARN);
+    
+    check_relatively_safe(false);
 
     request_autopickup();
 }
@@ -1299,6 +1301,8 @@ void down_stairs(dungeon_feature_type force_stair,
 
     if (!allow_control_teleport(true))
         mpr("You sense a powerful magical force warping space.", MSGCH_WARN);
+    
+    check_relatively_safe(false);
 
     trackers_init_new_level(true);
 

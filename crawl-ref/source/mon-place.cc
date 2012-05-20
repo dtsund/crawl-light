@@ -2155,6 +2155,10 @@ static int _place_monster_aux(const mgen_data &mg,
     // done after come in view ones.
     if (mon->type == MONS_TWISTER)
         _place_twister_clouds(mon);
+    
+    // Update the relatively safe indicator, maybe change the
+    // colour of "Place:" from blue to brown.
+    check_relatively_safe(false);
 
     return (mon->mindex());
 }

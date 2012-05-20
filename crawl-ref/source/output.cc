@@ -844,7 +844,10 @@ static std::string _level_description_string_hud()
 void print_stats_level()
 {
     cgotoxy(19, 9, GOTO_STAT);
-    textcolor(HUD_CAPTION_COLOUR);
+    if(!you.feel_relatively_safe)
+        textcolor(HUD_CAPTION_COLOUR);
+    else
+        textcolor(BLUE);
     cprintf("Place: ");
 
     textcolor(HUD_VALUE_COLOUR);

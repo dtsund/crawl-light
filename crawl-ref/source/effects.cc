@@ -2149,7 +2149,7 @@ static int _div(int num, int denom)
     return (res.rem >= 0 ? res.quot : res.quot - 1);
 }
 
-static bool _monsters_can_respawn()
+bool monsters_can_respawn()
 {
     return(!crawl_state.game_is_zotdef()
         && (you.level_type == LEVEL_ABYSS
@@ -2170,7 +2170,7 @@ void handle_time()
     // Every 5 turns, spawn random monsters in appropriate areas, not in Zotdef.
     // Appropriate areas: Abyss, Hells, Pandemonium.  A player farming those is
     // already strong enough to win.  Also allow spawning during the orb run.
-    if (_div(base_time, 50) > _div(old_time, 50) && _monsters_can_respawn())
+    if (_div(base_time, 50) > _div(old_time, 50) && monsters_can_respawn())
     {
         spawn_random_monsters();
     }

@@ -101,6 +101,7 @@ static void _initialize()
 
     you.unique_creatures.init(false);
     you.unique_items.init(UNIQ_NOT_EXISTS);
+    you.feel_relatively_safe = false;
 
     // Set up the Lua interpreter for the dungeon builder.
     init_dungeon_lua();

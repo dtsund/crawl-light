@@ -2577,6 +2577,8 @@ int monster_die(monster* mons, killer_type killer,
 
     _give_experience(player_exp, monster_exp, killer, killer_index,
                      pet_kill, was_visible);
+    
+    check_relatively_safe(true);
 
     return (corpse);
 }

@@ -225,6 +225,10 @@ public:
                                       // have been opened
 
   int           last_view_update;     // what turn was the view last updated?
+  
+  bool          feel_relatively_safe; // True if no hostiles on the floor.
+                                      // Tracked so we don't spam the player with
+                                      // "You feel relatively safe now" messages.
 
   // Warning: these two are quite different.
   //
@@ -929,4 +933,6 @@ bool need_expiration_warning(coord_def p = you.pos());
 
 int get_max_magic_contamination(species_type species);
 bool contamination_warning_prompt(int cost);
+
+void check_relatively_safe(bool maybe_print_message);
 #endif

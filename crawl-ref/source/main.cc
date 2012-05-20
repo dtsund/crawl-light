@@ -403,6 +403,8 @@ static void _launch_game()
 
     // Initialise save game so we can recover from crashes on D:1.
     save_game_state();
+    
+    check_relatively_safe(false);
 
     cursor_control ccon(!Options.use_fake_player_cursor);
     while (true)
