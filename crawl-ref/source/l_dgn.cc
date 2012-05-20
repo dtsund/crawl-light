@@ -1795,8 +1795,10 @@ LUAFN(_dgn_check_directed_abyss_daction)
     for(unsigned int i = 0; i < you.dactions.size(); i++)
     {
         if(you.dactions[i] == DACT_ADD_DIRECTED_ABYSS)
+        {
             lua_pushboolean(ls, true);
             return 1;
+        }
     }
     lua_pushboolean(ls, false);
     return 1;
@@ -1817,8 +1819,10 @@ LUAFN(_dgn_check_pandoora_daction)
     for(unsigned int i = 0; i < you.dactions.size(); i++)
     {
         if(you.dactions[i] == DACT_SEAL_PANDOORA)
+        {
             lua_pushboolean(ls, true);
             return 1;
+        }
     }
     lua_pushboolean(ls, false);
     return 1;
