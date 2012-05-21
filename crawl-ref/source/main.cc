@@ -1289,7 +1289,7 @@ static bool _prompt_dangerous_portal(dungeon_feature_type ftype)
         else
             return true;
 
-    case DNGN_TEMP_PORTAL:
+    case DNGN_MALIGN_GATEWAY:
         return yesno("Are you sure you wish to approach this portal? There's no "
                      "telling what its forces would wreak upon your fragile "
                      "self.", false, 'n');
@@ -4047,7 +4047,7 @@ static void _move_player(coord_def move)
         _open_door(move.x, move.y, false);
         you.prev_move = move;
     }
-    else if (!targ_pass && grd(targ) == DNGN_TEMP_PORTAL && !attacking)
+    else if (!targ_pass && grd(targ) == DNGN_MALIGN_GATEWAY && !attacking)
     {
         if (!_prompt_dangerous_portal(grd(targ)))
             return;
