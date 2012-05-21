@@ -1376,7 +1376,7 @@ bool cast_malign_gateway(actor * caster, int pow, god_type god)
 
 bool cast_summon_horrible_things(int pow, god_type god)
 {
-    if (one_chance_in(3))
+    if (one_chance_in(6))
     {
         // if someone deletes the db, no message is ok
         mpr(getMiscString("SHT_int_loss").c_str());
