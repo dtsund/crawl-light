@@ -268,7 +268,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "" },
     // Trog
     { "go berserk at will",
-      "call upon Trog for regeneration and protection from hostile enchantments",
+      "regenerate and be protected from hostile enchantments",
       "",
       "call in reinforcements",
       "" },
@@ -376,7 +376,7 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "" },
     // Trog
     { "go berserk at will",
-      "call upon Trog for regeneration and protection from hostile enchantments",
+      "regenerate and be protected from hostile enchantments",
       "",
       "call in reinforcements",
       "" },
