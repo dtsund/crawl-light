@@ -107,8 +107,16 @@ function sroom_morgue(e)
         return
     end
 
+    -- Note that this absdepth precludes lair branches.  This is important.
+    if you.difficulty_level() > 1 and you.absdepth() > 13 then
+    fill_special_room(e, "small zombie w:80 / wight w:80 / necrophage w:80 / "
+                      .. "wraith w:75 / vampire w:30 / vampire mage w:20 / "
+                      .. "vampire knight w:20 / lich w:20 / "
+                      .. "ancient lich w:10", nil, true)    
+    else
     fill_special_room(e, "small zombie w:500 / wight w:167 / necrophage w:167 / "
                       .. "wraith w:125 / vampire w:42", nil, true)
+    end
 end
 
 function sroom_jelly_pit(e)
