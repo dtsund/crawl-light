@@ -122,7 +122,7 @@ void remove_regen(bool divine_ability)
     you.duration[DUR_REGENERATION] = 0;
     if (divine_ability)
     {
-        mpr("You feel less resistant to magic.", MSGCH_DURATION);
+        mpr("You feel less resistant to hostile enchantments.", MSGCH_DURATION);
         you.attribute[ATTR_DIVINE_REGENERATION] = 0;
     }
 }
@@ -134,7 +134,7 @@ void cast_regen(int pow, bool divine_ability)
 
     if (divine_ability)
     {
-        mpr("You feel resistant to magic.");
+        mpr("You feel resistant to hostile enchantments.");
         you.attribute[ATTR_DIVINE_REGENERATION] = 1;
     }
 }
