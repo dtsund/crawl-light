@@ -987,7 +987,6 @@ bool cast_tukimas_ball(actor *caster, int pow, god_type god, bool force_hostile)
 // This function seems to have very little regard for encapsulation.
 bool cast_tukimas_dance(int pow, god_type god, bool force_hostile)
 {
-    bool success = true;
     const int dur = std::min(2 + (random2(pow) / 5), 6);
     item_def* wpn = you.weapon();
 
@@ -997,41 +996,7 @@ bool cast_tukimas_dance(int pow, god_type god, bool force_hostile)
         || is_range_weapon(*wpn)
         || is_special_unrandom_artefact(*wpn))
     {
-        success = false;
-    }
 
-    int mons = -1;
-
-    if (success)
-    {
-        item_def cp = *wpn;
-        // Clear temp branding so we don't brand permanently.
-        if (you.duration[DUR_WEAPON_BRAND])
-            set_item_ego_type(cp, OBJ_WEAPONS, SPWPN_NORMAL);
-
-        // Mark weapon as "thrown", so we'll autopickup it later.
-        cp.flags |= ISFLAG_THROWN;
-
-        mgen_data mg(MONS_DANCING_WEAPON,
-                     BEH_FRIENDLY,
-                     force_hostile ? 0 : &you,
-                     dur, SPELL_TUKIMAS_DANCE,
-                     you.pos(),
-                     MHITYOU,
-                     0, god,
-                     MONS_NO_MONSTER, 0, BLACK,
-                     pow);
-        mg.props[TUKIMA_WEAPON] = cp;
-
-        if (force_hostile)
-            mg.non_actor_summoner = god_name(god, false);
-
-        mons = create_monster(mg);
-        success = (mons != -1);
-    }
-
-    if (!success)
-    {
         if (wpn)
         {
             mprf("%s vibrate%s crazily for a second.",
@@ -1043,6 +1008,34 @@ bool cast_tukimas_dance(int pow, god_type god, bool force_hostile)
 
         return (false);
     }
+    
+    int mons = -1;
+    item_def cp = *wpn;
+    // Clear temp branding so we don't brand permanently.
+    if (you.duration[DUR_WEAPON_BRAND])
+        set_item_ego_type(cp, OBJ_WEAPONS, SPWPN_NORMAL);
+
+    // Mark weapon as "thrown", so we'll autopickup it later.
+    cp.flags |= ISFLAG_THROWN;
+
+    // Cursed weapons become hostile.
+    const bool friendly = (!force_hostile && !wpn->cursed());
+
+    mgen_data mg(MONS_DANCING_WEAPON,
+                 friendly ? BEH_FRIENDLY : BEH_HOSTILE,
+                 force_hostile ? 0 : &you,
+                 dur, SPELL_TUKIMAS_DANCE,
+                 you.pos(),
+                 MHITYOU,
+                 0, god,
+                 MONS_NO_MONSTER, 0, BLACK,
+                 pow);
+    mg.props[TUKIMA_WEAPON] = cp;
+
+    if (force_hostile)
+        mg.non_actor_summoner = god_name(god, false);
+
+    mons = create_monster(mg);
 
     // We are successful.  Unwield the weapon, removing any wield
     // effects.
