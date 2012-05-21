@@ -89,13 +89,6 @@ bool brand_weapon(brand_type which_brand, int power)
     if (!temp_brand && get_weapon_brand(weapon) != SPWPN_NORMAL)
         return (false);
 
-    // Some brandings are restricted to certain damage types.
-    if (which_brand == SPWPN_DUMMY_CRUSHING
-        && !(get_damage_type(weapon) & DAM_BLUDGEON))
-    {
-        return (false);
-    }
-
     // Can only brand launchers with sensible brands.
     if (is_range_weapon(weapon))
     {
@@ -190,12 +183,6 @@ bool brand_weapon(brand_type which_brand, int power)
         duration_affected = 8;
         // We must repeat the special message here (as there's a side effect.)
         emit_special_message = true;
-        break;
-
-    case SPWPN_DUMMY_CRUSHING:  //jmf: Added for Maxwell's Silver Hammer.
-        which_brand = SPWPN_VORPAL;
-        msg += " glows silver and feels heavier.";
-        duration_affected = 7;
         break;
 
     case SPWPN_RETURNING:

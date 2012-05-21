@@ -1702,10 +1702,12 @@ static spret_type _do_cast(spell_type spell, int powc,
             canned_msg(MSG_SPELL_FIZZLES);
         break;
 
+#if TAG_MAJOR_VERSION == 32
     case SPELL_MAXWELLS_SILVER_HAMMER:
-        if (!brand_weapon(SPWPN_DUMMY_CRUSHING, powc))
-            canned_msg(MSG_SPELL_FIZZLES);
+        mpr("Sorry, this spell is gone!");
+        return SPRET_ABORT;
         break;
+#endif
 
     case SPELL_POISON_WEAPON:
         if (!brand_weapon(SPWPN_VENOM, powc))

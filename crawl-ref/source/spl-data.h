@@ -1908,6 +1908,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 32
 {
     SPELL_MAXWELLS_SILVER_HAMMER, "Maxwell's Silver Hammer",
      SPTYP_ENCHANTMENT | SPTYP_EARTH,
@@ -1920,6 +1921,7 @@ struct spell_desc
      false,
      true
 },
+#endif
 
 {
     SPELL_CONDENSATION_SHIELD, "Condensation Shield",
