@@ -878,16 +878,9 @@ GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mon-mst.h $(RLTILES)/dc-unran
 
 GAME_DEPENDS  := $(DESTTILEFILES) $(OBJECTS) $(EXTRA_OBJECTS) $(CONTRIB_LIBS)
 SRC_PKG_BASE  := crawl_light
-SRC_VERSION   := $(shell git describe --tags --long $(MERGE_BASE) 2>/dev/null || cat util/release_ver)
+SRC_VERSION   := $(shell git describe --tags $(MERGE_BASE) 2>/dev/null || cat util/release_ver)
 
-# when making release builds, use just the bare tag
-SRC_VERSION_SHORT := $(shell git describe --tags $(MERGE_BASE) 2>/dev/null || cat util/release_ver)
-ifneq (,$(SRC_VERSION_SHORT))
-  ifeq (,$(findstring -,$(SRC_VERSION_SHORT)))
-    SRC_VERSION := $(SRC_VERSION_SHORT)
-  endif
-endif
-export SRC_VERSION_SHORT
+export SRC_VERSION
 
 PKG_SRC_DIR   := $(SRC_PKG_BASE)-$(SRC_VERSION)
 SRC_PKG_TAR   := $(PKG_SRC_DIR).tar.bz2
@@ -1217,10 +1210,10 @@ clean-rltiles:
 
 # You need to have NSIS installed.
 package-windows:
-ifneq (x$(SRC_VERSION_SHORT),x$(shell cat build-win/version.txt 2>/dev/null))
+ifneq (x$(SRC_VERSION),x$(shell cat build-win/version.txt 2>/dev/null))
 	+$(MAKE) build-windows
 endif
-	makensis -NOCD -DVERSION=$(SRC_VERSION_SHORT) util/crawl.nsi
+	makensis -NOCD -DVERSION=$(SRC_VERSION) util/crawl.nsi
 
 build-windows:
 ifneq ($(GAME),crawl.exe)
@@ -1231,7 +1224,7 @@ endif
 	mv build-win/crawl.exe build-win/crawl-tiles.exe
 	+$(MAKE) TILES=  DESTDIR=build-win SAVEDIR='~/crawl' install
 	mv build-win/crawl.exe build-win/crawl-console.exe
-	echo $(SRC_VERSION_SHORT) >build-win/version.txt
+	echo $(SRC_VERSION) >build-win/version.txt
 
 #############################################################################
 # Building Mac app bundles
