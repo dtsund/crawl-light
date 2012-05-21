@@ -550,7 +550,7 @@ struct spell_desc
     SPELL_POISONOUS_CLOUD, "Poisonous Cloud",
      SPTYP_CONJURATION | SPTYP_SORCERY | SPTYP_AIR,
      SPFLAG_GRID | SPFLAG_AREA | SPFLAG_ALLOW_SELF,
-     5,
+     6,
      200,
      6, 6,
      0,
