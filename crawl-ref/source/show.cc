@@ -339,7 +339,7 @@ static int _hashed_rand(const monster* mons, uint32_t id, uint32_t die)
 static void _mark_invisible_monster(const coord_def &where)
 {
     env.map_knowledge(where).set_invisible_monster();
-ifdef USE_TILE
+#ifdef USE_TILE
     tile_place_invisible_monster(where);
 #endif
 }
