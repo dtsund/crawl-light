@@ -2074,6 +2074,12 @@ void save_ghost(bool force)
     {
         return;
     }
+    
+    // Don't save temporary resists.
+    you.duration[DUR_INSULATION] = 0;
+    you.duration[DUR_RESIST_POISON] = 0;
+    you.duration[DUR_RESIST_FIRE] = 0;
+    you.duration[DUR_RESIST_COLD] = 0;
 
     const std::string cha_fil = _make_ghost_filename();
     FILE *gfile = fopen_u(cha_fil.c_str(), "rb");
