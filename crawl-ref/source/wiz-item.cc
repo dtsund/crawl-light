@@ -605,6 +605,8 @@ void wizard_create_all_artefacts()
                                         << " (" << debug_art_val_str(item)
                                         << ")" << std::endl;
         move_item_to_grid(&islot, you.pos());
+        if (Options.autoinscribe_artefacts)
+            add_autoinscription(item, artefact_auto_inscription(item));
     }
 
     // Create Horn of Geryon
