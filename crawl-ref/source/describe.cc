@@ -1774,7 +1774,6 @@ std::string get_item_description(const item_def &item, bool verbose,
                  && (unrandart_descrip(0, item)[0] != '\0'
                      || unrandart_descrip(1, item)[1] != '\0'))
         {
-            const char *desc    = unrandart_descrip(0, item);
             const char *desc_id = unrandart_descrip(1, item);
 
             if (desc_id[0] != '\0')
