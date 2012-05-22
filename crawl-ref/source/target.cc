@@ -46,7 +46,7 @@ targetter_smite::targetter_smite(const actor* act, int ran,
     ASSERT(exp_min <= exp_max);
     agent = act;
     origin = aim = act->pos();
-    range2 = dist_range(ran);
+    range = ran;
 }
 
 bool targetter_smite::valid_aim(coord_def a)
@@ -55,7 +55,7 @@ bool targetter_smite::valid_aim(coord_def a)
         return false;
     if (a == origin)
         return true;
-    if ((origin - a).abs() > range2)
+    if ((origin - a).rdist() > range)
         return false;
     return cell_see_cell(origin, a);
 }
@@ -119,16 +119,16 @@ bool targetter_reach::valid_aim(coord_def a)
     if (!agent->see_cell_no_trans(a))
         return false;
 
-    int dist = (origin - a).abs();
+    int dist = (origin - a).rdist();
 
     switch(range)
     {
     default:
-        return dist <= 2;
+        return dist <= 1;
     case REACH_KNIGHT:
-        return dist <= 5;
+        return dist <= 2;
     case REACH_TWO:
-        return dist <= 8;
+        return dist <= 3;
     }
 }
 
@@ -140,7 +140,7 @@ aff_type targetter_reach::is_affected(coord_def loc)
     if (loc == aim)
         return AFF_YES;
 
-    if (((loc - origin) * 2 - (aim - origin)).abs() <= 1
+    if (((loc - origin) * 2 - (aim - origin)).rdist() <= 1
         && grd(loc) > DNGN_MAX_NONREACH)
     {
         return AFF_TRACER;

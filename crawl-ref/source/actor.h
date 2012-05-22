@@ -281,12 +281,11 @@ public:
                          bool self_halo = true) const = 0;
     // Within any actor's halo?
     virtual bool haloed() const;
-    // Squared halo radius.
-    virtual int halo_radius2() const = 0;
-    // Squared silence radius.
-    virtual int silence_radius2() const = 0;
-    // Squared liquefying radius
-    virtual int liquefying_radius2 () const = 0;
+
+    virtual int halo_radius() const = 0;
+    virtual int silence_radius() const = 0;
+    virtual int liquefying_radius() const = 0;
+
     virtual bool glows_naturally() const = 0;
 
     virtual bool petrified() const = 0;

@@ -1056,7 +1056,7 @@ static void _maybe_bloodify_square(const coord_def& where, int amount,
 #endif
 
             if (smell_alert && in_bounds(where))
-                blood_smell(12, where);
+                blood_smell(11, where);
         }
 
         if (spatter)
@@ -1938,7 +1938,7 @@ void bring_to_safety()
             || monster_at(pos)
             || env.pgrid(pos) & FPROP_NO_TELE_INTO
             || crawl_state.game_is_sprint()
-               && distance(pos, you.pos()) > dist_range(10))
+               && grid_distance(pos, you.pos()) > 9)
         {
             tries++;
             continue;

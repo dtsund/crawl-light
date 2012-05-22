@@ -2796,7 +2796,7 @@ bool monster::backlit(bool check_haloed, bool self_halo) const
     if (has_ench(ENCH_CORONA) || has_ench(ENCH_STICKY_FLAME) || has_ench(ENCH_SILVER_CORONA))
         return (true);
     if (check_haloed)
-        return (haloed() && (self_halo || halo_radius2() == -1));
+        return (haloed() && (self_halo || halo_radius() == -1));
     return (false);
 }
 

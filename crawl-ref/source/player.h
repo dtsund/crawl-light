@@ -582,9 +582,9 @@ public:
     bool confused() const;
     bool caught() const;
     bool backlit(bool check_haloed = true, bool self_halo = true) const;
-    int halo_radius2() const;
-    int silence_radius2() const;
-    int liquefying_radius2 () const;
+    int halo_radius() const;
+    int silence_radius() const;
+    int liquefying_radius() const;
     bool glows_naturally() const;
     bool petrified() const;
     bool incapacitated() const

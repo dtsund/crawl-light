@@ -1038,10 +1038,10 @@ void SkillMenu::_set_help(int flag)
                "<lightblue>blue</lightblue>.";
         break;
     case SKMF_DO_AUTOTRAIN:
-    	help = "Select a skill to automatically train.  Incoming experience "
-    	       "will automatically be distributed among all skills selected "
-    	       "here.";
-    	break;
+        help = "Select a skill to automatically train.  Incoming experience "
+               "will automatically be distributed among all skills selected "
+               "here.";
+        break;
     case SKMF_DISP_NORMAL:
     case SKMF_DISP_APTITUDE:
         if (is_set(SKMF_SIMPLE))

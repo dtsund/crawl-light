@@ -56,7 +56,7 @@ public:
     bool valid_aim(coord_def a);
     aff_type is_affected(coord_def loc);
 private:
-    int range2;
+    int range;
     // assumes exp_map is valid only if >0, so let's keep it private
     int exp_range_min, exp_range_max;
     explosion_map exp_map_min, exp_map_max;

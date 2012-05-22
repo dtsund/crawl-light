@@ -69,7 +69,7 @@ void setup_fire_storm(const actor *source, int pow, bolt &beam)
 
 bool cast_fire_storm(int pow, bolt &beam)
 {
-    if (distance(beam.target, beam.source) > dist_range(beam.range))
+    if (grid_distance(beam.target, beam.source) > beam.range)
         return (false);
 
     setup_fire_storm(&you, pow, beam);
@@ -86,7 +86,7 @@ bool cast_fire_storm(int pow, bolt &beam)
     //Reset the parameters.  beam.ex_size was 3 before to make
     //*absolutely* sure the player doesn't hit him/herself;
     //Fire Storm *hurts*.
-    beam.ex_size            = 2 + (random2(pow) > 75);
+    beam.ex_size            = 2 + (random2(1000) < pow);
     beam.is_tracer          = false;
     //Failure to reset in_explosion_phase means failing an assert.
     beam.in_explosion_phase = false;
@@ -144,10 +144,10 @@ bool cast_hellfire_burst(int pow, bolt &beam)
 
 static bool _lightning_los(const coord_def& source, const coord_def& target)
 {
-    // XXX: currently bounded by circular LOS radius;
+    // XXX: currently bounded by square LOS radius;
     // XXX: adapt opacity -- allow passing clouds.
     return (exists_ray(source, target, opc_solid,
-                       circle_def(LOS_MAX_RADIUS, C_ROUND)));
+                       circle_def(LOS_MAX_RADIUS, C_SQUARE)));
 }
 
 void cast_chain_lightning(int pow, const actor *caster)
@@ -923,7 +923,7 @@ void cast_shatter(int pow)
         mpr("The dungeon rumbles!", MSGCH_SOUND);
     }
 
-    int rad = 3 + (you.skill(SK_EARTH_MAGIC) / 5);
+    int rad = 2 + (you.skill(SK_EARTH_MAGIC) / 5);
 
     apply_area_within_radius(_shatter_items, you.pos(), pow, rad, 0);
     apply_area_within_radius(_shatter_monsters, you.pos(), pow, rad, 0);

@@ -386,7 +386,7 @@ int detect_items(int pow)
             return 0;
     }
 
-    for (radius_iterator ri(you.pos(), map_radius, C_ROUND); ri; ++ri)
+    for (radius_iterator ri(you.pos(), map_radius, C_SQUARE); ri; ++ri)
     {
         // Don't you love the 0,5 shop hack?
         if (!in_bounds(*ri))
@@ -488,7 +488,7 @@ int detect_creatures(int pow, bool telepathic)
     if (!telepathic)
         clear_map(false);
 
-    for (radius_iterator ri(you.pos(), map_radius, C_ROUND); ri; ++ri)
+    for (radius_iterator ri(you.pos(), map_radius, C_SQUARE); ri; ++ri)
     {
         if (monster* mon = monster_at(*ri))
         {

@@ -64,14 +64,13 @@ static bool _place_feature_near(const coord_def &centre,
                                 dungeon_feature_type replacement,
                                 int tries, bool not_seen = false)
 {
-    const int radius2 = radius * radius + 1;
     for (int i = 0; i < tries; ++i)
     {
         const coord_def &cp =
             centre + coord_def(random_range(-radius, radius),
                                random_range(-radius, radius));
 
-        if (cp == centre || (cp - centre).abs() > radius2 || !in_bounds(cp))
+        if (cp == centre || !in_bounds(cp))
             continue;
 
         if (not_seen && cell_see_cell(cp, centre))
@@ -597,7 +596,7 @@ private:
     {
         // env.map_knowledge().known() doesn't work on unmappable levels because
         // mapping flags are not set on such levels.
-        for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
+        for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)
             if (grd(*ri) == DNGN_EXIT_ABYSS && env.map_knowledge(*ri).seen())
                 return true;
 
@@ -607,7 +606,7 @@ private:
     bool abyss_rune_nearness() const
     {
         // See above comment about env.map_knowledge().known().
-        for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
+        for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)
         {
             if (env.map_knowledge(*ri).seen())
             {
@@ -1364,22 +1363,31 @@ static void _corrupt_level_features(const corrupt_env &cenv)
 
     for (rectangle_iterator ri(MAPGEN_BORDER); ri; ++ri)
     {
-        int idistance2 = GXM * GXM + GYM * GYM;
+        // This is `int idistance = GDM;` in the new_squarelos branch,
+        // which is defined as 105 in Stone Soup, but Light doesn't
+        // have it. I've used 107 here because the code in the
+        // new_squarelos branch uses GDM as the default value for
+        // the _max_radius parameter of distance_iterator's constructor,
+        // which is 107 in Light. --elliott
+        int idistance = 107;
         for (int i = 0, size = corrupt_seeds.size(); i < size; ++i)
         {
-            const int idist2 = (*ri - corrupt_seeds[i]).abs();
-            if (idist2 < idistance2)
-                idistance2 = idist2;
+            const int idist = (*ri - corrupt_seeds[i]).rdist();
+            if (idist < idistance)
+                idistance = idist;
         }
 
-        const int ground_zero_radius2 = 7;
+        const int ground_zero_radius = 2;
 
-        // Corruption odds are 100% within about 2 squares, decaying to 30%
-        // at LOS range (radius 8). Even if the corruption roll is made,
+        // Corruption odds are 100% within 2 squares, decaying to 30%
+        // at LOS range (radius 7). Even if the corruption roll is made,
         // the feature still gets a chance to resist if it's a wall.
+        // const int corrupt_perc_chance =
+        //     idistance * idistance <= ground_zero_radius2 ? 100 :
+        //     std::max(1, 100 - (idistance * idistance - ground_zero_radius2) * 70 / 42);
         const int corrupt_perc_chance =
-            idistance2 <= ground_zero_radius2 ? 100 :
-            std::max(1, 100 - (idistance2 - ground_zero_radius2) * 70 / 57);
+            idistance <= ground_zero_radius ? 100 :
+            std::max(1, 100 - (idistance * 10));
 
         if (random2(100) < corrupt_perc_chance && _is_grid_corruptible(*ri))
             _corrupt_square(cenv, *ri);

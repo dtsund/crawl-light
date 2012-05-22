@@ -3777,12 +3777,12 @@ void display_char_status()
     else
         mpr("You are alive.");
 
-    const int halo_size = you.halo_radius2();
+    const int halo_size = you.halo_radius();
     if (halo_size >= 0)
     {
-        if (halo_size > 37)
+        if (halo_size > 5)
             mpr("You are illuminated by a large divine halo.");
-        else if (halo_size > 10)
+        else if (halo_size > 2)
             mpr("You are illuminated by a divine halo.");
         else
             mpr("You are illuminated by a small divine halo.");
@@ -6560,7 +6560,7 @@ bool player::visible_to(const actor *looker) const
             || in_water()
             || mon->can_see_invisible()
             || mons_sense_invis(mon)
-               && circle_def(pos(), 4, C_ROUND).contains(mon->pos()));
+               && circle_def(pos(), 4, C_SQUARE).contains(mon->pos()));
 }
 
 bool player::backlit(bool check_haloed, bool self_halo) const
@@ -6571,7 +6571,7 @@ bool player::backlit(bool check_haloed, bool self_halo) const
         return (true);
     }
     if (check_haloed)
-        return (haloed() && (self_halo || halo_radius2() == -1));
+        return (haloed() && (self_halo || halo_radius() == -1));
     return (false);
 }
 

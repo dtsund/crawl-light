@@ -39,8 +39,8 @@
 bool conjure_flame(int pow, const coord_def& where)
 {
     // FIXME: This would be better handled by a flag to enforce max range.
-    if (distance(where, you.pos()) > dist_range(spell_range(SPELL_CONJURE_FLAME,
-                                                      pow, true))
+    if (grid_distance(where, you.pos()) > spell_range(SPELL_CONJURE_FLAME,
+                                                      pow, true)
         || !in_bounds(where))
     {
         mpr("That's too far away.");
@@ -163,7 +163,7 @@ bool stinking_cloud(int pow, bolt &beem)
 
 bool cast_big_c(int pow, cloud_type cty, const actor *caster, bolt &beam)
 {
-    if (distance(beam.target, you.pos()) > dist_range(beam.range)
+    if (grid_distance(beam.target, you.pos()) > beam.range
         || !in_bounds(beam.target))
     {
         mpr("That is beyond the maximum range.");
@@ -238,8 +238,8 @@ void manage_fire_shield(int delay)
 
 void corpse_rot(actor* caster)
 {
-    for (radius_iterator ri(caster->pos(), 6, C_ROUND, caster->atype() == ACT_PLAYER ? you.get_los_no_trans()
-                                                                                    : caster->get_los());
+    for (radius_iterator ri(caster->pos(), 5, C_SQUARE, caster->atype() == ACT_PLAYER ? you.get_los_no_trans()
+                                                                                      : caster->get_los());
          ri; ++ri)
     {
         if (!is_sanctuary(*ri) && env.cgrid(*ri) == EMPTY_CLOUD)

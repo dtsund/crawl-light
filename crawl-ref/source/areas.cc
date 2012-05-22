@@ -79,8 +79,8 @@ void areas_actor_moved(const actor* act, const coord_def& oldpos)
 {
     if (act->alive() &&
         (you.entering_level
-         || act->halo_radius2() > -1 || act->silence_radius2() > -1
-         || act->liquefying_radius2() > -1))
+         || act->halo_radius() > -1 || act->silence_radius() > -1
+         || act->liquefying_radius() > -1))
     {
         // Not necessarily new, but certainly potentially interesting.
         invalidate_agrid(true);
@@ -104,20 +104,20 @@ static void _update_agrid()
     {
         int r;
 
-        if ((r = ai->silence_radius2()) >= 0)
+        if ((r = ai->silence_radius()) >= 0)
         {
             _agrid_centres.push_back(area_centre(AREA_HALO, ai->pos(), r));
 
-            for (radius_iterator ri(ai->pos(), r, C_CIRCLE); ri; ++ri)
+            for (radius_iterator ri(ai->pos(), r, C_SQUARE); ri; ++ri)
                 _set_agrid_flag(*ri, APROP_SILENCE);
             no_areas = false;
         }
 
-        if ((r = ai->halo_radius2()) >= 0)
+        if ((r = ai->halo_radius()) >= 0)
         {
             _agrid_centres.push_back(area_centre(AREA_HALO, ai->pos(), r));
 
-            for (radius_iterator ri(ai->pos(), r, C_CIRCLE, ai->get_los());
+            for (radius_iterator ri(ai->pos(), r, C_SQUARE, ai->get_los());
                  ri; ++ri)
             {
                 _set_agrid_flag(*ri, APROP_HALO);
@@ -125,11 +125,11 @@ static void _update_agrid()
             no_areas = false;
         }
 
-        if ((r = ai->liquefying_radius2()) >= 0)
+        if ((r = ai->liquefying_radius()) >= 0)
         {
             _agrid_centres.push_back(area_centre(AREA_LIQUID, ai->pos(), r));
 
-            for (radius_iterator ri(ai->pos(),r, C_CIRCLE, ai->get_los());
+            for (radius_iterator ri(ai->pos(), r, C_SQUARE, ai->get_los());
                 ri; ++ri)
             {
                 dungeon_feature_type f = grd(*ri);
@@ -202,7 +202,7 @@ coord_def find_centre_for (const coord_def& f, area_centre_type at)
         if (a.centre == f)
             return (f);
 
-        int d = distance(a.centre, f);
+        int d = grid_distance(a.centre, f);
         if (d <= a.radius && (d <= dist || dist == 0))
         {
             possible = a.centre;
@@ -240,7 +240,7 @@ bool remove_sanctuary(bool did_attack)
     if (!in_bounds(env.sanctuary_pos))
         return (false);
 
-    const int radius = 5;
+    const int radius = 4;
     bool seen_change = false;
     for (radius_iterator ri(env.sanctuary_pos, radius, C_SQUARE); ri; ++ri)
         if (is_sanctuary(*ri))
@@ -273,7 +273,7 @@ bool remove_sanctuary(bool did_attack)
 // For the last (radius) counter turns the sanctuary will slowly shrink.
 void decrease_sanctuary_radius()
 {
-    const int radius = 5;
+    const int radius = 4;
 
     // For the last (radius-1) turns 33% chance of not decreasing.
     if (env.sanctuary_time < radius && one_chance_in(3))
@@ -291,10 +291,10 @@ void decrease_sanctuary_radius()
 
     for (radius_iterator ri(env.sanctuary_pos, size+1, C_SQUARE); ri; ++ri)
     {
-        int dist = distance(*ri, env.sanctuary_pos);
+        int rdist = grid_distance(*ri, env.sanctuary_pos);
 
         // If necessary overwrite sanctuary property.
-        if (dist > size*size)
+        if (rdist > size)
             _remove_sanctuary_property(*ri);
     }
 
@@ -314,7 +314,7 @@ void create_sanctuary(const coord_def& center, int time)
 
     // radius could also be influenced by Inv
     // and would then have to be stored globally.
-    const int radius      = 5;
+    const int radius      = 4;
     int       blood_count = 0;
     int       trap_count  = 0;
     int       scare_count = 0;
@@ -322,10 +322,10 @@ void create_sanctuary(const coord_def& center, int time)
     monster* seen_mon    = NULL;
 
     int shape = random2(4);
-    for (radius_iterator ri(center, radius, C_POINTY); ri; ++ri)
+    for (radius_iterator ri(center, radius, C_SQUARE); ri; ++ri)
     {
         const coord_def pos = *ri;
-        const int dist = distance(center, pos);
+        const int rdist = grid_distance(center, pos);
 
         if (testbits(env.pgrid(pos), FPROP_BLOODY) && you.see_cell(pos))
             blood_count++;
@@ -348,10 +348,7 @@ void create_sanctuary(const coord_def& center, int time)
             in_yellow = (x == 0 || y == 0 || x == y || x == -y);
             break;
         case 1:                 // circles
-            in_yellow = (dist >= (radius-1)*(radius-1)
-                         && dist <= radius*radius
-                         || dist >= (radius/2-1)*(radius/2-1)
-                            && dist <= radius*radius/4);
+            in_yellow = ((rdist % 2) == 1);
             break;
         case 2:                 // latticed
             in_yellow = (x%2 == 0 || y%2 == 0);
@@ -447,28 +444,33 @@ void create_sanctuary(const coord_def& center, int time)
 /////////////
 // Silence
 
-// pre-squared radius, calculated from remaining duration
+// radius calculated from remaining duration
 // dur starts at 10 (low power) and is capped at 100
-// maximal range: 6*6 + 1 = 37
+// maximal range: 5
 // last 6 turns: range 0, hence only the player silenced
 static int _silence_range(int dur)
 {
     if (dur <= 0)
         return (-1);
     dur /= BASELINE_DELAY; // now roughly number of turns
-    return std::max(0, std::min(dur - 6, 37));
+    for (int r = 0; r < 5; r++)
+    {
+        if (6 + r*r + 2*r >= dur)
+            return r;
+    }
+    return 5;
 }
 
-int player::silence_radius2() const
+int player::silence_radius() const
 {
     return (_silence_range(you.duration[DUR_SILENCE]));
 }
 
-int monster::silence_radius2() const
+int monster::silence_radius() const
 {
 /* Removing the permanent aura for now.
     if (type == MONS_SILENT_SPECTRE)
-        return 150;
+        return 11;
 */
 
     if (!has_ench(ENCH_SILENCE))
@@ -507,21 +509,20 @@ bool actor::haloed() const
     return (::haloed(pos()));
 }
 
-int player::halo_radius2() const
+int player::halo_radius() const
 {
     if (you.religion == GOD_SHINING_ONE && you.piety >= piety_breakpoint(0)
         && !you.penance[GOD_SHINING_ONE])
     {
         // Preserve the middle of old radii.
         const int r = you.piety - 10;
-        // The cap is 64, just less than the LOS of 65.
-        return std::min(LOS_RADIUS*LOS_RADIUS, r * r / 400);
+        return std::min(LOS_RADIUS, r / 20);
     }
 
     return (-1);
 }
 
-int monster::halo_radius2() const
+int monster::halo_radius() const
 {
     if (holiness() != MH_HOLY)
         return (-1);
@@ -531,31 +532,31 @@ int monster::halo_radius2() const
     switch(type)
     {
     case MONS_SPIRIT:
-        return (5);
+        return (2);
     case MONS_ANGEL:
-        return (26);
+        return (4);
     case MONS_CHERUB:
-        return (29);
+        return (4);
     case MONS_DAEVA:
-        return (32);
-    case MONS_PEARL_DRAGON:
         return (5);
+    case MONS_PEARL_DRAGON:
+        return (2);
     case MONS_OPHAN:
-        return (64); // highest rank among sentient ones
+        return (7); // highest rank among sentient ones
     case MONS_PHOENIX:
-        return (10);
+        return (3);
     case MONS_SHEDU:
-        return (10);
+        return (3);
     case MONS_APIS:
-        return (4);
+        return (1);
     case MONS_PALADIN:
-        return (4);  // mere humans
+        return (1);  // mere humans
     case MONS_BLESSED_TOE:
-        return (17);
+        return (3);
     case MONS_SILVER_STAR:
-        return (40); // dumb but with an immense power
+        return (6); // dumb but with an immense power
     default:
-        return (4);
+        return (1);
     }
 }
 
@@ -563,12 +564,12 @@ int monster::halo_radius2() const
 // Leda's Liquefaction
 //
 
-int player::liquefying_radius2() const
+int player::liquefying_radius() const
 {
     return (_silence_range(you.duration[DUR_LIQUEFYING]));
 }
 
-int monster::liquefying_radius2() const
+int monster::liquefying_radius() const
 {
     if (!has_ench(ENCH_LIQUEFYING))
         return (-1);

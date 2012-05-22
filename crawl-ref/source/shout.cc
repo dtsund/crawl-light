@@ -458,8 +458,8 @@ bool noisy(int original_loudness, const coord_def& where,
     // that soft noises can be drowned out by loud noises. For both
     // these reasons, use the simple old noise system to check if the
     // player heard the noise:
-    const int dist = loudness * loudness + 1;
-    const int player_distance = distance(you.pos(), where);
+    const int dist = loudness;
+    const int player_distance = grid_distance(you.pos(), where);
 
     // Message the player.
     if (player_distance <= dist && player_can_hear(where))
@@ -485,11 +485,11 @@ bool fake_noisy(int loudness, const coord_def& where)
 
 void blood_smell(int strength, const coord_def& where)
 {
-    const int range = strength * strength;
+    const int range = strength;
     dprf("blood stain at (%d, %d), range of smell = %d",
          where.x, where.y, range);
 
-    circle_def c(where, range, C_CIRCLE);
+    circle_def c(where, range, C_SQUARE);
     for (monster_iterator mi(&c); mi; ++mi)
     {
         if (!mons_class_flag(mi->type, M_BLOOD_SCENT))

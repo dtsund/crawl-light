@@ -443,8 +443,8 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
     }
 
     // now gradually weaker with distance:
-    const int pfar     = dist_range((map_radius * 7) / 10);
-    const int very_far = dist_range((map_radius * 9) / 10);
+    const int pfar     = (map_radius * 7) / 10;
+    const int very_far = (map_radius * 9) / 10;
 
     bool did_map = false;
     int  num_altars        = 0;
@@ -465,7 +465,7 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
         {
             int threshold = proportion;
 
-            const int dist = distance(you.pos(), *ri);
+            const int dist = grid_distance(you.pos(), *ri);
 
             if (dist > very_far)
                 threshold = threshold / 3;
@@ -509,8 +509,8 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
                 env.map_knowledge(*ri).set_feature(grd(*ri));
             else if (!env.map_knowledge(*ri).feat())
                 env.map_knowledge(*ri).set_feature(magic_map_base_feat(grd(*ri)));
-	    if (emphasise(*ri))
-	        env.map_knowledge(*ri).flags |= MAP_EMPHASIZE;
+        if (emphasise(*ri))
+            env.map_knowledge(*ri).flags |= MAP_EMPHASIZE;
 
             if (wizard_map)
             {
@@ -1070,11 +1070,8 @@ void viewwindow(bool show_updates)
         }
         else if (crawl_state.darken_range >= 0)
         {
-            const int rsq = (crawl_state.darken_range
-                             * crawl_state.darken_range) + 1;
-            bool out_of_range = distance(you.pos(), gc) > rsq
-                                || !you.see_cell(gc);
-            if (out_of_range)
+            if (grid_distance(you.pos(), gc) > crawl_state.darken_range
+                || !you.see_cell(gc))
             {
                 cell->colour = DARKGREY;
 #ifdef USE_TILE
