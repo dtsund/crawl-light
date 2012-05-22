@@ -2382,7 +2382,7 @@ void unmarshallMapCell(reader &th, map_cell& cell)
         feat_colour = unmarshallUnsigned(th);
         
 #if TAG_MAJOR_VERSION == 32
-    if (feat_colour > ETC_DISCO && th.getMinorVersion() < TAG_SKILL_MENU_STATES)
+    if (feat_colour > ETC_DISCO && th.getMinorVersion() < TAG_MINOR_LUA_COLOUR_ENUM)
         feat_colour = ETC_DISCO;
 #endif
 
@@ -2764,7 +2764,7 @@ static void tag_read_level(reader &th)
     env.grid_colours.init(BLACK);
     _run_length_decode(th, unmarshallByte, env.grid_colours, GXM, GYM);
 #if TAG_MAJOR_VERSION == 32
-    if (th.getMinorVersion() <= TAG_SKILL_MENU_STATES)
+    if (th.getMinorVersion() <= TAG_MINOR_LUA_COLOUR_ENUM)
     {
         for (rectangle_iterator ri(0); ri; ++ri)
             if (env.grid_colours(*ri) > ETC_DISCO)
