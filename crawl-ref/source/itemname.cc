@@ -1016,22 +1016,6 @@ std::string item_def::name_aux(description_level_type desc,
     switch (base_type)
     {
     case OBJ_WEAPONS:
-        if (know_curse && !terse)
-        {
-            // We don't bother printing "uncursed" if the item is identified
-            // for pluses (its state should be obvious), this is so that
-            // the weapon name is kept short (there isn't a lot of room
-            // for the name on the main screen).  If you're going to change
-            // this behaviour, *please* make it so that there is an option
-            // that maintains this behaviour. -- bwr
-            // Nor for artefacts. Again, the state should be obvious. --jpeg
-            if (cursed())
-                buff << "cursed ";
-            else if (Options.show_uncursed && !know_pluses
-                     && (!is_artefact(*this)))
-                buff << "uncursed ";
-        }
-
         if (know_pluses)
         {
             if ((terse && it_plus == item_plus2) || sub_type == WPN_BLOWGUN)
@@ -1149,14 +1133,6 @@ std::string item_def::name_aux(description_level_type desc,
         break;
     }
     case OBJ_ARMOUR:
-        if (know_curse && !terse)
-        {
-            if (cursed())
-                buff << "cursed ";
-            else if (Options.show_uncursed && !know_pluses)
-                buff << "uncursed ";
-        }
-
         if (know_pluses)
         {
             output_with_sign(buff, it_plus);
@@ -1356,21 +1332,6 @@ std::string item_def::name_aux(description_level_type desc,
 
         const bool is_randart = is_artefact(*this);
 
-        if (know_curse)
-        {
-            if (cursed())
-                buff << "cursed ";
-            else if (Options.show_uncursed && !terse && desc != DESC_PLAIN
-                     && (!is_randart)
-                     && (!ring_has_pluses(*this) || !know_pluses)
-                     // If the item is worn, its curse status is known,
-                     // no need to belabour the obvious.
-                     && get_equip_slot(this) == -1)
-            {
-                buff << "uncursed ";
-            }
-        }
-
         if (is_randart && !dbname)
         {
             buff << get_artefact_name(*this);
@@ -1474,18 +1435,6 @@ std::string item_def::name_aux(description_level_type desc,
         break;
 
     case OBJ_STAVES:
-        if (know_curse && !terse)
-        {
-            if (cursed())
-                buff << "cursed ";
-            else if (Options.show_uncursed && desc != DESC_PLAIN
-                     && !know_pluses
-                     && (!is_artefact(*this)))
-            {
-                buff << "uncursed ";
-            }
-        }
-
         if (item_is_rod(*this) && know_pluses
             && !basename && !qualname && !dbname)
         {
