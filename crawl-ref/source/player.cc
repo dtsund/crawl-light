@@ -5146,6 +5146,7 @@ void player::init()
 
     for (int i = 0; i < ENDOFPACK; i++)
         inv[i].clear();
+    runes.reset();
 
     burden          = 0;
     burden_state    = BS_UNENCUMBERED;

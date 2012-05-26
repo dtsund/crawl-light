@@ -11,6 +11,7 @@
 #include "delay.h"
 #include "env.h"
 #include "food.h"
+#include "items.h"
 #include "libutil.h"
 #include "mapmark.h"
 #include "mon-util.h"
@@ -19,7 +20,6 @@
 #include "religion.h"
 #include "shopping.h"
 #include "species.h"
-#include "stairs.h"
 #include "skills2.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
@@ -314,33 +314,7 @@ static int _you_uniques(lua_State *ls)
     return (1);
 }
 
-static int _you_num_runes (lua_State *ls)
-{
-    std::vector<int> runes;
-    const int num_runes = runes_in_pack(runes);
-
-    lua_pushnumber(ls, num_runes);
-
-    if (num_runes > 0)
-    {
-        lua_newtable(ls);
-
-        int index = 0;
-
-        for (unsigned slot = 0; slot < runes.size(); ++slot)
-        {
-            if (you.inv[runes[slot]].defined())
-            {
-                clua_push_item(ls, &you.inv[runes[slot]]);
-                lua_rawseti(ls, -2, ++index);
-            }
-        }
-
-        return (2);
-    }
-    else
-        return (1);
-}
+LUARET1(you_num_runes, number, runes_in_pack())
 
 static int _you_gold(lua_State *ls)
 {

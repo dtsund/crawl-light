@@ -79,6 +79,7 @@ public:
   transformation_type form;
 
   FixedVector< item_def, ENDOFPACK > inv;
+  FixedBitArray<NUM_RUNE_TYPES> runes;
 
   int burden;
   burden_state_type burden_state;

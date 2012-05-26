@@ -616,7 +616,7 @@ static const char* jewellery_type_name(int jeweltype)
     }
 }
 
-static const char* rune_type_name(int p)
+const char* rune_type_name(int p)
 {
     switch (static_cast<rune_type>(p))
     {

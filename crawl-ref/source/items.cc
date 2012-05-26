@@ -592,19 +592,6 @@ static void _handle_gone_item(const item_def &item)
         if (is_unrandom_artefact(item))
             set_unique_item_status(item, UNIQ_LOST_IN_ABYSS);
     }
-
-    if (item_is_rune(item))
-    {
-        if ((item.flags & ISFLAG_BEEN_IN_INV))
-        {
-            if (item_is_unique_rune(item))
-                you.attribute[ATTR_UNIQUE_RUNES] -= item.quantity;
-            else if (item.plus == RUNE_ABYSSAL)
-                you.attribute[ATTR_ABYSSAL_RUNES] -= item.quantity;
-            else
-                you.attribute[ATTR_DEMONIC_RUNES] -= item.quantity;
-        }
-    }
 }
 
 void item_was_lost(const item_def &item)
@@ -1032,6 +1019,7 @@ static void _check_note_item(item_def &item)
         // further notes.
         if (fully_identified(item))
             item.flags |= ISFLAG_NOTED_ID;
+        _milestone_check(item);
     }
 }
 
@@ -1048,7 +1036,6 @@ void origin_set(const coord_def& where)
             si->orig_monnum = static_cast<short>(monnum);
         si->orig_place  = pplace;
         _origin_set_portal_vault(*si);
-        _milestone_check(*si);
     }
 }
 
@@ -1067,7 +1054,6 @@ static void _origin_freeze(item_def &item, const coord_def& where)
         item.orig_place = get_packed_place();
         _origin_set_portal_vault(item);
         _check_note_item(item);
-        _milestone_check(item);
     }
 }
 
@@ -1096,7 +1082,7 @@ bool origin_describable(const item_def &item)
 {
     return (origin_known(item)
             && (item.orig_place != 0xFFFFU || item.orig_monnum == -1)
-            && (!is_stackable_item(item) || item_is_rune(item))
+            && !is_stackable_item(item)
             && item.quantity == 1
             && item.base_type != OBJ_CORPSES
             && (item.base_type != OBJ_FOOD || item.sub_type != FOOD_CHUNK));
@@ -1392,9 +1378,7 @@ bool is_stackable_item(const item_def &item)
         || item.base_type == OBJ_FOOD
         || item.base_type == OBJ_SCROLLS
         || item.base_type == OBJ_POTIONS
-        || item.base_type == OBJ_GOLD
-        || (item.base_type == OBJ_MISCELLANY
-            && item.sub_type == MISC_RUNE_OF_ZOT))
+        || item.base_type == OBJ_GOLD)
     {
         return (true);
     }
@@ -1419,7 +1403,7 @@ bool items_similar(const item_def &item1, const item_def &item2, bool ignore_ide
     if (item1.base_type != item2.base_type || item1.sub_type != item2.sub_type)
         return (false);
 
-    if (item1.base_type == OBJ_GOLD)
+    if (item1.base_type == OBJ_GOLD || item_is_rune(item1))
         return (true);
 
     // These classes also require pluses and special.
@@ -1587,23 +1571,6 @@ static void _got_item(item_def& item, int quant)
 
     if (item.props.exists("needs_autopickup"))
         item.props.erase("needs_autopickup");
-
-    if (!item_is_rune(item))
-        return;
-
-    // Picking up the rune for the first time.
-    if (!(item.flags & ISFLAG_BEEN_IN_INV))
-    {
-        if (item_is_unique_rune(item))
-            you.attribute[ATTR_UNIQUE_RUNES] += quant;
-        else if (item.plus == RUNE_ABYSSAL)
-            you.attribute[ATTR_ABYSSAL_RUNES] += quant;
-        else
-            you.attribute[ATTR_DEMONIC_RUNES] += quant;
-    }
-
-    item.flags |= ISFLAG_BEEN_IN_INV;
-    _check_note_item(item);
 }
 
 void note_inscribe_item(item_def &item)
@@ -1629,8 +1596,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
     if (mitm[obj].base_type == OBJ_ORBS && crawl_state.game_is_zotdef())
     {
-        std::vector<int> runes;
-        if (runes_in_pack(runes) < 15)
+        if (runes_in_pack() < 15)
         {
             mpr("You must possess at least fifteen runes to touch the sacred Orb which you defend.");
             return (1);
@@ -1655,6 +1621,21 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         learned_something_new(HINT_SEEN_GOLD);
 
         you.turn_is_over = true;
+        return (retval);
+    }
+    
+    // So do runes.
+    if (item_is_rune(mitm[obj]))
+    {
+        you.runes.set(mitm[obj].plus);
+        _check_note_item(mitm[obj]);
+        dec_mitm_item_quantity(obj, quant_got);
+
+        if (!quiet)
+            mpr("You pick up the rune and feel its power.");
+
+        you.turn_is_over = true;
+
         return (retval);
     }
 
@@ -3918,4 +3899,15 @@ item_info get_item_info(const item_def& item)
     }
 
     return ii;
+}
+
+int runes_in_pack()
+{
+    int num_runes = 0;
+
+    for (int i = 0; i < NUM_RUNE_TYPES; i++)
+        if (you.runes[i])
+            num_runes++;
+
+    return num_runes;
 }

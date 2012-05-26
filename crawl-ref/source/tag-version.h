@@ -11,6 +11,7 @@ enum tag_minor_version
     TAG_MINOR_RESET           = 0, // Minor tags were reset
     TAG_MINOR_DIRECTED_ABYSS,      // Add the directed Abyss portal.
     TAG_MINOR_LUA_COLOUR_ENUM,     // Require enums for Lua colours.
+    TAG_MINOR_GOLDIFIED_RUNES,     // Runes are undroppable and don't take space.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
