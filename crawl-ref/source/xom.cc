@@ -3488,7 +3488,7 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
             done    = _xom_player_confusion_effect(sever, debug);
             badness = (random2(tension) > 5 ? 2 : 1);
         }
-        else if (x_chance_in_y(6, sever))
+        else if (x_chance_in_y(1, sever))
         {
             done    = _xom_lose_stats(debug);
             badness = 2;
