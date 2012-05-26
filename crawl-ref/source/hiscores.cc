@@ -1550,7 +1550,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
                  _job_name(job));
         desc += scratch;
 
-        ASSERT(birth_time)
+        ASSERT(birth_time);
         desc += " on ";
         _hiscore_date_string(birth_time, scratch);
         desc += scratch;
