@@ -779,8 +779,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
     dec_mp(spell_mana(spell));
 
-    if (!staff_energy)
-        contaminate_player(spell_glow(spell), true);
+    contaminate_player(spell_glow(spell), true);
 
     you.turn_is_over = true;
     alert_nearby_monsters();
