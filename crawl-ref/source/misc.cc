@@ -1224,7 +1224,7 @@ void search_around(bool only_adjacent)
                 {
                     ptrap->reveal();
                     mprf("You found %s trap!",
-                         ptrap->name(DESC_NOCAP_A).c_str())
+                         ptrap->name(DESC_NOCAP_A).c_str());
                     learned_something_new(HINT_SEEN_TRAP, *ri);
                     practise(EX_TRAP_FOUND);
                 }
