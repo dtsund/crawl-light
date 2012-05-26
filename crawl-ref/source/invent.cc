@@ -800,35 +800,33 @@ void InvMenu::load_items(const std::vector<const item_def*> &mitems,
     {
         if (!inv_class[i])
             continue;
+        if (type != MT_RUNES)
+         {
+            std::string subtitle = item_class_name(i);
+            if (type == MT_KNOW && i == OBJ_MISCELLANY)
+                subtitle = "Runes"; // hack
 
-        std::string subtitle = item_class_name(i);
-
-        // Mention the class selection shortcuts.
-        if (is_set(MF_MULTISELECT) && inv_class[i] > 1)
-        {
-            std::vector<char> glyphs;
-            _get_class_hotkeys(i, glyphs);
-            if (!glyphs.empty())
-            {
-                const std::string str = "Magical Staves and Rods"; // longest string
-                subtitle += std::string(strwidth(str) - strwidth(subtitle) + 1, ' ');
-                subtitle += "(select all with ";
-#ifdef USE_TILE
-                // For some reason, this is only formatted correctly in the
-                // Tiles version.
-                subtitle += "<w>";
-#endif
-                for (unsigned int k = 0; k < glyphs.size(); ++k)
-                     subtitle += glyphs[k];
-#ifdef USE_TILE
-                subtitle += "</w><blue>";
-#endif
-                subtitle += ")";
-            }
+            // Mention the class selection shortcuts.
+            if (is_set(MF_MULTISELECT) && inv_class[i] > 1)
+             {
+                std::vector<char> glyphs;
+                _get_class_hotkeys(i, glyphs);
+                if (!glyphs.empty())
+                {
+                    // longest string
+                    const std::string str = "Magical Staves and Rods";
+                    subtitle += std::string(strwidth(str)
+                                            - strwidth(subtitle) + 1, ' ');
+                    subtitle += "(select all with <w>";
+                    for (unsigned int k = 0; k < glyphs.size(); ++k)
+                         subtitle += glyphs[k];
+                    subtitle += "</w><blue>)";
+                }
+             }
+ 
+            add_entry(new MenuEntry(subtitle, MEL_SUBTITLE));
+            items_in_class.clear();
         }
-
-        add_entry(new MenuEntry(subtitle, MEL_SUBTITLE));
-        items_in_class.clear();
 
         for (int j = 0, count = mitems.size(); j < count; ++j)
         {

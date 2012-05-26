@@ -640,6 +640,7 @@ enum command_type
     CMD_DISPLAY_MAP,
     CMD_DISPLAY_OVERMAP,
     CMD_DISPLAY_RELIGION,
+    CMD_DISPLAY_RUNES,
     CMD_DISPLAY_CHARACTER_STATUS,
     CMD_DISPLAY_SPELLS,
     CMD_EXPERIENCE_CHECK,
@@ -1811,6 +1812,7 @@ enum menu_type
     MT_DROP,
     MT_PICKUP,
     MT_KNOW,
+    MT_RUNES,
 };
 
 enum mon_holy_type
