@@ -373,10 +373,8 @@ bool del_spell_from_memory(spell_type spell)
 //glow costs.  Old hunger of choko level corresponds to 1 point
 //of glow, honeycomb level corresponds to 2 points, ration level to 3.
 int spell_glow(spell_type which_spell, bool rod)
-{
-    //Staff of Energy means no charge.
-    if(player_energy())
-        return 0;
+{    
+    int base_glow = 0;
 
     const int level = spell_difficulty(which_spell);
 
@@ -415,15 +413,30 @@ int spell_glow(spell_type which_spell, bool rod)
     
     return 0;
 */
+
+/*
     //Draft 2: Considerably more lenient than draft 1.
     if (hunger > 500)
         return 3;
-    else if (hunger > 200)
+    else if (hunger > 275)
         return 2;
-    else if (hunger > 70)
+    else if (hunger > 100)
         return 1;
+*/
     
-    return 0;
+    //Draft 3: Intermediate between the first two drafts.
+    if (hunger > 500)
+        base_glow = 3;
+    else if (hunger > 200)
+        base_glow = 2;
+    else if (hunger > 70)
+        base_glow = 1;
+    
+    //Staff of Energy means reduced glow.
+    if(player_energy() && base_glow > 0)
+        return base_glow - 1;
+    
+    return base_glow;
 }
 
 // Spell glow evaluator that takes into consideration the glow
