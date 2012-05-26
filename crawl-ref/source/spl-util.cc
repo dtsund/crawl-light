@@ -432,8 +432,8 @@ int spell_glow(spell_type which_spell, bool rod)
     else if (hunger > 70)
         base_glow = 1;
     
-    //Staff of Energy means reduced glow.
-    if(player_energy() && base_glow > 0)
+    //Staff of Discharge means reduced glow.
+    if(player_discharge() && base_glow > 0)
         return base_glow - 1;
     
     return base_glow;

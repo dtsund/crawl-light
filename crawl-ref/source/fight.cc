@@ -3699,7 +3699,7 @@ void melee_attack::player_apply_staff_damage()
     case STAFF_CHANNELING:
     case STAFF_CONJURATION:
     case STAFF_ENCHANTMENT:
-    case STAFF_ENERGY:
+    case STAFF_DISCHARGE:
     case STAFF_WIZARDRY:
         break;
 

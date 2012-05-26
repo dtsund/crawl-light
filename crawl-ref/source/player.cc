@@ -1775,12 +1775,12 @@ int player_spec_poison()
     return sp;
 }
 
-int player_energy()
+int player_discharge()
 {
     int pe = 0;
 
     // Staves
-    pe += player_equip(EQ_STAFF, STAFF_ENERGY);
+    pe += player_equip(EQ_STAFF, STAFF_DISCHARGE);
 
     return pe;
 }

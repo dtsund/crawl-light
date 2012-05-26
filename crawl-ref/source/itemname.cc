@@ -804,7 +804,7 @@ static const char* staff_type_name(int stafftype)
     case STAFF_FIRE:        return "fire";
     case STAFF_COLD:        return "cold";
     case STAFF_POISON:      return "sorcery";
-    case STAFF_ENERGY:      return "energy";
+    case STAFF_DISCHARGE:      return "discharge";
     case STAFF_DEATH:       return "death";
     case STAFF_CONJURATION: return "conjuration";
     case STAFF_ENCHANTMENT: return "enchantment";
@@ -2568,7 +2568,7 @@ bool is_useless_item(const item_def &item, bool temp)
             return (true);
         if (you.religion == GOD_TROG && !item_is_rod(item))
             return (true);
-        if (item.sub_type == STAFF_ENERGY && you.species == SP_MUMMY)
+        if (item.sub_type == STAFF_DISCHARGE && you.species == SP_MUMMY)
             return (true);
         break;
 

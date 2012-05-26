@@ -1236,9 +1236,9 @@ staff of enchantment
 
 This staff increases the power of enchantment spells cast by its wielder. In the hands of a skilled person, it also increases resistance to hostile enchantments.
 %%%%
-staff of energy
+staff of discharge
 
-This staff allows its wielder to cast magical spells without hungering as a result.
+This staff allows its wielder to absorb less harmful magical contamination while casting spells.
 %%%%
 staff of fire
 

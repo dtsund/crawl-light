@@ -780,7 +780,7 @@ i-staff_power STAFF_POWER
 i-staff_fire STAFF_FIRE
 i-staff_cold STAFF_COLD
 i-staff_poison STAFF_POISON
-i-staff_energy STAFF_ENERGY
+i-staff_discharge STAFF_DISCHARGE
 i-staff_death STAFF_DEATH
 i-staff_conjuration STAFF_CONJURATION
 i-staff_enchantment STAFF_ENCHANTMENT

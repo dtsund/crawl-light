@@ -2908,9 +2908,9 @@ static void _generate_staff_item(item_def& item, int force_type, int item_level)
         if (one_chance_in(10))
             item.sub_type = get_random_rod_type();
 
-        // staves of energy/channeling are 25% less common, wizardry/power
+        // staves of discharge/channeling are 25% less common, wizardry/power
         // are more common
-        if ((item.sub_type == STAFF_ENERGY
+        if ((item.sub_type == STAFF_DISCHARGE
                 || item.sub_type == STAFF_CHANNELING)
             && one_chance_in(4))
         {

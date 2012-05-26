@@ -759,7 +759,6 @@ bool cast_a_spell(bool check_range, spell_type spell)
         return (false);
     }
 
-    const bool staff_energy = player_energy();
     if (you.confused())
         random_uselessness();
     else

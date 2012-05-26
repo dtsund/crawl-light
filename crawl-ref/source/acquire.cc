@@ -749,7 +749,7 @@ static int _acquirement_staff_subtype(const has_vector& already_has)
         {
         case 0: result = STAFF_WIZARDRY;   break;
         case 1: result = STAFF_POWER;      break;
-        case 2: result = STAFF_ENERGY;     break;
+        case 2: result = STAFF_DISCHARGE;     break;
         case 3: result = STAFF_CHANNELING; break;
         case 4: break;          // keep the original random staff
         }
