@@ -95,7 +95,7 @@ static void _create_monster_hide(const item_def corpse)
 
     int mons_class = corpse.plus;
 
-    int o = get_item_slot();
+    int o = get_mitm_slot();
     if (o == NON_ITEM)
         return;
 
@@ -189,7 +189,7 @@ void turn_corpse_into_skeleton_and_chunks(item_def &item)
     if (mons_skeleton(item.plus))
         turn_corpse_into_skeleton(item);
 
-    int o = get_item_slot();
+    int o = get_mitm_slot();
     if (o != NON_ITEM)
     {
         turn_corpse_into_chunks(chunks);
@@ -385,7 +385,7 @@ void maybe_coagulate_blood_potions_floor(int obj)
     }
 
     // Else, create a new stack of potions.
-    int o = get_item_slot(20);
+    int o = get_mitm_slot(20);
     if (o == NON_ITEM)
         return;
 
@@ -697,7 +697,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     // If we got here nothing was found!
 
     // Create a new stack of potions.
-    o = get_item_slot();
+    o = get_mitm_slot();
     if (o == NON_ITEM)
         return (false);
 
@@ -937,7 +937,7 @@ void turn_corpse_into_skeleton_and_blood_potions(item_def &item)
     if (mons_skeleton(item.plus))
         turn_corpse_into_skeleton(item);
 
-    int o = get_item_slot();
+    int o = get_mitm_slot();
     if (o != NON_ITEM)
     {
         turn_corpse_into_blood_potions(blood_potions);
