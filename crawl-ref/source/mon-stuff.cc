@@ -1659,15 +1659,7 @@ int monster_die(monster* mons, killer_type killer,
 
 #if TAG_MAJOR_VERSION == 32
     if (gives_xp)
-    {
-        int tier = che_monster_tier(mons);
-        if (tier != MONS_SENSED_FRIENDLY)
-        {
-            tier -= MONS_SENSED_TRIVIAL;
-            ASSERT(tier >= 0 && tier <= 3);
-            you.montiers[tier]++;
-        }
-    }
+    you.montiers[mons_threat_level(mons)]++;
 #endif
 
     // Take note!
