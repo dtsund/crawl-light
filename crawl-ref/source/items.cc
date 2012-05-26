@@ -2130,10 +2130,7 @@ bool drop_item(int item_dropped, int quant_drop)
             {
                 // If we take off the item, cue up the item being dropped
                 if (takeoff_armour(item_dropped))
-                {
                     start_delay(DELAY_DROP_ITEM, 1, item_dropped, 1);
-                    you.turn_is_over = false; // turn happens later
-                }
             }
 
             // Regardless, we want to return here because either we're
@@ -2391,10 +2388,8 @@ void drop()
 
     if (items_for_multidrop.size() == 1) // only one item
     {
-        drop_item(items_for_multidrop[0].slot,
-                   items_for_multidrop[0].quantity);
+        drop_item(items_for_multidrop[0].slot, items_for_multidrop[0].quantity);
         items_for_multidrop.clear();
-        you.turn_is_over = true;
     }
     else
         start_delay(DELAY_MULTIDROP, items_for_multidrop.size());
