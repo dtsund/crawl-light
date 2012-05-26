@@ -631,6 +631,7 @@ std::string replace_all(std::string s,
                         const std::string &find,
                         const std::string &repl)
 {
+    ASSERT(!find.empty());
     std::string::size_type start = 0;
     std::string::size_type found;
 
@@ -649,6 +650,7 @@ std::string replace_all_of(std::string s,
                            const std::string &tofind,
                            const std::string &replacement)
 {
+    ASSERT(!tofind.empty());
     std::string::size_type start = 0;
     std::string::size_type found;
 
@@ -663,6 +665,7 @@ std::string replace_all_of(std::string s,
 
 int count_occurrences(const std::string &text, const std::string &s)
 {
+    ASSERT(!s.empty());
     int nfound = 0;
     std::string::size_type pos = 0;
 
