@@ -4741,9 +4741,8 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
             return (MON_OTHER);
         }
 
-        // The monster can be no more than lightly wounded/damaged,
-        // using the formula from mon-stuff.cc:mons_get_damage_level().
-        if (mon->hit_points <= mon->max_hit_points * 3 / 4)
+        // The monster can be no more than lightly wounded/damaged.
+        if (mons_get_damage_level(mon) > MDAM_LIGHTLY_DAMAGED)
         {
             simple_monster_message(mon, "'s soul is too badly injured.");
             return (MON_OTHER);
