@@ -8,13 +8,13 @@
 #define EFFECTS_H
 
 //Glow costs for glow-inducing effects.
-#define HASTE_GLOW_COST 4
-#define INVIS_GLOW_COST 4
+#define HASTE_GLOW_COST 5
+#define INVIS_GLOW_COST 5
 #define MIGHT_GLOW_COST 1
 #define BRILLIANCE_GLOW_COST 1
 #define AGILITY_GLOW_COST 1
 #define FINESSE_GLOW_COST 4
-#define BERSERK_GLOW_COST 4
+#define BERSERK_GLOW_COST 5
 
 struct bolt;
 
