@@ -314,7 +314,7 @@ static int _you_uniques(lua_State *ls)
     return (1);
 }
 
-LUARET1(you_num_runes, number, runes_in_pack())
+LUARET1(_you_num_runes, number, runes_in_pack())
 
 static int _you_have_rune(lua_State *ls)
 {
