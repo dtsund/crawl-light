@@ -32,6 +32,7 @@
 #include "options.h"
 #include "player.h"
 #include "random.h"
+#include "random-weight.h"
 #include "religion.h"
 #include "shopping.h"
 #include "skills2.h"
