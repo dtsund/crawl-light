@@ -4172,7 +4172,7 @@ bool mons_is_tentacle_end(const int mtype)
             || mtype == MONS_ELDRITCH_TENTACLE);
 }
 
-mon_threat_level_type mons_threat_level(const monster *mon)
+mon_threat_level_type mons_threat_level(const monster *mon, bool real)
 {
     const double factor = sqrt(exp_needed(you.experience_level) / 30.0);
     const int tension = exper_value(mon) / (1 + factor);
