@@ -3266,6 +3266,7 @@ bool fedhas_evolve_flora()
 
     case MONS_BALLISTOMYCETE:
         simple_monster_message(target, " appears agitated.");
+        env.level_state |= LSTATE_GLOW_MOLD;
         break;
 
     default:

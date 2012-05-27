@@ -103,6 +103,10 @@ struct crawl_environment
     int density;
     bool can_find_hell_key;
 
+    // Volatile level flags, not saved.
+    uint32_t level_state;
+
+
     // Temp stuff.
     std::vector<final_effect> final_effects;
 };

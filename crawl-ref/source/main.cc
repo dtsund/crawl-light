@@ -2767,7 +2767,7 @@ static void _regenerate_hp_and_mp(int delay)
 
 static void _update_mold_state(const coord_def & pos)
 {
-    if (glowing_mold(pos))
+    if (coinflip())
     {
         // Doing a weird little state thing with the two mold
         // fprops. 'glowing' mold should turn back to normal after
@@ -2786,10 +2786,14 @@ static void _update_mold_state(const coord_def & pos)
 
 static void _update_mold()
 {
+    env.level_state &= ~LSTATE_GLOW_MOLD; // we'll restore it if any
+
     for (rectangle_iterator ri(0); ri; ++ri)
-    {
-        _update_mold_state(*ri);
-    }
+        if (glowing_mold(*ri))
+        {
+            _update_mold_state(*ri);
+            env.level_state |= LSTATE_GLOW_MOLD;
+        }
     for (monster_iterator mon_it; mon_it; ++mon_it)
     {
         if (mon_it->type == MONS_HYPERACTIVE_BALLISTOMYCETE)
@@ -2806,6 +2810,7 @@ static void _update_mold()
                     env.pgrid(*rad_it) |= FPROP_GLOW_MOLD;
                 }
             }
+            env.level_state |= LSTATE_GLOW_MOLD;
         }
     }
 }
@@ -2906,6 +2911,8 @@ static void _update_golubria_traps()
             }
         }
     }
+    if (traps.empty())
+        env.level_state &= ~LSTATE_GOLUBRIA;
 }
 
 void world_reacts()
@@ -2968,8 +2975,10 @@ void world_reacts()
 
     handle_time();
     manage_clouds();
-    _update_mold();
-    _update_golubria_traps();
+    if (env.level_state & LSTATE_GLOW_MOLD)
+        _update_mold();
+    if (env.level_state & LSTATE_GOLUBRIA)
+        _update_golubria_traps();
 
     if (crawl_state.game_is_zotdef() && you.num_turns == 100)
         zotdef_set_wave();
