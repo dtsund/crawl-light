@@ -2138,8 +2138,13 @@ void dgn_set_colours_from_monsters()
     if (env.mons_alloc[9] < 0 || env.mons_alloc[9] == MONS_NO_MONSTER
         || env.mons_alloc[9] >= NUM_MONSTERS)
     {
-        if (env.floor_colour == BLACK)
+        // Don't use silence or halo colours.
+        if (env.floor_colour == BLACK
+            || env.floor_colour == CYAN
+            || env.floor_colour == YELLOW)
+        {
             env.floor_colour = LIGHTGREY;
+        }
     }
     else
     {
