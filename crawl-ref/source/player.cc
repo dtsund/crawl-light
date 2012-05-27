@@ -153,6 +153,11 @@ static bool _check_moveto_cloud(const coord_def& p,
 
 static bool _check_moveto_trap(const coord_def& p, const std::string &move_verb)
 {
+    // If there's no trap, let's go.
+    trap_def* trap = find_trap(p);
+    if (!trap)
+        return true;
+
     // If we're walking along, give a chance to avoid traps.
     const dungeon_feature_type new_grid = env.grid(p);
     if (new_grid == DNGN_UNDISCOVERED_TRAP)
