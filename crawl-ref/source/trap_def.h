@@ -12,7 +12,7 @@ struct trap_def
     bool is_known(const actor* act = 0) const;
     void trigger(actor& triggerer, bool flat_footed = false);
     void disarm();
-    void destroy();
+    void destroy(bool known = true);
     void hide();
     void reveal();
     void prepare_ammo();
