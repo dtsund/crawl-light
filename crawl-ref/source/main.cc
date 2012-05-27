@@ -82,6 +82,7 @@
 #include "maps.h"
 #include "message.h"
 #include "misc.h"
+#include "mislead.h"
 #include "mon-act.h"
 #include "mon-cast.h"
 #include "mon-iter.h"
