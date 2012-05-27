@@ -666,7 +666,7 @@ static void _userdef_run_startrunning_hook(void)
 {
 #ifdef CLUA_BINDINGS
     if (you.running)
-        clua.callfn("ch_start_running", "s", run_mode_name(you.running));
+        clua.callfn("ch_start_running", "s", _run_mode_name(you.running));
 #endif
 }
 
