@@ -6130,7 +6130,7 @@ const monsterentry *monster::find_monsterentry() const
 monster_type monster::get_mislead_type() const
 {
     if (props.exists("mislead_as"))
-        eturn props["mislead_as"].get_monster().type;
+        return props["mislead_as"].get_monster().type;
     else
         return type;
 }
