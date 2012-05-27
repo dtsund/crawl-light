@@ -425,6 +425,14 @@ unsigned int _tile_floor_count[TILE_FLOOR_MAX - 0] =
     1,
     1,
     1,
+    8,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
 };
 
 unsigned int tile_floor_count(tileidx_t idx)
@@ -851,6 +859,14 @@ tileidx_t _tile_floor_basetiles[TILE_FLOOR_MAX - 0] =
     413,
     414,
     415,
+    416,
+    416,
+    416,
+    416,
+    416,
+    416,
+    416,
+    416,
 };
 
 tileidx_t tile_floor_basetile(tileidx_t idx)
@@ -1277,6 +1293,14 @@ int _tile_floor_probs[TILE_FLOOR_MAX - 0] =
     1,
     1,
     1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
 };
 
 int tile_floor_probs(tileidx_t idx)
@@ -1703,6 +1727,14 @@ const char *_tile_floor_name[TILE_FLOOR_MAX - 0] =
     "SIGIL_SHARP_E_NE",
     "SIGIL_SHARP_W_SW",
     "SIGIL_STRAIGHT_E_NE_SW",
+    "FLOOR_CRYPT",
+    "FLOOR_CRYPT_1",
+    "FLOOR_CRYPT_2",
+    "FLOOR_CRYPT_3",
+    "FLOOR_CRYPT_4",
+    "FLOOR_CRYPT_5",
+    "FLOOR_CRYPT_6",
+    "FLOOR_CRYPT_7",
 };
 
 const char *tile_floor_name(tileidx_t idx)
@@ -2129,6 +2161,14 @@ tile_info _tile_floor_info[TILE_FLOOR_MAX - 0] =
     tile_info(32, 32, 1, 0, 923, 384, 954, 416),
     tile_info(32, 32, 0, 1, 954, 384, 986, 415),
     tile_info(32, 32, 0, 0, 986, 384, 1018, 416),
+    tile_info(32, 32, 0, 0, 0, 416, 32, 448),
+    tile_info(32, 32, 0, 0, 32, 416, 64, 448),
+    tile_info(32, 32, 0, 0, 64, 416, 96, 448),
+    tile_info(32, 32, 0, 0, 96, 416, 128, 448),
+    tile_info(32, 32, 0, 0, 128, 416, 160, 448),
+    tile_info(32, 32, 0, 0, 160, 416, 192, 448),
+    tile_info(32, 32, 0, 0, 192, 416, 224, 448),
+    tile_info(32, 32, 0, 0, 224, 416, 256, 448),
 };
 
 tile_info &tile_floor_info(tileidx_t idx)
@@ -2145,6 +2185,7 @@ _name_pair floor_name_pairs[] =
     _name_pair("dngn_error", 1 + 0),
     _name_pair("dngn_unseen", 0 + 0),
     _name_pair("floor_cobble_blood", 272 + 0),
+    _name_pair("floor_crypt", 416 + 0),
     _name_pair("floor_crystal_squares", 307 + 0),
     _name_pair("floor_dirt", 362 + 0),
     _name_pair("floor_grass", 313 + 0),

@@ -154,11 +154,14 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
         return;
 
     case BRANCH_TARTARUS:
-    case BRANCH_CRYPT:
     case BRANCH_VESTIBULE_OF_HELL:
         flv.wall  = TILE_WALL_UNDEAD;
         flv.floor = TILE_FLOOR_TOMB;
         return;
+        
+    case BRANCH_CRYPT:
+        flv.wall  = TILE_WALL_BRICK_GRAY;
+        flv.floor = TILE_FLOOR_CRYPT;
 
     case BRANCH_TOMB:
         flv.wall  = TILE_WALL_TOMB;
@@ -965,7 +968,10 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
     if ((you.where_are_you == BRANCH_CRYPT || you.where_are_you == BRANCH_TOMB)
         && orig == TILE_DNGN_STONE_WALL)
     {
-        orig = TILE_WALL_NORMAL;
+        if(you.where_are_you == BRANCH_CRYPT)
+            orig = TILE_WALL_CRYPT;
+        else
+            orig = TILE_WALL_NORMAL;
     }
 
     if (orig == TILE_FLOOR_NORMAL)

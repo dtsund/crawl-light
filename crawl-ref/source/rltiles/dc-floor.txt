@@ -564,3 +564,12 @@ sigil_straight_E_W_NE_NW SIGIL_FOURWAY
 sigil_sharp_E_NE SIGIL_SHARP_E_NE
 sigil_sharp_W_SW SIGIL_SHARP_W_SW
 sigil_straight_E_NE_SW SIGIL_STRAIGHT_E_NE_SW
+
+crypt0 FLOOR_CRYPT
+crypt1
+crypt2
+crypt3
+crypt4
+crypt5
+crypt6
+crypt7
