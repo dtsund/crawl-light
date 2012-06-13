@@ -32,8 +32,8 @@ void transit_lists_clear()
     transiting_items.clear();
 }
 
-static void level_place_lost_monsters(m_transit_list &m);
-static void level_place_followers(m_transit_list &m);
+static void level_place_lost_monsters(m_transit_list &m, int time_taken);
+static void level_place_followers(m_transit_list &m, int time_taken);
 
 static void cull_lost_mons(m_transit_list &mlist, int how_many)
 {
@@ -113,7 +113,31 @@ m_transit_list *get_transit_list(const level_id &lid)
 void add_monster_to_transit(const level_id &lid, const monster& m)
 {
     m_transit_list &mlist = the_lost_ones[lid];
-    mlist.push_back(m);
+    follower to_push = m;
+    to_push.mons_original_index = m.mindex();
+    for(int i = 0; i < NUM_MONSTER_SLOTS; i++)
+        to_push.items_original_index[i] = m.inv[i];
+        
+    int time_to_stairs = (m.pos() - you.pos()).rdist() * 100 / m.speed;
+    to_push.aut_to_staircase = time_to_stairs;
+    
+    to_push.mons_original_lid = level_id::current().describe();
+    
+   //Instead of just pushing to the back of the list, order by time to reach
+    //staircase.  This'll make it cleaner to pop them in order.
+    bool inserted = false;
+    for(std::list<follower>::iterator iter = mlist.begin(); iter !=mlist.end(); iter++)
+   {
+        if(time_to_stairs < (*iter).aut_to_staircase)
+        {
+            mlist.insert(iter, to_push);
+            inserted = true;
+            break;
+        }
+    }
+    
+    if(!inserted)
+        mlist.push_back(to_push);
 
 #ifdef DEBUG_DIAGNOSTICS
     mprf(MSGCH_DIAGNOSTICS, "Monster in transit: %s",
@@ -125,26 +149,26 @@ void add_monster_to_transit(const level_id &lid, const monster& m)
         cull_lost_mons(mlist, how_many);
 }
 
-void place_lost_ones(void (*placefn)(m_transit_list &ml))
+void place_lost_ones(void (*placefn)(m_transit_list &ml, int time_taken), int time_taken)
 {
     level_id c = level_id::current();
 
     monsters_in_transit::iterator i = the_lost_ones.find(c);
     if (i == the_lost_ones.end())
         return;
-    placefn(i->second);
+    placefn(i->second, time_taken);
     if (i->second.empty())
         the_lost_ones.erase(i);
 }
 
-void place_transiting_monsters()
+void place_transiting_monsters(int time_taken)
 {
-    place_lost_ones(level_place_lost_monsters);
+    place_lost_ones(level_place_lost_monsters, time_taken);
 }
 
-void place_followers()
+void place_followers(int time_taken)
 {
-    place_lost_ones(level_place_followers);
+    place_lost_ones(level_place_followers, time_taken);
 }
 
 static bool place_lost_monster(follower &f)
@@ -153,11 +177,19 @@ static bool place_lost_monster(follower &f)
     mprf(MSGCH_DIAGNOSTICS, "Placing lost one: %s",
          f.mons.name(DESC_PLAIN).c_str());
 #endif
-    return (f.place(false));
+    return (f.place(true));
 }
 
-static void level_place_lost_monsters(m_transit_list &m)
+static void level_place_lost_monsters(m_transit_list &m, int time_taken)
 {
+    //First, decrement all times to staircase.
+    for (m_transit_list::iterator i = m.begin();
+         i != m.end(); i++)
+    {
+        mprf("%d", (*i).aut_to_staircase);
+        (*i).aut_to_staircase -= time_taken;
+    }
+
     for (m_transit_list::iterator i = m.begin();
          i != m.end();)
     {
@@ -168,18 +200,38 @@ static void level_place_lost_monsters(m_transit_list &m)
         if (you.level_type == LEVEL_ABYSS && coinflip())
             continue;
 
+        // Monster hasn't yet reached the staircase!            
+        if ((*mon).aut_to_staircase > 0)
+            break;
+
         if (place_lost_monster(*mon))
             m.erase(mon);
     }
 }
 
-static void level_place_followers(m_transit_list &m)
+static void level_place_followers(m_transit_list &m, int time_taken)
 {
+    //First, decrement all times to staircase.
+    for (m_transit_list::iterator i = m.begin();
+         i != m.end(); i++)
+    {
+        mprf("%d", (*i).aut_to_staircase);
+        (*i).aut_to_staircase -= time_taken;
+    }
+
     for (m_transit_list::iterator i = m.begin(); i != m.end();)
     {
         m_transit_list::iterator mon = i++;
+            
+        if ((*mon).aut_to_staircase > 0)
+            break;
+
+        //Erase the monster both from the transit list and from the original level.
         if ((mon->mons.flags & MF_TAKING_STAIRS) && mon->place(true))
+        {
+            //XXX flag monster to be removed
             m.erase(mon);
+        }
     }
 }
 
@@ -356,19 +408,6 @@ static bool _tag_follower_at(const coord_def &pos, bool &real_follower)
         return (false);
     }
 
-    // Monsters that are not directly adjacent are subject to more
-    // stringent checks.
-    if ((pos - you.pos()).rdist() > 1)
-    {
-        if (!fmenv->friendly())
-            return (false);
-
-        // Undead will follow Yredelemnul worshippers, and orcs will
-        // follow Beogh worshippers.
-        if (!_is_religious_follower(fmenv))
-            return (false);
-    }
-
     // Monsters that can't use stairs can still be marked as followers
     // (though they'll be ignored for transit), so any adjacent real
     // follower can follow through. (jpeg)
@@ -416,6 +455,18 @@ static int follower_tag_radius2()
 
 void tag_followers()
 {
+    // If we're doing this, we should first clear out the old follower list.
+
+        //XXX: DO SOMETHING TO CLEAR OUT THE EXISTING LIST OF FOLLOWERS GOING TO THIS LEVEL
+    
+    // Iterate over every square in LOS
+    for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
+    {
+        bool real_follower = false;
+        _tag_follower_at(*i, real_follower);
+    }
+        
+/*
     const int radius2 = follower_tag_radius2();
     int n_followers = 18;
 
@@ -451,6 +502,7 @@ void tag_followers()
         places[place_set].clear();
         place_set = !place_set;
     }
+*/
 }
 
 void untag_followers()

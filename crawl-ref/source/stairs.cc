@@ -726,6 +726,8 @@ void up_stairs(dungeon_feature_type force_stair,
     check_relatively_safe(false);
 
     request_autopickup();
+    
+    you.entry_coords = you.pos();
 }
 
 // All changes to you.level_type, you.where_are_you and you.absdepth0
@@ -1307,6 +1309,7 @@ void down_stairs(dungeon_feature_type force_stair,
     if (crawl_state.game_is_zotdef())
         start_delay(DELAY_UNINTERRUPTIBLE, 5);
 
+    you.entry_coords = you.pos();
 }
 
 static bool _any_glowing_mold()

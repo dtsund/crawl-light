@@ -1050,8 +1050,8 @@ static bool _grab_follower_at(const coord_def &pos)
 #endif
     bool could_see = you.can_see(fmenv);
     fmenv->set_transit(dest);
-    fmenv->destroy_inventory();
-    monster_cleanup(fmenv);
+//    fmenv->destroy_inventory();
+//    monster_cleanup(fmenv);
     if (could_see)
         view_update_at(pos);
     return (true);
@@ -1121,6 +1121,9 @@ static void _grab_followers()
                  non_stair_using_allies > 1 ? "s" : "",
                  non_stair_using_allies > 1 ? ""  : "s");
         }
+        for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
+            _grab_follower_at(*i);
+        /*
         memset(travel_point_distance, 0, sizeof(travel_distance_grid_t));
         std::vector<coord_def> places[2];
         int place_set = 0;
@@ -1143,6 +1146,7 @@ static void _grab_followers()
             places[place_set].clear();
             place_set = !place_set;
         }
+        */
     }
 
     // Clear flags of monsters that didn't follow.
@@ -1357,6 +1361,7 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
 
     crawl_view.set_player_at(you.pos(), load_mode != LOAD_VISITOR);
 
+/*
     // Actually "move" the followers if applicable.
     if (level_type_allows_followers(you.level_type)
         && load_mode == LOAD_ENTER_LEVEL)
@@ -1370,6 +1375,9 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
         place_transiting_monsters();
         place_transiting_items();
     }
+*/
+    if (load_mode == LOAD_ENTER_LEVEL)
+        place_transiting_items();
 
     if (make_changes)
     {

@@ -14,6 +14,14 @@ struct follower
 {
     monster mons;
     FixedVector<item_def, NUM_MONSTER_SLOTS> items;
+    
+    //Information regarding the monster's original position in the data.  Used
+    //for off-level deletion.
+    int mons_original_index; //The index of the monster in the floor it came from.
+    short items_original_index[NUM_MONSTER_SLOTS]; //Indices of the monster's gear.
+    std::string mons_original_lid; //The level id of the monster's original floor.
+    
+    int aut_to_staircase;
 
     follower() : mons(), items() { }
     follower(const monster& m);
@@ -38,8 +46,8 @@ void add_monster_to_transit(const level_id &dest, const monster& m);
 void add_item_to_transit(const level_id &dest, const item_def &i);
 
 // Places (some of the) monsters eligible to be placed on this level.
-void place_transiting_monsters();
-void place_followers();
+void place_transiting_monsters(int time_taken);
+void place_followers(int time_taken);
 
 void place_transiting_items();
 

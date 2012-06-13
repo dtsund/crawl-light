@@ -175,6 +175,10 @@ public:
   std::string level_type_tag;
 
   branch_type where_are_you;
+  
+  
+  coord_def entry_coords; //The coordinates you entered a level on.
+                          //Used by following monsters.
 
   FixedVector<uint8_t, 30> branch_stairs;
 

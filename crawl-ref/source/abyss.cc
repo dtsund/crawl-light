@@ -1009,7 +1009,7 @@ void abyss_area_shift(void)
     _abyss_generate_monsters(15);
 
     // And allow monsters in transit another chance to return.
-    place_transiting_monsters();
+    place_transiting_monsters(1000);
     place_transiting_items();
 
 #ifdef WIZARD
@@ -1052,7 +1052,7 @@ static void _abyss_generate_new_area()
     }
 
     los_changed();
-    place_transiting_monsters();
+    place_transiting_monsters(1000);
     place_transiting_items();
 }
 

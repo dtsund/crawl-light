@@ -3809,6 +3809,10 @@ bool monster::find_home_near_place(const coord_def &c)
     SquareArray<int, MAX_PLACE_NEAR_DIST> dist(-1);
     std::queue<coord_def> q;
 
+    //If c itself is viable, put the monster there directly.    
+    if(in_bounds(c) && !actor_at(c) && monster_habitable_grid(this, grd(c)))
+        return move_to_pos(c);
+
     q.push(c);
     dist(coord_def()) = 0;
     while (!q.empty())
@@ -3842,7 +3846,7 @@ bool monster::find_home_near_place(const coord_def &c)
 
 bool monster::find_home_near_player()
 {
-    return (find_home_near_place(you.pos()));
+    return (find_home_near_place(you.entry_coords));
 }
 
 bool monster::find_home_anywhere()

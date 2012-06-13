@@ -55,6 +55,7 @@
 #include "mon-place.h"
 #include "mon-project.h"
 #include "mon-stuff.h"
+#include "mon-transit.h"
 #include "mon-util.h"
 #include "mutation.h"
 #include "notes.h"
@@ -2173,6 +2174,12 @@ void handle_time()
     if (_div(base_time, 50) > _div(old_time, 50) && monsters_can_respawn())
     {
         spawn_random_monsters();
+    }
+    
+    // Every turn, allow following monsters to come up stairs.
+    if (_div(base_time, 10) > _div(old_time, 10))
+    {
+        place_transiting_monsters(you.time_taken);
     }
     
     const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC);
