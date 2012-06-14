@@ -18,7 +18,6 @@ struct follower
     //Information regarding the monster's original position in the data.  Used
     //for off-level deletion.
     int mons_original_index; //The index of the monster in the floor it came from.
-    short items_original_index[NUM_MONSTER_SLOTS]; //Indices of the monster's gear.
     std::string mons_original_lid; //The level id of the monster's original floor.
     
     int aut_to_staircase;

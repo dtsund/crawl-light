@@ -115,8 +115,6 @@ void add_monster_to_transit(const level_id &lid, const monster& m)
     m_transit_list &mlist = the_lost_ones[lid];
     follower to_push = m;
     to_push.mons_original_index = m.mindex();
-    for(int i = 0; i < NUM_MONSTER_SLOTS; i++)
-        to_push.items_original_index[i] = m.inv[i];
         
     int time_to_stairs = (m.pos() - you.pos()).rdist() * 100 / m.speed;
     to_push.aut_to_staircase = time_to_stairs;
