@@ -1018,7 +1018,7 @@ static void _clear_clouds()
     env.cgrid.init(EMPTY_CLOUD);
 }
 
-static bool _grab_follower_at(const coord_def &pos)
+static bool _grab_follower_at(const coord_def &pos, level_id &origin)
 {
     if (pos == you.pos())
         return (false);
@@ -1049,7 +1049,7 @@ static bool _grab_follower_at(const coord_def &pos)
          dest.describe().c_str());
 #endif
     bool could_see = you.can_see(fmenv);
-    fmenv->set_transit(dest);
+    fmenv->set_transit(dest, origin);
 //    fmenv->destroy_inventory();
 //    monster_cleanup(fmenv);
     if (could_see)
@@ -1057,7 +1057,7 @@ static bool _grab_follower_at(const coord_def &pos)
     return (true);
 }
 
-static void _grab_followers()
+static void _grab_followers(level_id origin)
 {
     const bool can_follow = level_type_allows_followers(you.level_type);
 
@@ -1122,7 +1122,7 @@ static void _grab_followers()
                  non_stair_using_allies > 1 ? ""  : "s");
         }
         for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
-            _grab_follower_at(*i);
+            _grab_follower_at(*i, origin);
         /*
         memset(travel_point_distance, 0, sizeof(travel_distance_grid_t));
         std::vector<coord_def> places[2];
@@ -1236,7 +1236,7 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
     // This block is to grab followers and save the old level to disk.
     if (load_mode == LOAD_ENTER_LEVEL && old_level.depth != -1)
     {
-        _grab_followers();
+        _grab_followers(old_level);
 
         if (old_level.level_type == LEVEL_DUNGEON
             || old_level.level_type != you.level_type)

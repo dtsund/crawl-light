@@ -25,6 +25,7 @@
 #include "message.h"
 #include "misc.h"
 #include "mon-iter.h"
+#include "mon-transit.h"
 #include "notes.h"
 #include "options.h"
 #include "ouch.h"
@@ -717,6 +718,9 @@ void up_stairs(dungeon_feature_type force_stair,
     // Checking new squares for interesting features.
     if (!you.running)
         check_for_interesting_features();
+    
+    // Remove monsters that have left the level.
+    remove_doomed_monsters();
 
     seen_monsters_react();
 
@@ -1271,6 +1275,9 @@ void down_stairs(dungeon_feature_type force_stair,
     new_level();
 
     moveto_location_effects(old_feat);
+    
+    // Remove monsters that have left the level.
+    remove_doomed_monsters();
 
     // Clear list of beholding monsters.
     you.clear_beholders();

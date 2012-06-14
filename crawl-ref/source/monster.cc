@@ -3897,8 +3897,14 @@ bool monster::needs_abyss_transit() const
             && !has_ench(ENCH_ABJ));
 }
 
+void monster::set_transit(const level_id &dest, level_id &origin)
+{
+    add_monster_to_transit(dest, origin, *this);
+}
+
 void monster::set_transit(const level_id &dest)
 {
+    //In this case, we don't want to add to the doomed list.
     add_monster_to_transit(dest, *this);
 }
 

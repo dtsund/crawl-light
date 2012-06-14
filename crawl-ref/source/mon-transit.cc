@@ -24,11 +24,13 @@
 #define MAX_LOST 100
 
 monsters_in_transit the_lost_ones;
+monsters_to_remove the_doomed_ones;
 items_in_transit    transiting_items;
 
 void transit_lists_clear()
 {
     the_lost_ones.clear();
+    the_doomed_ones.clear();
     transiting_items.clear();
 }
 
@@ -110,7 +112,13 @@ m_transit_list *get_transit_list(const level_id &lid)
     return (i != the_lost_ones.end()? &i->second : NULL);
 }
 
-void add_monster_to_transit(const level_id &lid, const monster& m)
+m_doomed_list *get_doomed_list(const level_id &lid)
+{
+    monsters_to_remove::iterator i = the_doomed_ones.find(lid);
+    return (i != the_doomed_ones.end()? &i->second : NULL);
+}
+
+void add_monster_to_transit(const level_id &lid, level_id &origin, const monster& m)
 {
     m_transit_list &mlist = the_lost_ones[lid];
     follower to_push = m;
@@ -119,9 +127,10 @@ void add_monster_to_transit(const level_id &lid, const monster& m)
     int time_to_stairs = (m.pos() - you.pos()).rdist() * 100 / m.speed;
     to_push.aut_to_staircase = time_to_stairs;
     
-    to_push.mons_original_lid = level_id::current().describe();
+    to_push.mons_original_lid = origin;
+    to_push.add_to_doomed = true;
     
-   //Instead of just pushing to the back of the list, order by time to reach
+    //Instead of just pushing to the back of the list, order by time to reach
     //staircase.  This'll make it cleaner to pop them in order.
     bool inserted = false;
     for(std::list<follower>::iterator iter = mlist.begin(); iter !=mlist.end(); iter++)
@@ -147,6 +156,49 @@ void add_monster_to_transit(const level_id &lid, const monster& m)
         cull_lost_mons(mlist, how_many);
 }
 
+void add_monster_to_transit(const level_id &lid, const monster& m)
+{
+    m_transit_list &mlist = the_lost_ones[lid];
+    follower to_push = m;
+    to_push.mons_original_index = m.mindex();
+        
+    int time_to_stairs = (m.pos() - you.pos()).rdist() * 100 / m.speed;
+    to_push.aut_to_staircase = time_to_stairs;
+    
+    to_push.add_to_doomed = false;
+    
+    //Instead of just pushing to the back of the list, order by time to reach
+    //staircase.  This'll make it cleaner to pop them in order.
+    bool inserted = false;
+    for(std::list<follower>::iterator iter = mlist.begin(); iter !=mlist.end(); iter++)
+   {
+        if(time_to_stairs < (*iter).aut_to_staircase)
+        {
+            mlist.insert(iter, to_push);
+            inserted = true;
+            break;
+        }
+    }
+    
+    if(!inserted)
+        mlist.push_back(to_push);
+
+#ifdef DEBUG_DIAGNOSTICS
+    mprf(MSGCH_DIAGNOSTICS, "Monster in transit: %s",
+         m.name(DESC_PLAIN).c_str());
+#endif
+
+    const int how_many = mlist.size();
+    if (how_many > MAX_LOST)
+        cull_lost_mons(mlist, how_many);
+}
+
+void add_monster_to_doomed(const level_id &lid, const int index)
+{
+    m_doomed_list &doomed = the_doomed_ones[lid];
+    doomed.push_back(index);
+}
+
 void place_lost_ones(void (*placefn)(m_transit_list &ml, int time_taken), int time_taken)
 {
     level_id c = level_id::current();
@@ -157,6 +209,25 @@ void place_lost_ones(void (*placefn)(m_transit_list &ml, int time_taken), int ti
     placefn(i->second, time_taken);
     if (i->second.empty())
         the_lost_ones.erase(i);
+}
+
+void remove_doomed_monsters()
+{
+    level_id current_level = level_id::current();
+    
+    monsters_to_remove::iterator i = the_doomed_ones.find(current_level);
+    if (i == the_doomed_ones.end())
+        return;
+    
+    m_doomed_list doomed = i->second;
+    for(m_doomed_list::iterator doomed_iterator = doomed.begin();
+        doomed_iterator != doomed.end(); doomed_iterator++)
+    {
+        menv[*doomed_iterator].destroy_inventory();
+        monster_cleanup(&menv[*doomed_iterator]);
+    }
+    
+    the_doomed_ones.erase(i);
 }
 
 void place_transiting_monsters(int time_taken)
@@ -184,7 +255,6 @@ static void level_place_lost_monsters(m_transit_list &m, int time_taken)
     for (m_transit_list::iterator i = m.begin();
          i != m.end(); i++)
     {
-        mprf("%d", (*i).aut_to_staircase);
         (*i).aut_to_staircase -= time_taken;
     }
 
@@ -203,7 +273,11 @@ static void level_place_lost_monsters(m_transit_list &m, int time_taken)
             break;
 
         if (place_lost_monster(*mon))
+        {
+            if((*mon).add_to_doomed)
+                add_monster_to_doomed((*mon).mons_original_lid, (*mon).mons_original_index);
             m.erase(mon);
+        }
     }
 }
 
@@ -213,7 +287,6 @@ static void level_place_followers(m_transit_list &m, int time_taken)
     for (m_transit_list::iterator i = m.begin();
          i != m.end(); i++)
     {
-        mprf("%d", (*i).aut_to_staircase);
         (*i).aut_to_staircase -= time_taken;
     }
 
@@ -227,7 +300,9 @@ static void level_place_followers(m_transit_list &m, int time_taken)
         //Erase the monster both from the transit list and from the original level.
         if ((mon->mons.flags & MF_TAKING_STAIRS) && mon->place(true))
         {
-            //XXX flag monster to be removed
+            //flag monster to be removed
+            if((*mon).add_to_doomed)
+                add_monster_to_doomed((*mon).mons_original_lid, (*mon).mons_original_index);
             m.erase(mon);
         }
     }
