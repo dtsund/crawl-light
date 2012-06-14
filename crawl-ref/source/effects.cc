@@ -2180,6 +2180,7 @@ void handle_time()
     if (_div(base_time, 10) > _div(old_time, 10))
     {
         place_transiting_monsters(you.time_taken);
+        check_relatively_safe(false);
     }
     
     const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC);
