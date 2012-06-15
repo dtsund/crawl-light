@@ -1411,7 +1411,9 @@ static void _go_upstairs()
 
     you.clear_clinging();
 
-    tag_followers(); // Only those beside us right now can follow.
+    if(ygrd != DNGN_ESCAPE_HATCH_UP)
+        tag_followers(); // Only those beside us right now can follow.
+    
     start_delay(DELAY_ASCENDING_STAIRS, 0);
 }
 
@@ -1499,8 +1501,9 @@ static void _go_downstairs()
     {
         if (_marker_vetoes_stair())
             return;
+        if(ygrd != DNGN_ESCAPE_HATCH_DOWN)
+            tag_followers(); // Only those beside us right now can follow.
 
-        tag_followers(); // Only those beside us right now can follow.
         start_delay(DELAY_DESCENDING_STAIRS, 0);
     }
 }
