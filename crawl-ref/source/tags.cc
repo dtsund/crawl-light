@@ -1398,11 +1398,6 @@ static void marshall_follower(writer &th, const follower &f)
     marshallInt(th, f.aut_to_staircase);
 }
 
-static void marshall_doomed(writer &th, const int &f)
-{
-    marshallInt(th, f);
-}
-
 static void unmarshall_follower(reader &th, follower &f)
 {
     unmarshallMonster(th, f.mons);
@@ -1441,7 +1436,7 @@ static void marshall_doomed_list(writer &th, const m_doomed_list &dlist)
     for (m_doomed_list::const_iterator di = dlist.begin();
          di != dlist.end(); ++di)
     {
-        marshall_doomed(th, *di);
+        marshallInt(th, *di);
     }
 }
 
@@ -2174,7 +2169,7 @@ static void tag_read_lost_monsters(reader &th)
 static void tag_read_doomed_monsters(reader &th)
 {
     the_doomed_ones.clear();
-    if(th.getMinorVersion() > TAG_MINOR_STAIR_FOLLOW)
+    if(th.getMinorVersion() >= TAG_MINOR_STAIR_FOLLOW)
     {
         unmarshallMap(th, the_doomed_ones,
                       unmarshall_level_id, unmarshall_doomed_list);
