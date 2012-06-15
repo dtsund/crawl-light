@@ -266,6 +266,7 @@ static void tag_construct_you(writer &th);
 static void tag_construct_you_items(writer &th);
 static void tag_construct_you_dungeon(writer &th);
 static void tag_construct_lost_monsters(writer &th);
+static void tag_construct_doomed_monsters(writer &th);
 static void tag_construct_lost_items(writer &th);
 static void tag_construct_game_state(writer &th);
 static void tag_read_char(reader &th);
@@ -273,6 +274,7 @@ static void tag_read_you(reader &th);
 static void tag_read_you_items(reader &th);
 static void tag_read_you_dungeon(reader &th);
 static void tag_read_lost_monsters(reader &th);
+static void tag_read_doomed_monsters(reader &th);
 static void tag_read_lost_items(reader &th);
 static void tag_read_game_state(reader &th);
 
@@ -925,6 +927,7 @@ void tag_write(tag_type tagID, writer &outf)
         tag_construct_you_items(th);
         tag_construct_you_dungeon(th);
         tag_construct_lost_monsters(th);
+        tag_construct_doomed_monsters(th);
         tag_construct_lost_items(th);
         break;
     case TAG_LEVEL:
@@ -977,6 +980,7 @@ void tag_read(reader &inf, tag_type tag_id)
         tag_read_you_items(th);
         tag_read_you_dungeon(th);
         tag_read_lost_monsters(th);
+        tag_read_doomed_monsters(th);
         tag_read_lost_items(th);
         break;
     case TAG_LEVEL:
@@ -1387,6 +1391,16 @@ static void marshall_follower(writer &th, const follower &f)
     marshallMonster(th, f.mons);
     for (int i = 0; i < NUM_MONSTER_SLOTS; ++i)
         marshallItem(th, f.items[i]);
+    
+    marshallInt(th, f.mons_original_index);
+    marshall_level_id(th, f.mons_original_lid);
+    marshallBoolean(th, f.add_to_doomed);
+    marshallInt(th, f.aut_to_staircase);
+}
+
+static void marshall_doomed(writer &th, const int &f)
+{
+    marshallInt(th, f);
 }
 
 static void unmarshall_follower(reader &th, follower &f)
@@ -1394,6 +1408,19 @@ static void unmarshall_follower(reader &th, follower &f)
     unmarshallMonster(th, f.mons);
     for (int i = 0; i < NUM_MONSTER_SLOTS; ++i)
         unmarshallItem(th, f.items[i]);
+    
+    if(th.getMinorVersion() < TAG_MINOR_STAIR_FOLLOW)
+    {
+        //Don't put nonsense in the doomed list.
+        f.add_to_doomed = false;
+    }
+    else
+    {
+        f.mons_original_index = unmarshallInt(th);
+        f.mons_original_lid = unmarshall_level_id(th);
+        f.add_to_doomed = unmarshallBoolean(th);
+        f.aut_to_staircase = unmarshallInt(th);
+    }
 }
 
 static void marshall_follower_list(writer &th, const m_transit_list &mlist)
@@ -1404,6 +1431,17 @@ static void marshall_follower_list(writer &th, const m_transit_list &mlist)
          mi != mlist.end(); ++mi)
     {
         marshall_follower(th, *mi);
+    }
+}
+
+static void marshall_doomed_list(writer &th, const m_doomed_list &dlist)
+{
+    marshallShort(th, dlist.size());
+
+    for (m_doomed_list::const_iterator di = dlist.begin();
+         di != dlist.end(); ++di)
+    {
+        marshall_doomed(th, *di);
     }
 }
 
@@ -1434,6 +1472,20 @@ static m_transit_list unmarshall_follower_list(reader &th)
     }
 
     return (mlist);
+}
+
+static m_doomed_list unmarshall_doomed_list(reader &th)
+{
+    m_doomed_list dlist;
+
+    const int size = unmarshallShort(th);
+
+    for (int i = 0; i < size; ++i)
+    {
+        dlist.push_back(unmarshallInt(th));
+    }
+
+    return (dlist);
 }
 
 static i_transit_list unmarshall_item_list(reader &th)
@@ -1568,6 +1620,12 @@ static void tag_construct_lost_monsters(writer &th)
 {
     marshallMap(th, the_lost_ones, marshall_level_id,
                  marshall_follower_list);
+}
+
+static void tag_construct_doomed_monsters(writer &th)
+{
+    marshallMap(th, the_doomed_ones, marshall_level_id,
+                 marshall_doomed_list);
 }
 
 static void tag_construct_lost_items(writer &th)
@@ -2111,6 +2169,16 @@ static void tag_read_lost_monsters(reader &th)
     the_lost_ones.clear();
     unmarshallMap(th, the_lost_ones,
                   unmarshall_level_id, unmarshall_follower_list);
+}
+
+static void tag_read_doomed_monsters(reader &th)
+{
+    the_doomed_ones.clear();
+    if(th.getMinorVersion() > TAG_MINOR_STAIR_FOLLOW)
+    {
+        unmarshallMap(th, the_doomed_ones,
+                      unmarshall_level_id, unmarshall_doomed_list);
+    }
 }
 
 static void tag_read_lost_items(reader &th)
