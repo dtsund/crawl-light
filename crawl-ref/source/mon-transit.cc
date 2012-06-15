@@ -512,20 +512,6 @@ static bool _tag_follower_at(const coord_def &pos, bool &real_follower)
     return (true);
 }
 
-static int follower_tag_radius2()
-{
-    // If only friendlies are adjacent, we set a max radius of 6, otherwise
-    // only adjacent friendlies may follow.
-    for (adjacent_iterator ai(you.pos()); ai; ++ai)
-    {
-        if (const monster* mon = monster_at(*ai))
-            if (!mon->friendly())
-                return (2);
-    }
-
-    return (6 * 6);
-}
-
 void tag_followers()
 {
     // If we're doing this, we should first clear out the old follower list.
@@ -539,44 +525,6 @@ void tag_followers()
         bool real_follower = false;
         _tag_follower_at(*i, real_follower);
     }
-        
-/*
-    const int radius2 = follower_tag_radius2();
-    int n_followers = 18;
-
-    std::vector<coord_def> places[2];
-    int place_set = 0;
-
-    places[place_set].push_back(you.pos());
-    memset(travel_point_distance, 0, sizeof(travel_distance_grid_t));
-    while (!places[place_set].empty())
-    {
-        for (int i = 0, size = places[place_set].size(); i < size; ++i)
-        {
-            const coord_def &p = places[place_set][i];
-            for (adjacent_iterator ai(p); ai; ++ai)
-            {
-                if ((*ai - you.pos()).abs() > radius2
-                    || travel_point_distance[ai->x][ai->y])
-                {
-                    continue;
-                }
-                travel_point_distance[ai->x][ai->y] = 1;
-
-                bool real_follower = false;
-                if (_tag_follower_at(*ai, real_follower))
-                {
-                    // If we've run out of our follower allowance, bail.
-                    if (real_follower && --n_followers <= 0)
-                        return;
-                    places[!place_set].push_back(*ai);
-                }
-            }
-        }
-        places[place_set].clear();
-        place_set = !place_set;
-    }
-*/
 }
 
 void untag_followers()

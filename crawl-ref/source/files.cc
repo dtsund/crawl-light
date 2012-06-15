@@ -1050,8 +1050,6 @@ static bool _grab_follower_at(const coord_def &pos, level_id &origin)
 #endif
     bool could_see = you.can_see(fmenv);
     fmenv->set_transit(dest, origin);
-//    fmenv->destroy_inventory();
-//    monster_cleanup(fmenv);
     if (could_see)
         view_update_at(pos);
     return (true);
