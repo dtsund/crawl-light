@@ -15,6 +15,7 @@
 #include "dungeon.h"
 #include "env.h"
 #include "items.h"
+#include "mon-pathfind.h"
 #include "mon-place.h"
 #include "mon-util.h"
 #include "random.h"
@@ -123,8 +124,20 @@ void add_monster_to_transit(const level_id &lid, level_id &origin, const monster
     m_transit_list &mlist = the_lost_ones[lid];
     follower to_push = m;
     to_push.mons_original_index = m.mindex();
-        
-    int time_to_stairs = (m.pos() - you.pos()).rdist() * 100 / m.speed;
+    
+    //Pathfind to determine the shortest path to get to the staircase;
+    //Can't just use coordinates, because there may be insurmountable
+    //obstacles in between the monster and the staircase.
+    monster_pathfind mp;
+    if(!mp.init_pathfind(m.pos(), you.pos()))
+    {
+        //No path, bail.
+        return;
+    }
+    
+    //Now get the actual time needed to reach the staircase.
+    const std::vector<coord_def> path = mp.backtrack();    
+    int time_to_stairs = (path.size() - 1) * 100 / m.speed;
     to_push.aut_to_staircase = time_to_stairs;
     
     to_push.mons_original_lid = origin;
