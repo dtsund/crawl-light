@@ -146,9 +146,9 @@ void add_monster_to_transit(const level_id &lid, level_id &origin, const monster
     //a) We don't clobber monsters we shouldn't, and
     //b) We don't accumulate a monstrously huge the_doomed_ones list.
     if(origin.level_type == LEVEL_DUNGEON)
-        to_push.add_to_doomed = false;
-    else
         to_push.add_to_doomed = true;
+    else
+        to_push.add_to_doomed = false;
     
     //Instead of just pushing to the back of the list, order by time to reach
     //staircase.  This'll make it cleaner to pop them in order.
