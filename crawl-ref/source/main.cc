@@ -1412,8 +1412,7 @@ static void _go_upstairs()
     you.clear_clinging();
 
     tag_followers(); // Only those beside us right now can follow.
-    start_delay(DELAY_ASCENDING_STAIRS,
-                1 + (you.burden_state > BS_UNENCUMBERED));
+    start_delay(DELAY_ASCENDING_STAIRS, 0);
 }
 
 static void _go_downstairs()
@@ -1502,8 +1501,7 @@ static void _go_downstairs()
             return;
 
         tag_followers(); // Only those beside us right now can follow.
-        start_delay(DELAY_DESCENDING_STAIRS,
-                    1 + (you.burden_state > BS_UNENCUMBERED));
+        start_delay(DELAY_DESCENDING_STAIRS, 0);
     }
 }
 
