@@ -529,8 +529,9 @@ static int follower_tag_radius2()
 void tag_followers()
 {
     // If we're doing this, we should first clear out the old follower list.
-
-        //XXX: DO SOMETHING TO CLEAR OUT THE EXISTING LIST OF FOLLOWERS GOING TO THIS LEVEL
+    m_transit_list current_list = *get_transit_list(level_id::current());
+    if(current_list != NULL)
+        current_list.clear();
     
     // Iterate over every square in LOS
     for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
