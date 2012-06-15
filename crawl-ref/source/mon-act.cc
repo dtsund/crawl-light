@@ -1978,7 +1978,7 @@ void handle_monster_move(monster* mons)
 
     fedhas_neutralise(mons);
 
-    // Monster just summoned (or just took stairs), skip this action.
+    // Monster just summoned, skip this action.
     if (testbits(mons->flags, MF_JUST_SUMMONED))
     {
         mons->flags &= ~MF_JUST_SUMMONED;

@@ -412,7 +412,6 @@ bool follower::place(bool near_player)
             m.target.reset();
 
             m.flags &= ~MF_TAKING_STAIRS;
-            m.flags |= MF_JUST_SUMMONED;
 
             restore_mons_items(m);
             return (true);
