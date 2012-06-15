@@ -154,7 +154,7 @@ void add_monster_to_transit(const level_id &lid, level_id &origin, const monster
     //staircase.  This'll make it cleaner to pop them in order.
     bool inserted = false;
     for(std::list<follower>::iterator iter = mlist.begin(); iter !=mlist.end(); iter++)
-   {
+    {
         if(time_to_stairs < (*iter).aut_to_staircase)
         {
             mlist.insert(iter, to_push);
