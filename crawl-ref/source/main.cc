@@ -1315,6 +1315,23 @@ static bool _has_orb()
     return false;
 }
 
+//Is this level-exit feature something that allows things to follow you?
+static bool _terrain_allows_following(dungeon_feature_type feature)
+{
+    switch(feature)
+    {
+    case DNGN_ESCAPE_HATCH_DOWN:
+    case DNGN_ESCAPE_HATCH_UP:
+    case DNGN_ENTER_ABYSS:
+    case DNGN_ENTER_ABYSS_DIRECTED:
+    case DNGN_ENTER_PANDEMONIUM: //Let's not let players destroy nasty uniques 'easily'
+    case DNGN_TRANSIT_PANDEMONIUM:
+        return false;
+    default:
+        return true;
+    }
+}
+
 static void _go_downstairs();
 static void _go_upstairs()
 {
@@ -1411,7 +1428,7 @@ static void _go_upstairs()
 
     you.clear_clinging();
 
-    if(ygrd != DNGN_ESCAPE_HATCH_UP)
+    if(_terrain_allows_following(ygrd))
         tag_followers(); // Only those beside us right now can follow.
     
     start_delay(DELAY_ASCENDING_STAIRS, 0);
@@ -1501,8 +1518,8 @@ static void _go_downstairs()
     {
         if (_marker_vetoes_stair())
             return;
-        if(ygrd != DNGN_ESCAPE_HATCH_DOWN)
-            tag_followers(); // Only those beside us right now can follow.
+        if(_terrain_allows_following(ygrd))
+            tag_followers();
 
         start_delay(DELAY_DESCENDING_STAIRS, 0);
     }
