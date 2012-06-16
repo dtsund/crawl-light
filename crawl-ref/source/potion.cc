@@ -176,8 +176,10 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
 
         mprf(MSGCH_DURATION, "You feel %s all of a sudden.",
              were_agile ? "agile" : "more agile");
-
-        you.increase_duration(DUR_AGILITY, (35 + random2(pow)) / factor, 80);
+        
+        int duration = (35 + random2(pow)) / factor;
+        you.increase_duration(DUR_AGILITY, duration, 80);
+        you.increase_duration(DUR_SWIFTNESS, duration, 80);
 
         if (!were_agile)
             notify_stat_change(STAT_DEX, 5, true, "");

@@ -756,7 +756,7 @@ A suit of mail and large plates of metal.
 %%%%
 potion of agility
 
-A magic potion which greatly increases the dexterity and evasiveness of one who drinks it.
+A magic potion which grants a slight increase in running speed and great increases to dexterity and evasiveness to whomever drinks it.
 %%%%
 potion of berserk rage
 
