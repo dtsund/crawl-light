@@ -1322,6 +1322,8 @@ static bool _terrain_allows_following(dungeon_feature_type feature)
     {
     case DNGN_ESCAPE_HATCH_DOWN:
     case DNGN_ESCAPE_HATCH_UP:
+    case DNGN_ENTER_PORTAL_VAULT:
+    case DNGN_EXIT_PORTAL_VAULT:
     case DNGN_ENTER_ABYSS:
     case DNGN_ENTER_ABYSS_DIRECTED:
     case DNGN_ENTER_PANDEMONIUM: //Let's not let players destroy nasty uniques 'easily'
