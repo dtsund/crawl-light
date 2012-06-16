@@ -34,6 +34,7 @@
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
+#include "monster.h"
 #include "mon-act.h"
 #include "mon-behv.h"
 #include "mon-iter.h"
@@ -1749,6 +1750,170 @@ void beogh_recall_orcish_followers()
 {
     recall(2);
 }
+
+//Share the effects of beneficial potions with nearby orcish followers.
+void beogh_share_potion(potion_type potion)
+{
+    //Check Beogh worship.
+    if(you.religion != GOD_BEOGH || player_under_penance()
+       || you.piety < piety_breakpoint(2))
+    {
+        //Can't share potions.
+        return;
+    }
+   
+    //Only do something if the potion's effects make sense for NPCs.
+    //TODO: Make the potion of resistance affect your followers.
+    switch(potion)
+    {
+    case POT_HEALING:
+    case POT_HEAL_WOUNDS:
+    case POT_SPEED:
+    case POT_MIGHT:
+    case POT_INVISIBILITY:
+    case POT_BERSERK_RAGE:
+        break;
+    default:
+        return;
+    }
+    
+    //Used to determine whether more than one is affected, which in turn
+    //determines what message gets printed at the end.
+    int num_affected = 0;
+    
+    //Used to name the monster if exactly one is affected.
+    monster* mon_affected = NULL;
+    
+    //Iterate over all squares within 3 of the player.
+    for(radius_iterator ri(you.pos(), 3); ri; ++ri)
+    {
+        monster* mon = monster_at(*ri);
+        
+        //Check whether the square has an appropriate monster.
+        if(mon != NULL && mon->mons_species() == MONS_ORC
+           && mon->attitude == ATT_FRIENDLY)
+        {
+            switch(potion)
+            {
+            case POT_HEALING:
+            {
+                //Minor health restoration and clearing of status ailments.
+                mon->heal(5 + random2(7));
+                
+                const enchant_type cured_enchants[] = {
+                    ENCH_POISON, ENCH_SICK, ENCH_CONFUSION, ENCH_ROT
+                };
+                for (unsigned int i = 0; i < ARRAYSZ(cured_enchants); ++i)
+                    mon->del_ench(cured_enchants[i]);
+                num_affected++;
+                mon_affected = mon;
+            }
+                break;
+            case POT_HEAL_WOUNDS:
+                //Moderate health restoration.
+                mon->heal(10 + random2avg(28, 3));
+                num_affected++;
+                mon_affected = mon;
+                break;
+            case POT_SPEED:
+                //Cancel Slow status, or add Haste.
+                if(mon->del_ench(ENCH_SLOW, true))
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    break;
+                }
+                
+                if(!mon->has_ench(ENCH_HASTE))
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    mon->add_ench(ENCH_HASTE);
+                }
+                break;
+            case POT_MIGHT:
+                //Grant Might status.
+                if(!mon->has_ench(ENCH_MIGHT))
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    mon->add_ench(ENCH_MIGHT);
+                }
+                break;
+            case POT_INVISIBILITY:
+                //Grant Invisibility status if the player can see invisible.
+                if(!you.can_see_invisible())
+                    break;
+                if(!mon->has_ench(ENCH_INVIS))
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    mon->add_ench(ENCH_INVIS);
+                }
+                break;
+            case POT_BERSERK_RAGE:
+                //Grant Berserk status.  This should be fun...
+                if(!mon->berserk())
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    mon->go_berserk(true);
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    
+    if(num_affected == 1)
+    {
+        switch(potion)
+        {
+        case POT_HEALING:
+        case POT_HEAL_WOUNDS:
+            mprf("%s is healed.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
+            break;
+        case POT_SPEED:
+            mprf("%s seems to speed up.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
+            break;
+        case POT_MIGHT:
+            mprf("%s seems to grow stronger.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
+            break;
+        case POT_INVISIBILITY:
+            mprf("%s flickers for a moment.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
+            break;
+        case POT_BERSERK_RAGE:
+        default:
+            //Berserk will already have printed a message in go_berserk().
+            break;
+        }
+    }
+    else
+    {
+        switch(potion)
+        {
+        case POT_HEALING:
+        case POT_HEAL_WOUNDS:
+            mprf("Your nearby followers are healed.");
+            break;
+        case POT_SPEED:
+            mprf("Your nearby followers seem to speed up.");
+            break;
+        case POT_MIGHT:
+            mprf("Your nearby followers seem to grow stronger.");
+            break;
+        case POT_INVISIBILITY:
+            mprf("Your nearby followers flicker for a moment.");
+            break;
+        case POT_BERSERK_RAGE:
+        default:
+            //Berserk will already have printed a message in go_berserk().
+            break;
+        }
+    }
+}
+            
 
 bool jiyva_can_paralyse_jellies()
 {

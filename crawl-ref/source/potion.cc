@@ -19,6 +19,7 @@
 #include "env.h"
 #include "exercise.h"
 #include "food.h"
+#include "godabil.h"
 #include "godconduct.h"
 #include "godwrath.h"
 #include "hints.h"
@@ -408,6 +409,10 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
         mpr("You feel bugginess flow through your body.");
         break;
     }
+    
+    //Beogh followers with sufficient piety will share their potions.
+    if(drank_it)
+        beogh_share_potion(pot_eff);
 
     return true;
 }

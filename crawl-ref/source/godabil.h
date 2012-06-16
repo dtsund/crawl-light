@@ -54,6 +54,7 @@ void jiyva_slimify();
 bool beogh_water_walk();
 bool beogh_smiting();
 void beogh_recall_orcish_followers();
+void beogh_share_potion(potion_type potion);
 
 bool yred_injury_mirror();
 void yred_request_injury_mirror();

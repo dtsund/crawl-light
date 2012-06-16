@@ -293,7 +293,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // Beogh
     { "Beogh supports the use of orcish gear.",
       "smite your foes",
-      "gain orcish followers",
+      "gain orcish followers and share potions with them",
       "recall your orcish followers",
       "walk on water" },
     // Jiyva
@@ -401,7 +401,7 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // Beogh
     { "Beogh no longer supports the use of orcish gear.",
       "smite your foes",
-      "gain orcish followers",
+      "gain orcish followers or share potions with them",
       "recall your orcish followers",
       "walk on water" },
     // Jiyva
