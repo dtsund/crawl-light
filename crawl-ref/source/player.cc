@@ -6954,6 +6954,11 @@ int get_max_magic_contamination(species_type species)
 // otherwise.
 bool contamination_warning_prompt(int cost)
 {
+    //Never warn if there's no cost.
+    if(cost == 0)
+        return true;
+    
+    //Not a heavy enough cost to warrant a warning.
     if(you.magic_contamination + cost <= you.max_magic_contamination)
         return true;
     
