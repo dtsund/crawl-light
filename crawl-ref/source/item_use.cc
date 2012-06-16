@@ -3932,7 +3932,7 @@ void drink(int slot)
     
     if(you.where_are_you == BRANCH_GEHENNA)
     {
-        mpr("You don't dare expose your potions to this infernal heat!");
+        mpr("Your potions would simply evaporate in this infernal heat!");
         return;
     }
 
