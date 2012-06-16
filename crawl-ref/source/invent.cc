@@ -1587,7 +1587,7 @@ bool needs_handle_warning(const item_def &item, operation_types oper)
         && (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES))
     {
         if (get_weapon_brand(item) == SPWPN_DISTORTION
-            && !you.duration[DUR_WEAPON_BRAND])
+            && (!you.duration[DUR_WEAPON_BRAND] && you.religion != GOD_LUGONU))
         {
             return (true);
         }
