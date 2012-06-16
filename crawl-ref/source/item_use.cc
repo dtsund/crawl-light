@@ -34,6 +34,7 @@
 #include "effects.h"
 #include "env.h"
 #include "exercise.h"
+#include "files.h"
 #include "fight.h"
 #include "food.h"
 #include "godconduct.h"
@@ -4709,10 +4710,18 @@ void read_scroll(int slot)
         break;
 
     case SCR_ACQUIREMENT:
+        // XXX HACK: Don't let the player acquirement-scum.
+        // Save the game upon reading and decrement scroll count,
+        // so if SIGHUP or something is received, it'll just waste the scroll
+        // instead of letting you take another shot if you want better items.
+        // Can decrement item quantity here and return only because you can't
+        // cancel this scroll.
+        dec_inv_item_quantity(item_slot, 1);
+        save_game_state();
         mpr("This is a scroll of acquirement!");
         more();
         acquirement(OBJ_RANDOM, AQ_SCROLL);
-        break;
+        return;
 
     case SCR_FEAR:
     {
