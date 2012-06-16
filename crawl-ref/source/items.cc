@@ -1648,6 +1648,13 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
             mpr("Press } to see all the runes you have collected.");
         }
+        
+        //If the player just took the Abyssal rune, give him an exit.
+        if(mitm[obj].plus == RUNE_ABYSSAL)
+        {
+            mpr("The magic within the rune manifests itself in the form of a gate.");
+            dungeon_terrain_changed(you.pos(), DNGN_EXIT_ABYSS, false, false, true);
+        }
 
         dungeon_events.fire_position_event(
             dgn_event(DET_ITEM_PICKUP, you.pos(), 0, obj, -1), you.pos());
