@@ -1254,6 +1254,27 @@ static void _give_species_bonus_mp()
     }
 }
 
+//Now that you can't just take a staircase to avoid trouble, let's give the player
+//a few tools to be able to avoid dying early.
+static void _give_starting_escape_items()
+{
+    //One potion of agility, for an evasion and swiftness boost...
+    item_def agility;
+    agility.quantity = 1;
+    agility.base_type = OBJ_POTIONS;
+    agility.sub_type = POT_AGILITY;
+    const int agility_slot = find_free_slot(agility);
+    you.inv[agility_slot] = agility;
+    
+    //...and one scroll of teleportation.
+    item_def teleport;
+    teleport.quantity = 1;
+    teleport.base_type = OBJ_SCROLLS;
+    teleport.sub_type = SCR_TELEPORTATION;
+    const int teleport_slot = find_free_slot(teleport);
+    you.inv[teleport_slot] = teleport;
+}
+
 static void _setup_tutorial_miscs()
 {
     // Allow for a few specific hint mode messages.
@@ -1518,6 +1539,8 @@ static void _setup_generic(const newgame_def& ng)
 
     if (you.species == SP_DEMONSPAWN)
         roll_demonspawn_mutations();
+
+    _give_starting_escape_items();
 
     if (crawl_state.game_is_sprint())
         sprint_give_items();
