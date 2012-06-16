@@ -140,6 +140,11 @@ void add_monster_to_transit(const level_id &lid, level_id &origin, const monster
     int time_to_stairs = (path.size() - 1) * 100 / m.speed;
     to_push.aut_to_staircase = time_to_stairs;
     
+    //If a monster will take more than ten normal-turns to reach the stairs, bail.
+    if(time_to_stairs > 100)
+        return;
+    
+    
     to_push.mons_original_lid = origin;
     
     //We'll never revisit non-dungeon areas anyway, so let's make sure that
