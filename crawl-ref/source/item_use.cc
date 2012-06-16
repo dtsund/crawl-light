@@ -3844,6 +3844,13 @@ void zap_wand(int slot)
 
     // Take off a charge.
     wand.plus--;
+    
+    // Take off a second charge if in Gehenna.
+    if(you.where_are_you == BRANCH_GEHENNA && wand.plus > 0)
+    {
+        mpr("Your wand sputters and sparks in the blistering heat, discharging some energy.");
+        wand.plus--;
+    }
 
     // Zap counts count from the last recharge.
     if (wand.plus2 == ZAPCOUNT_MAX_CHARGED || wand.plus2 == ZAPCOUNT_RECHARGED)
@@ -3921,6 +3928,12 @@ void drink(int slot)
        canned_msg(MSG_PRESENT_FORM);
        _vampire_corpse_help();
        return;
+    }
+    
+    if(you.where_are_you == BRANCH_GEHENNA)
+    {
+        mpr("You don't dare expose your potions to this infernal heat!");
+        return;
     }
 
     if (slot == -1)
@@ -4547,6 +4560,12 @@ void read_scroll(int slot)
     if (inv_count() < 1)
     {
         canned_msg(MSG_NOTHING_CARRIED);
+        return;
+    }
+    
+    if(you.where_are_you == BRANCH_GEHENNA)
+    {
+        mpr("You don't dare expose your books and scrolls to this infernal heat!");
         return;
     }
 
