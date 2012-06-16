@@ -7,7 +7,7 @@ NAME: primary_dummy
 TAGS: dummy
 DEPTH: 1-100, Pan, Abyss
 ORIENT: float
-CHANCE: 0 : 0 (D:26-27), 0 : 5000 (D:24-25), 0 : 7500 (D:20-23), 0 : 8888
+CHANCE: 0 : 0 (D:18), 0 : 5000 (D:16-17), 0 : 7500 (D:14-15), 0 : 8888
 MAP
 x
 ENDMAP
