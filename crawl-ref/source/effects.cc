@@ -2212,6 +2212,13 @@ void handle_time()
     // Nasty things happen to people who spend too long in Hell.
     if (player_in_hell() && coinflip())
         _hell_effects();
+    
+    // In particular, Tartarus slowly drains your experience...
+    if(you.where_are_you == BRANCH_TARTARUS)
+    {
+        you.experience = you.experience * 49 / 50;
+        level_change();
+    }
 
     // Adjust the player's stats if s/he's diseased. Stats used to slowly
     // recover over time, but now they don't.

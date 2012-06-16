@@ -66,6 +66,8 @@ public:
   uint8_t hit_points_regeneration;
   uint8_t magic_points_regeneration;
   unsigned int experience;
+  unsigned int undrained_experience; //Experience immediately before entering Tartarus.
+                                     //Will be restored on exit.
   int experience_level;
   int gold;
   int zigs_completed, zig_max;

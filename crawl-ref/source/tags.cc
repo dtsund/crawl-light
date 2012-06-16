@@ -1076,6 +1076,7 @@ static void tag_construct_you(writer &th)
 
     marshallShort(th, you.hit_points_regeneration * 100);
     marshallInt(th, you.experience);
+    marshallInt(th, you.undrained_experience);
     marshallInt(th, you.gold);
 
     marshallInt(th, you.exp_available);
@@ -1721,6 +1722,12 @@ static void tag_read_you(reader &th)
 
     you.hit_points_regeneration   = unmarshallShort(th) / 100;
     you.experience                = unmarshallInt(th);
+
+    if(th.getMinorVersion() >= TAG_MINOR_TAR_DRAINING)
+        you.undrained_experience  = unmarshallInt(th);
+    else
+        you.undrained_experience = you.experience;
+
     you.gold                      = unmarshallInt(th);
     you.exp_available             = unmarshallInt(th);
     

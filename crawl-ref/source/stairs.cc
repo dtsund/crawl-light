@@ -692,6 +692,17 @@ void up_stairs(dungeon_feature_type force_stair,
     {
         mprf("Welcome back to %s!",
              branches[you.where_are_you].longname);
+        
+        //When leaving Tartarus, restore lost experience.
+        if(old_level.branch == BRANCH_TARTARUS)
+        {
+            if(you.experience < you.undrained_experience)
+            {
+                mpr("You sigh with relief as your memories come flooding back.");
+                you.experience = you.undrained_experience;
+                level_change();
+            }
+        }
     }
 
     const coord_def stair_pos = you.pos();
@@ -1166,6 +1177,20 @@ void down_stairs(dungeon_feature_type force_stair,
             mpr(branches[you.where_are_you].entry_message);
         else
             mprf("Welcome to %s!", branches[you.where_are_you].longname);
+            
+        //Handle the just-entered-Tartarus stuff here.
+        if(you.where_are_you == BRANCH_TARTARUS)
+        {
+            mpr("You shudder as the unholy atmosphere begins claiming your memories...");
+            you.undrained_experience = you.experience;
+            
+            //This will almost never happen in practice.
+            if(you.experience_level == 1)
+                you.experience = 0;
+            else
+                you.experience = exp_needed(you.experience_level) - 1;
+            level_change();
+        }
     }
 
     if (stair_find == DNGN_ENTER_HELL)
