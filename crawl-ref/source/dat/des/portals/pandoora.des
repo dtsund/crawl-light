@@ -35,7 +35,7 @@ function pandoora_portal(e)
     }
 
   e.lua_marker('O',
-      timed_marker {
+      one_way_stair {
         disappear = "The portal silently vanishes, perhaps for the better.",
         desc = "sinister portal",
         desc_long = desc_long,
@@ -43,8 +43,6 @@ function pandoora_portal(e)
         dstname = "pandoora",
         dstorigin = "near a Pandoora",
         overview = "sinister portal",
-        turns = timeout_turns_long,
-        turns_short = timeout_turns_short,
         floor = "stone_arch",
         msg = messager })
   e.kfeat("O = enter_portal_vault")
@@ -142,9 +140,13 @@ KITEM:   a = scroll of acquirement
 KPROP:   "a = no_tele_into
 SUBST:   " = .
 MAP
-xxxxxxxxXXXXX
-x......1ooo"X
-x>A....2B/B"X
-x......1oooaX
-xxxxxxxxXXXXX
+xxxxxxxxxx
+x........x
+x.xxxxxx.xxXXXXX
+x.........1ooo"X
+x>A.......2B/B"X
+x.........1oooaX
+x.xxxxxx.xxXXXXX
+x........x
+xxxxxxxxxx
 ENDMAP
