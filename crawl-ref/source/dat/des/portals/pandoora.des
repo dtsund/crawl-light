@@ -105,7 +105,8 @@ default-depth:
 NAME:   pandoora_vault_1
 TAGS:   pandoora no_rotate allow_dup
 ORIENT: encompass
-MONS:   ancient lich
+MONS:   hill giant
+MONS:   kobold demonologist
 KFEAT:  > = exit_portal_vault
 {{
 local pandoora_marker = TriggerableFunction:new {
@@ -142,8 +143,8 @@ KPROP:   "a = no_tele_into
 SUBST:   " = .
 MAP
 xxxxxxxxXXXXX
-x.......ooo"X
-x>A.....B/B"X
-x.......oooaX
+x......1ooo"X
+x>A....2B/B"X
+x......1oooaX
 xxxxxxxxXXXXX
 ENDMAP
