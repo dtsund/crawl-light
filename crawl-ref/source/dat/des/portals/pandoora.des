@@ -14,6 +14,8 @@
 ##############################################################################
 
 {{
+local portal_destroyed = false
+
 function pandoora_portal(e)
   local desc_long
   desc_long = [[This dark portal leads to a place spoken of only in whispers, where great evil is sealed away. Releasing these dark forces would probably be unwise.]]
@@ -67,29 +69,88 @@ function open_pandoora(data, triggerable, triggerer, marker, ev)
 -- Just here to maintain save compatibility.
 end
 
+function open_barrier(data, triggerable, triggerer, marker, ev)
+    if portal_destroyed == true then
+        return
+    else
+        portal_destroyed = true
+    end
+    
+    crawl.mpr("The portal in the room vanishes without a trace.")
+  
+    for slave in iter.slave_iterator("pandoora_portal_phase", 1) do
+        dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
+    end
+end
+
+function destroy_pandoora_portal(data, triggerable, triggerer, marker, ev)
+    if portal_destroyed == true then
+        return
+    else
+        portal_destroyed = true
+    end
+    
+    for slave in iter.slave_iterator("pandoora_portal_phase", 1) do
+        dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
+    end
+end
+
+
+local tm = TriggerableFunction:new{func="destroy_pandoora_portal"}
+tm:add_triggerer(DgnTriggerer:new{type="pressure_plate"})
+
 }}
 
 # Basic Pandoora entries ########################################
 
 NAME:   enter_pandoora_stairs
-TAGS:   pandoora_entry
+TAGS:   pandoora_entry no_monster_gen
 ORIENT: float
 PLACE: D:easy_checkpoint
 WEIGHT: 1
 :   pandoora_portal(_G)
+{{
+local barrier_door_marker = TriggerableFunction:new {
+    func="open_barrier"}
+
+barrier_door_marker:add_triggerer(DgnTriggerer:new {
+    type="feat_change",
+    target="door"})
+    
+local killer_floor_marker = TriggerableFunction:new {
+    func="destroy_pandoora_portal"}
+
+killer_floor_marker:add_triggerer(DgnTriggerer:new {
+    type="player_move",
+    target="floor"})
+
+lua_marker("/", barrier_door_marker)
+lua_marker('^', killer_floor_marker)
+}}
+MARKER:  + = lua:restrict_door {}
+MARKER:  / = lua:props_marker { \
+             door_open_prompt="As you approach the door, the portal beside you" .. \
+                              "seems to fade.  Open it anyway?", \
+             door_description_noun="rune-encrusted door", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
+MARKER: O = lua:portal_desc {pandoora_portal_phase = 1}
+KPROP:  "({[O = no_tele_into
+SUBST:   "^ = .
+SUBST:   / = +
 MAP
 xxxxx
-x(.[x
-x.{.x
-x...x
-x.O.x
-xx.xx
+x("[x
+x"{"x
+x"""x
+x"O"x
+xx/xx
+ x^x
  x.x
- x.x
- x.x
+ x+x
 ENDMAP
-
-
 # The actual maps ###############################################
 default-depth:
 
