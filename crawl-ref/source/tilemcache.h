@@ -76,7 +76,6 @@ public:
 
     void read(reader &th);
     void construct(writer &th);
-    bool empty() { return m_entries.empty(); }
 
 protected:
     std::vector<mcache_entry*> m_entries;
