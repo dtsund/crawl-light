@@ -2400,6 +2400,11 @@ static void _trowel_card(int power, deck_rarity_type rarity)
 
 static void _genie_card(int power, deck_rarity_type rarity)
 {
+    // XXX HACK: Don't let the player acquirement-scum.
+    // Save the game upon drawing, so if SIGHUP or something is received,
+    // it'll just waste the card instead of letting you take another shot 
+    // if you want better items.
+    save_game_state();
     if (coinflip())
     {
         mpr("A genie takes form and thunders: "

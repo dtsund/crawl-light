@@ -20,6 +20,7 @@
 #include "dungeon.h"
 #include "externs.h"
 #include "food.h"
+#include "files.h"
 #include "invent.h"
 #include "itemname.h"
 #include "itemprop.h"
@@ -2112,12 +2113,15 @@ bool acquirement(object_class_type class_wanted, int agent,
         }
 
     redraw_screen();
+    save_game_state();
     return(true);
 
     }
 
     *item_index = acquirement_create_item(class_wanted, agent, quiet,
                                           you.pos(), debug);
+
+    save_game_state();
 
     return (true);
 }
