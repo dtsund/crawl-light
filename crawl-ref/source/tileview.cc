@@ -973,6 +973,12 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
         else
             orig = TILE_WALL_NORMAL;
     }
+    
+    if (you.level_type == LEVEL_DUNGEON && you.where_are_you == BRANCH_CRYPT
+        && orig == TILE_DNGN_METAL_WALL)
+    {
+        orig = TILE_WALL_CRYPT_METAL;
+    }
 
     if (orig == TILE_FLOOR_NORMAL)
         *bg = flv.floor;
