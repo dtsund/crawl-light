@@ -35,6 +35,7 @@ Table of Contents
 6. Compiling the game
 7. Tiles suggestions
 8. Submitting your tiles
+9. Reducing file size
 
 
 1. The Tools
@@ -462,6 +463,24 @@ Please submit your new tiles as a new item in the Graphics category of our
 Mantis tracker (http://crawl.develz.org/mantis/bug_report_page.php), or send an
 email containing your tiles to one of the tiles developers
 (ennewalker, evktalo, jpeg).
+
+9. Reducing file size
+=====================
+
+(Committer only.)  When actually putting the tiles into version control,
+please minimize their file sizes.  Editors usually want to save quickly,
+often producing files 3-4 times as big as they could be without any loss of
+quality.  There are two separate steps, and there are two different programs
+which excel at them.  I found that the best effects can be obtained with
+running them in sequence:
+  optipng -o4 -i0 -fix image.png
+  advpng -z4 image.png
+
+optipng: optimizations higher than -o4 touch only areas that will be
+re-done by advpng anyway; -i0 disables interlacing which does no good here
+and stops advpng from working; -fix allows to ignore junk PhotoShop adds.
+
+advpng can be found in package "advancecomp".
 
 Thanks a lot for your support!
 
