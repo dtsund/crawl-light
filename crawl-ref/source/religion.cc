@@ -3431,6 +3431,12 @@ void god_pitch(god_type which_god)
     }
 
     // Note that you.worshipped[] has already been incremented.
+    if (you.char_class == JOB_MONK && had_gods() <= 1)
+    {
+        // monks get bonus piety for first god
+        gain_piety(35, 1, true, false);
+    }
+
     if (you.religion == GOD_LUGONU && you.worshipped[GOD_LUGONU] == 1)
         gain_piety(20, 1, true, false);  // allow instant access to first power
 
@@ -3456,6 +3462,14 @@ void god_pitch(god_type which_god)
     redraw_skill(you.your_name, player_title());
 
     learned_something_new(HINT_CONVERT);
+}
+
+int had_gods()
+{
+    int count = 0;
+    for (int i = 0; i < MAX_NUM_GODS; i++)
+        count += you.worshipped[i];
+    return count;
 }
 
 bool god_likes_your_god(god_type god, god_type your_god)
