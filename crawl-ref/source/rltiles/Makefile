@@ -42,7 +42,7 @@ endif
 ifeq ($(shell which $(LMACH)gcc > /dev/null 2> /dev/null && echo "Yes"),)
 LMACH :=
 endif
-CXX = $(LMACH)g++
+CXX ?= $(LMACH)g++
 ifdef ARCH
 CF_ARCHS := $(patsubst %,-arch %,$(ARCH))
 CXX += $(CF_ARCHS)
