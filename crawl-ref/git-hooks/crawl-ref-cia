@@ -175,6 +175,9 @@ $user =~ s/^muu+$/Mu/i;
 $user =~ s/raphael.langella/galehar/;
 $user =~ s/flodiebold/edlothiol/;
 
+# Crawl Light:
+$user =~ s/Derrick Sund/dtsund/;
+
 # Other regular contributorss
 $user =~ s/chriscampbell89/MarvinPA/;
 $user =~ s/homelesspete/Twinge/;
