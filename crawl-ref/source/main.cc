@@ -1341,7 +1341,7 @@ static bool _prompt_unique_pan_rune(dungeon_feature_type ygrd)
                 || rune->plus == RUNE_MNOLEG || rune->plus == RUNE_GLOORX_VLOQ))
     {
         return yesno("An item of great power still resides in this realm, "
-                "and you once you leave you can never return. "
+                "and once you leave you can never return. "
                 "Are you sure you want to leave?");
     }
     return true;
