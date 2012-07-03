@@ -1334,7 +1334,7 @@ static bool _terrain_allows_following(dungeon_feature_type feature)
 
 static bool _prompt_unique_pan_rune(dungeon_feature_type ygrd)
 {
-    if (ygrd != DNGN_TRANSIT_PANDEMONIUM)
+    if (ygrd != DNGN_TRANSIT_PANDEMONIUM && ygrd != DNGN_EXIT_PANDEMONIUM)
         return true;
     item_def* rune = find_floor_item(OBJ_MISCELLANY, MISC_RUNE_OF_ZOT);
     if (rune && (rune->plus == RUNE_CEREBOV || rune->plus == RUNE_LOM_LOBON
