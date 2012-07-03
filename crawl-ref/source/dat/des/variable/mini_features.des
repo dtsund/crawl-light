@@ -1325,7 +1325,7 @@ ENDMAP
 NAME:   mumra_transporter_accident
 TAGS:   extra
 WEIGHT: 1
-DEPTH:  D:5-,Lair,Elf:1-4,Orc
+DEPTH:  D:3-,Lair,Elf:1-2,Orc
 SUBST:  X = x.
  : dgn.delayed_decay(_G,'B', 'human skeleton')
 KITEM:  A : wand of teleportation charges:0 / wand of digging charges:0

@@ -1946,7 +1946,7 @@ ENDMAP
 NAME:   mumra_celtic_spiral_tile
 ORIENT: float
 TAGS:   allow_dup
-DEPTH:  D:1-10
+DEPTH:  D:1-7
 WEIGHT: 2
 MAP
             xxxxxxxxxxxxx

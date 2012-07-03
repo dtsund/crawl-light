@@ -236,7 +236,7 @@ end
 NAME:	fedhas_growing_garden
 TAGS:   uniq_altar_fedhas temple_overflow_fedhas mini_float
 TAGS:   no_item_gen no_monster_gen no_rotate
-DEPTH:	D:8-16,Lair:2-6,Snake:2-4
+DEPTH:	D:5-10,Lair:2-4,Snake:2
 # Shuffle the growth stages
 SUBST:	2 = 1:10 2:50
 SUBST:	3 = 2:20 3:50
