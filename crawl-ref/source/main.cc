@@ -1332,6 +1332,21 @@ static bool _terrain_allows_following(dungeon_feature_type feature)
     }
 }
 
+static bool _prompt_unique_pan_rune(dungeon_feature_type ygrd)
+{
+    if (ygrd != DNGN_TRANSIT_PANDEMONIUM)
+        return true;
+    item_def* rune = find_floor_item(OBJ_MISCELLANY, MISC_RUNE_OF_ZOT);
+    if (rune && (rune->plus == RUNE_CEREBOV || rune->plus == RUNE_LOM_LOBON
+                || rune->plus == RUNE_MNOLEG || rune->plus == RUNE_GLOORX_VLOQ))
+    {
+        return yesno("An item of great power still resides in this realm, "
+                "and you once you leave you can never return. "
+                "Are you sure you want to leave?");
+    }
+    return true;
+}
+
 static void _go_downstairs();
 static void _go_upstairs()
 {
@@ -1394,6 +1409,9 @@ static void _go_upstairs()
         mpr("You are carrying too much to climb upwards.");
         return;
     }
+
+    if (!_prompt_unique_pan_rune(ygrd))
+        return;
 
     const bool leaving_dungeon =
         level_id::current() == level_id(BRANCH_MAIN_DUNGEON, 1)
@@ -1503,6 +1521,9 @@ static void _go_downstairs()
     // Does the next level have a warning annotation?
     // Also checks for entering a labyrinth with teleportitis.
     if (!check_annotation_exclusion_warning())
+        return;
+        
+    if (!_prompt_unique_pan_rune(ygrd))
         return;
 
     if (you.duration[DUR_MISLED])
