@@ -1645,7 +1645,12 @@ static spret_type _do_cast(spell_type spell, int powc,
         break;
 
     case SPELL_ABJURATION:
-        abjuration(powc);
+        abjuration(powc,
+                   monster_at(spd.isTarget ? beam.target : you.pos() + spd.delta));
+        break;
+
+    case SPELL_MASS_ABJURATION:
+        abjuration(powc, NULL);
         break;
 
     case SPELL_OLGREBS_TOXIC_RADIANCE:

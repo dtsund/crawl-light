@@ -1391,7 +1391,7 @@ TAGS:   no_monster_gen
 DEPTH:  D:3-, Coc, Geh
 : if you.absdepth() > 16 then
 MONS:   fiend / balrug w:5
-MONS:   ice fiend / blue death w:5
+MONS:   ice fiend / blizzard demon w:5
 MONS:   sun demon / smoke demon / hellion
 MONS:   ice devil / blue devil w:5
 MONS:   red devil / imp

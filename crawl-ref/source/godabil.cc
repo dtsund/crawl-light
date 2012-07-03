@@ -3961,6 +3961,6 @@ bool makhleb_major_destruction()
 void makhleb_greater_servant_of_makhleb()
 {
     summon_demon_type(random_mons(MONS_EXECUTIONER, MONS_GREEN_DEATH,
-                      MONS_BLUE_DEATH, MONS_BALRUG, MONS_CACODEMON, -1),
+                      MONS_BLIZZARD_DEMON, MONS_BALRUG, MONS_CACODEMON, -1),
                       20 + you.skill(SK_INVOCATIONS) * 3, GOD_MAKHLEB);
 }

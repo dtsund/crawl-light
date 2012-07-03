@@ -2212,7 +2212,7 @@ enum monster_type                      // (int) menv[].type
     MONS_IRON_DEVIL,
     MONS_EXECUTIONER,
     MONS_GREEN_DEATH,
-    MONS_BLUE_DEATH,
+    MONS_BLIZZARD_DEMON,
     MONS_BALRUG,
     MONS_CACODEMON,
     MONS_SUN_DEMON,
@@ -3129,6 +3129,7 @@ enum spell_type
     SPELL_MELEE, // like SPELL_NO_SPELL, but doesn't cause a re-roll
     SPELL_FIRE_SUMMON,
     SPELL_INNER_FLAME,
+    SPELL_MASS_ABJURATION,
 
     NUM_SPELLS
 };
