@@ -1887,7 +1887,7 @@ int player_movement_speed(bool ignore_burden)
 
     // Swiftness doesn't work in water.
     if (you.duration[DUR_SWIFTNESS] > 0 && !you.in_water())
-        mv -= 2
+        mv -= 2;
 
     // Mutations: -2, -3, -4, unless innate and shapechanged.
     // Not when swimming, since it is "cover the ground quickly".
