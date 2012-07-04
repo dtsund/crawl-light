@@ -276,7 +276,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
                  "You become %stransparent, but the glow from your "
                  "magical contamination prevents you from becoming "
                  "completely invisible.",
-                 you.duration[DUR_INVIS] ? "further " : "");
+                 you.duration[DUR_INVIS] ? "more " : "");
         }
         else
         {
