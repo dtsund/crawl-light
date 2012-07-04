@@ -4080,7 +4080,7 @@ static void _move_player(coord_def move)
         }
 
         you.time_taken *= player_movement_speed();
-        you.time_taken /= 10;
+        you.time_taken = div_rand_round(you.time_taken, 10);
 
         move_player_to_grid(targ, true, false);
 
