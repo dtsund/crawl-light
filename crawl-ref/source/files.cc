@@ -1180,11 +1180,8 @@ static void _grab_followers(level_id origin)
 
 // Should be called after _grab_followers(), so that items carried by
 // followers won't be considered lost.
-static void _do_lost_items(level_area_type old_level_type)
+static void _do_lost_items()
 {
-    if (old_level_type == LEVEL_DUNGEON)
-        return;
-
     for (int i = 0; i < MAX_ITEMS; i++)
     {
         item_def& item(mitm[i]);
@@ -1253,20 +1250,20 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
     dungeon_events.clear();
 
     // This block is to grab followers and save the old level to disk.
-    if (load_mode == LOAD_ENTER_LEVEL && old_level.depth != -1)
+    if (load_mode == LOAD_ENTER_LEVEL)
     {
+        ASSERT(old_level.depth != -1); // what's this for?
+        
         _grab_followers(old_level);
 
         if (old_level.level_type == LEVEL_DUNGEON
             || old_level.level_type != you.level_type)
         {
             _save_level(old_level);
+        else
+        {
+            _do_lost_items();
         }
-    }
-
-    if (load_mode == LOAD_ENTER_LEVEL)
-    {
-        _do_lost_items(old_level.level_type);
 
         // The player is now between levels.
         you.position.reset();
