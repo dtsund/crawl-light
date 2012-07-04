@@ -3939,11 +3939,18 @@ int melee_attack::player_to_hit(bool random_factor)
     // Check for backlight (Corona).
     if (defender && defender->atype() == ACT_MONSTER)
     {
-        if (defender->backlit(true, false))
-            your_to_hit += 2 + random2(8);
         // Invisible monsters are hard to hit.
-        else if (!defender->visible_to(&you))
+        if (!defender->visible_to(&you))
             your_to_hit -= 6;
+        else
+        {
+            if (defender->backlit(true, false))
+                your_to_hit += 2 + random2(8);
+
+            else if (!attacker->nightvision()
+                     && defender->umbra(true, true))
+                your_to_hit -= 2 + random2(4);
+        }
     }
 
     return (your_to_hit);
@@ -5267,9 +5274,7 @@ void melee_attack::mons_do_spines()
     if (body)
         evp = -property(*body, PARM_EVASION);
 
-    if (you.mutation[MUT_SPINY]
-        && attacker->alive()
-        && one_chance_in(evp + 1))
+    if (you.mutation[MUT_SPINY] && attacker->alive() && one_chance_in(evp + 1))
     {
         if (test_melee_hit(2 + 4 * mut, attacker->melee_evasion(defender), r)
             < 0)
@@ -5877,19 +5882,26 @@ int melee_attack::mons_to_hit()
     if (attacker->confused())
         mhit -= 5;
 
-    if (defender->backlit(true, false))
-        mhit += 2 + random2(8);
-
-     if (defender->atype() == ACT_PLAYER
-         && player_mutation_level(MUT_TRANSLUCENT_SKIN) >= 3)
-         mhit -= 5;
-
     // Invisible defender is hard to hit if you can't see invis. Note
     // that this applies only to monsters vs monster and monster vs
     // player. Does not apply to a player fighting an invisible
     // monster.
     if (!defender->visible_to(attacker))
         mhit = mhit * 65 / 100;
+    else
+    {
+         // This can only help if you're visible!
+         if (defender->atype() == ACT_PLAYER
+             && player_mutation_level(MUT_TRANSLUCENT_SKIN) >= 3)
+             mhit -= 5;
+
+         if (defender->backlit(true, false))
+             mhit += 2 + random2(8);
+
+         else if (!attacker->nightvision() &&
+                  defender->umbra(true, true))
+             mhit -= 2 + random2(4);
+    }
 
 #ifdef DEBUG_DIAGNOSTICS
     mprf(MSGCH_DIAGNOSTICS, "%s: Base to-hit: %d, Final to-hit: %d",

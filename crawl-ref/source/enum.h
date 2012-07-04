@@ -2400,6 +2400,7 @@ enum monster_type                      // (int) menv[].type
     MONS_HOLY_SWINE,            // porkalator only
     MONS_SENSED_FRIENDLY,
     MONS_GOLEM,
+    MONS_PROFANE_SERVITOR,
 
     NUM_MONSTERS,                      // used for polymorph
 

@@ -3810,8 +3810,9 @@ void display_char_status()
         STATUS_SPEED, DUR_MIGHT, DUR_BRILLIANCE, DUR_AGILITY,
         DUR_DIVINE_VIGOUR, DUR_DIVINE_STAMINA, DUR_BERSERK,
         STATUS_AIRBORNE, STATUS_NET, DUR_POISONING, STATUS_SICK,
-        STATUS_ROT, STATUS_GLOW, DUR_CONFUSING_TOUCH, DUR_SURE_BLADE,
+        STATUS_ROT, STATUS_CONTAMINATION, DUR_CONFUSING_TOUCH, DUR_SURE_BLADE,
         DUR_AFRAID, DUR_MIRROR_DAMAGE, DUR_SCRYING, STATUS_CLINGING, STATUS_FIREBALL,
+        STATUS_BACKLIT, STATUS_UMBRA,
     };
 
     status_info inf;
@@ -6116,6 +6117,12 @@ bool player::travelling_light() const
     return (burden < carrying_capacity(BS_UNENCUMBERED) * 70 / 100);
 }
 
+bool player::nightvision() const
+{
+    return (undead_or_demonic() ||
+           (religion == GOD_YREDELEMNUL && piety > piety_breakpoint(2)));
+}
+
 int player::mons_species() const
 {
     if (player_genus(GENPC_DRACONIAN))
@@ -6577,7 +6584,19 @@ bool player::backlit(bool check_haloed, bool self_halo) const
         return (true);
     }
     if (check_haloed)
-        return (haloed() && (self_halo || halo_radius() == -1));
+        return (!antihaloed() && haloed()
+                && (self_halo || halo_radius() == -1));
+    return (false);
+}
+
+bool player::umbra(bool check_haloed, bool self_halo) const
+{
+    if (backlit())
+        return (false);
+
+    if (check_haloed)
+        return (antihaloed() && !haloed()
+                && (self_halo || antihalo_radius() == -1));
     return (false);
 }
 
