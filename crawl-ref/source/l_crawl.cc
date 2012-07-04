@@ -102,10 +102,12 @@ LUAFN(crawl_stderr)
 
 LUAFN(crawl_dpr)
 {
+#ifdef DEBUG_DIAGNOSTICS
     const char *text = luaL_checkstring(ls, 1);
     if (crawl_state.io_inited)
         dprf("%s", text);
     return (0);
+#endif
 }
 
 LUAWRAP(crawl_delay, delay(luaL_checkint(ls, 1)))
