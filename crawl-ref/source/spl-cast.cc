@@ -1791,16 +1791,9 @@ static spret_type _do_cast(spell_type spell, int powc,
             return (SPRET_ABORT);
         break;
 
+#if TAG_MAJOR_VERSION == 32
     case SPELL_LEVITATION:
-        if (liquefied(you.pos()) && you.ground_level())
-        {
-            mprf(MSGCH_WARN, "Such puny magic can't pull you from the ground!");
-            return (SPRET_ABORT);
-        }
-
-        you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
-        levitate_player(powc);
-        break;
+#endif
 
     case SPELL_FLY:
         if (liquefied(you.pos()) && you.ground_level())
