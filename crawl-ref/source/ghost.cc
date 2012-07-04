@@ -9,6 +9,7 @@
 
 #include "artefact.h"
 #include "colour.h"
+#include "database.h"
 #include "env.h"
 #include "externs.h"
 #include "itemname.h"
