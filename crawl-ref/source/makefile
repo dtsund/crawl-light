@@ -8,10 +8,8 @@
 
 # Typical targets:
 #    make
-#    make wizard
 #    make debug
 #    make install
-#    make wizard install
 #    make debug install
 #    -- note, unlike most programs, you need to specify build type when
 #       installing even if you just built it.
@@ -42,6 +40,8 @@
 #
 #    USE_ICC       -- set to use Intel's compiler
 #    ASSERTS       -- set to enable assertion checks (implied in debug mode)
+#    NOWIZARD      -- set to disable wizard mode.  Use if you have untrusted
+#                     remote players without DGL.
 #
 #
 # Requirements:
@@ -611,23 +611,14 @@ endif
 # No optimization, full debugging.
 ifneq (,$(findstring debug,$(MAKECMDGOALS)))
 	FULLDEBUG=YesPlease
-	WIZARD=YesPlease
 	DEBUG=YesPlease
 	NO_OPTIMIZE=YesPlease
-endif
-
-# Wizard
-# Optimized, with wizard mode.
-ifneq (,$(findstring wizard,$(MAKECMDGOALS)))
-	WIZARD=YesPlease
-	DEBUG=YesPlease
 endif
 
 # Profile
 # Optimized, with full debugging.
 ifneq (,$(findstring profile,$(MAKECMDGOALS)))
 	FULLDEBUG=YesPlease
-	WIZARD=YesPlease
 	DEBUG=YesPlease
 endif
 
@@ -648,7 +639,7 @@ ifdef DEBUG
 CFOTHERS := -ggdb $(CFOTHERS)
 DEFINES += -DDEBUG
 endif
-ifdef WIZARD
+ifndef NOWIZARD
 DEFINES += -DWIZARD
 endif
 ifdef NO_OPTIMIZE
@@ -895,7 +886,7 @@ SRC_PKG_TAR_NODEPS := $(PKG_SRC_DIR)-nodeps.tar.bz2
 SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
 .PHONY: all test install clean clean-contrib clean-rltiles distclean debug \
-        profile wizard package-source source build-windows package-windows
+        profile package-source source build-windows package-windows
 
 all: buildscript $(GAME) $(GENERATED_DOCS)
 
@@ -1108,7 +1099,6 @@ $(GAME): $(GAME_DEPENDS)
 
 debug: all
 profile: all
-wizard: all
 final: all
 
 doxy-simple: doxygen-simple
