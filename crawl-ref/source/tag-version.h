@@ -15,6 +15,7 @@ enum tag_minor_version
     TAG_MINOR_MONS_THREAT_LEVEL,   // Save threat level in monster_info.
     TAG_MINOR_STAIR_FOLLOW,        // Monsters follow you more dynamically, Brogue-style.
     TAG_MINOR_TAR_DRAINING,        // Tartarus drains your experience.
+    TAG_MINOR_UNIQUE_NOTES,        // Automatic annotations for uniques.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1

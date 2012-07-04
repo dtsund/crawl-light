@@ -13,6 +13,7 @@
 #include "coordit.h"
 #include "delay.h"
 #include "dgnevent.h"
+#include "dgn-overview.h"
 #include "dgn-shoals.h"
 #include "directn.h"
 #include "env.h"
@@ -3912,6 +3913,8 @@ bool monster::needs_abyss_transit() const
 void monster::set_transit(const level_id &dest, level_id &origin)
 {
     add_monster_to_transit(dest, origin, *this);
+    if (you.can_see(this))
+        remove_unique_annotation(this);
 }
 
 void monster::set_transit(const level_id &dest)
