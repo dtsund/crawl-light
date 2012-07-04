@@ -1260,6 +1260,7 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
             || old_level.level_type != you.level_type)
         {
             _save_level(old_level);
+        }
         else
         {
             _do_lost_items();
