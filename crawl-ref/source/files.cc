@@ -35,6 +35,7 @@
 #include "act-iter.h"
 #include "areas.h"
 #include "artefact.h"
+#include "branch.h"
 #include "chardump.h"
 #include "cloud.h"
 #include "clua.h"
@@ -1236,6 +1237,14 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
             // Save the information for later deletion -- DML 6/11/99
             Generated_Levels.insert(current);
         }
+    }
+    
+    // Delete old Tartarus levels.  You can't revisit them; they're intended
+    // to be nonpersistent.
+    if(level_id::current().branch == BRANCH_TARTARUS
+       && level_id::current().depth < branches[BRANCH_TARTARUS].depth)
+    {
+        you.save->delete_chunk(level_name);
     }
 
     you.prev_targ     = MHITNOT;
