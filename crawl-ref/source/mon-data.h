@@ -96,6 +96,8 @@
    So far, differences here have little effects except for monster's chance
    of seeing you if stealthy and rudimentary trap handling; really stupid
    monsters will walk through clouds.
+   I_REPTILE is an alias for I_INSECT to reduce confusion a bit: these are
+   lower vertebrates (fish, amphibians, non-draconic reptiles).
 
    speed
    - Increases the store of energy that the monster uses for doing things.
@@ -1217,7 +1219,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 3}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 1, 1, 2, 0 },
     0, 15, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SILENT,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_TINY
 },
 
@@ -1229,7 +1231,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 5}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 1, 3, 5, 0 },
     1, 14, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SILENT,
-    I_INSECT, HT_LAND, FL_NONE, 12, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 12, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LITTLE
 },
 
@@ -1241,7 +1243,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 15}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 3, 3, 5, 0 },
     5, 9, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_HISS,
-    I_INSECT, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_SMALL
 },
 
@@ -1254,7 +1256,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 20}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 4, 4, 0 },
     3, 12, MST_NO_SPELLS, CE_POISON_CONTAM, Z_SMALL, S_HISS,
-    I_INSECT, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_SMALL
 },
 
@@ -1266,7 +1268,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_DISEASE, 30}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 8, 3, 5, 0 },
     7, 8, MST_NO_SPELLS, CE_CONTAMINATED, Z_BIG, S_HISS,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
@@ -1304,7 +1306,7 @@ static monsterentry mondata[] = {
       {AT_CLAW, AF_PLAIN, 10}, AT_NO_ATK },
     { 9, 3, 5, 0 },
     8, 6, MST_NO_SPELLS, CE_CLEAN, Z_BIG, S_ROAR,
-    I_INSECT, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
@@ -2652,7 +2654,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 18}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 13, 3, 5, 0 },
     0, 5, MST_NO_SPELLS, CE_POISON_CONTAM, Z_BIG, S_ROAR,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_BIG
 },
 
@@ -3585,7 +3587,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON, 2}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 1, 2, 3, 0 },
     0, 11, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SILENT,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 12, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 12, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_TINY
 },
 
@@ -3597,7 +3599,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON, 5}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 2, 3, 5, 0 },
     1, 15, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SILENT,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 13, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 13, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LITTLE
 },
 
@@ -3609,7 +3611,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON_MEDIUM, 10}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 4, 3, 5, 0 },
     2, 15, MST_NO_SPELLS, CE_POISONOUS, Z_SMALL, S_HISS,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 14, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 14, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_SMALL
 },
 
@@ -3621,7 +3623,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON_MEDIUM, 20}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 7, 3, 5, 0 },
     4, 15, MST_NO_SPELLS, CE_POISONOUS, Z_SMALL, S_HISS,
-    I_INSECT, HT_LAND, FL_NONE, 18, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 18, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
@@ -3633,7 +3635,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON_MEDIUM, 15}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 6, 3, 5, 0 },
     4, 14, MST_NO_SPELLS, CE_POISONOUS, Z_SMALL, S_HISS,
-    I_INSECT, HT_LAND, FL_NONE, 13, DEFAULT_ENERGY,
+    I_REPTILE, HT_LAND, FL_NONE, 13, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_SMALL
 },
 
@@ -3645,7 +3647,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_POISON_STRONG, 24}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 10, 4, 5, 0 },
     2, 15, MST_NO_SPELLS, CE_POISONOUS, Z_SMALL, S_HISS,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 12, SWIM_ENERGY(4),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 12, SWIM_ENERGY(4),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
@@ -3657,7 +3659,7 @@ static monsterentry mondata[] = {
     { {AT_CONSTRICT, AF_CRUSH, 30}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 11, 3, 5, 0 },
     4, 16, MST_NO_SPELLS, CE_CLEAN, Z_BIG, S_HISS,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 18, DEFAULT_ENERGY,
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 18, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
@@ -5463,7 +5465,7 @@ static monsterentry mondata[] = {
     { {AT_BITE, AF_PLAIN, 18}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 30, 0, 0, 150 },
     0, 5, MST_NO_SPELLS, CE_POISON_CONTAM, Z_NOZOMBIE, S_ROAR,
-    I_INSECT, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(6),
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_GIANT
 },
 
