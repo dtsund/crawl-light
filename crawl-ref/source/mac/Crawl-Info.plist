@@ -5,6 +5,8 @@
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
 	<string>Crawl Light</string>
+	<key>CFBundleExecutable</key>
+	<string>%EXECUTABLE%</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.crawl-ref</string>
 	<key>CFBundleInfoDictionaryVersion</key>
