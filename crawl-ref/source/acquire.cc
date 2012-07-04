@@ -1944,6 +1944,9 @@ bool acquirement(object_class_type class_wanted, int agent,
         stock[index] = acquirement_create_item_general(OBJ_GOLD, agent, tempQuiet,
                                                    stock_loc, debug, false);
         index++;
+        stock[index] = acquirement_create_item_general(OBJ_MISSILES, agent, tempQuiet,
+                                                   stock_loc, debug, false);
+        index++;
 
         // Autoinscribe randarts in the menu.
         for (unsigned int i = 0; i < stock.size(); i++)
