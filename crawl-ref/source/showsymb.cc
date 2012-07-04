@@ -132,7 +132,7 @@ static int _get_mons_colour(const monster_info& mi)
         col = RED;
 
     if (mi.is(MB_MIRROR_DAMAGE))
-        col = ETC_NECRO;
+        col = ETC_DEATH;
 
     if (mi.is(MB_INNER_FLAME))
         col = ETC_FIRE;
