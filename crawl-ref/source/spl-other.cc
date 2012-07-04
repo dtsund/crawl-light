@@ -286,13 +286,18 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
         return 0;
     }
 
-    mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
-    return 1;
+    if (x_chance_in_y(40 + pow/3, 100))
+    {
+        mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
+        return 1;
+    }
+    return 0;
 }
 
 void cast_intoxicate(int pow)
 {
-    potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
+    if (x_chance_in_y(60 - pow/3, 100))
+        potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
 
     if (one_chance_in(20)
         && lose_stat(STAT_INT, 1 + random2(3), false,
