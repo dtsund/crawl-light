@@ -1520,7 +1520,7 @@ static void unmarshall_level_map_masks(reader &th)
     for (rectangle_iterator ri(0); ri; ++ri)
     {
 #if TAG_MAJOR_VERSION == 32
-        if (th.getMinorVersion() < TAG_MINOR_NEW_MIMICS)
+        if (th.getMinorVersion() < TAG_MINOR_MAP_MASK)
         {
             env.level_map_mask(*ri) = unmarshallShort(th);
             env.level_map_ids(*ri)  = unmarshallShort(th);
