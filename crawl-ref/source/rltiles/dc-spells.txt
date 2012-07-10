@@ -135,6 +135,7 @@ resist_poison RESIST_POISON
 spider_form SPIDER_FORM
 sting STING
 venom_bolt VENOM_BOLT
+illude ILLUDE
 
 %sdir gui/spells/summoning
 abjuration ABJURATION

@@ -2377,7 +2377,7 @@ enum monster_type                      // (int) menv[].type
     MONS_IRON_ELEMENTAL,
 
     // Specials:
-    MONS_PLAYER_ILLUSION,
+    MONS_PLAYER_ILLUSION,       // summoned by Mara
     MONS_PLAYER_GHOST,
     MONS_BALL_LIGHTNING,
     MONS_ORB_OF_DESTRUCTION,    // a projectile, not a real mon
@@ -2402,6 +2402,7 @@ enum monster_type                      // (int) menv[].type
     MONS_SENSED_FRIENDLY,
     MONS_GOLEM,
     MONS_PROFANE_SERVITOR,
+    MONS_ILLUSION,              // Illude
 
     NUM_MONSTERS,                      // used for polymorph
 
@@ -3134,6 +3135,7 @@ enum spell_type
     SPELL_FIRE_SUMMON,
     SPELL_INNER_FLAME,
     SPELL_MASS_ABJURATION,
+    SPELL_ILLUDE,
 
     NUM_SPELLS
 };

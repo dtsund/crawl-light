@@ -358,10 +358,13 @@ void handle_behaviour(monster* mon)
     }
 
     // Unfriendly monsters fighting other monsters will usually
-    // target the player, if they're healthy.
+    // target the player, if they're healthy.  Won't shift to the
+    // player if already targeting an illusion, however, because they
+    // can't distinguish those.
     // Zotdef: 2/3 chance of retargeting changed to 1/4
     if (!isFriendly && !isNeutral
         && mon->foe != MHITYOU && mon->foe != MHITNOT
+        && menv[mon->foe].type != MONS_ILLUSION
         && proxPlayer && !mon->berserk() && isHealthy
         && (crawl_state.game_is_zotdef() ? one_chance_in(4)
                                          : !one_chance_in(3)))
@@ -911,7 +914,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             // worship Fedhas, create a ring of friendly plants, and try
             // to break out of the ring by killing a plant, you'll get
             // a warning prompt and penance only once.  Without the
-            // hostility check, the plant will remain friendly until it
+            // hostility check, the plant will remain friendly until ifor (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)t
             // dies, and you'll get a warning prompt and penance once
             // *per hit*.  This may not be the best way to address the
             // issue, though. -cao
@@ -1079,18 +1082,63 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
 
         mon->behaviour = BEH_CORNERED;
         break;
+    
+    case ME_ILLUDE:
+        if(!mon->friendly())
+            setTarget = true;
+        break;
 
     case ME_EVAL:
         break;
     }
-
     if (setTarget)
     {
         if (src == MHITYOU)
         {
-            mon->target = you.pos();
-            mon->attitude = ATT_HOSTILE;
-            mons_att_changed(mon);
+            //Need to determine if the monster should target an illusion
+            //instead.
+            //First, count the number of illusions within LOS.
+            int num_illusions = 0;
+            for (radius_iterator ri(mon->pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)
+            {
+                if (monster* mon_at = monster_at(*ri))
+                {
+                    if(mon_at->type == MONS_ILLUSION)
+                        num_illusions++;
+                }
+            }
+            //One chance in (num_illusions + 1) of targeting the player.
+            if(num_illusions == 0 || random2(num_illusions + 1) == 0)
+            {
+                mon->target = you.pos();
+                mon->attitude = ATT_HOSTILE;
+                mons_att_changed(mon);
+            }
+            else
+            {
+                //Otherwise, target one of the illusions.
+                int illusion_to_target = random2(num_illusions);
+                int current_illusion = 0;
+                
+                for (radius_iterator ri(mon->pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)
+                {
+                    if (monster* mon_at = monster_at(*ri))
+                    {
+                        if(mon_at->type == MONS_ILLUSION)
+                        {
+                            if(current_illusion == illusion_to_target)
+                            {
+                                mon->target = *ri;
+                                mon->foe = mon_at->mindex();
+                                mon->attitude = ATT_HOSTILE;
+                                mons_att_changed(mon);
+                                break;
+                            }
+                            current_illusion++;
+                        }
+                    }
+                }
+            }
         }
         else if (src != MHITNOT)
             mon->target = src_pos;

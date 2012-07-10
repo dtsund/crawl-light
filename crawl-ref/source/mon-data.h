@@ -1674,6 +1674,19 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
+// Extremely fragile; meant to die in a single hit.
+{
+    MONS_ILLUSION, 'p', LIGHTGREY, "illusion",
+    M_NO_SKELETON | M_CONFUSED | M_NO_EXP_GAIN,
+    MR_NO_FLAGS,
+    0, 10, MONS_ILLUSION, MONS_ILLUSION, MH_NATURAL, -3,
+    { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
+    { 0, 0, 0, 1 },
+    0, 0, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
+    I_NORMAL, HT_LAND, FL_FLY, 10, DEFAULT_ENERGY,
+    MONUSE_NOTHING, MONEAT_NOTHING, SIZE_MEDIUM
+},
+
 // dwarves ('q')
 { // Another dummy monster.  Zombies and poly allowed.
     MONS_DWARF, 'q', LIGHTGREY, "dwarf",

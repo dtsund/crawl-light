@@ -2209,3 +2209,38 @@ void abjuration(int pow, monster *mon)
         }
     }
 }
+
+//Illude: summons weak, non-attacking illusions of the player.
+//Monsters will be unable to determine which of {player, illusion}
+//to attack, and choosing wrong will leave them stabbable.
+void cast_illude(int pow)
+{
+    mpr("Illusory figures surround you...");
+
+    int num_illusions = std::min(8, 4 + random2(pow) / 20);
+    
+    for(int i = 0; i < num_illusions; i++)
+    {
+        if(create_monster(mgen_data(MONS_ILLUSION, BEH_FRIENDLY, &you,
+                                    2, SPELL_ILLUDE,
+                                    you.pos(), MHITNOT,
+                                    0, GOD_NO_GOD)) == -1)
+        {
+            break;
+        }
+    }
+    
+    //Need to call behaviour_event on monsters so that they reset their
+    //targets.
+    for (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)
+    {
+        if (monster* mon = monster_at(*ri))
+        {
+            //Hostile monsters within LOS targeting you may have their targets reset.
+            if(!mon->friendly() && mon->target == you.pos())
+            {
+                behaviour_event(mon, ME_ILLUDE, MHITYOU);
+            }
+        }
+    }
+}

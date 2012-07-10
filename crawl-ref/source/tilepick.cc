@@ -1011,6 +1011,7 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_FLAYED_GHOST;
     case MONS_PLAYER_GHOST:
     case MONS_PLAYER_ILLUSION:
+    case MONS_ILLUSION:
         return TILEP_MONS_PLAYER_GHOST;
     case MONS_INSUBSTANTIAL_WISP:
         return TILEP_MONS_INSUBSTANTIAL_WISP;
@@ -4275,6 +4276,7 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_VENOM_BOLT:               return TILEG_VENOM_BOLT;
     case SPELL_POISON_ARROW:             return TILEG_POISON_ARROW;
     case SPELL_POISONOUS_CLOUD:          return TILEG_POISONOUS_CLOUD;
+    case SPELL_ILLUDE:                   return TILEG_ILLUDE;
 
     // Enchantment
     case SPELL_CONFUSING_TOUCH:          return TILEG_CONFUSING_TOUCH;
