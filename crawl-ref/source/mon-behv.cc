@@ -914,7 +914,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             // worship Fedhas, create a ring of friendly plants, and try
             // to break out of the ring by killing a plant, you'll get
             // a warning prompt and penance only once.  Without the
-            // hostility check, the plant will remain friendly until ifor (radius_iterator ri(you.pos(), LOS_RADIUS, C_SQUARE); ri; ++ri)t
+            // hostility check, the plant will remain friendly until it
             // dies, and you'll get a warning prompt and penance once
             // *per hit*.  This may not be the best way to address the
             // issue, though. -cao
