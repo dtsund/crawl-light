@@ -2999,7 +2999,7 @@ struct spell_desc
     SPELL_ILLUDE, "Illude",
      SPTYP_SORCERY,
      SPFLAG_NONE,
-     9,
+     6,
      200,
      -1, -1,
      0,
