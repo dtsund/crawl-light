@@ -3538,6 +3538,9 @@ int get_expiration_threshold(duration_type dur)
 {
     switch (dur)
     {
+    case DUR_SPAWNING_ILLUSIONS:
+        return (BASELINE_DELAY);
+
     case DUR_QUAD_DAMAGE:
         return (3 * BASELINE_DELAY); // per client.qc
 

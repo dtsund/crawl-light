@@ -137,6 +137,8 @@ static duration_def duration_data[] =
       BLUE, "Dark", "darkness", "You emit darkness." },
     { DUR_TORNADO_COOLDOWN, false,
       YELLOW, "Tornado", "", "" ,},
+    { DUR_SPAWNING_ILLUSIONS, true,
+      BLUE, "Illude", "illude", "You are surrounded by illusions." },
 };
 
 static int duration_index[NUM_DURATIONS];

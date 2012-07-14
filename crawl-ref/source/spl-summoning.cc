@@ -2215,9 +2215,20 @@ void abjuration(int pow, monster *mon)
 //to attack, and choosing wrong will leave them stabbable.
 void cast_illude(int pow)
 {
-    mpr("Illusory figures surround you...");
+    if(you.duration[DUR_SPAWNING_ILLUSIONS] == 0)
+        mpr("Illusory figures surround you...");
+    else
+        mpr("The illusions surrounding you intensify.");
+    
+    //Doesn't last very long.
+    you.increase_duration(DUR_SPAWNING_ILLUSIONS, 4 + random2(pow)/50, 10);
+    
+    create_player_illusions();
+}
 
-    int num_illusions = std::min(8, 4 + random2(pow) / 20);
+void create_player_illusions()
+{
+    int num_illusions = 3 + random2(2);
     
     for(int i = 0; i < num_illusions; i++)
     {

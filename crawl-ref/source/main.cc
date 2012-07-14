@@ -111,6 +111,7 @@
 #include "spl-goditem.h"
 #include "spl-other.h"
 #include "spl-selfench.h"
+#include "spl-summoning.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
 #include "stairs.h"
@@ -2717,6 +2718,19 @@ static void _decrement_durations()
         }
         update_vision_range();
     }
+    
+    // Spawn illusions once every game-time turn.
+    int old_duration = you.duration[DUR_SPAWNING_ILLUSIONS];
+    _decrement_a_duration(DUR_SPAWNING_ILLUSIONS, delay,
+                          "Illusions cease swirling around you.",
+                          0, "The illusions around you begin to fade.");
+    // old_duration - 1 and, likewise, you.duration - 1 instead of just
+    // the raw values ensures one last spawn when the status wears off.
+    // It'd be mean to tell a high-speed player that Illude is still up
+    // when there can't be any more illusion spawns...
+    int num_spawns = ((old_duration - 1) / 10) - ((you.duration[DUR_SPAWNING_ILLUSIONS] - 1) / 10);
+    for (int i = 0; i < num_spawns; i++)
+        create_player_illusions();
 }
 
 static void _check_banished()

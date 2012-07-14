@@ -80,5 +80,6 @@ bool cast_haunt(int pow, const coord_def& where, god_type god = GOD_NO_GOD);
 void abjuration(int pow, monster *mon = NULL);
 
 void cast_illude(int pow);
+void create_player_illusions();
 
 #endif
