@@ -288,7 +288,7 @@ This spell attempts to convert all poison within the caster's view into liquid f
 %%%%
 Illude
 
-This spell fills the immediate vicinity with several illusions, each indistinguishable from the caster. Any foes will be unable to distinguish between the caster and these illusions, and may be vulnerable to stabbing.
+This spell fills the immediate vicinity with several illusions, each indistinguishable from the caster. Any foes will be unable to distinguish between the caster and these illusions, and those who mistakenly attack the illusions will be thrown off-balance and made vulnerable to stabbing.
 %%%%
 Inner Flame
 
