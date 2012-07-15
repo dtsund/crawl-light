@@ -2487,6 +2487,16 @@ int monster_die(monster* mons, killer_type killer,
         if (pbd_dur > you.duration[DUR_POWERED_BY_DEATH])
             you.set_duration(DUR_POWERED_BY_DEATH, pbd_dur);
     }
+    
+    // If a monster just accidentally melee'd an illusion to death, put it off balance
+    // and ready for stabbing.
+    // Don't put a monster off-balance if it deliberately clawed through an illusion to
+    // reach the player.
+    if (killer == KILL_MON && menv[killer_index].foe != MHITYOU)
+    {
+        menv[killer_index].add_ench(ENCH_OFF_BALANCE);
+        simple_monster_message(&menv[killer_index], " is thrown off-balance!");
+    }
 
     unsigned int player_exp = 0, monster_exp = 0;
     if (!mons_reset && !fake_abjuration && !timeout && !unsummoned)

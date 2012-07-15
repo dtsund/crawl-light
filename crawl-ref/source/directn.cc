@@ -3496,6 +3496,8 @@ static std::vector<std::string> _get_monster_behaviour_vector(const monster_info
         descs.push_back(mi.is(MB_CONFUSED) ? "sleepwalking" : "resting");
     else if (mi.is(MB_FLEEING))
         descs.push_back("retreating");
+    else if (mi.is(MB_OFF_BALANCE))
+        descs.push_back("off-balance");
     else if (mi.attitude == ATT_HOSTILE && (mi.is(MB_UNAWARE) || mi.is(MB_WANDERING)))
         descs.push_back("hasn't noticed you");
 

@@ -36,6 +36,7 @@ enum unchivalric_attack_type
     UCAT_PARALYSED,
     UCAT_SLEEPING,
     UCAT_ALLY,
+    UCAT_OFF_BALANCE,
 };
 
 struct mon_attack_def;

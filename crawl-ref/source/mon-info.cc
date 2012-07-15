@@ -389,6 +389,8 @@ monster_info::monster_info(const monster* m, int milev)
         mb.set(MB_HALOED);
     if (!m->haloed() && m->antihaloed())
         mb.set(MB_ANTIHALOED);
+    if (m->off_balance())
+        mb.set(MB_OFF_BALANCE);
     if (mons_looks_stabbable(m))
         mb.set(MB_STABBABLE);
     if (mons_looks_distracted(m))
@@ -925,6 +927,8 @@ static std::string _verbose_info0(const monster_info& mi)
         return ("blind");
     if (mi.is(MB_INNER_FLAME))
         return ("inner flame");
+    if (mi.is(MB_OFF_BALANCE))
+        return ("off-balance");
 
     return ("");
 }

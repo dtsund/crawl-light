@@ -75,6 +75,7 @@ enum monster_info_flags
     MB_PERM_SUMMON,
     MB_INNER_FLAME,
     MB_ANTIHALOED,
+    MB_OFF_BALANCE,
     NUM_MB_FLAGS
 };
 

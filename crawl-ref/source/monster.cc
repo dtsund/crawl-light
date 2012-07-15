@@ -2831,6 +2831,11 @@ bool monster::petrifying() const
     return (has_ench(ENCH_PETRIFYING));
 }
 
+bool monster::off_balance() const
+{
+    return (has_ench(ENCH_OFF_BALANCE));
+}
+
 bool monster::friendly() const
 {
     return (attitude == ATT_FRIENDLY || has_ench(ENCH_CHARM));
@@ -4651,6 +4656,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         behaviour_event(this, ME_EVAL);
         break;
 
+    case ENCH_OFF_BALANCE:
+        if (!quiet && alive())
+            simple_monster_message(this, " is no longer off-balance.");
+        break;
+
     default:
         break;
     }
@@ -4751,6 +4761,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_FEAR_INSPIRING: case ENCH_REGENERATION: case ENCH_RAISED_MR:
         case ENCH_MIRROR_DAMAGE: case ENCH_STONESKIN: case ENCH_LIQUEFYING:
         case ENCH_SILVER_CORONA: case ENCH_DAZED: case ENCH_FAKE_ABJURATION:
+        case ENCH_OFF_BALANCE:
             lose_ench_levels(i->second, levels);
             break;
 
@@ -4956,6 +4967,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_FAKE_ABJURATION:
     case ENCH_RECITE_TIMER:
     case ENCH_INNER_FLAME:
+    case ENCH_OFF_BALANCE:
         decay_enchantment(me);
         break;
 
@@ -6569,7 +6581,7 @@ static const char *enchant_names[] =
     "withdrawn", "attached", "guardian_timer", "levitation",
     "helpless", "liquefying", "perm_tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "inner flame", "buggy",
+    "inner flame", "off-balance", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
@@ -6810,6 +6822,10 @@ int mon_enchant::calc_duration(const monster* mons,
         cturn = 10 * (4 + random2(4)) / _mod_speed(10, mons->speed);
     case ENCH_INNER_FLAME:
         return (random_range(75, 125) * 10);
+    //One and a half turns, so Slowed characters can usually still
+    //try to stab.  Gets removed on a successful hit.
+    case ENCH_OFF_BALANCE:
+        return 15;
     default:
         break;
     }

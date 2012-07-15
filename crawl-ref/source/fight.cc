@@ -248,6 +248,10 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
     if (defender->petrified())
         unchivalric = UCAT_PETRIFIED;
 
+    // off-balance    
+    if (def && def->off_balance())
+        unchivalric = UCAT_OFF_BALANCE;
+
     // paralysed
     if (defender->paralysed())
         unchivalric = UCAT_PARALYSED;
@@ -1695,6 +1699,10 @@ int melee_attack::player_stab(int damage)
                     defender->as_monster()->speed_increment = 0;
             }
         }
+        
+        // Can't catch a monster off-balance more than once.
+        if (defender->as_monster()->off_balance())
+            defender->as_monster()->del_ench(ENCH_OFF_BALANCE, true);
 
         damage = player_stab_weapon_bonus(damage);
     }
@@ -3975,6 +3983,8 @@ void melee_attack::player_stab_check()
     int roll = 100;
     if (uat == UCAT_INVISIBLE && !mons_sense_invis(defender->as_monster()))
         roll -= 10;
+    if (uat == UCAT_OFF_BALANCE)
+        roll -= 20;
 
     switch (uat)
     {
@@ -3988,6 +3998,7 @@ void melee_attack::player_stab_check()
     case UCAT_HELD_IN_NET:
     case UCAT_PETRIFYING:
     case UCAT_PETRIFIED:
+    case UCAT_OFF_BALANCE:
         stab_bonus = 2;
         break;
     case UCAT_INVISIBLE:
