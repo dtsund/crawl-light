@@ -158,7 +158,6 @@ default-depth:
 ############################################################################
 # Pandoora vault 1.
 #
-# Currently, no monsters and no loot. This will change.
 # Yes, the door needs to be that big. Sadly, the Crawl code chokes and
 # vomits when you put a triggerable and a restrict_door on the same square.
 NAME:   pandoora_vault_1
