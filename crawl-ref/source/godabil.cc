@@ -1772,6 +1772,7 @@ void beogh_share_potion(potion_type potion)
     case POT_MIGHT:
     case POT_INVISIBILITY:
     case POT_BERSERK_RAGE:
+    case POT_RESISTANCE:
         break;
     default:
         return;
@@ -1860,6 +1861,15 @@ void beogh_share_potion(potion_type potion)
                     mon->go_berserk(true);
                 }
                 break;
+            case POT_RESISTANCE:
+                //Grant temporary resistance to the elements.
+                if(!mon->has_ench(ENCH_RESISTANT))
+                {
+                    num_affected++;
+                    mon_affected = mon;
+                    mon->add_ench(ENCH_RESISTANT);
+                }
+                break;
             default:
                 break;
             }
@@ -1883,6 +1893,9 @@ void beogh_share_potion(potion_type potion)
         case POT_INVISIBILITY:
             mprf("%s flickers for a moment.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
             break;
+        case POT_RESISTANCE:
+            mprf("%s gains resistance to the elements.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
+            break;
         case POT_BERSERK_RAGE:
         default:
             //Berserk will already have printed a message in go_berserk().
@@ -1905,6 +1918,9 @@ void beogh_share_potion(potion_type potion)
             break;
         case POT_INVISIBILITY:
             mprf("Your nearby followers flicker for a moment.");
+            break;
+        case POT_RESISTANCE:
+            mprf("Your nearby followers gain resistance to the elements.");
             break;
         case POT_BERSERK_RAGE:
         default:
