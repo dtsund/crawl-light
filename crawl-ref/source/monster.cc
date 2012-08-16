@@ -4661,6 +4661,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             simple_monster_message(this, " is no longer off-balance.");
         break;
 
+    case ENCH_RESISTANT:
+        if (!quiet && alive())
+            simple_monster_message(this, " no longer resists the elements.");
+        break;
+
     default:
         break;
     }
@@ -4761,7 +4766,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_FEAR_INSPIRING: case ENCH_REGENERATION: case ENCH_RAISED_MR:
         case ENCH_MIRROR_DAMAGE: case ENCH_STONESKIN: case ENCH_LIQUEFYING:
         case ENCH_SILVER_CORONA: case ENCH_DAZED: case ENCH_FAKE_ABJURATION:
-        case ENCH_OFF_BALANCE:
+        case ENCH_OFF_BALANCE: case ENCH_RESISTANT:
             lose_ench_levels(i->second, levels);
             break;
 
@@ -4968,6 +4973,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_RECITE_TIMER:
     case ENCH_INNER_FLAME:
     case ENCH_OFF_BALANCE:
+    case ENCH_RESISTANT:
         decay_enchantment(me);
         break;
 
@@ -6581,7 +6587,7 @@ static const char *enchant_names[] =
     "withdrawn", "attached", "guardian_timer", "levitation",
     "helpless", "liquefying", "perm_tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "inner flame", "off-balance", "buggy",
+    "inner flame", "off-balance", "resistant", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
@@ -6720,6 +6726,7 @@ int mon_enchant::calc_duration(const monster* mons,
     case ENCH_INVIS:
     case ENCH_FEAR_INSPIRING:
     case ENCH_STONESKIN:
+    case ENCH_RESISTANT:
         cturn = 1000 / _mod_speed(25, mons->speed);
         break;
     case ENCH_LIQUEFYING:

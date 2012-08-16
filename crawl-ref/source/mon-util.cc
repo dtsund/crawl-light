@@ -387,6 +387,16 @@ mon_resist_def get_mons_resists(const monster* mon)
 
     if (newmon.type == MONS_SERPENT_OF_HELL)
         resists |= serpent_of_hell_resists(&newmon);
+    
+    // Monsters under the influence of potions of resistance get an extra
+    // level of fire, cold, poison, and electricity resistance.
+    if(mon->has_ench(ENCH_RESISTANT))
+    {
+        resists.fire = resists.fire + 1;
+        resists.cold = resists.cold + 1;
+        resists.poison = resists.poison + 1;
+        resists.elec = resists.elec + 1;
+    }
 
     return (resists);
 }

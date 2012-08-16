@@ -1465,6 +1465,7 @@ enum enchant_type
     ENCH_RECITE_TIMER,  // Was recited against.
     ENCH_INNER_FLAME,
     ENCH_OFF_BALANCE,   // Just hit an illusion, now ripe for stabbing.
+    ENCH_RESISTANT,     // Potion of resistance.
     // Update enchantment names in monster.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS

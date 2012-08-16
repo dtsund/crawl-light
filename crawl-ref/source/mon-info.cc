@@ -130,6 +130,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_MAD;
     case ENCH_INNER_FLAME:
         return MB_INNER_FLAME;
+    case ENCH_RESISTANT:
+        return MB_RESISTANT;
     default:
         return NUM_MB_FLAGS;
     }
@@ -1120,6 +1122,8 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("stupefied");
     if (is(MB_MAD))
         v.push_back("lost in madness");
+    if (is(MB_RESISTANT))
+        v.push_back("resistant");
     return v;
 }
 
