@@ -3145,6 +3145,10 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where)
     if(item->base_type != OBJ_MISSILES)
         return (false);
     
+    //Nets don't mulch from throwing.
+    if(item->base_type == MI_THROWING_NET)
+        return (false);
+    
     //Mulch large rocks one time in 50.
     if(item->sub_type == MI_LARGE_ROCK && !one_chance_in(50))
         return (false);
