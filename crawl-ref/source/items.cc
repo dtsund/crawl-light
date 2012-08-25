@@ -1415,7 +1415,6 @@ bool items_similar(const item_def &item1, const item_def &item2, bool ignore_ide
 
     // These classes also require pluses and special.
     if (item1.base_type == OBJ_WEAPONS         // only throwing weapons
-        || item1.base_type == OBJ_MISSILES
         || item1.base_type == OBJ_FOOD)        // chunks
     {
         if (item1.plus != item2.plus
@@ -1429,6 +1428,10 @@ bool items_similar(const item_def &item1, const item_def &item2, bool ignore_ide
             return (false);
         }
     }
+    
+    // Missiles only require the same special.
+    if(item1.base_type == OBJ_MISSILES && item1.special != item2.special)
+        return (false);
 
     // Check the ID flags.
     if (!ignore_ident && ident_flags(item1) != ident_flags(item2))

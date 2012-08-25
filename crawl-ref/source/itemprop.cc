@@ -1256,8 +1256,7 @@ int wand_max_charges(int type)
 bool is_enchantable_weapon(const item_def &wpn, bool uncurse, bool first)
 {
     if (wpn.base_type != OBJ_WEAPONS
-        && wpn.base_type != OBJ_STAVES
-        && wpn.base_type != OBJ_MISSILES)
+        && wpn.base_type != OBJ_STAVES)
     {
         return (false);
     }

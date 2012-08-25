@@ -1100,12 +1100,6 @@ std::string item_def::name_aux(description_level_type desc,
         if (know_brand && !terse && _missile_brand_is_prefix(brand))
             buff << missile_brand_name(brand, MBN_NAME) << ' ';
 
-        if (know_pluses)
-        {
-            output_with_sign(buff, it_plus);
-            buff << ' ';
-        }
-
         if (!basename && !dbname)
             buff << racial_description_string(*this, terse);
 
