@@ -1286,10 +1286,11 @@ void fire_thing(int item)
 {
     dist target;
     item = get_ammo_to_shoot(item, target);
-    if (item == -1)
-        return;
+    //if (item == -1)
+    //    return;
 
-    if (check_warning_inscriptions(you.inv[item], OPER_FIRE))
+    // Need to check whether item is -1, or else you.inv[item] goes out of bounds.
+    if (item == -1 || check_warning_inscriptions(you.inv[item], OPER_FIRE))
     {
         bolt beam;
         throw_it(beam, item, false, 0, &target);
@@ -1315,11 +1316,11 @@ void throw_item_no_quiver()
     std::string warn;
     int slot = _fire_prompt_for_item();
 
-    if (slot == -1)
-    {
-        canned_msg(MSG_OK);
-        return;
-    }
+    //if (slot == -1)
+    //{
+    //    canned_msg(MSG_OK);
+    //    return;
+    //}
 
     if (!_fire_validate_item(slot, warn))
     {
@@ -2339,17 +2340,83 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         }
     }
     pbolt.set_target(thr);
+    
+    // Implicit ammo: if attempting to fire with a launcher equipped but without
+    // anything quivered, fire a +0 basic projectile (but not for blowguns).
+    bool implicit_ammo = false;
+    launch_retval projected = LRET_THROWN;
+    // Copy of the item to be launched/thrown; in the case of implicit ammo,
+    // this will be a new +0 projectile of the appropriate type.
+    item_def item;
+    // The original item to be launched/thrown, in the case of non-implicit ammo.
+    item_def thrown;
+    if(throw_2 == -1 && fires_ammo_type(*(you.weapon())) != MI_NONE 
+       && you.weapon()->sub_type != WPN_BLOWGUN)
+    {
+        int temp_missile_index = items(0, OBJ_MISSILES, MI_ARROW, true, 0, 0, 0, 0, -1, true);
+        // Make absolutely sure we have an index, though this shouldn't ever realistically fail.
+        if(temp_missile_index == NON_ITEM)
+        {
+            mpr("For some reason, you fumble as you reach for an arrow.  Try again?");
+            return false;
+        }
+        item = mitm[temp_missile_index];
+        item.quantity = 1;
+        implicit_ammo = true;
+        projected = LRET_LAUNCHED;
+        
+        item.base_type = OBJ_MISSILES;
+        
+        switch(you.weapon()->sub_type)
+        {
+        case WPN_BOW:
+        case WPN_LONGBOW:
+        {
+            item.sub_type = MI_ARROW;
+            break;
+        }
+        case WPN_CROSSBOW:
+        {
+            item.sub_type = MI_BOLT;
+            break;
+        }
+        case WPN_SLING:
+        {
+            item.sub_type = MI_SLING_BULLET;
+            break;
+        }
+        default:
+        {
+            //Hopefully this never happens.
+            item.sub_type = MI_NONE;
+            break;
+        }
+        }
+        
+        item.plus = 0;
+        item.plus2 = 0;
+        
+        thrown = item;
+            
+    }
+    else if(throw_2 == -1)
+    {
+        //Abort; no ammo, and no launcher either.
+        canned_msg(MSG_OK);
+        return (false);
+    }
+    else
+    {
+        thrown = you.inv[throw_2];
 
-    item_def& thrown = you.inv[throw_2];
-    ASSERT(thrown.defined());
+        // Figure out if we're thrown or launched.
+        projected = is_launched(&you, you.weapon(), thrown);
 
-    // Figure out if we're thrown or launched.
-    const launch_retval projected = is_launched(&you, you.weapon(), thrown);
-
-    // Making a copy of the item: changed only for venom launchers.
-    item_def item = thrown;
-    item.quantity = 1;
-    item.slot     = index_to_letter(item.link);
+        // Making a copy of the item: changed only for venom launchers.   
+        item = thrown;
+        item.quantity = 1;
+        item.slot     = index_to_letter(item.link);
+    }
 
     // Items that get a temporary brand from a player spell lose the
     // brand as soon as the player lets go of the item.  Can't call
@@ -3018,7 +3085,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             msg::stream << item.name(DESC_CAP_THE)
                         << " fails to return to your pack!" << std::endl;
         }
-        dec_inv_item_quantity(throw_2, 1);
+        if(!implicit_ammo)
+            dec_inv_item_quantity(throw_2, 1);
         if (unwielded)
             canned_msg(MSG_EMPTY_HANDED);
     }
@@ -3029,8 +3097,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     // if it didn't make any noise.
     alert_nearby_monsters();
 
-    if (ammo_ided)
-        _merge_ammo_in_inventory(throw_2);
+//    if (ammo_ided)
+//        _merge_ammo_in_inventory(throw_2);
 
     you.turn_is_over = true;
 
