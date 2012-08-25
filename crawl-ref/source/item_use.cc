@@ -2381,7 +2381,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     if(throw_2 == -1 && you.weapon() && fires_ammo_type(*(you.weapon())) != MI_NONE 
        && you.weapon()->sub_type != WPN_BLOWGUN)
     {
-        int temp_missile_index = items(0, OBJ_MISSILES, MI_ARROW, true, 0, 0, 0, 0, -1, true);
+        int temp_missile_index = items(0, OBJ_MISSILES, MI_ARROW, true, 0, 0, 0, 0, -1, true, true);
         // Make absolutely sure we have an index, though this shouldn't ever realistically fail.
         if(temp_missile_index == NON_ITEM)
         {

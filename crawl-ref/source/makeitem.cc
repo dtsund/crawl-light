@@ -1971,7 +1971,11 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
     return (false);
 }
 
-static void _generate_missile_item(item_def& item, int force_type,
+//Returns false if it generates a mundane arrow, bolt, or sling bullet,
+//true otherwise.  The false cases get suppressed (except when forced
+//to appear, as with temporary arrows for implicit ammo), and don't manifest
+//in the dungeon.
+static bool _generate_missile_item(item_def& item, int force_type,
                                    int item_level, int item_race)
 {
     const bool no_brand = (item.special == SPMSL_FORBID_BRAND);
@@ -2001,17 +2005,17 @@ static void _generate_missile_item(item_def& item, int force_type,
     if (item.sub_type == MI_LARGE_ROCK)
     {
         item.quantity = 2 + random2avg(5,2);
-        return;
+        return true;
     }
     else if (item.sub_type == MI_STONE)
     {
         item.quantity = 1 + random2(9) + random2(12) + random2(15) + random2(12);
-        return;
+        return true;
     }
     else if (item.sub_type == MI_THROWING_NET) // no fancy nets, either
     {
         item.quantity = 1 + one_chance_in(4); // and only one, rarely two
-        return;
+        return true;
     }
 
     set_equip_race(item, ISFLAG_NO_RACE);
@@ -2034,9 +2038,15 @@ static void _generate_missile_item(item_def& item, int force_type,
         item.quantity = 1 + random2(9) + random2(12) + random2(12);
     else
         item.quantity = 1 + random2(9) + random2(12) + random2(12) + random2(15);
-
-    if (x_chance_in_y(16 + item_level, 100))
-        item.plus += random2(5);
+    
+    if(item.sub_type == MI_ARROW || item.sub_type == MI_BOLT
+       || item.sub_type == MI_SLING_BULLET)
+    {
+        //Ammo of the above types will be suppressed if unbranded.
+        if(get_ammo_brand(item) == SPMSL_NORMAL)
+            return false;
+    }
+    return true;
 }
 
 static bool _try_make_armour_artefact(item_def& item, int force_type,
@@ -3073,7 +3083,9 @@ int items(int allow_uniques,       // not just true-false,
           uint32_t mapmask,
           int force_ego,           // desired ego/brand
           int agent,               // acquirement agent, if not -1
-          bool mundane)            // no plusses
+          bool mundane,            // no plusses
+          bool implicit)          // implicit ammunition, overrides suppression
+                                   // of mundane ammo
 {
     ASSERT(force_ego <= 0
            || force_class == OBJ_WEAPONS
@@ -3174,7 +3186,15 @@ int items(int allow_uniques,       // not just true-false,
         break;
 
     case OBJ_MISSILES:
-        _generate_missile_item(item, force_type, item_level, item_race);
+        //_generate_missile_item returns false if a mundane piece of launcher
+        //ammo was generated.
+        if(!_generate_missile_item(item, force_type, item_level, item_race)
+           && !implicit)
+        {
+            //Suppress generation of mundane ammo.
+            destroy_item(p);
+            return NON_ITEM;
+        }
         break;
 
     case OBJ_ARMOUR:
