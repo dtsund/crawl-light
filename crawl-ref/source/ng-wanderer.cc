@@ -22,7 +22,7 @@ static bool _give_wanderer_weapon(int & slot, int wpn_skill, int plus)
         if (plus)
         {
             newgame_make_item(slot, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1,
-                               1 + random2(4));
+                               3 + random2(6));
             set_item_ego_type(you.inv[slot], OBJ_MISSILES, SPMSL_CURARE);
             slot++;
         }
@@ -30,7 +30,7 @@ static bool _give_wanderer_weapon(int & slot, int wpn_skill, int plus)
         else
         {
             newgame_make_item(slot, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1,
-                               5 + roll_dice(2, 5));
+                               10 + roll_dice(2, 8));
             set_item_ego_type(you.inv[slot], OBJ_MISSILES, SPMSL_POISONED);
             slot++;
         }
@@ -818,46 +818,6 @@ static void _wanderer_cover_equip_holes(int & slot)
             newgame_make_item(slot, EQ_WEAPON, OBJ_WEAPONS, WPN_DAGGER);
             slot++;
         }
-    }
-
-    // The player needs a stack of bolts if they have a crossbow.
-    bool need_bolts = false;
-
-    for (int i = 0; i < slot; ++i)
-    {
-        if (you.inv[i].base_type == OBJ_WEAPONS
-            && you.inv[i].sub_type == WPN_CROSSBOW)
-        {
-            need_bolts = true;
-            break;
-        }
-    }
-
-    if (need_bolts)
-    {
-        newgame_make_item(slot, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1,
-                           15 + random2avg(21, 5));
-        slot++;
-    }
-
-    // And the player needs arrows if they have a bow.
-    bool needs_arrows = false;
-
-    for (int i = 0; i < slot; ++i)
-    {
-        if (you.inv[i].base_type == OBJ_WEAPONS
-            && you.inv[i].sub_type == WPN_BOW)
-        {
-            needs_arrows = true;
-            break;
-        }
-    }
-
-    if (needs_arrows)
-    {
-        newgame_make_item(slot, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1,
-                           15 + random2avg(21, 5));
-        slot++;
     }
 }
 

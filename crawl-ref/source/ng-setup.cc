@@ -534,7 +534,7 @@ static void _give_items_skills(const newgame_def& ng)
             newgame_make_item(curr++, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 15, 1);
             //Make some exploding darts.  They won't last long, but will be
             //fun and useful while they're there.
-            newgame_make_item(curr, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 15, 1);
+            newgame_make_item(curr, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 30, 1);
             set_item_ego_type(you.inv[curr++], OBJ_MISSILES, SPMSL_EXPLODING);
         }
         else
@@ -542,7 +542,7 @@ static void _give_items_skills(const newgame_def& ng)
             //Four throwing nets and six +1 javelins.
             newgame_make_item(curr++, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1,
                                4);
-            newgame_make_item(curr, EQ_NONE, OBJ_MISSILES, MI_JAVELIN, -1, 6, 1);
+            newgame_make_item(curr, EQ_NONE, OBJ_MISSILES, MI_JAVELIN, -1, 25, 1);
             
         }
 
@@ -758,7 +758,7 @@ static void _give_items_skills(const newgame_def& ng)
 
         // One free escape.
         newgame_make_item(3, EQ_NONE, OBJ_SCROLLS, SCR_BLINKING);
-        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 20, 1);
+        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 40, 1);
 
         newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 5);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_DISPERSAL);
@@ -779,8 +779,6 @@ static void _give_items_skills(const newgame_def& ng)
         {
         case SP_HALFLING:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_SLING);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_SLING_BULLET, -1,
-                               30);
 
             // Wield the sling instead.
             you.equip[EQ_WEAPON] = 1;
@@ -790,7 +788,6 @@ static void _give_items_skills(const newgame_def& ng)
         case SP_DEEP_DWARF:
         case SP_KOBOLD:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_CROSSBOW);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1, 25);
 
             // Wield the crossbow instead.
             you.equip[EQ_WEAPON] = 1;
@@ -798,7 +795,6 @@ static void _give_items_skills(const newgame_def& ng)
 
         default:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_BOW);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 25);
 
             // Wield the bow instead.
             you.equip[EQ_WEAPON] = 1;
@@ -806,7 +802,7 @@ static void _give_items_skills(const newgame_def& ng)
         }
 
         // And give them a book
-        newgame_make_item(3, EQ_NONE, OBJ_BOOKS, BOOK_BRANDS);
+        newgame_make_item(2, EQ_NONE, OBJ_BOOKS, BOOK_BRANDS);
 
         you.skills[range_skill(you.inv[1])] = 2;
         you.skills[SK_DODGING]              = 1;
@@ -889,7 +885,10 @@ static void _give_items_skills(const newgame_def& ng)
         you.equip[EQ_WEAPON] = -1; // Transmuters fight unarmed.
 
         // Some sticks for sticks to snakes.
-        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 12);
+        // A lot more now that mundane arrow generation is suppressed...
+        // Note that starting a transmuter is now the only way to find mundane
+        // arrows now.
+        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 40);
         newgame_make_item(2, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE);
         newgame_make_item(3, EQ_NONE, OBJ_BOOKS, BOOK_CHANGES);
 
@@ -995,15 +994,15 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(2, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE);
         newgame_make_item(3, EQ_CLOAK, OBJ_ARMOUR, ARM_CLOAK);
 
-        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 10);
+        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 25);
         set_item_ego_type(you.inv[4], OBJ_MISSILES, SPMSL_POISONED);
-        newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 3);
+        newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 7);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_CURARE);
-        newgame_make_item(6, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        newgame_make_item(6, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 10);
         set_item_ego_type(you.inv[6], OBJ_MISSILES, SPMSL_SLEEP);
-        newgame_make_item(7, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        newgame_make_item(7, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 10);
         set_item_ego_type(you.inv[7], OBJ_MISSILES, SPMSL_SLOW);
-        newgame_make_item(8, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 5);
+        newgame_make_item(8, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 10);
         set_item_ego_type(you.inv[8], OBJ_MISSILES, SPMSL_CONFUSION);        
 
         if (you.species == SP_OGRE || you.species == SP_TROLL)
@@ -1042,7 +1041,7 @@ static void _give_items_skills(const newgame_def& ng)
 
         //A butchering implement and enchanted ammo doesn't exactly compensate
         //for the absence of the book of Distance.  Therefore, Hunters also start
-        //with more ammo, in the applicable cases.
+        //with an enchanted weapon, in the applicable cases.
         switch (you.species)
         {
         //Sludge elves, hill orcs, and merfolk who want nets and javelins can
@@ -1067,26 +1066,25 @@ static void _give_items_skills(const newgame_def& ng)
         case SP_HALFLING:
         case SP_SPRIGGAN:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_SLING);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_SLING_BULLET, -1,
-                               50, 1);
 
             // Wield the sling instead.
             you.equip[EQ_WEAPON] = 1;
+            _enchant_weapon(1, 1, 1);
             break;
 
         case SP_MOUNTAIN_DWARF:
         case SP_DEEP_DWARF:
         case SP_KOBOLD:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_CROSSBOW);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1, 40, 1);
 
             // Wield the crossbow instead.
             you.equip[EQ_WEAPON] = 1;
+            _enchant_weapon(1, 1, 1);
             break;
 
         default:
             newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_BOW);
-            newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 40, 1);
+            _enchant_weapon(0, 1, 1);
 
             // Wield the bow instead.
             you.equip[EQ_WEAPON] = 1;
