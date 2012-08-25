@@ -1471,8 +1471,13 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
     }
 
     // extract weapon/ammo bonuses due to magic
-    ammoHitBonus = item.plus;
-    ammoDamBonus = item.plus2;
+    if(wepClass == OBJ_WEAPONS)
+    {
+        ammoHitBonus = item.plus;
+        ammoDamBonus = item.plus2;
+    }
+    else if(wepClass == OBJ_MISSILES)
+        ammoHitBonus = ammoDamBonus = std::min(3, mons->hit_dice/3);
 
     // Archers get a boost from their melee attack.
     if (archer)
@@ -1507,10 +1512,6 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
 
         if (wepClass == OBJ_MISSILES)   // throw missile
         {
-            // ammo damage needs adjusting here - OBJ_MISSILES
-            // don't get separate tohit/damage bonuses!
-            ammoDamBonus = ammoHitBonus;
-
             // [dshaligram] Thrown stones/darts do only half the damage of
             // launched stones/darts. This matches 4.0 behaviour.
             if (wepType == MI_DART || wepType == MI_STONE

@@ -2578,11 +2578,19 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     // special: might be throwing generic weapon;
     // use base wep. damage, w/ penalty
     if (wepClass == OBJ_WEAPONS)
+    {
         baseDam = std::max(0, property(item, PWPN_DAMAGE) - 4);
 
-    // Extract weapon/ammo bonuses due to magic.
-    ammoHitBonus = item.plus;
-    ammoDamBonus = item.plus2;
+        ammoHitBonus = item.plus;
+        ammoDamBonus = item.plus2;
+    }
+    else if (wepClass == OBJ_MISSILES)
+    {
+        skill_type sk = SK_THROWING;
+        if (projected == LRET_LAUNCHED)
+            sk = range_skill(*you.weapon());
+        ammoHitBonus = ammoDamBonus = std::min(3, you.skill_rdiv(sk));
+    }
 
     int bow_brand = SPWPN_NORMAL;
 
@@ -2633,9 +2641,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 "(item %d + launcher %d)",
                         baseHit, baseDam,
                         item_base_dam, lnch_base_dam);
-
-        // Fix ammo damage bonus, since missiles only use inv_plus.
-        ammoDamBonus = ammoHitBonus;
 
         // Check for matches; dwarven, elven, orcish.
         if (!(get_equip_race(*you.weapon()) == 0))
@@ -2837,10 +2842,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             did_return = true;
 
         baseHit = 0;
-
-        // Missiles only use inv_plus.
-        if (wepClass == OBJ_MISSILES)
-            ammoDamBonus = ammoHitBonus;
 
         // All weapons that use 'throwing' go here.
         if (wepClass == OBJ_WEAPONS
