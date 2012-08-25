@@ -667,7 +667,7 @@ bool cast_portal_projectile(int pow)
 {
     dist target;
     int item = get_ammo_to_shoot(-1, target, true);
-    if (item == -1)
+    if (item == -2)
         return (false);
 
     if (cell_is_solid(target.target))
@@ -683,7 +683,7 @@ bool cast_portal_projectile(int pow)
         return (false);
     }
 
-    if (!check_warning_inscriptions(you.inv[item], OPER_FIRE))
+    if (item != -1 && !check_warning_inscriptions(you.inv[item], OPER_FIRE))
         return (false);
 
     bolt beam;
