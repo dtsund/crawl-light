@@ -2393,8 +2393,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         implicit_ammo = true;
         projected = LRET_LAUNCHED;
         
-        item.base_type = OBJ_MISSILES;
-        
         switch(you.weapon()->sub_type)
         {
         case WPN_BOW:

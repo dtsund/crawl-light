@@ -3855,11 +3855,39 @@ int mons_weapon_damage_rating(const item_def &launcher)
 // Returns a rough estimate of damage from firing/throwing missile.
 int mons_missile_damage(monster* mons, const item_def *launch,
                         const item_def *missile)
-{
-    if (!missile || (!launch && !is_throwable(mons, *missile)))
-        return (0);
+{    
+    //Determine whether we use explicit or implicit ammo, or abort.
+    bool implicit = false;
+    if (!missile && launch && (launch->sub_type == WPN_BOW
+          || launch->sub_type == WPN_CROSSBOW
+          || launch->sub_type == WPN_SLING))
+    {
+        implicit = true;
+    }
+    else if (!missile || (!launch && !is_throwable(mons, *missile)))
+    {
+        return 0;
+    }
+    
+    int missile_damage = 0;
 
-    const int missile_damage = property(*missile, PWPN_DAMAGE) / 2 + 1;
+    if(!implicit)
+        missile_damage = property(*missile, PWPN_DAMAGE) / 2 + 1;
+    else
+    {
+        //Make a temporary missile for the purposes of calculation, since
+        //we don't have an acutal missile.
+        item_def temp_missile;
+        temp_missile.base_type = OBJ_MISSILES;
+        if(launch->sub_type == WPN_BOW)
+            temp_missile.sub_type = MI_ARROW;
+        else if(launch->sub_type == WPN_CROSSBOW)
+            temp_missile.sub_type = MI_BOLT;
+        else if(launch->sub_type == WPN_SLING)
+            temp_missile.sub_type = MI_SLING_BULLET;
+        
+        missile_damage = property(temp_missile, PWPN_DAMAGE) / 2 + 1;
+    }
     const int launch_damage  = launch? property(*launch, PWPN_DAMAGE) : 0;
     return std::max(0, launch_damage + missile_damage);
 }
@@ -3892,8 +3920,13 @@ int mons_pick_best_missile(monster* mons, item_def **launcher,
     }
 
     const item_def *missiles = mons->missiles();
-    if (launch && missiles && !missiles->launched_by(*launch))
+    if (launch && missiles && !missiles->launched_by(*launch)
+        && launch->sub_type != WPN_BOW
+        && launch->sub_type != WPN_CROSSBOW
+        && launch->sub_type != WPN_SLING)
+    {
         launch = NULL;
+    }
 
     const int n_usable_melee_weapons(mons_wields_two_weapons(mons) ? 2 : 1);
     const bool only = melee_weapon_count == n_usable_melee_weapons
@@ -3909,6 +3942,9 @@ int mons_pick_best_missile(monster* mons, item_def **launcher,
     else
     {
         *launcher = launch;
+        if(!missiles)
+            return -1;
+
         return (missiles->index());
     }
 }

@@ -1436,7 +1436,11 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
     const int lnchType  = (weapon != NON_ITEM) ? mitm[weapon].sub_type : 0;
 
     mon_inv_type slot = get_mon_equip_slot(mons, mitm[msl]);
-    ASSERT(slot != NUM_MONSTER_SLOTS);
+    
+    bool implicit_ammo = false;
+    //if the monster isn't actually carrying the ammo, it must be implicit.
+    if(slot == NUM_MONSTER_SLOTS)
+        implicit_ammo = true;
 
     const bool skilled = mons->flags & MF_FIGHTER;
     const bool archer  = mons->flags & MF_ARCHER;
@@ -1774,7 +1778,7 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
                         << "!" << std::endl;
         }
     }
-    else if (dec_mitm_item_quantity(msl, 1))
+    else if (dec_mitm_item_quantity(msl, 1) && !implicit_ammo)
         mons->inv[slot] = NON_ITEM;
 
     if (pbolt.special_explosion != NULL)
@@ -1865,20 +1869,26 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 
     item_def *launcher = NULL;
     const item_def *weapon = NULL;
-    const int mon_item = mons_pick_best_missile(mons, &launcher);
+    //mon_item will be -1 for implicit ammo.
+    int mon_item = mons_pick_best_missile(mons, &launcher);
+    
+    bool implicit_ammo = (mon_item == -1);
 
-    if (mon_item == NON_ITEM || !mitm[mon_item].defined())
+    if (mon_item == NON_ITEM || (!implicit_ammo && !mitm[mon_item].defined()))
         return (false);
 
     if (player_or_mon_in_sanct(mons))
         return (false);
+    
+    item_def *missile = NULL;
 
-    item_def *missile = &mitm[mon_item];
+    if(!implicit_ammo)
+        missile = &mitm[mon_item];
 
     // Throwing a net at a target that is already caught would be
     // completely useless, so bail out.
     const actor *act = actor_at(beem.target);
-    if (missile->base_type == OBJ_MISSILES
+    if (!implicit_ammo && missile->base_type == OBJ_MISSILES
         && missile->sub_type == MI_THROWING_NET
         && act && act->caught())
     {
@@ -1891,6 +1901,45 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
         weapon = mons->mslot_item(MSLOT_WEAPON);
         if (weapon && weapon != launcher && weapon->cursed())
             return (false);
+    }
+    
+    //If we're dealing with implicit ammo, make the temporary ammo piece.
+    if(implicit_ammo)
+    {
+        mon_item = items(0, OBJ_MISSILES, MI_ARROW, true, 0, 0, 0, 0, -1, true, true);
+        if(mon_item == NON_ITEM)
+        {
+            //Uh-oh!  Bail; we've somehow managed to not spawn a piece of ammo.
+            return false;
+        }
+        missile = &mitm[mon_item];
+        missile->quantity = 1;
+        
+        switch(launcher->sub_type)
+        {
+        case WPN_BOW:
+        case WPN_LONGBOW:
+        {
+            missile->sub_type = MI_ARROW;
+            break;
+        }
+        case WPN_CROSSBOW:
+        {
+            missile->sub_type = MI_BOLT;
+            break;
+        }
+        case WPN_SLING:
+        {
+            missile->sub_type = MI_SLING_BULLET;
+            break;
+        }
+        default:
+        {
+            //Hopefully this never happens.
+            missile->sub_type = MI_NONE;
+            break;
+        }
+        }
     }
 
     // Ok, we'll try it.
@@ -1933,6 +1982,12 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 
         beem.name.clear();
         return (_mons_throw(mons, beem, mon_item, sidestep_attempt));
+    }
+    
+    //If we made a temporary piece of implicit ammuntion, delete it.
+    if(implicit_ammo)
+    {
+        destroy_item(*missile);
     }
 
     return (false);
