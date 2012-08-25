@@ -1127,7 +1127,7 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
 
     direction(target, args);
 
-    if (!beh.active_item())
+    if (!beh.active_item() && you.weapon()->sub_type == WPN_BLOWGUN)
     {
         canned_msg(MSG_OK);
         return (false);
@@ -1168,6 +1168,9 @@ static int _fire_prompt_for_item()
 // Returns false and err text if this item can't be fired.
 static bool _fire_validate_item(int slot, std::string &err)
 {
+    // We never need to warn about implicit ammo.
+    if (slot == -1)
+        return true;
     if (slot == you.equip[EQ_WEAPON]
         && (you.inv[slot].base_type == OBJ_WEAPONS
             || you.inv[slot].base_type == OBJ_STAVES)
@@ -1237,7 +1240,25 @@ static bool _autoswitch_to_ranged()
     const item_def& launcher = you.inv[item_slot];
     if(!is_range_weapon(launcher))
         return false;
+    
+    //If we're already wielding a non-blowgun launcher, don't autoswitch.
+    if(is_range_weapon(*(you.weapon())) && you.weapon()->sub_type != WPN_BLOWGUN)
+        return false;
+    
+    //If not a blowgun, don't need to check for ammo.
+    if(launcher.sub_type != WPN_BLOWGUN)
+    {
+        if (!wield_weapon(true, item_slot))
+            return false;
+        
+        you.turn_is_over = true;
+        //XXX Hacky. Should use a delay instead.
+        macro_buf_add(command_to_key(CMD_FIRE));
+        return true;
+    }     
 
+    //It's a blowgun.  Need to make sure we actually have needles, since
+    //the player doesn't get implicit needles.
     FixedVector<item_def,ENDOFPACK>::const_pointer iter = you.inv.begin();
     for (;iter!=you.inv.end(); ++iter)
        if(iter->launched_by(launcher))
@@ -1254,40 +1275,44 @@ static bool _autoswitch_to_ranged()
     return false;
 }
 
+//Returns the index of chosen ammo, OR -1 if the player is to fire
+//implicit ammo, OR -2 if aborted.
 int get_ammo_to_shoot(int item, dist &target, bool teleport)
 {
     if (fire_warn_if_impossible())
     {
         flush_input_buffer(FLUSH_ON_FAILURE);
-        return (-1);
+        return (-2);
     }
 
+    //Note that _autoswitch_to_ranged won't autoswitch away from
+    //non-blowgun launchers even if there is no explicit ammo for them.
     if(Options.auto_switch && you.m_quiver->get_fire_item() == -1
        && _autoswitch_to_ranged())
     {
-        return (-1);
+        return (-2);
     }
 
     if(!_fire_choose_item_and_target(item, target, teleport))
-        return (-1);
+        return (-2);
 
     std::string warn;
-    if (!_fire_validate_item(item, warn))
+    if (item >= 0 && !_fire_validate_item(item, warn))
     {
         mpr(warn.c_str());
-        return (-1);
+        return (-2);
     }
     return (item);
 }
 
-// If item == -1, prompt the user.
+// If item == -1, use implicit ammo.
 // If item passed, it will be put into the quiver.
 void fire_thing(int item)
 {
     dist target;
     item = get_ammo_to_shoot(item, target);
-    //if (item == -1)
-    //    return;
+    if (item == -2)
+        return;
 
     // Need to check whether item is -1, or else you.inv[item] goes out of bounds.
     if (item == -1 || check_warning_inscriptions(you.inv[item], OPER_FIRE))
@@ -1316,11 +1341,11 @@ void throw_item_no_quiver()
     std::string warn;
     int slot = _fire_prompt_for_item();
 
-    //if (slot == -1)
-    //{
-    //    canned_msg(MSG_OK);
-    //    return;
-    //}
+    if (slot == -1)
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
 
     if (!_fire_validate_item(slot, warn))
     {
