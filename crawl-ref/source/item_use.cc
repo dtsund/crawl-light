@@ -3139,73 +3139,17 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 bool thrown_object_destroyed(item_def *item, const coord_def& where)
 {
     ASSERT(item != NULL);
-
-    std::string name = item->name(DESC_PLAIN, false, true, false);
-
-    // Exploding missiles are always destroyed.
-    if (name.find("explod") != std::string::npos)
-        return (true);
-
-    if (item->base_type != OBJ_MISSILES)
+    
+    //Never mulch non-missiles.
+    if(item->base_type != OBJ_MISSILES)
         return (false);
-
-    int brand = get_ammo_brand(*item);
-    if (brand == SPMSL_CHAOS || brand == SPMSL_DISPERSAL)
-        return (true);
-
-    // Nets don't get destroyed by throwing.
-    if (item->sub_type == MI_THROWING_NET)
+    
+    //Mulch large rocks one time in 50.
+    if(item->sub_type == MI_LARGE_ROCK && !one_chance_in(50))
         return (false);
-
-    int chance;
-
-    // [dshaligram] Removed influence of Throwing on ammo preservation.
-    // The effect is nigh impossible to perceive.
-    switch (item->sub_type)
-    {
-    case MI_NEEDLE:
-        chance = (brand == SPMSL_CURARE ? 3 : 6);
-        break;
-
-    case MI_SLING_BULLET:
-    case MI_STONE:
-    case MI_ARROW:
-    case MI_BOLT:
-        chance = 4;
-        break;
-
-    case MI_DART:
-        chance = 3;
-        break;
-
-    case MI_JAVELIN:
-        chance = 10;
-        break;
-
-    case MI_LARGE_ROCK:
-        chance = 25;
-        break;
-
-    default:
-        die("Unknown missile type");
-    }
-
-    // Inflate by 4 to avoid rounding errors.
-    const int mult = 4;
-    chance *= mult;
-
-    if (brand == SPMSL_STEEL)
-        chance *= 10;
-    if (brand == SPMSL_FLAME)
-        chance /= 2;
-    if (brand == SPMSL_FROST)
-        chance /= 2;
-    if (brand == SPMSL_REAPING)
-        chance /= 4;
-
-    // Enchanted projectiles get an extra shot at avoiding
-    // destruction: plus / (3 + plus) chance of survival.
-    return (x_chance_in_y(mult, chance) && x_chance_in_y(3, item->plus + 3));
+    
+    //Everything else is always destroyed.
+    return (true);
 }
 
 static int _prompt_ring_to_remove(int new_ring)
