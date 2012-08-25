@@ -1127,7 +1127,7 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
 
     direction(target, args);
 
-    if (!beh.active_item() && you.weapon()->sub_type == WPN_BLOWGUN)
+    if (!beh.active_item() && you.weapon() && you.weapon()->sub_type == WPN_BLOWGUN)
     {
         canned_msg(MSG_OK);
         return (false);
@@ -1242,8 +1242,11 @@ static bool _autoswitch_to_ranged()
         return false;
     
     //If we're already wielding a non-blowgun launcher, don't autoswitch.
-    if(is_range_weapon(*(you.weapon())) && you.weapon()->sub_type != WPN_BLOWGUN)
+    if(you.weapon() && is_range_weapon(*(you.weapon()))
+       && you.weapon()->sub_type != WPN_BLOWGUN)
+    {
         return false;
+    }
     
     //If not a blowgun, don't need to check for ammo.
     if(launcher.sub_type != WPN_BLOWGUN)
@@ -2375,7 +2378,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     item_def item;
     // The original item to be launched/thrown, in the case of non-implicit ammo.
     item_def thrown;
-    if(throw_2 == -1 && fires_ammo_type(*(you.weapon())) != MI_NONE 
+    if(throw_2 == -1 && you.weapon() && fires_ammo_type(*(you.weapon())) != MI_NONE 
        && you.weapon()->sub_type != WPN_BLOWGUN)
     {
         int temp_missile_index = items(0, OBJ_MISSILES, MI_ARROW, true, 0, 0, 0, 0, -1, true);
