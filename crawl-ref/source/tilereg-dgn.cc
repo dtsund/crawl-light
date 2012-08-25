@@ -664,7 +664,9 @@ static const bool _have_appropriate_spell(const actor* target)
 static bool _can_fire_item()
 {
     return (you.species != SP_CAT
-            && you.m_quiver->get_fire_item() != -1);
+            && you.m_quiver->get_fire_item() != -1
+            || (you.weapon() && is_range_weapon(*(you.weapon())) 
+                && you.weapon()->sub_type != WPN_BLOWGUN));
 }
 
 static bool _handle_distant_monster(monster* mon, unsigned char mod)
@@ -1088,7 +1090,9 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
 
             if (you.species != SP_CAT
                 && you.see_cell_no_trans(target->pos())
-                && you.m_quiver->get_fire_item() != -1)
+                && (you.m_quiver->get_fire_item() != -1
+                    || (you.weapon() && is_range_weapon(*(you.weapon())) 
+                        && you.weapon()->sub_type != WPN_BLOWGUN)))
             {
                 _add_tip(tip, "[Shift + L-Click] Fire (%)");
                 cmd.push_back(CMD_FIRE);
