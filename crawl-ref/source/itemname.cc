@@ -228,7 +228,6 @@ std::string item_def::name(description_level_type descrip,
 
     buff << auxname;
 
-    bool equipped = false;
     if (descrip == DESC_INVENTORY_EQUIP)
     {
         equipment_type eq = item_equip_slot(*this);
@@ -274,7 +273,6 @@ std::string item_def::name(description_level_type descrip,
         }
         else if (item_is_quivered(*this))
         {
-            equipped = true;
             buff << " (quivered)";
         }
     }

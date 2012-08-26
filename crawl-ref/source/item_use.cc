@@ -2247,33 +2247,6 @@ static int dex_adjust_thrown_tohit(int hit)
     return stat_adjust(hit, you.dex(), 13, 160, 90);
 }
 
-static void _merge_ammo_in_inventory(int slot)
-{
-    if (!you.inv[slot].defined())
-        return;
-
-    bool done_anything = false;
-
-    for (int i = 0; i < ENDOFPACK; ++i)
-    {
-        if (i == slot || !you.inv[i].defined())
-            continue;
-
-        // Merge with the thrower slot. This could be a bad
-        // thing if you're wielding IDed ammo and firing from
-        // an unIDed stack...but that's a pretty remote case.
-        if (items_stack(you.inv[i], you.inv[slot]))
-        {
-            if (!done_anything)
-                mpr("You combine your ammunition.");
-
-            inc_inv_item_quantity(slot, you.inv[i].quantity, true);
-            dec_inv_item_quantity(i, you.inv[i].quantity);
-            done_anything = true;
-        }
-    }
-}
-
 void throw_noise(actor* act, const bolt &pbolt, const item_def &ammo)
 {
     const item_def* launcher = act->weapon();
@@ -2333,7 +2306,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 {
     dist thr;
     int shoot_skill = 0;
-    bool ammo_ided = false;
 
     // launcher weapon sub-type
     weapon_type lnchType;
@@ -2692,17 +2664,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         exHitBonus = (lnchHitBonus > 0 ? random2(lnchHitBonus + 1)
                                        : -random2(-lnchHitBonus + 1));
 
-        // Identify ammo type if the information is there. Note
-        // that the bow is always type-identified because it's
-        // wielded.
-        if (determines_ammo_brand(bow_brand, ammo_brand))
-        {
-            if (ammo_brand != SPMSL_NORMAL)
-            {
-                ammo_ided = true;
-            }
-        }
-
         practise(EX_WILL_LAUNCH, launcher_skill);
 
         // Removed 2 random2(2)s from each of the learning curves, but
@@ -2921,9 +2882,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
         if (wepClass == OBJ_MISSILES)
         {
-            // Identify ammo type.
-            ammo_ided = true;
-
             switch (wepType)
             {
             case MI_LARGE_ROCK:
@@ -3123,9 +3081,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     // ...any monster nearby can see that something has been thrown, even
     // if it didn't make any noise.
     alert_nearby_monsters();
-
-//    if (ammo_ided)
-//        _merge_ammo_in_inventory(throw_2);
 
     you.turn_is_over = true;
 
@@ -4736,8 +4691,6 @@ void read_scroll(int slot)
     bool id_the_scroll = true;  // to prevent unnecessary repetition
     bool tried_on_item = false; // used to modify item (?EA, ?RC, ?ID)
 
-    bool bad_effect = false; // for Xom: result is bad (or at least dangerous)
-
     switch (which_scroll)
     {
     case SCR_BLINKING:
@@ -4811,7 +4764,6 @@ void read_scroll(int slot)
 
         // This is only naughty if you know you're doing it.
         did_god_conduct(DID_NECROMANCY, 10, true);
-        bad_effect = true;
         break;
 
     case SCR_IMMOLATION:
@@ -4819,7 +4771,6 @@ void read_scroll(int slot)
 
         // Doesn't destroy scrolls anymore, so no special check needed. (jpeg)
         immolation(10, IMMOLATION_SCROLL, you.pos(), true, &you);
-        bad_effect = true;
         more();
         break;
 

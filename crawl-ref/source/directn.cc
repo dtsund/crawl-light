@@ -3746,12 +3746,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         item_def* mon_arm = mi.mon()->mslot_item(MSLOT_ARMOUR);
         item_def* mon_shd = mi.mon()->mslot_item(MSLOT_SHIELD);
         item_def* mon_qvr = mi.mon()->mslot_item(MSLOT_MISSILE);
-        item_def* mon_alt = mi.mon()->mslot_item(MSLOT_ALT_WEAPON);
         item_def* mon_wnd = mi.mon()->mslot_item(MSLOT_WAND);
-
-        // _describe_monster_weapon already took care of this
-        if (mi.two_weapons)
-            mon_alt = 0;
 
         const bool mon_has_wand = mi.props.exists("wand_known") && mi.inv[MSLOT_WAND].get();
         const bool mon_carry = mon_has_wand;

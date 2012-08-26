@@ -982,11 +982,8 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
            || item.base_type == OBJ_WEAPONS);
     ASSERT(!is_unrandom_artefact(item));
 
-    bool seen = false;
     if (mon && you.can_see(mon) && item.base_type == OBJ_WEAPONS)
     {
-        seen = true;
-
         description_level_type desc = mon->friendly() ? DESC_CAP_YOUR :
                                                         DESC_CAP_THE;
         std::string msg = apostrophise(mon->name(desc));
