@@ -28,6 +28,7 @@ Gods
 * Lugonu followers may now unwield distortion weapons without penalty.
 + Cheibriados gives full stat boost for fully ponderous, regardless of species.
 * Jiyva now allows followers to take the Slime:4 loot immediately.
+* Invoking Berserk Rage from Trog now costs 0-1 piety.
 
 Character
 ---------
@@ -41,7 +42,6 @@ Character
 * Removed the hunger clock.
 * Most things that previously cost hunger now cost glow.
 * Glow behaviour is now more deterministic.
-* Invoking Berserk Rage from Trog now costs 0-1 piety.
 * Removed Ghouls and Vampires as player races.
 * Forget Spell given as an intrinsic ability to all characters.
 * Drained stats no longer recover over time.
@@ -116,8 +116,6 @@ Monsters
 * Monster depths and depth ranges adjusted to compensate for shorter dungeon.
 * Monsters no longer have randomized energy.
 * Monsters now pursue the player across levels at a distance, Brogue-style.
-+ Enchantment no longer has any effect on ammo.
-* Mundane ammo for launchers is now implicitly carried in infinite quantity.
 
 Levels
 ------
@@ -165,6 +163,8 @@ Items
 * Removed non-fruit non-chunk food (fruit remains for the sake of Fedhas).
 * Staff of Energy renamed Staff of Discharge, now reduces glow cost for spells.
 * Potions of Agility now grant Swiftness when consumed.
++ Enchantment no longer has any effect on ammo.
+* Mundane ammo for launchers is now implicitly carried in infinite quantity.
 
 
 Crawl Light 0.1 (20110812)
