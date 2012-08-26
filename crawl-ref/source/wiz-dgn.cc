@@ -334,7 +334,7 @@ void wizard_create_feature()
                     // might be *LONG*.
                     mpr_comma_separated_list(prefix, matches, " and ", ", ",
                                              MSGCH_DIAGNOSTICS);
-                    return;
+                    return wizard_create_feature(pos);
                 }
             }
         }
