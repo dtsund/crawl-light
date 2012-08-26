@@ -298,7 +298,7 @@ void manage_clouds()
                     if (env.cloud[env.cgrid(*ai)].type == CLOUD_GLOOM)
                         count++;
 
-            if (!antihaloed(cloud.pos) && haloed(cloud.pos)
+            if (!umbraed(cloud.pos) && haloed(cloud.pos)
                 && !silenced(cloud.pos))
                 count = 0;
 

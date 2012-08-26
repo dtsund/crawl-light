@@ -6586,7 +6586,7 @@ bool player::backlit(bool check_haloed, bool self_halo) const
         return (true);
     }
     if (check_haloed)
-        return (!antihaloed() && haloed()
+        return (!umbraed() && haloed()
                 && (self_halo || halo_radius() == -1));
     return (false);
 }
@@ -6597,8 +6597,8 @@ bool player::umbra(bool check_haloed, bool self_halo) const
         return (false);
 
     if (check_haloed)
-        return (antihaloed() && !haloed()
-                && (self_halo || antihalo_radius() == -1));
+        return (umbraed() && !haloed()
+                && (self_halo || umbra_radius() == -1));
     return (false);
 }
 
