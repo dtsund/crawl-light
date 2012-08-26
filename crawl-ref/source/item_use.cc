@@ -2199,27 +2199,6 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     return (false);
 }
 
-// XXX This is a bit too generous, as it lets the player determine
-// that the bolt of fire he just shot from a flaming bow is actually
-// a poison arrow. Hopefully this isn't too abusable.
-static bool determines_ammo_brand(int bow_brand, int ammo_brand)
-{
-    if (bow_brand == SPWPN_FLAME && ammo_brand == SPMSL_FLAME)
-        return (false);
-    if (bow_brand == SPWPN_FROST && ammo_brand == SPMSL_FROST)
-        return (false);
-    if (bow_brand == SPWPN_VENOM && ammo_brand == SPMSL_POISONED)
-        return (false);
-    if (bow_brand == SPWPN_CHAOS && ammo_brand == SPMSL_CHAOS)
-        return (false);
-    if (bow_brand == SPWPN_PENETRATION && ammo_brand == SPMSL_PENETRATION)
-        return (false);
-    if (bow_brand == SPWPN_REAPING && ammo_brand == SPMSL_REAPING)
-        return (false);
-
-    return (true);
-}
-
 static int stat_adjust(int value, int stat, int statbase,
                        const int maxmult = 160, const int minmult = 40)
 {
