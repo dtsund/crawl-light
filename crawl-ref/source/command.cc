@@ -1000,7 +1000,7 @@ static std::vector<std::string> _get_desc_keys(std::string regex,
     return (all_matches);
 }
 
-static std::vector<std::string> _get_monster_keys(wchar_t showchar)
+static std::vector<std::string> _get_monster_keys(ucs_t showchar)
 {
     std::vector<std::string> mon_keys;
 
@@ -1020,7 +1020,7 @@ static std::vector<std::string> _get_monster_keys(wchar_t showchar)
         if (getLongDescription(me->name).empty())
             continue;
 
-        if (me->showchar == showchar)
+        if ((ucs_t)me->showchar == showchar)
             mon_keys.push_back(me->name);
     }
 
