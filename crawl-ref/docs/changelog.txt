@@ -82,7 +82,6 @@ Interface
 + New command: 'D'rop last. Drops the item(s) last picked up.
 + Auto-switch: bumping while wielding launcher switches to weapon in slots a/b.
 + Auto-switch: firing while wielding melee weapon switches to launcher in a/b.
-+ New command: 'D'rop last. Drops the item(s) last picked up.
 * Ability failure rates are now listed as percentages, rather than adjectives.
 * Glow meter, beneath the HP and MP meters.
 * Prompt the player before entering dangerous levels of glow.
