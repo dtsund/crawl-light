@@ -3828,7 +3828,7 @@ bool monster::find_home_near_place(const coord_def &c)
     std::queue<coord_def> q;
 
     //If c itself is viable, put the monster there directly.    
-    if(in_bounds(c) && !actor_at(c) && monster_habitable_grid(this, grd(c)))
+    if(in_bounds(c) && !actor_at(c) && monster_habitable_grid_clouds(this, c))
         return move_to_pos(c);
 
     q.push(c);
@@ -3851,7 +3851,7 @@ bool monster::find_home_near_place(const coord_def &c)
                 continue;
             dist(*ai - c) = last_dist = dist(p - c) + 1;
 
-            if (!monster_habitable_grid(this, grd(*ai)))
+            if (!monster_habitable_grid_clouds(this, *ai))
                 continue;
 
             q.push(*ai);

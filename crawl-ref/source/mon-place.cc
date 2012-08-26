@@ -253,6 +253,19 @@ bool monster_habitable_grid(monster_type mt,
     return (false);
 }
 
+//Checks both monster_habitable_grid for the square and whether the
+//square has a cloud the monster wouldn't like.
+bool monster_habitable_grid_clouds(const monster* mon, coord_def coords)
+{
+    if(!monster_habitable_grid(mon, grd(coords)))
+        return false;
+    
+    if(mons_avoids_cloud(mon, env.cgrid(coords)))
+        return false;
+    
+    return true;
+}
+
 // Returns true if the monster can submerge in the given grid.
 bool monster_can_submerge(const monster* mon, dungeon_feature_type feat)
 {

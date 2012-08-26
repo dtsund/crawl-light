@@ -123,6 +123,7 @@ bool monster_habitable_grid(
     dungeon_feature_type wanted_grid_feature = DNGN_UNSEEN,
     int flies = -1,
     bool paralysed = false);
+bool monster_habitable_grid_clouds(const monster* mon, coord_def coords);
 bool monster_can_submerge(const monster* mon, dungeon_feature_type grid);
 coord_def find_newmons_square(int mons_class, const coord_def &p);
 coord_def find_newmons_square_contiguous(monster_type mons_class,
