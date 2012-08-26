@@ -511,6 +511,7 @@ static int _mons_rare_abyss_hard(int mcls)
 
     case MONS_ANGEL:
     case MONS_IRON_DEVIL:
+    case MONS_PROFANE_SERVITOR:
         return 15;
 
     case MONS_ANCIENT_LICH:
