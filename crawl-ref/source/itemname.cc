@@ -2405,7 +2405,7 @@ bool is_useless_item(const item_def &item, bool temp)
         if (you.species == SP_CAT)
             return (true);
 
-        if (!you.could_wield(item, true)
+        if (!you.could_wield(item, true, !temp)
             && !is_throwable(&you, item))
         {
             // Weapon is too large (or small) to be wielded and cannot
