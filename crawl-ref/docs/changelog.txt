@@ -27,6 +27,7 @@ Gods
 * Followers of Beogh with sufficient piety share potion effects with allies.
 * Lugonu followers may now unwield distortion weapons without penalty.
 + Cheibriados gives full stat boost for fully ponderous, regardless of species.
+* Jiyva now allows followers to take the Slime:4 loot immediately.
 
 Character
 ---------
