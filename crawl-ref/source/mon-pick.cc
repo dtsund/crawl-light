@@ -136,6 +136,7 @@ bool mons_abyss(int mcls)
     case MONS_PHANTASMAL_WARRIOR:
     case MONS_PHANTOM:
     case MONS_PIT_FIEND:
+    case MONS_PROFANE_SERVITOR:
     case MONS_RAKSHASA:
     case MONS_REAPER:
     case MONS_RED_DEVIL:
@@ -322,6 +323,7 @@ int mons_rare_abyss(int mcls, bool force_normal)
 
     case MONS_ANGEL:
     case MONS_IRON_DEVIL:
+    case MONS_PROFANE_SERVITOR:
         return 6;
 
     case MONS_ANCIENT_LICH:
