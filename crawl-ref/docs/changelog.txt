@@ -132,7 +132,6 @@ Levels
         5 floors to 3.
     Slime Pits reduced from 6 floors to 4.
     Hive reduced from 2 floors to 1.
-    Crypt reduced from 5 floors to 3.
     Gehennom, Tartarus, Cocytus, and Dis reduced from 7 floors to 5.
 * Hive is now a source of potions, rather than a source of food.
 * Stronger restrictions on overflow altar depth.
