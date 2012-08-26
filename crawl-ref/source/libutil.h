@@ -72,9 +72,6 @@ static inline int isaalnum(int c)
 
 bool ends_with(const std::string &s, const std::string &suffix);
 
-#ifdef UNIX
-extern "C" int stricmp(const char *str1, const char *str2);
-#endif
 int numcmp(const char *a, const char *b, int limit = 0);
 bool numcmpstr(std::string a, std::string b);
 #ifndef __UCLIBC__

@@ -465,7 +465,7 @@ static tag_pref _str_to_tag_pref(const char *opt)
 {
     for (int i = 0; i < TAGPREF_MAX; i++)
     {
-        if (!stricmp(opt, tag_prefs[i]))
+        if (!strcasecmp(opt, tag_prefs[i]))
             return ((tag_pref)i);
     }
 
@@ -3834,7 +3834,7 @@ bool parse_args(int argc, char **argv, bool rc_only)
 
         int o;
         for (o = 0; o < num_cmd_ops; o++)
-            if (stricmp(cmd_ops[o], arg) == 0)
+            if (strcasecmp(cmd_ops[o], arg) == 0)
                 break;
 
         // Print the list of commandline options for "--help".
