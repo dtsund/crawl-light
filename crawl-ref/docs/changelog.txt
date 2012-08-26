@@ -1,3 +1,173 @@
+Crawl Light 0.2 (20120825)
+--------------------------
+
+Disclaimer: These are merely the highlights, not an exhaustive list of changes.
+In particular, not all of the imported changes from Stone Soup are listed.
+Breaks save compatibility with the Crawl Light 0.1 release.
+
+Items marked with an asterisk are new to Crawl Light.  Items marked with a +
+have been imported, at least in part, from Stone Soup.
+
+Crawl Light 0.2 Highlights
+--------------------------
+* The ID game is no more.
+* Difficulty levels have been added to the game; the player can make the game
+    harder by opening "Pandooras".
+* Line of sight for players and monsters is now square.
+* Brogue-style monster interlevel pursuit.
+* New spell: Illude.
+* Sidestepping.
+* Hunger clock removed, hunger costs replaced by glow costs.
+* Drastically shortened dungeon.
+
+Gods
+----
+* Ashenzari removed from the game.
+* Cheibriados given Ashenzari's passive monster detection.
+* Followers of Beogh with sufficient piety share potion effects with allies.
+* Lugonu followers may now unwield distortion weapons without penalty.
++ Cheibriados gives full stat boost for fully ponderous, regardless of species.
+
+Character
+---------
++ New mutation: Camouflage, granting a stealth bonus.
++ +3 base HP for all characters.
++ Berserkitis mutation triggers less often.
+* Restored the Reaver class.
+* DoomRL-style sidestepping is now possible: 50% chance of success against
+  mundane projectiles; 20% against magical bolts; 0% against insubstantial
+  enchantments, smites, and the like.
+* Removed the hunger clock.
+* Most things that previously cost hunger now cost glow.
+* Glow behaviour is now more deterministic.
+* Invoking Berserk Rage from Trog now costs 0-1 piety.
+* Removed Ghouls and Vampires as player races.
+* Forget Spell given as an intrinsic ability to all characters.
+* Drained stats no longer recover over time.
+* Some sources of stat drain nerfed.
+* Crusaders now start with a potion of restore ability.
+* All players now start with one Scroll of Teleportation, Potion of Agility.
++ All characters carry a bootknife to dissect corpses.
+
+Difficulty
+----------
+* Guaranteed portal vault on D:5, containing a difficulty-increasing Pandoora.
+* If the first Pandoora is opened, Hive contains a second.  Cannot be opened
+  if the player advances beyond D:9 first.
+* When playing in the easiest difficulty, OoD generation is curtailed.
+* When playing in the easiest difficulty, 20% more items are generated.
+* When playing in the hardest difficulty, monster generation is much nastier.
+* When playing in the hardest difficulty, 30% fewer items are generated.
+* In the hardest difficulty, the following items have lower generation weight:
+    Wand of Healing
+    Wand of Hasting
+    Wand of Teleportation
+    Potion of Healing
+    Potion of Heal Wounds
+    Potion of Cure Mutation
+    Scroll of Enchant Armour
+    Scroll of Recharging
+    Scroll of Blinking
+    Scroll of Acquirement
+* In the hardest difficulty, there is a minimum number of monsters per floor.
+* Some vaults, particularly unique-generation vaults, tied to difficulty level.
+* Cannot enter Pandemonium when difficulty is at its easiest.
+
+Interface
+---------
++ Search: allows searching for portals, and for waypoints (Ctrl-F 1, Ctrl-F *).
++ Search: "branded" synonymous with "ego". Better help (Ctrl-F ?).
++ Auto-explore tries to look at unreachable places.
++ New command: 'D'rop last. Drops the item(s) last picked up.
++ Auto-switch: bumping while wielding launcher switches to weapon in slots a/b.
++ Auto-switch: firing while wielding melee weapon switches to launcher in a/b.
++ New command: 'D'rop last. Drops the item(s) last picked up.
+* Ability failure rates are now listed as percentages, rather than adjectives.
+* Glow meter, beneath the HP and MP meters.
+* Prompt the player before entering dangerous levels of glow.
+* "You feel relatively safe now" message when floor is empty of monsters.
+* Added wizmode command to alter difficulty level.
+* Prayer while worshipping a blood god sacrifices all valid corpses in LOS.
++ Display -cTele on the status line where controlled teleports are blocked.
+
+Spells
+------
++ Statue and Dragon Form balance: give both some GDR, reduce unarmed damage.
++ Statue Form: boost all melee damage.
+* Rain clouds no longer influence fire or ice magic.
++ New spell: Inner Flame.
+* Reduced the Haste bonus from 100% to 75%.
+* Spell failure rates of 2% or below are now rounded down to 0%.
+* Removed the Selective Amnesia spell.
+* Casting Berserker Rage now randomly drains strength or dexterity.
+* New spell: Illude.  Sorcery spell that spawns fragile, distracting illusions.
+
+Monsters
+--------
+* Monsters now yield 50% more experience.
+* Gnolls may no longer appear in packs on D:1.
+* Jackals may no longer appear in packs on D:1.
++ Pikel: fixed bugs with freed monsters
+* Merfolk and krakens nerfed somewhat but given an attack bonus against
+  floundering players.
+* Merfolk impalers and javelineers nerfed, but made eligible for Shoals:1
+* Monsters no longer flee upon being seriously wounded.
+* Monsters no longer respawn on most floors.
+* Monster depths and depth ranges adjusted to compensate for shorter dungeon.
+* Monsters no longer have randomized energy.
+* Monsters now pursue the player across levels at a distance, Brogue-style.
++ Enchantment no longer has any effect on ammo.
+* Mundane ammo for launchers is now implicitly carried in infinite quantity.
+
+Levels
+------
++ Vestibule of Hell has its own monster set.
+* Shoals tides now only alternate between shallow water and land.
+* Shoals tides sped up by a factor of 30.
+* Most branches severely reduced in length:
+    Dungeon reduced from 27 floors to 18.
+    Lair and Vaults reduced from 8 floors to 5.
+    Orcish Mines reduced from 4 floors to 3.
+    Swamp, Snake Pit, Shoals, Elven Halls, Crypt, and Realm of Zot reduced from
+        5 floors to 3.
+    Slime Pits reduced from 6 floors to 4.
+    Hive reduced from 2 floors to 1.
+    Crypt reduced from 5 floors to 3.
+    Gehennom, Tartarus, Cocytus, and Dis reduced from 7 floors to 5.
+* Hive is now a source of potions, rather than a source of food.
+* Stronger restrictions on overflow altar depth.
+* Gehenna interferes with item use: potions and scrolls unusable, wands consume
+    double charges.
+* Tartarus constantly drains experience; Tar:1-4 are nonpersistent levels.
+
+Items
+-----
++ Destruction cards buffed.
++ Randart heavy armours tend to come with better enchantment.
++ Large rocks can (rarely) be generated on the dungeon floor.
++ Price reform: scrolls, potions, rings.
+* The ID game is no more.
+* Items may no longer be cursed.
+* Removed the following items:
+    Scroll of Identify
+    Scroll of Detect Curse
+    Scroll of Random Uselessness
+    Scroll of Curse Weapon
+    Scroll of Curse Armour
+    Scroll of Curse Jewellery
+    Scroll of Remove Curse
+    Scroll of Amnesia
+    Scroll of Noise
+    Amulet of Inaccuracy
+    Ring of Hunger
+* Negatively enchanted rings are no longer generated.
+* Loot frequency altered to fit reduced dungeon length.
+* Artefacts may no longer have the autocursing or metabolism properties.
+* Removed non-fruit non-chunk food (fruit remains for the sake of Fedhas).
+* Staff of Energy renamed Staff of Discharge, now reduces glow cost for spells.
+* Potions of Agility now grant Swiftness when consumed.
+
+
 Crawl Light 0.1 (20110812)
 --------------------------
 
