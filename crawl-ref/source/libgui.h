@@ -57,7 +57,7 @@ void update_screen();
 bool kbhit();
 
 #ifdef UNIX
-extern "C" char *strlwr(char *str);
+char *strlwr(char *str);
 int itoa(int value, char *strptr, int radix);
 #endif
 

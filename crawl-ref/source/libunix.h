@@ -51,16 +51,7 @@ void set_mouse_enabled(bool enabled);
 void sighup_save_and_exit();
 #endif
 
-#ifndef _LIBUNIX_IMPLEMENTATION
-/* Some stuff from curses, to remove compiling warnings.. */
-extern "C"
-{
-    int getch(void);
-    int noecho(void);
-    int echo(void);
-    char *strlwr(char *str);
-}
-#endif
+char *strlwr(char *str);
 
 
 #endif
