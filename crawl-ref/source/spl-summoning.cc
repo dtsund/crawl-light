@@ -656,11 +656,9 @@ bool cast_summon_ugly_thing(int pow, god_type god)
 
     const int dur = std::min(2 + (random2(pow) / 4), 6);
 
-    const bool friendly = (random2(pow) > 3);
-
     if (create_monster(
             mgen_data(mon,
-                      friendly ? BEH_FRIENDLY : BEH_HOSTILE, &you,
+                      BEH_FRIENDLY, &you,
                       dur, SPELL_SUMMON_UGLY_THING,
                       you.pos(),
                       MHITYOU,
@@ -668,9 +666,6 @@ bool cast_summon_ugly_thing(int pow, god_type god)
     {
         mpr((mon == MONS_VERY_UGLY_THING) ? "A very ugly thing appears."
                                           : "An ugly thing appears.");
-
-        if (!friendly)
-            mpr("It doesn't look very happy.");
 
         return (true);
     }
