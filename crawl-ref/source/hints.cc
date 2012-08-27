@@ -570,7 +570,7 @@ void hints_finished()
     {
         text =  "You can search among all items existing in the dungeon with "
                 "the <w>%</w> command. For example, "
-                "<w>% \"knife\"</w> will list all knives. You can then "
+                "<w>% \"dagger\"</w> will list all daggers. You can then "
                 "travel to one of the spots. It is even possible to enter "
                 "words like <w>\"shop\"</w> or <w>\"altar\"</w>.";
         insert_commands(text, CMD_SEARCH_STASHES, CMD_SEARCH_STASHES, 0);
