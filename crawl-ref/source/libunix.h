@@ -51,8 +51,5 @@ void set_mouse_enabled(bool enabled);
 void sighup_save_and_exit();
 #endif
 
-char *strlwr(char *str);
-
-
 #endif
 #endif

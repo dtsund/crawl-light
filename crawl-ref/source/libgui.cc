@@ -229,18 +229,5 @@ int itoa(int value, char *strptr, int radix)
     }
     return (0);                /* Me? Fail? Nah. */
 }
-
-
-// Convert string to lowercase.
-char *strlwr(char *str)
-{
-    unsigned int i;
-
-    for (i = 0; i < strlen(str); i++)
-        str[i] = tolower(str[i]);
-
-    return (str);
-}
-
 #endif // #ifdef UNIX
 #endif // #ifdef USE_TILE
