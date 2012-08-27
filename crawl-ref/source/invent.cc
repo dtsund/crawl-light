@@ -1911,7 +1911,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
         if (!wielded && !msg)
             return (false);
 
-        if (get_weapon_brand(item) == SPWPN_REACHING)
+        if (weapon_reach(item))
         {
             if (!wielded)
             {

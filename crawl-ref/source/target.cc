@@ -114,22 +114,19 @@ targetter_reach::targetter_reach(const actor* act, reach_type ran) :
 
 bool targetter_reach::valid_aim(coord_def a)
 {
-    if (!cell_see_cell(origin, a))
-        return false;
+    if (origin == a)
+        return notify_fail("That would be overly suicidal.");
+    if (!cell_see_cell(origin, a, LOS_DEFAULT))
+        return notify_fail("You cannot see that place.");
     if (!agent->see_cell_no_trans(a))
-        return false;
+        return notify_fail("You can't get through.");
 
-    int dist = (origin - a).rdist();
+    int dist = (origin - a).abs();
 
-    switch(range)
-    {
-    default:
-        return dist <= 1;
-    case REACH_KNIGHT:
-        return dist <= 2;
-    case REACH_TWO:
-        return dist <= 3;
-    }
+    if (dist > reach_range(range))
+        return notify_fail("You can't reach that far!");
+
+    return true;
 }
 
 aff_type targetter_reach::is_affected(coord_def loc)
