@@ -97,7 +97,6 @@
 // & is replaced by "is" or "are" as appropriate for the item.
 // % is replaced by "s" or "" as appropriate.
 // Text between [] only appears if the item already glows.
-// <> and </> are replaced with colors.
 // First message is if there's no piety gain; second is if piety gain is
 // one; third is if piety gain is more than one.
 static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
@@ -110,9 +109,9 @@ static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
     },
     // Zin
     {
-        " <>barely glow%</> and disappear%.",
-        " <>glow% silver</> and disappear%.",
-        " <>glow% blindingly silver</> and disappear%.",
+        " barely glow% and disappear%.",
+        " glow% silver and disappear%.",
+        " glow% blindingly silver and disappear%.",
     },
     // TSO
     {
