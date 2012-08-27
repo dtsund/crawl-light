@@ -1020,7 +1020,7 @@ static std::vector<std::string> _get_monster_keys(ucs_t showchar)
         if (getLongDescription(me->name).empty())
             continue;
 
-        if ((ucs_t)me->showchar == showchar)
+        if ((ucs_t)me->basechar == showchar)
             mon_keys.push_back(me->name);
     }
 
