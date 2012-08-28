@@ -1660,7 +1660,7 @@ int exper_value(const monster* mon)
             case SPELL_BANISHMENT:
             case SPELL_LEHUDIBS_CRYSTAL_SPEAR:
             case SPELL_IRON_SHOT:
-            case SPELL_IOOD
+            case SPELL_IOOD:
             case SPELL_TELEPORT_SELF:
             case SPELL_TELEPORT_OTHER:
             case SPELL_PORKALATOR:
