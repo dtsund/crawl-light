@@ -6,11 +6,19 @@
 #include "coord.h"
 #include "coordit.h"
 #include "env.h"
+#include "libutil.h"
 #include "itemprop.h"
 #include "player.h"
 #include "terrain.h"
 
 #define notify_fail(x) (why_not = (x), false)
+
+static std::string _wallmsg(coord_def c)
+{
+    ASSERT(map_bounds(c)); // there'd be an information leak
+    const char *wall = feat_type_name(grd(c));
+    return "There is " + article_a(wall) + " there.";
+}
 
 bool targetter::set_aim(coord_def a)
 {
@@ -61,7 +69,7 @@ bool targetter_smite::valid_aim(coord_def a)
     if ((origin - a).rdist() > range)
         return notify_fail("Out of range.");
     if (!affects_walls && feat_is_solid(grd(a)))
-        return notify_fail("There is a wall there."); // FIXME: need a short name ("wall", "tree")
+        return notify_fail(_wallmsg(a));
     return true;
 }
 
@@ -176,7 +184,7 @@ bool targetter_cloud::valid_aim(coord_def a)
     if (agent && (origin - a).abs() > range2)
         return notify_fail("Out of range.");
     if (!in_bounds(a) || feat_is_solid(grd(a)))
-        return notify_fail("There's a wall there."); // FIXME: short name
+        return notify_fail(_wallmsg(a));
     if (env.cgrid(a) != EMPTY_CLOUD)
         return notify_fail("There's already a cloud there.");
     ASSERT(_cloudable(a));
