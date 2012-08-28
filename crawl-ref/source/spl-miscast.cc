@@ -644,7 +644,8 @@ bool MiscastEffect::_malign_gateway()
         env.grid(point) = DNGN_MALIGN_GATEWAY;
 
         noisy(10, point);
-        all_msg = "The dungeon shakes, a horrible noise fills the air, and a portal to some otherworldly place is opened!";
+        all_msg = "The dungeon shakes, a horrible noise fills the air, and a "
+                  "portal to some otherworldly place is opened!";
         msg_ch = MSGCH_WARN;
         do_msg();
     }
@@ -1657,11 +1658,11 @@ void MiscastEffect::_necromancy(int severity)
             break;
         case 2:
             you_msg = "Pain shoots through your body.";
-            // Monster messages needed.
+            mon_msg_seen = "@The_monster@ twitches violently.";
             break;
         case 3:
             you_msg = "Your bones ache.";
-            // Monster messages needed.
+            mon_msg_seen = "@The_monster@ pauses, visibly distraught.";
             break;
         case 4:
             you_msg      = "The world around you seems to dim momentarily.";
@@ -1680,7 +1681,6 @@ void MiscastEffect::_necromancy(int severity)
             you_msg        = "You sense a malignant aura.";
             mon_msg_seen   = "@The_monster@ is briefly tinged with black.";
             mon_msg_unseen = "The air has a black tinge for a moment.";
-            // Monster messages needed.
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
