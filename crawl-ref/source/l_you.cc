@@ -11,6 +11,7 @@
 #include "delay.h"
 #include "env.h"
 #include "food.h"
+#include "itemname.h"
 #include "items.h"
 #include "libutil.h"
 #include "mapmark.h"
