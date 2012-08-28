@@ -811,7 +811,7 @@ HEADER_END
         {
             $part = "HAND2";
         }
-        elsif ($artefact->{sub_type} =~ /_BOOTS/)
+        elsif ($artefact->{sub_type} =~ /_BOOTS|_BARDING/)
         {
             $part = "BOOTS";
         }
