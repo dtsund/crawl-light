@@ -17,6 +17,7 @@ enum tag_minor_version
     TAG_MINOR_TAR_DRAINING,        // Tartarus drains your experience.
     TAG_MINOR_UNIQUE_NOTES,        // Automatic annotations for uniques.
     TAG_MINOR_MAP_MASK,            // Wider map mask.
+    TAG_MINOR_POLEARMS_REACH,      // Purge reaching from polearms (built-in now).
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
