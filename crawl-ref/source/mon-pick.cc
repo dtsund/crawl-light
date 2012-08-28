@@ -294,7 +294,6 @@ int mons_rare_abyss(int mcls, bool force_normal)
     case MONS_MUMMY:
     case MONS_NECROPHAGE:
     case MONS_ROTTING_DEVIL:
-    case MONS_SHADOW_DEMON:
     case MONS_SHADOW_IMP:
     case MONS_SUN_DEMON:
     case MONS_WIGHT:
@@ -351,6 +350,7 @@ int mons_rare_abyss(int mcls, bool force_normal)
     case MONS_DEEP_DWARF_DEATH_KNIGHT:
     case MONS_UNBORN_DEEP_DWARF:
     case MONS_KENKU:
+    case MONS_SHADOW_DEMON:
         return 5;
 
     case MONS_AIR_ELEMENTAL:
@@ -482,7 +482,6 @@ static int _mons_rare_abyss_hard(int mcls)
     case MONS_MUMMY:
     case MONS_NECROPHAGE:
     case MONS_ROTTING_DEVIL:
-    case MONS_SHADOW_DEMON:
     case MONS_SHADOW_IMP:
     case MONS_SUN_DEMON:
     case MONS_WIGHT:
@@ -539,6 +538,7 @@ static int _mons_rare_abyss_hard(int mcls)
     case MONS_DEEP_DWARF_DEATH_KNIGHT:
     case MONS_UNBORN_DEEP_DWARF:
     case MONS_KENKU:
+    case MONS_SHADOW_DEMON:
         return 20;
 
     case MONS_AIR_ELEMENTAL:
@@ -3712,7 +3712,6 @@ int mons_tartarus_level(int mcls)
     case MONS_HELL_HOUND:
     case MONS_NECROMANCER:
     case MONS_SHADOW:
-    case MONS_SHADOW_DEMON:
     case MONS_WRAITH:
     case MONS_SILENT_SPECTRE:
         mlev += 2;
@@ -3734,6 +3733,7 @@ int mons_tartarus_level(int mcls)
     case MONS_FLYING_SKULL:
     case MONS_HELLION:
     case MONS_REAPER:
+    case MONS_SHADOW_DEMON:
     case MONS_ROTTING_DEVIL:
     case MONS_SHADOW_DRAGON:
     case MONS_VAMPIRE:
@@ -3792,9 +3792,6 @@ int mons_tartarus_rare(int mcls, bool force_normal)
     case MONS_WRAITH:
         return 52;
 
-    case MONS_SHADOW_DEMON:
-        return 50;
-
     case MONS_PHANTASMAL_WARRIOR:
         return 45;
 
@@ -3803,6 +3800,7 @@ int mons_tartarus_rare(int mcls, bool force_normal)
 
     case MONS_HELLION:
     case MONS_TORMENTOR:
+    case MONS_SHADOW_DEMON:
         return 42;
 
     case MONS_BONE_DRAGON:
