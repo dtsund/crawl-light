@@ -162,6 +162,8 @@ void reassess_starting_skills()
         {
             continue;
         }
+        ASSERT(!is_invalid_skill(sk));
+        ASSERT(!is_useless_skill(sk));
 
         // Grant the amount of skill points required for a human.
         you.skill_points[sk] = skill_exp_needed(you.skills[sk], sk,
