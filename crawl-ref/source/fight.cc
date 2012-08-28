@@ -3689,6 +3689,7 @@ void melee_attack::player_apply_staff_damage()
     }
 
     case STAFF_DEATH:
+        {
         if (defender->res_negative_energy())
             break;
 
