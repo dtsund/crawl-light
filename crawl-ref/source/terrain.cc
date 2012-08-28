@@ -428,8 +428,7 @@ bool feat_is_watery(dungeon_feature_type feat)
 
 bool feat_is_lava(dungeon_feature_type feat)
 {
-    return (feat == DNGN_LAVA
-            || feat == DNGN_LAVA_SEA);
+    return (feat == DNGN_LAVA);
 }
 
 // Returns GOD_NO_GOD if feat is not an altar, otherwise returns the
