@@ -894,6 +894,7 @@ unsigned int item_value(item_def item, bool ident)
             break;
 
         case WPN_DAGGER:
+        case WPN_STAFF:
             valued += 20;
             break;
 

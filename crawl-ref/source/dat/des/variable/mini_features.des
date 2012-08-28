@@ -1436,8 +1436,8 @@ ENDMAP
 
 NAME:  firewood_loft
 DEPTH: D:1-17
-KITEM: " = quarterstaff, quarterstaff, quarterstaff
-KITEM: ' = quarterstaff, quarterstaff / any staff w:3
+KITEM: " = staff, staff, quarterstaff
+KITEM: ' = staff, staff / any staff w:3
 MAP
 xxxxx
 x"']x

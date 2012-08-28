@@ -1108,8 +1108,8 @@ static void _give_items_skills(const newgame_def& ng)
         break;
 
     case JOB_ARTIFICER:
-        // Equipment. Dagger, and armour or robe.
-        newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, WPN_DAGGER);
+        // Equipment. Staff, and armour or robe.
+        newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, WPN_STAFF);
         newgame_make_item(1, EQ_BODY_ARMOUR, OBJ_ARMOUR,
                            ARM_LEATHER_ARMOUR, ARM_ROBE);
 
