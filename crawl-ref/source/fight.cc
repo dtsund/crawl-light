@@ -3674,7 +3674,7 @@ void melee_attack::player_apply_staff_damage()
 
     case STAFF_POISON:
     {
-        if (random2(30) >= 2*you.skill(SK_EVOCATIONS) + you.skill(SK_POISON_MAGIC))
+        if (random2(30) >= 2*you.skill(SK_EVOCATIONS) + you.skill(SK_SORCERY))
             return;
 
         // Base chance at 50% -- like mundane weapons.
