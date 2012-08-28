@@ -1016,7 +1016,10 @@ static targetter* _spell_targetter(spell_type spell, int pow, int range)
     {
     case SPELL_FIRE_STORM:
         return new targetter_smite(&you, range, 2, pow > 76 ? 3 : 2);
-        break;
+    case SPELL_FREEZING_CLOUD:
+    case SPELL_POISONOUS_CLOUD:
+    case SPELL_HOLY_BREATH:
+        return new targetter_cloud(&you, range);
     default:
         return 0;
     }
