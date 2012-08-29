@@ -38,6 +38,7 @@ my %field_type = (
     LEV      => "bool",
     LIFE     => "bool",
     MAGIC    => "num",
+    HP       => "num",
     MP       => "num",
     MUTATE   => "num",
     NAME     => "str",
@@ -474,7 +475,7 @@ my @art_order = (
     "SEEINV", "INV", "LEV", "BLINK", "BERSERK",  "NOISES", "\n",
     "NOSPELL", "RND_TELE", "NOTELEP", "ANGRY", "\n",
     "MUTATE", "ACC", "DAM", "STEALTH", "MP", "\n",
-    "PONDEROUS", "\n",
+    "PONDEROUS", "HP", "\n",
     "}",
 
     "DESC", "\n",

@@ -151,6 +151,22 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
         _unequip_jewellery_effect(item, msg);
 }
 
+void _hp_artefact()
+{
+    // Rounding must be down or Deep Dwarves would abuse certain values.
+    // We can reduce errors by a factor of 100 by using partial hp we have.
+    int old_max = you.hp_max;
+    int hp = you.hp * 100 + you.hit_points_regeneration;
+    calc_hp();
+    int new_max = you.hp_max;
+    hp = hp * new_max / old_max;
+    if (hp < 100)
+        hp = 100;
+    you.hp = std::min(hp / 100, you.hp_max);
+    you.hit_points_regeneration = hp % 100;
+    if (you.hp_max <= 0) // Borgnjor's abusers...
+        ouch(0, NON_MONSTER, KILLED_BY_DRAINING);
+}
 
 ///////////////////////////////////////////////////////////
 // Actual equip and unequip effect implementation below
@@ -212,6 +228,9 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_NOISES])
         you.attribute[ATTR_NOISES] = 1;
 
+    if (proprt[ARTP_HP])
+        _hp_artefact();
+
     // Let's try this here instead of up there.
     if (proprt[ARTP_MAGICAL_POWER])
         calc_mp();
@@ -272,6 +291,9 @@ static void _unequip_artefact_effect(const item_def &item,
     {
         you.duration[DUR_INVIS] = 1;
     }
+    
+    if (proprt[ARTP_HP])
+        _hp_artefact();
 
     if (proprt[ARTP_MAGICAL_POWER])
         calc_mp();
