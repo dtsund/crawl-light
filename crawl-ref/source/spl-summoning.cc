@@ -1669,8 +1669,8 @@ static bool _raise_remains(const coord_def &pos, int corps, beh_type beha,
 
     // Use the original monster type as the zombified type here, to get
     // the proper stats from it.
-    mgen_data mg(mon, beha, as, 0, 0, pos, hitting, MG_FORCE_BEH, god,
-                 static_cast<monster_type>(monnum), number);
+    mgen_data mg(mon, beha, as, 0, 0, pos, hitting, MG_FORCE_BEH|MG_FORCE_PLACE,
+                 god, static_cast<monster_type>(monnum), number);
 
     mg.non_actor_summoner = nas;
 
