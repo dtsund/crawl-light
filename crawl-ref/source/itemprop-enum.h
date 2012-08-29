@@ -285,6 +285,8 @@ enum rune_type
     RUNE_ABYSSAL,
 
     RUNE_DEMONIC,
+
+    // order must match owners in enum.h
     RUNE_MNOLEG,
     RUNE_LOM_LOBON,
     RUNE_CEREBOV,
