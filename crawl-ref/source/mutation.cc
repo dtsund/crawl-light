@@ -362,7 +362,7 @@ formatted_string describe_mutations()
         // Draconians are large for the purposes of armour, but only medium for
         // weapons and carrying capacity.
         std::ostringstream num;
-        num << 3 + you.experience_level / 3;
+        num << 4 + you.experience_level / 3;
         result += "Your " + scale_type + " scales are hard (AC +" + num.str() + ").\n";
 
         result += "Your body does not fit into most forms of armour.\n";
@@ -888,7 +888,7 @@ static bool _physiology_mutation_conflict(mutation_type mutat)
     if ((mutat == MUT_HOOVES || mutat == MUT_TALONS) && !player_has_feet())
         return (true);
 
-    // Already innate.
+    // Only Nagas can get this upgrade.
     if (mutat == MUT_BREATHE_POISON && you.species != SP_NAGA)
         return (true);
 
@@ -896,8 +896,8 @@ static bool _physiology_mutation_conflict(mutation_type mutat)
     if (mutat == MUT_BREATHE_FLAMES && you.species == SP_RED_DRACONIAN)
         return (true);
 
-    // Green Draconians can already breathe poison, so they don't need
-    // to spit it.
+    // Green Draconians can breathe mephitic, poison is not really redundant
+    // but its name might confuse players a bit ("noxious" vs "poison").
     if (mutat == MUT_SPIT_POISON && you.species == SP_GREEN_DRACONIAN)
         return (true);
 
