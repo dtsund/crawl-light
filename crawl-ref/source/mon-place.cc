@@ -3817,7 +3817,6 @@ monster_type summon_any_demon(demon_class_type dct)
                 1, MONS_SMOKE_DEMON,
                 1, MONS_NEQOXEC,
                 1, MONS_YNOXINUL,
-                1, MONS_SHADOW_DEMON,
                 1, MONS_CHAOS_SPAWN,
                 0));
         }
@@ -3837,6 +3836,7 @@ monster_type summon_any_demon(demon_class_type dct)
                 1, MONS_REAPER,
                 1, MONS_LOROCYPROCA,
                 1, MONS_TORMENTOR,
+                1, MONS_SHADOW_DEMON,
                 0));
         }
         else
