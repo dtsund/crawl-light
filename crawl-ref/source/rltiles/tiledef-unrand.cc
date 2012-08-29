@@ -104,6 +104,7 @@ int unrandart_to_tile(int unrand)
     case UNRAND_DEMON_AXE:           return TILE_UNRAND_DEMON_AXE;
     case UNRAND_LIGHTNING_SCALES:    return TILE_UNRAND_LIGHTNING_SCALES;
     case UNRAND_BLACK_KNIGHT_HORSE:  return TILE_UNRAND_BLACK_KNIGHT_HORSE;
+    case UNRAND_VITALITY:            return TILE_UNRAND_VITALITY;
     default: return 0;
     }
 }
