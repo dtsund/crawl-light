@@ -312,6 +312,7 @@ static void _post_init(bool newc)
         run_map_epilogues();
 }
 
+#ifndef DGAMELAUNCH
 /**
  * Helper for show_startup_menu()
  * constructs the game modes section
@@ -845,6 +846,7 @@ static void _show_startup_menu(newgame_def* ng_choice,
         }
     }
 }
+#endif
 
 static void _choose_arena_teams(newgame_def* choice,
                                 const newgame_def& defaults)
