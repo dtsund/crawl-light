@@ -5534,7 +5534,8 @@ void melee_attack::mons_perform_attack_rounds()
                 break;
             }
 
-            inflict_damage(damage_done + special_damage);
+            inflict_damage(damage_done + special_damage, special_damage_flavour,
+                           true);
 
             if (!defender->alive())
             {
@@ -5571,7 +5572,7 @@ void melee_attack::mons_perform_attack_rounds()
             }
 
             if (special_damage > 0)
-                inflict_damage(special_damage);
+                inflict_damage(special_damage, special_damage_flavour, true);
 
             if (!defender->alive())
             {
