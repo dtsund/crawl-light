@@ -2034,16 +2034,11 @@ static bool _generate_missile_item(item_def& item, int force_type,
                            _determine_missile_brand(item, item_level));
     }
 
-    // Reduced quantity if special.
-    if (item.sub_type == MI_JAVELIN
-        || (item.sub_type == MI_NEEDLE && get_ammo_brand(item) != SPMSL_POISONED)
-        || get_ammo_brand(item) == SPMSL_RETURNING
-        || (item.sub_type == MI_DART && get_ammo_brand(item) == SPMSL_POISONED))
+    if (get_ammo_brand(item) != SPMSL_NORMAL
+        && (item.sub_type == MI_NEEDLE && get_ammo_brand(item) != SPMSL_POISONED))
     {
-        item.quantity = random_range(2, 8);
-    }
-    else if (get_ammo_brand(item) != SPMSL_NORMAL)
         item.quantity = 1 + random2(9) + random2(12) + random2(12);
+    }
     else
         item.quantity = 1 + random2(9) + random2(12) + random2(12) + random2(15);
     
