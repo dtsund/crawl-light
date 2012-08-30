@@ -29,6 +29,7 @@ static bool _item_matches(const item_def &item, fire_type types,
                           const item_def* launcher);
 static bool _items_similar(const item_def& a, const item_def& b,
                            bool force = true);
+static bool _can_fire_implicit_ammo();
 
 // ----------------------------------------------------------------------
 // player_quiver
@@ -120,13 +121,15 @@ int player_quiver::get_fire_item(std::string* no_item_reason) const
         else
         {
             const int skipped_item = full_fire_order[0];
-            if (skipped_item < Options.fire_items_start)
+            bool implicit_okay = _can_fire_implicit_ammo();
+            
+            if (skipped_item < Options.fire_items_start && !implicit_okay)
             {
                 *no_item_reason = make_stringf(
                     "Nothing suitable (fire_items_start = '%c').",
                     index_to_letter(Options.fire_items_start));
             }
-            else
+            else if (!implicit_okay)
             {
                 *no_item_reason = make_stringf(
                     "Nothing suitable (ignored '=f'-inscribed item on '%c').",
@@ -228,6 +231,14 @@ void choose_item_for_quiver()
         }
     }
     quiver_item(slot);
+}
+
+// Returns true if the player's current weapon 
+static bool _can_fire_implicit_ammo()
+{
+    ammo_t slot = _get_weapon_ammo_type(*you.weapon());
+    
+    return (slot == AMMO_BOW || slot == AMMO_CROSSBOW || slot == AMMO_SLING);
 }
 
 // Notification that item was fired with 'f'.
@@ -334,10 +345,7 @@ void player_quiver::_maybe_fill_empty_slot()
     const item_def* weapon = you.weapon();
     const ammo_t slot = _get_weapon_ammo_type(weapon);
     
-    bool use_implicit_ammo = (slot == AMMO_BOW || slot == AMMO_CROSSBOW
-                              || slot == AMMO_SLING);
-    
-    if(slot == AMMO_BOW || slot == AMMO_CROSSBOW || slot == AMMO_SLING)
+    if(_can_fire_implicit_ammo())
     {
         // Don't, by default, quiver anything if implicit ammo will do.
         return;
