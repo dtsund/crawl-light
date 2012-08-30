@@ -78,6 +78,11 @@ void player_quiver::get_desired_item(const item_def** item_out, int* slot_out) c
 // If no item can be found, return the reason why.
 int player_quiver::get_fire_item(std::string* no_item_reason) const
 {
+    if(m_last_used_of_type[m_last_used_type].quantity == 0)
+    {
+        //Implicit ammo sets quantity to 0.
+        return -1;
+    }
     // Felids have no use for the quiver.
     if (you.species == SP_CAT)
     {
@@ -328,6 +333,15 @@ void player_quiver::_maybe_fill_empty_slot()
 
     const item_def* weapon = you.weapon();
     const ammo_t slot = _get_weapon_ammo_type(weapon);
+    
+    bool use_implicit_ammo = (slot == AMMO_BOW || slot == AMMO_CROSSBOW
+                              || slot == AMMO_SLING);
+    
+    if(slot == AMMO_BOW || slot == AMMO_CROSSBOW || slot == AMMO_SLING)
+    {
+        // Don't, by default, quiver anything if implicit ammo will do.
+        return;
+    }
 
 #ifdef DEBUG_QUIVER
     mprf(MSGCH_DIAGNOSTICS, "last quiver item: %s; link %d, wpn: %d",
