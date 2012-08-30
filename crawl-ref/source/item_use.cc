@@ -1025,7 +1025,30 @@ void fire_target_behaviour::set_prompt()
         << ": ";
 
     // Describe the selected item for firing.
-    if (!active_item())
+    // Bows, longbows, crossbows, and slings may be using implicit ammo.
+    if (!active_item() && (you.weapon()->sub_type == WPN_BOW ||
+                           you.weapon()->sub_type == WPN_LONGBOW))
+    {
+        const char* colour = (selected_from_inventory ? "lightgrey" : "w");
+        msg << "<" << colour << ">"
+            << "a plain arrow"
+            << "</" << colour << ">";
+    }
+    else if (!active_item() && you.weapon()->sub_type == WPN_CROSSBOW)
+    {
+        const char* colour = (selected_from_inventory ? "lightgrey" : "w");
+        msg << "<" << colour << ">"
+            << "a plain bolt"
+            << "</" << colour << ">";
+    }
+    else if (!active_item() && you.weapon()->sub_type == WPN_SLING)
+    {
+        const char* colour = (selected_from_inventory ? "lightgrey" : "w");
+        msg << "<" << colour << ">"
+            << "a plain sling bullet"
+            << "</" << colour << ">";
+    }
+    else if (!active_item())
     {
         msg << "<red>" << m_noitem_reason << "</red>";
     }
