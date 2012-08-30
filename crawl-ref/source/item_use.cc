@@ -557,6 +557,10 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
 
         return (false);
     }
+
+    const int sub_type = item.sub_type;
+    const equipment_type slot = get_armour_slot(item);
+
     
     if (player_genus(GENPC_DRACONIAN) && slot == EQ_BODY_ARMOUR)
     {
@@ -565,9 +569,6 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
                  ? "" : ", even vestigial as they are,");
         return (false);
     }
-
-    const int sub_type = item.sub_type;
-    const equipment_type slot = get_armour_slot(item);
 
     if (sub_type == ARM_NAGA_BARDING || sub_type == ARM_CENTAUR_BARDING)
     {
