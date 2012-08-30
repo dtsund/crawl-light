@@ -29,7 +29,6 @@ static bool _item_matches(const item_def &item, fire_type types,
                           const item_def* launcher);
 static bool _items_similar(const item_def& a, const item_def& b,
                            bool force = true);
-static bool _can_fire_implicit_ammo();
 
 // ----------------------------------------------------------------------
 // player_quiver
@@ -121,7 +120,7 @@ int player_quiver::get_fire_item(std::string* no_item_reason) const
         else
         {
             const int skipped_item = full_fire_order[0];
-            bool implicit_okay = _can_fire_implicit_ammo();
+            bool implicit_okay = can_fire_implicit_ammo();
             
             if (skipped_item < Options.fire_items_start && !implicit_okay)
             {
@@ -155,6 +154,11 @@ void player_quiver::empty_quiver(ammo_t ammo_type)
     m_last_used_of_type[ammo_type].quantity = 0;
     m_last_used_type  = ammo_type;
     you.redraw_quiver = true;
+}
+
+void player_quiver::empty_quiver()
+{
+     empty_quiver(_get_weapon_ammo_type(you.weapon()));
 }
 
 static bool _wielded_slot_no_quiver(int slot)
@@ -234,7 +238,7 @@ void choose_item_for_quiver()
 }
 
 // Returns true if the player's current weapon can fire implicit ammunition.
-static bool _can_fire_implicit_ammo()
+bool can_fire_implicit_ammo()
 {
     ammo_t slot = _get_weapon_ammo_type(you.weapon());
     
@@ -345,7 +349,7 @@ void player_quiver::_maybe_fill_empty_slot()
     const item_def* weapon = you.weapon();
     const ammo_t slot = _get_weapon_ammo_type(weapon);
     
-    if(_can_fire_implicit_ammo())
+    if(can_fire_implicit_ammo())
     {
         // Don't, by default, quiver anything if implicit ammo will do.
         return;

@@ -38,6 +38,7 @@ class player_quiver
     // Callbacks from engine
     void set_quiver(const item_def &item, ammo_t ammo_type);
     void empty_quiver(ammo_t ammo_type);
+    void empty_quiver();
     void on_item_fired(const item_def &item, bool explicitly_chosen = false);
     void on_item_fired_fi(const item_def &item);
     void on_inv_quantity_changed(int slot, int amt);
@@ -79,5 +80,6 @@ class preserve_quiver_slots
 
 void quiver_item(int slot);
 void choose_item_for_quiver(void);
+bool can_fire_implicit_ammo();
 
 #endif

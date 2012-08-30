@@ -927,6 +927,14 @@ int get_next_fire_item(int current, int direction)
         return -1;
 
     int next = direction > 0 ? 0 : -1;
+    
+    //Ugly special case; if current is -1 for implicit ammo, the loop will
+    //never touch it, so we cover it here.
+    if(current == -1 && direction > 0)
+        return fire_order[0];
+    if(current == -1 && direction < 0)
+        return fire_order[fire_order.size() - 1];
+    
     for (unsigned i = 0; i < fire_order.size(); i++)
     {
         if (fire_order[i] == current)
@@ -935,6 +943,9 @@ int get_next_fire_item(int current, int direction)
             break;
         }
     }
+
+    if((next == -1 || next >= (int) fire_order.size()) && can_fire_implicit_ammo())
+        return -1;
 
     next = (next + fire_order.size()) % fire_order.size();
     return fire_order[next];
@@ -1074,7 +1085,7 @@ void fire_target_behaviour::set_prompt()
 void fire_target_behaviour::cycle_fire_item(bool forward)
 {
     const int next = get_next_fire_item(m_slot, forward ? 1 : -1);
-    if (next != m_slot && next != -1)
+    if (next != m_slot && (can_fire_implicit_ammo() || next != -1))
     {
         m_slot = next;
         selected_from_inventory = false;
@@ -1088,7 +1099,7 @@ void fire_target_behaviour::pick_fire_item_from_inventory()
     need_redraw = true;
     std::string err;
     const int selected = _fire_prompt_for_item();
-    if (selected >= 0 && _fire_validate_item(selected, err))
+    if (selected >= -1 && _fire_validate_item(selected, err))
     {
         m_slot = selected;
         selected_from_inventory = true;
@@ -1175,7 +1186,12 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
         return (false);
     }
 
-    you.m_quiver->on_item_fired(*beh.active_item(), beh.chosen_ammo);
+    //Set quiver to whatever we just chose (possibly implicit ammunition).
+    if(slot != -1)
+        you.m_quiver->on_item_fired(*beh.active_item(), beh.chosen_ammo);
+    else
+        you.m_quiver->empty_quiver();
+    
     you.redraw_quiver = true;
     slot = beh.m_slot;
 
@@ -1183,20 +1199,29 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
 }
 
 // Bring up an inventory screen and have user choose an item.
-// Returns an item slot, or -1 on abort/failure
+// Returns an item slot, or -1 for implicit ammo, or -2 on abort/failure.
 // On failure, returns error text, if any.
 static int _fire_prompt_for_item()
 {
-    if (inv_count() < 1)
+    bool implicit_okay = can_fire_implicit_ammo();
+    
+    //If we have no items, return -1 if we can fire implicit ammo,
+    //or -2 if we're not using a weapon that allows this.
+    if (inv_count() < 1 && !implicit_okay)
+        return -2;
+    else if (inv_count() < 1)
         return -1;
 
     int slot = prompt_invent_item("Fire/throw which item? (* to show all)",
                                    MT_INVLIST,
                                    OSEL_THROWABLE, true, true, true, 0, -1,
-                                   NULL, OPER_FIRE);
+                                   NULL, OPER_FIRE, false, true);
+
+    if (slot == PROMPT_NOTHING && implicit_okay)
+        return -1;
 
     if (slot == PROMPT_ABORT || slot == PROMPT_NOTHING)
-        return -1;
+        return -2;
 
     return slot;
 }
@@ -1380,7 +1405,7 @@ void throw_item_no_quiver()
     std::string warn;
     int slot = _fire_prompt_for_item();
 
-    if (slot == -1)
+    if (slot == -2)
     {
         canned_msg(MSG_OK);
         return;

@@ -1675,7 +1675,8 @@ int prompt_invent_item(const char *prompt,
                         int excluded_slot,
                         int *const count,
                         operation_types oper,
-                        bool allow_list_known)
+                        bool allow_list_known,
+                        bool allow_no_item)
 {
     if (!any_items_to_select(type_expect) && type_expect == OSEL_THROWABLE
         && oper == OPER_FIRE && mtype == MT_INVLIST)
@@ -1778,6 +1779,10 @@ int prompt_invent_item(const char *prompt,
                     mesclr();
                 }
             }
+        }
+        else if (keyin == '-' && allow_no_item)
+        {
+            return PROMPT_NOTHING;
         }
         else if (count != NULL && isadigit(keyin))
         {
