@@ -236,7 +236,7 @@ void choose_item_for_quiver()
 // Returns true if the player's current weapon can fire implicit ammunition.
 static bool _can_fire_implicit_ammo()
 {
-    ammo_t slot = _get_weapon_ammo_type(*you.weapon());
+    ammo_t slot = _get_weapon_ammo_type(you.weapon());
     
     return (slot == AMMO_BOW || slot == AMMO_CROSSBOW || slot == AMMO_SLING);
 }
