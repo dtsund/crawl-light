@@ -538,7 +538,24 @@ static void _print_stats_qv(int y)
         else
         {
             col  = LIGHTGREY;
-            text = "Nothing quivered";
+            
+            if(you.weapon()->sub_type == WPN_BOW
+               || you.weapon()->sub_type == WPN_LONGBOW)
+            {
+                text = "Plain arrows";
+            }
+            else if (you.weapon()->sub_type == WPN_CROSSBOW)
+            {
+                text = "Plain bolts";
+            }
+            else if (you.weapon()->sub_type == WPN_SLING)
+            {
+                text = "Plain sling bullets";
+            }
+            else
+            {
+                text = "Nothing quivered";
+            }
         }
 
         text = prefix + text;
