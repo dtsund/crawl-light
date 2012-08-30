@@ -1828,6 +1828,14 @@ LUAFN(_dgn_check_pandoora_daction)
     return 1;
 }
 
+//Have to unrestrict the door right after the portal to the first pandoora
+//with a daction, sadly.
+LUAFN(_dgn_unrestrict_door_daction)
+{
+    add_daction(DACT_UNRESTRICT_DOOR);
+    return (0);
+}
+
 LUAFN(_dgn_marker_at_pos)
 {
     const int x = luaL_checkint(ls, 1);
@@ -2060,6 +2068,7 @@ const struct luaL_reg dgn_dlib[] =
 { "check_pandoora_daction", _dgn_check_pandoora_daction },
 { "add_directed_abyss_daction", _dgn_add_directed_abyss_daction },
 { "check_directed_abyss_daction", _dgn_check_directed_abyss_daction },
+{ "unrestrict_door_daction", _dgn_unrestrict_door_daction },
 
 { "marker_at_pos", _dgn_marker_at_pos },
 

@@ -12,6 +12,7 @@
 #include "decks.h"
 #include "env.h"
 #include "libutil.h"
+#include "mapmark.h"
 #include "mon-behv.h"
 #include "mon-stuff.h"
 #include "mon-util.h"
@@ -44,6 +45,7 @@ static const char *daction_names[] =
     "Pikel's slaves go good-neutral",
     "add directed Abyss portal",
     "seal the Pandoora in the Hive",
+    "unrestrict the runed door"
 };
 
 static bool _mons_matches_counter(const monster* mon, daction_type act)
@@ -239,6 +241,16 @@ static void _apply_daction(daction_type act)
                env.markers.property_at(*ri, MAT_ANY, "door_description_noun") == "directed_abyss")
             {
                 grd(*ri) = DNGN_ENTER_ABYSS_DIRECTED;
+            }
+        }
+    case DACT_UNRESTRICT_DOOR:
+        for (rectangle_iterator ri(1); ri; ++ri)
+        {
+            dungeon_feature_type grid = grd(*ri);
+            if(grid == DNGN_CLOSED_DOOR &&
+                env.markers.property_at(*ri, MAT_ANY, "door_description_noun") == "rune-encrusted door")
+            {
+                remove_markers_and_listeners_at(*ri);
             }
         }
     case NUM_DA_COUNTERS:

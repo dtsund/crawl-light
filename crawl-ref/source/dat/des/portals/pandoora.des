@@ -79,7 +79,7 @@ function open_barrier(data, triggerable, triggerer, marker, ev)
     crawl.mpr("The portal in the room vanishes without a trace.")
   
     for slave in iter.slave_iterator("pandoora_portal_phase", 1) do
-        dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
+        dgn.terrain_changed(slave.x, slave.y, "stone_arch", false, false, false)
     end
 end
 
@@ -93,6 +93,12 @@ function destroy_pandoora_portal(data, triggerable, triggerer, marker, ev)
     for slave in iter.slave_iterator("pandoora_portal_phase", 1) do
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
     end
+    dgn.unrestrict_door_daction()
+end
+
+function unrestrict_door(data, triggerable, trigger, marker, ev)
+    portal_destroyed = true
+    dgn.unrestrict_door_daction()
 end
 
 
@@ -137,6 +143,7 @@ MARKER:  / = lua:props_marker { \
              veto_fragmentation="veto", \
              }
 MARKER: O = lua:portal_desc {pandoora_portal_phase = 1}
+MARKER: / = lua:portal_desc {restricted_door_phase = 1}
 KPROP:  "({[O = no_tele_into
 SUBST:   "^ = .
 SUBST:   / = +
@@ -174,7 +181,14 @@ pandoora_marker:add_triggerer(DgnTriggerer:new {
     type="feat_change",
     target="door"})
 
+local unrestrict_door_marker = TriggerableFunction:new {
+    func="unrestrict_door"}
+
+unrestrict_door_marker:add_triggerer(DgnTriggerer:new {
+    type="player_move"})
+
 lua_marker("/", pandoora_marker)
+lua_marker(">", unrestrict_door_marker)
 }}
 MARKER:  / = lua:props_marker { \
              door_open_prompt="You sense great evil behind this door. Open " .. \
