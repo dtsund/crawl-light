@@ -1042,21 +1042,21 @@ void fire_target_behaviour::set_prompt()
     {
         const char* colour = (selected_from_inventory ? "lightgrey" : "w");
         msg << "<" << colour << ">"
-            << "a plain arrow"
+            << "plain arrows"
             << "</" << colour << ">";
     }
     else if (!active_item() && you.weapon()->sub_type == WPN_CROSSBOW)
     {
         const char* colour = (selected_from_inventory ? "lightgrey" : "w");
         msg << "<" << colour << ">"
-            << "a plain bolt"
+            << "plain bolts"
             << "</" << colour << ">";
     }
     else if (!active_item() && you.weapon()->sub_type == WPN_SLING)
     {
         const char* colour = (selected_from_inventory ? "lightgrey" : "w");
         msg << "<" << colour << ">"
-            << "a plain sling bullet"
+            << "plain sling bullets"
             << "</" << colour << ">";
     }
     else if (!active_item())
