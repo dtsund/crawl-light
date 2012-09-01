@@ -535,7 +535,7 @@ static void _print_stats_qv(int y)
             col  = DARKGREY;
             text = "Unavailable";
         }
-        else
+        else if (you.weapon() != NULL)
         {
             col  = LIGHTGREY;
             
