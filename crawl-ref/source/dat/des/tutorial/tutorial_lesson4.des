@@ -73,8 +73,8 @@ function tutorial_msg4.ring_power ()
 end
 
 function tutorial_msg4.undead ()
-    local text = "Other than for other monsters, with undead it is "
-                 .. "impossible to tell how wounded they are."
+    local text = "Unlike other monsters, you cannot tell how wounded the "
+                 .. "undead are by looking at them."
 
     if crawl.is_tiles() then
         text = text .. "\nIncidentally, you can also cast spells by pressing "
@@ -125,11 +125,15 @@ function tutorial_msg4.aiming_clouds ()
     return tutorial_message(text)
 end
 
-function tutorial_msg4.spell_hunger ()
-    return tutorial_message("Spellcasting can make you really hungry. Spell hunger "
-                            .. "is higher for more difficult spells and can be "
-                            .. "reduced by high Intelligence and by training the "
-                            .. "Spellcasting skill.")
+function tutorial_msg4.spell_glow ()
+    return tutorial_message("Casting high-level spells can contaminate you "
+                            .. "with residual magic. You can see how much "
+                            .. "more contamination you will incur by casting "
+                            .. "a given spell by pressing ! in the spell menu, "
+                            .. "and see how much more you can tolerate "
+                            .. "in the 'Glow' section of the player status. "
+                            .. "Contamination costs can be reduced by high Intelligence "
+                            .. "and by training the Spellcasting skill.")
 end
 
 function tutorial_msg4.forget_spell ()
@@ -137,14 +141,11 @@ function tutorial_msg4.forget_spell ()
                  .. "skill gives you spell slots to spend on spells. You can "
                  .. "also <w>forget a memorised spell</w> to make space for "
                  .. "a new one. For example, to forget \"Magic Dart\", you "
-                 .. "need to read a spellbook containing the spell (with "
-                 .. tutorial_get_cmd("CMD_READ")
-    if crawl.is_tiles() then
-        text = text .. " or by <white>rightclicking</click> on it)"
-    end
-    text = text .. ", select \"Magic Dart\", type <w>f</w> and confirm. This "
-                .. "will destroy the book, so you'll need other spellbooks "
-                .. "to learn new spells, such as the one lying over there."
+                 .. "can simply open the ability menu with "
+                 .. tutorial_get_cmd("CMD_USE_ABILITY")
+                 .. ", select \"Forget Spell\", and select \"Magic Dart\"."
+                 .. " Doing so incurs magical contamination, however, so "
+                 .. "you may not want to do so while in the middle of combat."
 
     return tutorial_message(text)
 end
@@ -266,14 +267,14 @@ KFEAT:   S = distillery shop count:8 ; \
          potion of slowing | w:20 potion of confusion | potion of poison | potion of paralysis
 COLOUR:  ABCDdefh = blue
 FTILE:   ABCDdefh = tutorial_pad
-KITEM:   A = scroll of fog q:4, scroll of enchant weapon i q:4, scroll of torment q:4, \
+KITEM:   A = scroll of fog q:12, scroll of enchant weapon i q:4, scroll of torment q:4, \
          scroll of holy word q:4
 ITEM:    randbook numspells:2 spells:magic_dart|evaporate title:Introduction_to_Spellcasting owner:player
 ITEM:    ring of magical power not_cursed
 ITEM:    staff of wizardry not_cursed
 ITEM:    gold q:20
 ITEM:    staff of discharge
-MONS:    training dummy ; stone q:20
+MONS:    training dummy hp:4 ; stone q:20
 MONS:    megabat skeleton, goblin skeleton
 MONS:    rat, goblin
 MARKER:  A = lua:tutorial_msg4.train_spellcasting()
@@ -284,7 +285,7 @@ MARKER:  C = lua:tutorial_msg4.undead()
 MARKER:  f = lua:tutorial_msg4.spell_success()
 MARKER:  S = lua:tutorial_msg4.evaporate()
 MARKER:  D = lua:tutorial_msg4.aiming_clouds()
-MARKER:  h = lua:tutorial_msg4.spell_hunger()
+MARKER:  h = lua:tutorial_msg4.spell_glow()
 MARKER:  { = lua:one_way_stair { dst  = "tutorial_lesson4", \
                                  onclimb = "tutorial_msg4.exit" }
 epilogue{{
@@ -308,9 +309,9 @@ xxxxxxxxxxxxx..wwwxxx.Cxxxxxxxxxxxxxxxxxxxxx.gxxxxxxx
 xxxxxxxxxxxxx......e.xxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.S.xxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.g.xxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxgSgxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.g.xxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxx
@@ -342,6 +343,10 @@ MONS:    hobgoblin always_corpse; shield not_cursed . ring mail race:none not_cu
 MONS:    rat
 MONS:    goblin
 MONS:    gnoll; nothing
+# Kind-of ugly hack, this.  In order to suppress "You feel relatively safe now"
+# on entering the second floor with the placed skeletons, we put a newt above
+# the skeletons so that it gets generated before they do.
+MONS:    giant newt
 MARKER:  A = lua:tutorial_msg4.forget_spell()
 MARKER:  d = lua:tutorial_msg4.memorise2()
 MARKER:  B = lua:tutorial_msg4.displace_allies()
@@ -367,7 +372,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxx..xxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxx5.xxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxx......B.xxxx.T..xxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxx......B...x.egf.xxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxCCCxxxx...+.gde.....xxxxxxxxxxxxxxx

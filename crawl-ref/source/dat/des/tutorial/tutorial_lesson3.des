@@ -35,8 +35,8 @@ function tutorial_msg3.autopickup ()
         text = text .. " You can recognize these items by their green frame."
     end
 
-    text = text .. "\nYou can eat this ration with "
-                .. tutorial_get_cmd("CMD_EAT")
+    text = text .. "\nYou can read this scroll with "
+                .. tutorial_get_cmd("CMD_READ")
     if crawl.is_tiles() then
         text = text .. " or by <white>mouseclick</white>"
     end
@@ -46,9 +46,7 @@ function tutorial_msg3.autopickup ()
 end
 
 function tutorial_msg3.weapon_reminder ()
-    local text = "This dagger was picked up automatically because you didn't "
-                 .. "have a sharp-edged butchering tool yet. "
-                 .. "You know the drill: Wield it with "
+    local text = "You know the drill: Wield this dagger with "
                  .. tutorial_get_cmd("CMD_WIELD_WEAPON")
 
     if crawl.is_tiles() then
@@ -84,15 +82,14 @@ function tutorial_msg3.scroll_noautopickup ()
 end
 
 function tutorial_msg3.ego_weapon ()
-    return tutorial_message("An item described as <lightblue>runed</lightblue> "
-                            .. "or <lightblue>glowing</lightblue> will always be "
-                            .. "enchanted, or have special properties, or both. "
-                            .. "You need to wield this scimitar to find out what "
-                            .. "those are.")
+    return tutorial_message("An item named in <lightblue>blue</lightblue> "
+                            .. "text will always have a special property (or 'ego'). "
+                            .. "This scimitar, for example, is enchanted to "
+                            .. "poison the foes it strikes.")
 end
 
 function tutorial_msg3.inventory ()
-    local text = "To find out what your cool new weapon actually does, you can "
+    local text = "To find out what an item's special properties do, you can "
                  .. "access its description from your inventory with "
                  .. tutorial_get_cmd("CMD_DISPLAY_INVENTORY")
 
@@ -110,7 +107,7 @@ end
 function tutorial_msg3.battle ()
     return tutorial_message("Once you've successfully managed to poison a monster, "
                             .. "it is sometimes best to retreat and let the poison "
-                            .. "do the work. Also retreat to heal, if necessary.")
+                            .. "do the work. Also, retreat to heal, if necessary.")
 end
 
 function tutorial_msg3.downstairs ()
@@ -182,13 +179,13 @@ function tutorial_msg3.retreat_reminder ()
 end
 
 function tutorial_msg3.quantified_drop ()
-    local text = "These meat rations weigh too much. Note the <lightred>burden status</lightred> "
+    local text = "These scrolls weigh too much. Note the <lightred>burden status</lightred> "
                  .. "to the right of the screen!\n"
                  .. "You can drop them again with "
                  .. tutorial_get_cmd("CMD_DROP") .. ", or you can only drop "
                  .. "e.g. 20, by typing "
                  .. tutorial_get_cmd("CMD_DROP") .. ", <white>20</white>, selecting "
-                 .. "the meat rations, and confirming with <white>Enter</white>."
+                 .. "the scrolls, and confirming with <white>Enter</white>."
 
     return tutorial_message(text)
 end
@@ -205,15 +202,26 @@ function tutorial_msg3.jewellery ()
 end
 
 function tutorial_msg3.artefact_armour ()
-    local text = "Items with <white>unusual adjectives</white> in their descriptions "
+    local text = "Items named in <white>white</white> "
                  .. "are artefacts, which can have a number of special properties.\n"
-                 .. "Wear this cloak with "
-                 .. tutorial_get_cmd("CMD_WEAR_ARMOUR")
-    if crawl.is_tiles() then
-        text = text .. " or by <white>mouseclick</click>"
-    end
-    text = text .. " to find out what those are."
+                 .. "Examine this cloak with "
+                 .. tutorial_get_cmd("CMD_DISPLAY_INVENTORY")
 
+    if crawl.is_tiles() then
+        text = text .. ", or by <white>mouseover</click> or <white>rightclick</white> "
+                    .. "in the inventory panel,"
+    end
+
+    text = text .. " to find out what those are."
+                .. " (You might also want to go ahead and wear it.)"
+
+    return tutorial_message(text)
+end
+
+function tutorial_msg3.sidestep_reminder ()
+    local text = "Rather than taking your lumps, try sidestepping these kobolds' darts"
+                 .. " as you advance."
+    
     return tutorial_message(text)
 end
 
@@ -276,16 +284,14 @@ function tutorial_msg3.amulet ()
     if crawl.is_tiles() then
         text = text .. " or by <white>mouseclick</click>"
     end
-    text = text .. ".\nSome types of jewellery, when equipped, don't identify "
-                .. "automatically. For that, you'll need a scroll of identify."
 
     return tutorial_message(text)
 end
 
 function tutorial_msg3.scroll_id ()
     return tutorial_message("These three scrolls can be used to enchant armour, "
-                            .. "recharge wands, and identify items. Try working "
-                            .. "out which is which.")
+                            .. "recharge wands, and teleport short distances. Try "
+                            .. "experimenting with them.")
 end
 
 function tutorial_msg3.go_shopping ()
@@ -436,16 +442,19 @@ BFLAGS:  islanded
 ORIENT:  encompass
 KFEAT:   ^ = needle trap
 KFEAT:   ABCD = .
-COLOUR:  ABCDdefg = blue
+COLOUR:  ABCDdefgi = blue
 COLOUR:  .1234h = brown
 FTILE:   .{})^1234h = floor_swamp, t = floor_grass
-FTILE:   ABCDdefg = tutorial_pad
+FTILE:   ABCDdefgi = tutorial_pad
 ITEM:    potion of healing q:2
-ITEM:    scroll of fog q:50
+ITEM:    scroll of fog q:200
 ITEM:    ring of levitation
 ITEM:    cloak unrand:ratskin_cloak
 # Some more stones, in case that goblin was under-equipped.
 ITEM:    stone q:20
+# Some heal wounds potions for the kobold barrage, in case
+# the player gets unlucky.
+ITEM:   potion of heal wounds q:2
 MONS:    goblin ; sling ego:none not_cursed . stone q:30 . dagger ego:none not_cursed
 MONS:    jackal
 MONS:    kobold ; dart ego:none q:10
@@ -457,6 +466,7 @@ MARKER:  C = lua:tutorial_msg3.retreat_reminder()
 MARKER:  e = lua:tutorial_msg3.quantified_drop()
 MARKER:  f = lua:tutorial_msg3.jewellery()
 MARKER:  g = lua:tutorial_msg3.artefact_armour()
+MARKER:  i = lua:tutorial_msg3.sidestep_reminder()
 epilogue{{
   tutorial_msg3.command_help()
 }}
@@ -484,7 +494,7 @@ ttttttttt.wwwwwwwwW2..ttttwwwwwwwwwwwtttttttttt.tttt
 wtttttttwwwwwwwwwwwW.WwwwwwwtwwwwwtttttttttttttAtttt
 wwwtttttwwww3..wwwwwWWWwwwwttttttttttttttttttttt.ttt
 wwwwwwwwwww..g}.3.wwwWWWttttttttt..2..ttttt..tt.tttt
-wwwwwwwwwwwww3...wwww....tttttt..ttttt....Btt..ttttt
+wwwwwwwwwwwww3...wwww.i..tttttt..ttttt....Btt..ttttt
 tttttwwwwwwwwwwwwwww.....Cttt..ttttttttttttttttttttt
 ttttttttttwwwwwwwwt....ttt..2ttttttttttttttttttttttt
 tttttttttttttttttttttttttttttttttttttttttttttttttttt
@@ -516,16 +526,16 @@ ITEM:    gold q:40
 ITEM:    wand of flame charges:9
 ITEM:    wand of digging charges:15
 ITEM:    gold q:180
-ITEM:    amulet of inaccuracy mundane not_cursed
-ITEM:    scroll of fog q:3
+ITEM:    amulet of controlled flight mundane not_cursed
+ITEM:    scroll of blinking q:3
 ITEM:    scroll of enchant armour q:3
 ITEM:    scroll of recharging q:3
 SHUFFLE: ijk
 MONS:    gnoll ; spear ego:none | mace ego:none
 MONS:    imp
-MONS:    gnoll ; flail ego:none | spiked flail ego:none | halberd ego:none . \
+MONS:    gnoll ; flail ego:none | spiked flail ego:none | battleaxe ego:none . \
          leather armour ego:fire_resistance | ring mail ego:fire_resistance
-MONS:    orc ; scimitar ego:none | battleaxe ego:none | halberd ego:none . \
+MONS:    orc ; scimitar ego:none | battleaxe ego:none | spiked flail ego:none . \
          ring mail ego:fire_resistance | chain mail ego:fire_resistance
 MARKER:  d = lua:tutorial_msg3.gold()
 MARKER:  A = lua:tutorial_msg3.shop()

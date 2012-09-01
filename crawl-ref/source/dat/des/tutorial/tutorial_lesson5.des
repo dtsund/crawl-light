@@ -80,12 +80,13 @@ function tutorial_msg5.piety_on_kill ()
 end
 
 function tutorial_msg5.sacrificing ()
-    local text = "Praying on corpses with "
+    local text = "Praying with "
                  .. tutorial_get_cmd("CMD_PRAY")
     if crawl.is_tiles() then
         text = text .. " or via the <white>command panel</white>"
     end
-    text = text .. " will sacrifice them to Trog. Try it!"
+    text = text .. " will sacrifice all corpses in your line of sight to "
+                .. " Trog. Try it!"
 
     return tutorial_message(text)
 end
@@ -127,13 +128,6 @@ function tutorial_msg5.exhaustion ()
     text = text .. " until you feel fit again."
 
     return tutorial_message(text)
-end
-
-function tutorial_msg5.hunger ()
-    return tutorial_message("You cannot berserk while very hungry, so you should "
-                            .. "always carry some food with you. This means that "
-                            .. "sometimes you'll have to decide between butchering "
-                            .. "a corpse or sacrificing it to Trog.")
 end
 
 function tutorial_msg5.berserk2 ()
@@ -183,10 +177,10 @@ TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen 
 DESC:    "Lesson 5: Gods and Divine Abilities"
 BFLAGS:  islanded
 ORIENT:  encompass
-KFEAT:   bABCDEHIJ = .
+KFEAT:   bABCDEHJ = .
 KFEAT:   F = +
-COLOUR:  ABCDEHIJ = blue
-FTILE:   ABCDEHIJ = tutorial_pad
+COLOUR:  ABCDEHJ = blue
+FTILE:   ABCDEHJ = tutorial_pad
 KPROP:   b_ = bloody / nothing
 KFEAT:   _ = altar_trog
 NSUBST:  M = 2:= / *:m
@@ -206,7 +200,6 @@ MARKER:  D = lua:tutorial_msg5.sacrificing()
 MARKER:  E = lua:tutorial_msg5.burn_book()
 MARKER:  F = lua:tutorial_msg5.berserk()
 MARKER:  H = lua:tutorial_msg5.exhaustion()
-MARKER:  I = lua:tutorial_msg5.hunger()
 MARKER:  J = lua:tutorial_msg5.berserk2()
 MARKER:  { = lua:one_way_stair { dst  = "tutorial_lesson5", \
                                  onclimb = "tutorial_msg5.exit" }
@@ -245,7 +238,7 @@ x..mYbbbYm..xxxxxxxExxxxxxxxxxxxxxxxxx..1.f.xxxxxx
 x..Mbb_bbM..xxxxxxx.xxxxxxxxxxxxxxxxxxx..1...xxxxx
 x..mVbbbVm..xxxxxxx.xxxxxxxxxxxxxxxxxxxx....xxxxxx
 x..mmmmmmm..xxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxx.xxxxx
-xt.........txxxxxxxexxxxxxxxxxxxxxxxxxxxxxxxxIxxxx
+xt.........txxxxxxxexxxxxxxxxxxxxxxxxxxxxxxxx.xxxx
 xtt..G.G..ttxxxxx.....xxxxxxxx.......xxxxxx..xxxxx
 xxxxxxAxxxxxxxxxx............F.....3.H.....xxxxxxx
 xxxxxx.xxxxxxxxxx.....xxxxxxxx.......xxxxxxxxxxxxx
