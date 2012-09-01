@@ -1187,7 +1187,7 @@ static bool _fire_choose_item_and_target(int& slot, dist& target,
     }
 
     //Set quiver to whatever we just chose (possibly implicit ammunition).
-    if(slot != -1)
+    if(beh.active_item() != NULL)
         you.m_quiver->on_item_fired(*beh.active_item(), beh.chosen_ammo);
     else
         you.m_quiver->empty_quiver();
