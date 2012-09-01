@@ -147,3 +147,7 @@ CMD_SEARCH verbose
 
 Spend a single turn waiting, resting and searching.
 %%%%
+CMD_CYCLE_QUIVER_FORWARD
+
+Cycle through your available ammunition
+%%%%

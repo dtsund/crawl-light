@@ -4523,6 +4523,8 @@ tileidx_t tileidx_command(const command_type cmd)
         return TILEG_CMD_DISPLAY_COMMANDS;
     case CMD_CHARACTER_DUMP:
         return TILEG_CMD_CHARACTER_DUMP;
+    case CMD_CYCLE_QUIVER_FORWARD:
+        return TILEG_CMD_CYCLE_QUIVER_FORWARD;
     default:
         return TILEG_TODO;
     }

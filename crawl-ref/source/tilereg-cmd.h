@@ -20,7 +20,7 @@ static const command_type _common_commands[] =
 
     // meta commands
     CMD_SAVE_GAME_NOW, CMD_EDIT_PLAYER_TILE, CMD_DISPLAY_COMMANDS,
-    CMD_CHARACTER_DUMP
+    CMD_CHARACTER_DUMP, CMD_CYCLE_QUIVER_FORWARD
 };
 
 static const int n_common_commands = ARRAYSZ(_common_commands);
