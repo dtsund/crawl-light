@@ -557,6 +557,11 @@ static void _print_stats_qv(int y)
                 text = "Nothing quivered";
             }
         }
+        else
+        {
+            col = LIGHTGREY;
+            text = "Nothing quivered";
+        }
 
         text = prefix + text;
     }
