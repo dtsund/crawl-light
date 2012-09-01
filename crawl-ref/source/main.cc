@@ -1753,6 +1753,11 @@ static void _do_cycle_quiver(int dir)
         if (next == cur)
             mpr("No other missiles available. Use F to throw any item.");
     }
+    else if(can_fire_implicit_ammo())
+    {
+        //next is -1 and we can use implicit ammo, so do so.
+        you.m_quiver->empty_quiver();
+    }
     else if (cur == -1)
     {
         mpr("No missiles available. Use F to throw any item.");
