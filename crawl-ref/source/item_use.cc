@@ -2598,8 +2598,12 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     {
         skill_type sk = SK_THROWING;
         if (projected == LRET_LAUNCHED)
+        {
             sk = range_skill(*you.weapon());
-        ammoHitBonus = ammoDamBonus = std::min(7, you.skill(sk)/3) - 4;
+            ammoHitBonus = ammoDamBonus = std::min(7, you.skill(sk)/3) - 4;
+        }
+        else
+            ammoHitBonus = ammoDamBonus = std::min(3, you.skill(sk)/3);
     }
 
     int bow_brand = SPWPN_NORMAL;
