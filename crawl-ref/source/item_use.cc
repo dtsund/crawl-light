@@ -4110,7 +4110,8 @@ static bool _drink_fountain()
 
     // Good gods do not punish for bad random effects. However, they do
     // punish drinking from a fountain of blood.
-    potion_effect(fountain_effect, 100, true, feat != DNGN_FOUNTAIN_SPARKLING);
+    if (feat != DNGN_FOUNTAIN_BLOOD)
+        potion_effect(fountain_effect, 100, true, feat != DNGN_FOUNTAIN_SPARKLING);
 
     bool gone_dry = false;
     if (feat == DNGN_FOUNTAIN_BLUE)
