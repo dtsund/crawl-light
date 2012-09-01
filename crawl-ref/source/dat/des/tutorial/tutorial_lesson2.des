@@ -211,7 +211,7 @@ end
 
 function tutorial_msg2.sidestep ()
     local text = "This training dummy is armed with throwing rocks. Try not walking "
-                 .. "directly at it; if take a zigzag path toward it, on each turn it "
+                 .. "directly at it; if you take a zigzag path toward it, on each turn it "
                  .. "will have a good chance of firing at where you were before instead "
                  .. "of where you are now."
     
