@@ -130,6 +130,13 @@ function tutorial_msg5.exhaustion ()
     return tutorial_message(text)
 end
 
+function tutorial_msg5.hunger ()
+    return tutorial_message("Going berserk costs a small amount of piety. "
+                            .. "Killing these rats and sacrificing them will "
+                            .. "let you regain your lost piety (and probably "
+                            .. "more).")
+end
+
 function tutorial_msg5.berserk2 ()
     return tutorial_message("Berserk is also really useful against multiple enemies "
                             .. "- as long as you don't run out of steam in-between.")
@@ -177,10 +184,10 @@ TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen 
 DESC:    "Lesson 5: Gods and Divine Abilities"
 BFLAGS:  islanded
 ORIENT:  encompass
-KFEAT:   bABCDEHJ = .
+KFEAT:   bABCDEHIJ = .
 KFEAT:   F = +
-COLOUR:  ABCDEHJ = blue
-FTILE:   ABCDEHJ = tutorial_pad
+COLOUR:  ABCDEHIJ = blue
+FTILE:   ABCDEHIJ = tutorial_pad
 KPROP:   b_ = bloody / nothing
 KFEAT:   _ = altar_trog
 NSUBST:  M = 2:= / *:m
@@ -200,6 +207,7 @@ MARKER:  D = lua:tutorial_msg5.sacrificing()
 MARKER:  E = lua:tutorial_msg5.burn_book()
 MARKER:  F = lua:tutorial_msg5.berserk()
 MARKER:  H = lua:tutorial_msg5.exhaustion()
+MARKER:  I = lua:tutorial_msg5.hunger()
 MARKER:  J = lua:tutorial_msg5.berserk2()
 MARKER:  { = lua:one_way_stair { dst  = "tutorial_lesson5", \
                                  onclimb = "tutorial_msg5.exit" }
@@ -238,7 +246,7 @@ x..mYbbbYm..xxxxxxxExxxxxxxxxxxxxxxxxx..1.f.xxxxxx
 x..Mbb_bbM..xxxxxxx.xxxxxxxxxxxxxxxxxxx..1...xxxxx
 x..mVbbbVm..xxxxxxx.xxxxxxxxxxxxxxxxxxxx....xxxxxx
 x..mmmmmmm..xxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxx.xxxxx
-xt.........txxxxxxxexxxxxxxxxxxxxxxxxxxxxxxxx.xxxx
+xt.........txxxxxxxexxxxxxxxxxxxxxxxxxxxxxxxxIxxxx
 xtt..G.G..ttxxxxx.....xxxxxxxx.......xxxxxx..xxxxx
 xxxxxxAxxxxxxxxxx............F.....3.H.....xxxxxxx
 xxxxxx.xxxxxxxxxx.....xxxxxxxx.......xxxxxxxxxxxxx
