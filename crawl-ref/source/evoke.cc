@@ -17,6 +17,7 @@
 #include "artefact.h"
 #include "cloud.h"
 #include "coordit.h"
+#include "database.h"
 #include "decks.h"
 #include "effects.h"
 #include "env.h"
@@ -33,6 +34,8 @@
 #include "misc.h"
 #include "player-stats.h"
 #include "godconduct.h"
+#include "religion.h"
+#include "shout.h"
 #include "skills2.h"
 #include "spl-book.h"
 #include "spl-cast.h"
@@ -41,6 +44,122 @@
 #include "stuff.h"
 #include "view.h"
 #include "xom.h"
+
+// TODO: Let artefacts besides weapons generate noise.
+void noisy_equipment()
+{
+    if (silenced(you.pos()) || !one_chance_in(20))
+        return;
+
+    std::string msg;
+
+    const item_def* weapon = you.weapon();
+
+    if (weapon && is_unrandom_artefact(*weapon))
+    {
+        std::string name = weapon->name(DESC_PLAIN, false, true, false, false,
+                                        ISFLAG_IDENT_MASK);
+        msg = getSpeakString(name.c_str());
+        if (!msg.empty())
+        {
+            // "Your Singing Sword" sounds disrespectful
+            // (as if there could be more than one!)
+            msg = replace_all(msg, "@Your_weapon@", "@The_weapon@");
+            msg = replace_all(msg, "@your_weapon@", "@the_weapon@");
+        }
+    }
+
+    if (msg.empty())
+    {
+        msg = getSpeakString("noisy weapon");
+        if (!msg.empty())
+        {
+            msg = replace_all(msg, "@Your_weapon@", "Your @weapon@");
+            msg = replace_all(msg, "@your_weapon@", "your @weapon@");
+        }
+    }
+
+    // Set appropriate channel (will usually be TALK).
+    msg_channel_type channel = MSGCH_TALK;
+
+    // Disallow anything with VISUAL in it.
+    if (!msg.empty() && msg.find("VISUAL") != std::string::npos)
+        msg.clear();
+
+    if (!msg.empty())
+    {
+        std::string param;
+        const std::string::size_type pos = msg.find(":");
+
+        if (pos != std::string::npos)
+            param = msg.substr(0, pos);
+
+        if (!param.empty())
+        {
+            bool match = true;
+
+            if (param == "DANGER")
+                channel = MSGCH_DANGER;
+            else if (param == "WARN")
+                channel = MSGCH_WARN;
+            else if (param == "SOUND")
+                channel = MSGCH_SOUND;
+            else if (param == "PLAIN")
+                channel = MSGCH_PLAIN;
+            else if (param == "SPELL" || param == "ENCHANT")
+                msg.clear(); // disallow these as well, channel stays TALK
+            else if (param != "TALK")
+                match = false;
+
+            if (match && !msg.empty())
+                msg = msg.substr(pos + 1);
+        }
+    }
+
+    if (msg.empty()) // give default noises
+    {
+        channel = MSGCH_SOUND;
+        msg = "You hear a strange noise.";
+    }
+
+    // replace weapon references
+    if (weapon)
+    {
+        msg = replace_all(msg, "@The_weapon@", "The @weapon@");
+        msg = replace_all(msg, "@the_weapon@", "the @weapon@");
+        msg = replace_all(msg, "@weapon@", weapon->name(DESC_BASENAME));
+    }
+    // replace references to player name and god
+    msg = replace_all(msg, "@player_name@", you.your_name);
+    msg = replace_all(msg, "@player_god@",
+                      you.religion == GOD_NO_GOD ? "atheism"
+                      : god_name(you.religion, coinflip()));
+
+    mpr(msg.c_str(), channel);
+
+    noisy(25, you.pos());
+}
+
+void unrand_reacts()
+{
+    item_def*  weapon     = you.weapon();
+    const int  old_plus   = weapon ? weapon->plus   : 0;
+    const int  old_plus2  = weapon ? weapon->plus2  : 0;
+
+    for (int i = 0; i < NUM_EQUIP; i++)
+    {
+        if (you.unrand_reacts & (1 << i))
+        {
+            item_def&        item  = you.inv[you.equip[i]];
+            unrandart_entry* entry = get_unrand_entry(item.special);
+
+            entry->world_reacts_func(&item);
+        }
+    }
+
+    if (weapon && (old_plus != weapon->plus || old_plus2 != weapon->plus2))
+        you.wield_change = true;
+}
 
 void shadow_lantern_effect()
 {
@@ -353,7 +472,7 @@ static bool _ball_of_seeing(void)
     else if (use < 5 && enough_mp(1, true))
     {
         mpr("You feel your power drain away!");
-        set_mp(0);
+        set_mp(0, false);
         // if you're out of mana, the switch chain falls through to confusion
     }
     else if (use < 10 || you.level_type == LEVEL_LABYRINTH)
@@ -536,15 +655,12 @@ void skill_manual(int slot)
 
     mprf("You read about %s.", skill_name(skill));
 
+    //Note that practise, in the case of manuals, doesn't call exercise;
+    //it calls read_manual, granting a flat skill boost.
     practise(EX_READ_MANUAL, skill);
 
-    if (--manual.plus2 <= 0)
-    {
-        mpr("The manual crumbles into dust.");
-        dec_inv_item_quantity(slot, 1);
-    }
-    else
-        mpr("The manual looks somewhat more worn.");
+    mpr("The manual crumbles into dust.");
+    dec_inv_item_quantity(slot, 1);
 
     xom_is_stimulated(32);
 }
@@ -558,7 +674,7 @@ static bool _box_of_beasts(item_def &box)
     if (x_chance_in_y(60 + you.skill(SK_EVOCATIONS), 100))
     {
         const monster_type beasts[] = {
-            MONS_BAT,       MONS_HOUND,     MONS_JACKAL,
+            MONS_MEGABAT,   MONS_HOUND,     MONS_JACKAL,
             MONS_RAT,       MONS_ICE_BEAST, MONS_SNAKE,
             MONS_YAK,       MONS_BUTTERFLY, MONS_WATER_MOCCASIN,
             MONS_CROCODILE, MONS_HELL_HOUND
@@ -611,21 +727,16 @@ static bool _ball_of_energy(void)
 
     if (use < 2)
     {
-        const int loss = roll_dice(1, 2 * you.max_intel() / 3);
-        lose_stat(STAT_INT, loss, false, "using a ball of energy");
+        lose_stat(STAT_INT, 1, false, "using a ball of energy");
     }
     else if (use < 4 && enough_mp(1, true))
     {
         mpr("You feel your power drain away!");
-        set_mp(0);
+        set_mp(0, false);
     }
     else if (use < 6)
     {
         confuse_player(10 + random2(10));
-    }
-    else if (use < 8)
-    {
-        you.paralyse(NULL, 2 + random2(2));
     }
     else
     {
@@ -635,12 +746,12 @@ static bool _ball_of_energy(void)
             || one_chance_in(25))
         {
             mpr("You feel your power drain away!");
-            set_mp(0);
+            set_mp(0, false);
         }
         else
         {
             mpr("You are suffused with power!");
-            inc_mp(6 + roll_dice(2, you.skill(SK_EVOCATIONS)));
+            inc_mp(6 + roll_dice(2, you.skill(SK_EVOCATIONS)), false);
 
             ret = true;
         }
@@ -692,7 +803,6 @@ bool evoke_item(int slot)
     int pract = 0; // By how much Evocations is practised.
     bool did_work   = false;  // Used for default "nothing happens" message.
     bool unevokable = false;
-    bool ident      = false;
 
     const unrandart_entry *entry = is_unrandom_artefact(item)
         ? get_unrand_entry(item.special) : NULL;
@@ -740,20 +850,19 @@ bool evoke_item(int slot)
         }
         else if (item.sub_type == STAFF_CHANNELING)
         {
-            if (!you.is_undead && you.hunger_state == HS_STARVING)
+            if (!contamination_warning_prompt(1))
             {
-                canned_msg(MSG_TOO_HUNGRY);
+                canned_msg(MSG_OK);
                 return (false);
             }
             else if (you.magic_points < you.max_magic_points
                      && x_chance_in_y(you.skill(SK_EVOCATIONS) + 11, 40))
             {
                 mpr("You channel some magical energy.");
-                inc_mp(1 + random2(3));
-                make_hungry(50, false, true);
+                inc_mp(1 + random2(3), false);
+                contaminate_player(1);
                 pract = 1;
                 did_work = true;
-                ident = true;
             }
         }
         else
@@ -789,7 +898,7 @@ bool evoke_item(int slot)
 
         case MISC_CRYSTAL_BALL_OF_SEEING:
             if (_ball_of_seeing())
-                pract = 1, ident = true;
+                pract = 1;
             break;
 
         case MISC_AIR_ELEMENTAL_FAN:
@@ -799,7 +908,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_AIR_ELEMENTAL, 4, 3);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -810,7 +918,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_FIRE_ELEMENTAL, 4, 3);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -821,7 +928,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_EARTH_ELEMENTAL, 4, 5);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -832,24 +938,24 @@ bool evoke_item(int slot)
 
         case MISC_BOX_OF_BEASTS:
             if (_box_of_beasts(item))
-                pract = 1, ident = true;
+                pract = 1;
             break;
 
         case MISC_CRYSTAL_BALL_OF_ENERGY:
             if (_ball_of_energy())
-                pract = 1, ident = true;
+                pract = 1;
             break;
 
 #if TAG_MAJOR_VERSION == 32
         case MISC_CRYSTAL_BALL_OF_FIXATION:
             mpr("Nothing happens.");
-            pract = 0, ident = true;
+            pract = 0;
             break;
 #endif
 
         case MISC_DISC_OF_STORMS:
             if (disc_of_storms())
-                pract = (coinflip() ? 2 : 1), ident = true;
+                pract = (coinflip() ? 2 : 1);
             break;
 
         case MISC_QUAD_DAMAGE:
