@@ -310,8 +310,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "control the weather"
     },
     // Cheibriados
-    { "Cheibriados slows and strengthens your metabolism, "
-      "and supports the use of ponderous armour.",
+    { "Cheibriados supports the use of ponderous armour."
       "bend time to slow others",
       "",
       "inflict damage to those overly hasty",
@@ -418,8 +417,7 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "control the weather"
     },
     // Cheibriados
-    { "Cheibriados will no longer slow or strengthen your metabolism, "
-      "or support the use of ponderous armour.",
+    { "Cheibriados will no longer support the use of ponderous armour."
       "bend time to slow others",
       "",
       "inflict damage to those overly hasty",
