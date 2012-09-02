@@ -134,7 +134,7 @@ bool targetter_reach::valid_aim(coord_def a)
     if (!agent->see_cell_no_trans(a))
         return notify_fail("You can't get through.");
 
-    int dist = (origin - a).abs();
+    int dist = (origin - a).rdist();
 
     if (dist > reach_range(range))
         return notify_fail("You can't reach that far!");
@@ -181,7 +181,7 @@ static bool _cloudable(coord_def loc)
 
 bool targetter_cloud::valid_aim(coord_def a)
 {
-    if (agent && (origin - a).abs() > range2)
+    if (agent && (origin - a).rdist() > range2)
         return notify_fail("Out of range.");
     if (!map_bounds(a) || agent && origin != a && !cell_see_cell(origin, a))
         return notify_fail("You cannot see that place.");
@@ -219,7 +219,7 @@ bool targetter_cloud::set_aim(coord_def a)
             for(adjacent_iterator ai(c); ai; ++ai)
                 if (_cloudable(*ai) && seen.find(*ai) == seen.end())
                 {
-                    unsigned int d2 = d1 + ((*ai - c).abs() == 1 ? 5 : 7);
+                    unsigned int d2 = d1 + ((*ai - c).rdist() == 1 ? 5 : 7);
                     if (d2 >= queue.size())
                         queue.resize(d2 + 1);
                     queue[d2].push_back(*ai);
