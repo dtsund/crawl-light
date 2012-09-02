@@ -1288,7 +1288,7 @@ static void _give_ammo(monster* mon, int level,
                 set_item_ego_type(mitm[thing_created], OBJ_MISSILES,
                                   SPMSL_CURARE);
 
-                mitm[thing_created].quantity = random_range(4, 10);
+                mitm[thing_created].quantity = random_range(12, 30);
             }
             else
             {
@@ -1297,7 +1297,7 @@ static void _give_ammo(monster* mon, int level,
                                                          : SPMSL_POISONED);
 
                 if (get_ammo_brand(mitm[thing_created]) == SPMSL_CURARE)
-                    mitm[thing_created].quantity = random_range(2, 8);
+                    mitm[thing_created].quantity = random_range(5, 20);
             }
         }
         else
@@ -1378,7 +1378,7 @@ static void _give_ammo(monster* mon, int level,
             weap_type  = MI_JAVELIN;
             weap_class = OBJ_MISSILES;
             item_race  = MAKE_ITEM_ORCISH;
-            qty = random_range(4, 7);
+            qty = random_range(10, 30);
             break;
 
         case MONS_CHUCK:
