@@ -339,6 +339,8 @@ ITEM:    never_decay megabat skeleton
 ITEM:    never_decay goblin; nothing skeleton
 ITEM:    never_decay small snake skeleton
 ITEM:    never_decay jackal skeleton
+ITEM:    shield
+ITEM:    ring mail
 MONS:    hobgoblin always_corpse; shield not_cursed . ring mail race:none not_cursed
 MONS:    rat
 MONS:    goblin
@@ -382,7 +384,7 @@ xxxxxxxxxx.....xxxxxxxxx..xxxxxxxx.xxxxxxxxxxx
 xxxxxxxxxx.....xxxxxxxxxxxxxxxxxxx.xxxxxxxxxxx
 xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx...xxxxxxxxxx
 xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx{([xxxxxxxxxx
-xxxxxxxxxx..1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxx.i1j.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxDxxxxxxx.2..xxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxx.xxxxGx.....4]xxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxx.xxxGf+...2....xxxxxxxxxxxxxxxxxxx
