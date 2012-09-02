@@ -8,6 +8,7 @@
 #include <cctype>
 
 #include "cio.h"
+#include "colour.h"
 #include "command.h"
 #include "coord.h"
 #include "env.h"
@@ -18,6 +19,7 @@
 #include "options.h"
 #include "player.h"
 #include "hints.h"
+#include "religion.h"
 
 #ifdef USE_TILE
  #include "mon-stuff.h"
