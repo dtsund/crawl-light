@@ -3009,6 +3009,19 @@ struct spell_desc
 },
 
 {
+    SPELL_MASS_HASTE, "Mass Haste",
+     SPTYP_ENCHANTMENT,
+     SPFLAG_AREA | SPFLAG_MONSTER,
+     9,
+     200,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     false
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
      0,
      SPFLAG_TESTING,

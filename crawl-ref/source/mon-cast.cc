@@ -1086,6 +1086,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_DRAGON:
     case SPELL_SUMMON_HYDRA:
     case SPELL_FIRE_SUMMON:
+    case SPELL_MASS_HASTE:
         return (true);
     default:
         if (check_validity)
@@ -3570,6 +3571,51 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
                           spell_cast, mons->pos(), mons->foe, 0, god));
         }
         return;
+
+    case SPELL_MASS_HASTE:
+        {
+        //Keep track of whether it affected someone else for the purposes
+        //of message-printing.
+        bool other_affected = false;
+        bool self_affected = false;
+        
+        for (actor_iterator ai(mons->get_los()); ai; ++ai)
+        {
+            monster* m = ai->as_monster();
+
+            //Skip the player.
+            if (m == NULL)
+                continue;
+
+            //Skip monsters that aren't friendly.
+            if (!mons_atts_aligned(m->attitude, mons->attitude))
+                continue;
+
+            if(!m->has_ench(ENCH_HASTE))
+            {
+                m->add_ench(ENCH_HASTE);
+                //Check whether we affected the caster or someone else.
+                if(m == mons)
+                    self_affected = true;
+                else
+                    other_affected = true;
+            }
+        }
+        if(other_affected && self_affected)
+        {
+            mprf("%s and everything around %s seems to speed up!", mons->name(DESC_CAP_THE).c_str(),
+                mons->pronoun(PRONOUN_REFLEXIVE).c_str());
+        }
+        else if(!other_affected)
+        {
+            mprf("%s seems to speed up.", mons->name(DESC_CAP_THE).c_str());
+        }
+        else
+        {
+            mprf("Everything around %s seems to speed up!", mons->name(DESC_NOCAP_THE).c_str());
+        }
+        return;
+        }
     }
 
     // If a monster just came into view and immediately cast a spell,
@@ -4389,6 +4435,45 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
             ret = true;
         }
         break;
+
+    case SPELL_MASS_HASTE:
+        {
+        //Always a good idea if the caster isn't hasted.
+        //Otherwise, a good idea if half or fewer of the nearby
+        //allies are already hasted.
+        if (!mon->has_ench(ENCH_HASTE))
+            return false;
+
+        monster* mon_unconst = const_cast<monster*>(mon);
+        int already_hasted_count = 0;
+        for (actor_iterator ai(mon_unconst->get_los()); ai; ++ai)
+        {
+            monster* m = ai->as_monster();
+
+            //Skip the player.
+            if (m == NULL)
+                continue;
+
+            //Skip monsters that aren't friendly.
+            if (!mons_atts_aligned(m->attitude, mon->attitude))
+                continue;
+            
+            if(!m->has_ench(ENCH_HASTE))
+            {
+                already_hasted_count = already_hasted_count+1;
+            }
+            else
+            {
+                already_hasted_count = already_hasted_count-1;
+            }
+        }
+        
+        if(already_hasted_count > 0)
+            return true;
+        
+        return false;
+        break;
+        }
 
     case SPELL_NO_SPELL:
         ret = true;
