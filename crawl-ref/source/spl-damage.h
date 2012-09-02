@@ -20,7 +20,7 @@ bool cast_freeze(int pow, monster* mons);
 bool cast_airstrike(int pow, const dist &beam);
 void cast_shatter(int pow);
 void cast_ignite_poison(int pow);
-void cast_discharge(int pow);
+bool cast_discharge(int pow);
 int disperse_monsters(coord_def where, int pow);
 void cast_dispersal(int pow);
 bool cast_fragmentation(int powc, const dist& spd);

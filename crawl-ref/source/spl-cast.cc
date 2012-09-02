@@ -1430,7 +1430,8 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     // other effects
     case SPELL_DISCHARGE:
-        cast_discharge(powc);
+        if(!cast_discharge(powc))
+            return SPRET_ABORT;
         break;
 
     case SPELL_CHAIN_LIGHTNING:

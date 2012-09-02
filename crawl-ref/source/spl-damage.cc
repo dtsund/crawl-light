@@ -1235,87 +1235,40 @@ void cast_ignite_poison(int pow)
     flash_view(0);
 }
 
-static int _discharge_monsters(coord_def where, int pow, int, actor *)
+bool cast_discharge(int pow)
 {
-    monster* mons = monster_at(where);
-    int damage = 0;
-
     bolt beam;
-    beam.flavour = BEAM_ELECTRICITY; // used for mons_adjust_flavoured
 
-    dprf("Static discharge on (%d,%d) pow: %d", where.x, where.y, pow);
-    if (where == you.pos())
-    {
-        mpr("You are struck by lightning.");
-        damage = 1 + random2(3 + pow / 15);
-        dprf("You: static discharge damage: %d", damage);
-        damage = check_your_resists(damage, BEAM_ELECTRICITY,
-                                    "static discharge");
-        if (you.airborne())
-            damage /= 2;
-        ouch(damage, NON_MONSTER, KILLED_BY_WILD_MAGIC);
-    }
-    else if (mons == NULL)
-        return (0);
-    else if (mons->res_elec() > 0 || mons_flies(mons))
-        return (0);
-    else
-    {
-        damage = 3 + random2(5 + pow / 10 + (random2(pow) / 10));
-        dprf("%s: static discharge damage: %d",
-             mons->name(DESC_PLAIN, true).c_str(), damage);
-        damage = mons_adjust_flavoured(mons, beam, damage);
+    beam.flavour      = BEAM_ELECTRICITY;
+    beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
+    beam.damage       = dice_def(2, (15 + 2 * pow / 5));
+    beam.target       = you.pos();
+    beam.name         = "static discharge";
+    beam.colour       = LIGHTCYAN;
+    beam.ex_size      = 1;
+    beam.is_explosion = true;
+    beam.aux_source.clear();
+    beam.thrower      = KILL_YOU_MISSILE;
+    beam.is_tracer    = true;
 
-        if (damage)
-        {
-            mprf("%s is struck by lightning.",
-                 mons->name(DESC_CAP_THE).c_str());
-            _player_hurt_monster(*mons, damage);
-        }
+    beam.explode(false, true);
+
+    if(beam.beam_cancelled)
+    {
+        //Player aborted the casting.
+        canned_msg(MSG_OK);
+        return false;
     }
 
-    // Recursion to give us chain-lightning -- bwr
-    // Low power slight chance added for low power characters -- bwr
-    if ((pow >= 10 && !one_chance_in(4)) || (pow >= 3 && one_chance_in(10)))
-    {
-        mpr("The lightning arcs!");
-        pow /= (coinflip() ? 2 : 3);
-        damage += apply_random_around_square(_discharge_monsters, where,
-                                             true, pow, 1);
-    }
-    else if (damage > 0)
-    {
-        // Only printed if we did damage, so that the messages in
-        // cast_discharge() are clean. -- bwr
-        mpr("The lightning grounds out.");
-    }
+    beam.is_tracer          = false;
+    //Failure to reset in_explosion_phase means failing an assert.
+    beam.in_explosion_phase = false;
+    
+    mpr("Electricity rips through the air around you!");
 
-    return (damage);
-}
-
-void cast_discharge(int pow)
-{
-    const int num_targs = 1 + random2(random_range(1, 3) + pow / 20);
-    const int dam = apply_random_around_square(_discharge_monsters, you.pos(),
-                                               true, pow, num_targs);
-
-    dprf("Arcs: %d Damage: %d", num_targs, dam);
-
-    if (dam == 0)
-    {
-        if (coinflip())
-            mpr("The air around you crackles with electrical energy.");
-        else
-        {
-            const bool plural = coinflip();
-            mprf("%s blue arc%s ground%s harmlessly %s you.",
-                 plural ? "Some" : "A",
-                 plural ? "s" : "",
-                 plural ? " themselves" : "s itself",
-                 plural ? "around" : (coinflip() ? "beside" :
-                                      coinflip() ? "behind" : "before"));
-        }
-    }
+    beam.explode(true, true);
+    
+    return true;
 }
 
 // Really this is just applying the best of Band/Warp weapon/Warp field
