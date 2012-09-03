@@ -87,5 +87,4 @@ public:
     std::vector<std::vector<coord_def> > queue;
 };
 
-typedef std::vector<std::string> (*desc_filter) (const monster_info& mi);
 #endif
