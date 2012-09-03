@@ -1836,9 +1836,7 @@ void beogh_share_potion(potion_type potion)
                 }
                 break;
             case POT_INVISIBILITY:
-                //Grant Invisibility status if the player can see invisible.
-                if(!you.can_see_invisible())
-                    break;
+                //Grant Invisibility status.
                 if(!mon->has_ench(ENCH_INVIS))
                 {
                     num_affected++;
