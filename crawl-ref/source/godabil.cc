@@ -1491,7 +1491,7 @@ void elyvilon_purification()
     you.duration[DUR_PARALYSIS] = 0;          // can't currently happen -- bwr
     you.duration[DUR_PETRIFIED] = 0;
     restore_stat(STAT_ALL, 0, false);
-    unrot_hp(100);
+    unrot_hp(10000);
 }
 
 bool elyvilon_divine_vigour()
