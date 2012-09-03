@@ -4458,7 +4458,7 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
             if (!mons_atts_aligned(m->attitude, mon->attitude))
                 continue;
             
-            if(!m->has_ench(ENCH_HASTE))
+            if(m->has_ench(ENCH_HASTE))
             {
                 already_hasted_count = already_hasted_count+1;
             }
