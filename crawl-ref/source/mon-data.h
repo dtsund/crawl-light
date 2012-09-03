@@ -3328,7 +3328,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ANCIENT_LICH, 'L', WHITE, "ancient lich",
+    MONS_ANCIENT_LICH, 'L', BLUE, "ancient lich",
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_COLD, 2) | MR_RES_FIRE | MR_RES_ELEC,
     0, 24, MONS_LICH, MONS_LICH, MH_UNDEAD, -14,
@@ -5656,7 +5656,7 @@ static monsterentry mondata[] = {
 // "L"iches.
 {
     // May be re-spawned after his death.
-    MONS_BORIS, 'L', RED, "Boris",
+    MONS_BORIS, 'L', MAGENTA, "Boris",
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     MR_RES_COLD | mrd(MR_RES_ELEC, 2),
     0, 15, MONS_LICH, MONS_LICH, MH_UNDEAD, -11,
