@@ -370,6 +370,12 @@ sphinx cast
 @The_monster@ mumbles some strange words.
 
 @The_monster@ casts a spell.
+%%%%
+primordial lich cast
+
+@The_monster@ utters words of terrible power!
+
+You are overwhelmed by the force of @the_monster@'s spell!
 ########################################################################
 # Monster species and genus messages.
 ########################################################################
