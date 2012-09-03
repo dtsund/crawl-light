@@ -36,7 +36,6 @@ void elyvilon_remove_divine_vigour();
 void elyvilon_request_lifesaving();
 bool elyvilon_lesser_healing(const bool self);
 bool elyvilon_greater_healing(const ability_type abil);
-void elyvilon_restoration();
 
 bool vehumet_supports_spell(spell_type spell);
 

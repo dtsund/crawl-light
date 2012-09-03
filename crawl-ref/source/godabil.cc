@@ -1490,6 +1490,8 @@ void elyvilon_purification()
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PARALYSIS] = 0;          // can't currently happen -- bwr
     you.duration[DUR_PETRIFIED] = 0;
+    restore_stat(STAT_ALL, 0, false);
+    unrot_hp(100);
 }
 
 bool elyvilon_divine_vigour()
@@ -1572,15 +1574,7 @@ bool elyvilon_greater_healing(const ability_type abil)
     }
     
     return true;
-}
-
-//Elyvilon's Restoration invocation.
-void elyvilon_restoration()
-{
-    restore_stat(STAT_ALL, 0, false);
-    unrot_hp(100);
-}
-        
+}        
 
 bool vehumet_supports_spell(spell_type spell)
 {
