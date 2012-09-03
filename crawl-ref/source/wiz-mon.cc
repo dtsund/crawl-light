@@ -71,7 +71,7 @@ void wizard_create_spec_monster(void)
 void wizard_create_spec_monster_name()
 {
     char specs[100];
-    mpr("Which monster by name? ", MSGCH_PROMPT);
+    mpr("Enter monster name (or MONS spec): ", MSGCH_PROMPT);
     if (cancelable_get_line_autohist(specs, sizeof specs) || !*specs)
     {
         canned_msg(MSG_OK);
