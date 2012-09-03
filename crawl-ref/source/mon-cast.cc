@@ -3603,8 +3603,8 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         }
         if(other_affected && self_affected)
         {
-            mprf("%s and everything around %s seems to speed up!", mons->name(DESC_CAP_THE).c_str(),
-                mons->pronoun(PRONOUN_REFLEXIVE).c_str());
+            mprf("%s and %s allies seem to speed up!", mons->name(DESC_CAP_THE).c_str(),
+                mons->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str());
         }
         else if(!other_affected)
         {
