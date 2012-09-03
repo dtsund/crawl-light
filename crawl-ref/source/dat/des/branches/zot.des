@@ -450,7 +450,11 @@ SUBST:    . = .:500 ^
 
 #monsters
 MONS:     patrolling Orb Guardian, Killer Klown, electric golem, orb of fire
+:if you.difficulty_level() > 1 then
+MONS:     primordial lich, orange crystal statue / silver statue / ice statue
+:else
 MONS:     ancient lich, orange crystal statue / silver statue / ice statue
+:end
 SUBST:    8=8., 8=8., 5=5.
 SHUFFLE:  234
 SUBST:    ? = .:8 ?

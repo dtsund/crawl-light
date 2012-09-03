@@ -1798,6 +1798,11 @@ static bool _get_spellbook_list(mon_spellbook_type book[6],
         book[3] = MST_LICH_IV;
         break;
 
+    case MONS_PRIMORDIAL_LICH:
+        book[0] = MST_PRIMORDIAL_LICH_I;
+        book[1] = MST_PRIMORDIAL_LICH_II;
+        break;
+
     case MONS_NECROMANCER:
         book[0] = MST_NECROMANCER_I;
         book[1] = MST_NECROMANCER_II;

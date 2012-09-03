@@ -1725,6 +1725,30 @@
        SPELL_SHADOW_CREATURES,
        SPELL_SHADOW_CREATURES
       }
+    },
+
+    //Conjurers.
+    {  MST_PRIMORDIAL_LICH_I,
+      {
+       SPELL_ICE_STORM,
+       SPELL_SYMBOL_OF_TORMENT,
+       SPELL_HASTE,
+       SPELL_LEHUDIBS_CRYSTAL_SPEAR,
+       SPELL_BLINK_AWAY,
+       SPELL_MAJOR_HEALING
+      }
+    },
+    
+    //Summoners.
+    {  MST_PRIMORDIAL_LICH_II,
+      {
+       SPELL_AIRSTRIKE,
+       SPELL_SUMMON_GREATER_DEMON,
+       SPELL_MASS_HASTE,
+       SPELL_SUMMON_EYEBALLS,
+       SPELL_SUMMON_HORRIBLE_THINGS,
+       SPELL_BLINK_AWAY
+      }
     }
 
 #endif

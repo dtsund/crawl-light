@@ -611,6 +611,7 @@ boris MONS_BORIS
 %sdir dc-mon/undead
 lich MONS_LICH
 ancient_lich MONS_ANCIENT_LICH
+primordial_lich MONS_PRIMORDIAL_LICH
 zonguldrok_lich1 MONS_ZONGULDROK_LICH
 
 ## Mummies ('M')

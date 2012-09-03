@@ -3004,6 +3004,7 @@ int mons_hallzot_level(int mcls)
     case MONS_CURSE_TOE:
     case MONS_ORB_GUARDIAN:
     case MONS_GHOST_MOTH:
+    case MONS_PRIMORDIAL_LICH:
         mlev += 3;
         break;
     case MONS_DEATH_COB:
@@ -3136,6 +3137,7 @@ int _mons_hallzot_rare_hard(int mcls)
 
     case MONS_GUARDIAN_MUMMY:
     case MONS_ELECTRIC_GOLEM:
+    case MONS_PRIMORDIAL_LICH:
         return 20;
 
 /*All dracs are now classed!  mon-place.cc has been altered accordingly.

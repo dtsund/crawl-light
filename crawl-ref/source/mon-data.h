@@ -18,7 +18,9 @@
     - row 3: monster resistance flags
     - row 4: mass, experience modifier, genus, species, holiness, resist magic
     - row 5: damage for each of four attacks
-    - row 6: hit dice, described by four parameters
+    - row 6: hit dice, described by four parameters (hd, min, rand, bonus)
+             HP will be hd * min + (0..rand) + (0..rand) + (0..rand) + bonus
+                                    \\\\\\\\\\\hd times////////////
     - row 7: AC, evasion, sec(spell), corpse_thingy, zombie size, shouts
     - row 8: intel, habitat, flight class, speed, energy_usage
     - row 9: gmon_use class, gmon_eat class, body size
@@ -3339,6 +3341,18 @@ static monsterentry mondata[] = {
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
+{
+    MONS_PRIMORDIAL_LICH, 'L', RED, "primordial lich",
+    M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
+    mrd(MR_RES_COLD, 2) | MR_RES_FIRE | MR_RES_ELEC,
+    0, 24, MONS_LICH, MONS_LICH, MH_UNDEAD, -14,
+    { {AT_TOUCH, AF_DRAIN_XP, 30}, {AT_HIT, AF_DRAIN_XP, 25}, AT_NO_ATK, AT_NO_ATK },
+    { 30, 3, 5, 0 },
+    20, 15, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SHOUT,
+    I_HIGH, HT_LAND, FL_NONE, 12, DEFAULT_ENERGY,
+    MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_MEDIUM
+},
+
 // mummies ('M')
 {
     MONS_MUMMY, 'M', LIGHTGREY, "mummy",
@@ -6429,7 +6443,9 @@ static monsterentry mondata[] = {
     - row 3: monster resistance flags
     - row 4: mass, experience modifier, genus, species, holiness, resist magic
     - row 5: damage for each of four attacks
-    - row 6: hit dice, described by four parameters
+    - row 6: hit dice, described by four parameters (hd, min, rand, bonus)
+             HP will be hd * min + (0..rand) + (0..rand) + (0..rand) + bonus
+                                    \\\\\\\\\\\hd times////////////
     - row 7: AC, evasion, sec(spell), corpse_thingy, zombie size, shouts
     - row 8: intel, habitat, flight class, speed, energy_usage
     - row 9: gmon_use class, gmon_eat class, body size

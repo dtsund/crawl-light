@@ -2407,6 +2407,7 @@ enum monster_type                      // (int) menv[].type
     MONS_GOLEM,
     MONS_PROFANE_SERVITOR,
     MONS_ILLUSION,              // Illude
+    MONS_PRIMORDIAL_LICH,
 
     NUM_MONSTERS,                      // used for polymorph
 

@@ -1335,6 +1335,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_LICH;
     case MONS_ANCIENT_LICH:
         return TILEP_MONS_ANCIENT_LICH;
+    case MONS_PRIMORDIAL_LICH:
+        return TILEP_MONS_PRIMORDIAL_LICH;
 
     // mummies ('M')
     case MONS_MUMMY:
