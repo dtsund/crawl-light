@@ -18,6 +18,19 @@ function tutorial_msg2.start ()
     crawl.mpr("First, you need a weapon! Go and grab the one lying in front of the door!", "tutorial")
 end
 
+function open_tutorial_pandoora(data, triggerable, triggerer, marker, ev)
+    if data.trig == true then
+        return
+    else
+        data.trig = true
+    end
+
+    crawl.mpr("You feel as though achieving your goals just got harder.", "warning")
+    for slave in iter.slave_iterator("make_monster_tutorial", 1) do
+        dgn.create_monster(slave.x, slave.y, "ooze")
+    end
+end
+
 function tutorial_msg2.pickup_weapon ()
     local text = "Pick up this weapon with " .. tutorial_get_cmd("CMD_PICKUP")
                  .. " and then wield it with " .. tutorial_get_cmd("CMD_WIELD_WEAPON") .. "."
@@ -224,6 +237,15 @@ function tutorial_msg2.explore ()
                             .. ") to find the exit. Shoot any bats you come across!")
 end
 
+function tutorial_msg2.pandoora ()
+    return tutorial_message("Over the course of your game, you may come across "
+                            .. "some \"Pandooras\". Beware of opening them, as "
+                            .. "they will only make your game harder. It's "
+                            .. "probably best to leave them alone until you've "
+                            .. "won at least once and are looking for a "
+                            .. "challenge")
+end
+
 function tutorial_msg2.tutorial_end ()
     return tutorial_message("Congratulations! You've survived your first batch "
                             .. "of monsters!\n"
@@ -363,14 +385,24 @@ TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen 
 PLACE:   D:2
 BFLAGS:  islanded
 ORIENT:  encompass
+{{
+local pandoora_tutorial_marker = TriggerableFunction:new {
+    func="open_tutorial_pandoora"}
+    
+pandoora_tutorial_marker:add_triggerer(DgnTriggerer:new {
+    type="feat_change",
+    target="door"})
+lua_marker("/", pandoora_tutorial_marker)
+}}
 TILE:    G = dngn_statue_centaur
 RTILE:   x = wall_lair, c = wall_vines
-KFEAT:   ABCDEFHIJ = .
-COLOUR:  deABCDEHIJ = blue
-FTILE:   deABCDEHIJ = tutorial_pad
+KFEAT:   ABCDEFHIJK = .
+COLOUR:  deABCDEHIJK = blue
+FTILE:   deABCDEHIJK = tutorial_pad
 MONS:    training dummy hp:10 ; stone q:15
 MONS:    megabat
 MONS:    rat always_corpse
+MONS:    rat
 ITEM:    dart mundane q:30
 ITEM:    bow mundane not_cursed
 ITEM:    arrow ego:flame q:30
@@ -383,6 +415,7 @@ MARKER:  D = lua:tutorial_msg2.quiver()
 MARKER:  E = lua:tutorial_msg2.explore()
 MARKER:  I = lua:tutorial_msg2.safe()
 MARKER:  J = lua:tutorial_msg2.sidestep()
+MARKER:  K = lua:tutorial_msg2.pandoora()
 # This is just for atmosphere.
 MARKER:  F = lua:fog_machine { cloud_type = "thin mist", pow_min = 10, \
              pow_max = 10, delay = 10, start_clouds = 1, size_min = 1, \
@@ -399,6 +432,21 @@ MARKER:  ) = lua:one_way_stair { dst  = "tutorial_lesson2", \
 MARKER:  ] = lua:one_way_stair { dst  = "tutorial_lesson2", \
                                  desc = "exit from the tutorial", \
                                  onclimb = "tutorial_msg2.win" }
+MARKER:  / = lua:props_marker { \
+             door_open_prompt="You sense great evil behind this door. Open " .. \
+                                         "it anyway?", \
+             door_open_verb="unseal", \
+             door_description_noun="Pandoora", \
+             veto_disintegrate="veto", \
+             veto_shatter="veto", \
+             veto_fragmentation="veto", \
+             }
+MARKER:  ! = lua:restrict_door {}
+{{
+lua_marker("9", props_marker { make_monster_tutorial=1 })
+}}
+SUBST:   /! = +
+SUBST:   9  = .
 epilogue{{
   tutorial_msg2.newlevel()
 }}
@@ -427,12 +475,12 @@ xx...x..........xxxxxxxxxxxxx...xxx...xxxxxxxx
 x............F......xxxxxxxxxxxx...xxxxxxxxxxx
 xxx...tt.........xx.2.xxxxxxxxxxxxxxxxxxxxxxxx
 xx....ttt..........x....xxxxxxxxxxxxxxxxxxxxxx
-x.......tt........xxx....xxxxxxxxxxxxxxxxxxxxx
-xxx.F.......x...2.xxxx...xxxxxxxxxxxxxxxxxxxxx
-xx.........xx.......xxx.xxxxxxxxxxxxxxxxxxxxxx
-xxx.2..x......x....xxxxxIxxxxxxxxxxxxxxxxxxxxx
-xxxx.....2..x.x..xxxxxxx]xxxxxxxxxxxxxxxxxxxxx
-xxxxxx.......x.xxxxxx.).xxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxx..xxxxx.xx..}xxxxxxxxxxxxxxxxxxxxxxxxx
+x.......tt........xxx....xxxxxxxxx])}xxxxxxxxx
+xxx.F.......x...2.xxxx...xxxxxxxxxxIxxxxxxxxxx
+xx.........xx.......xxx.xxxxxxxxx......9xx.xxx
+xxx.2..x......x....xxxxx.xxxxxxxx..4....!/.xxx
+xxxx.....2..x.x..xxxxxxx.xxxxxxxx......9xx.xxx
+xxxxxx.......x.xx.xxx...x.xxxxxxxoooooooxx.xxx
+xxxxxxxx..xxxxx.xx...xxxxx..........K......xxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
