@@ -238,6 +238,8 @@ public:
                                       // Tracked so we don't spam the player with
                                       // "You feel relatively safe now" messages.
 
+  bool          found_hell_key;       // Found the key to Hell, and can enter Hell.
+
   // Warning: these two are quite different.
   //
   // The spell table is an index to a specific spell slot (you.spells).

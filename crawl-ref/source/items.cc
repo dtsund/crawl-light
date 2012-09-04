@@ -1002,6 +1002,8 @@ static void _milestone_check(const item_def &item)
         mark_milestone("rune", _milestone_rune(item));
     else if (item_is_orb(item))
         mark_milestone("orb", "found the Orb of Zot!");
+    else if (item.base_type == OBJ_MISCELLANY && item.sub_type == MISC_HELL_KEY)
+        mark_milestone("key", "found the key to Hell!");
 }
 
 static void _check_note_item(item_def &item)
@@ -1009,7 +1011,8 @@ static void _check_note_item(item_def &item)
     if (item.flags & (ISFLAG_NOTED_GET | ISFLAG_NOTED_ID))
         return;
 
-    if (item_is_rune(item) || item_is_orb(item) || is_artefact(item))
+    if (item_is_rune(item) || item_is_orb(item) || is_artefact(item)
+        || (item.base_type == OBJ_MISCELLANY && item.sub_type == MISC_HELL_KEY))
     {
         take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(DESC_NOCAP_A).c_str(),
                        origin_desc(item).c_str()));
@@ -1659,6 +1662,18 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         dungeon_events.fire_position_event(
             dgn_event(DET_ITEM_PICKUP, you.pos(), 0, obj, -1), you.pos());
 
+        dec_mitm_item_quantity(obj, quant_got);
+        you.turn_is_over = true;
+
+        return (retval);
+    }
+    
+    if (mitm[obj].base_type == OBJ_MISCELLANY && mitm[obj].sub_type == MISC_HELL_KEY)
+    {
+        you.found_hell_key = true;
+        _check_note_item(mitm[obj]);
+        mpr("With this key, you may pass through the very gates of Hell.");
+        mpr("Press } to see it and all the runes you have collected.");
         dec_mitm_item_quantity(obj, quant_got);
         you.turn_is_over = true;
 

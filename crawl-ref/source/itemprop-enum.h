@@ -245,6 +245,8 @@ enum misc_item_type
     MISC_RUNE_OF_ZOT,
 
     MISC_QUAD_DAMAGE, // Sprint only
+    
+    MISC_HELL_KEY,    // Allows access to Hell
 
     NUM_MISCELLANY, // mv: used for random generation
 };

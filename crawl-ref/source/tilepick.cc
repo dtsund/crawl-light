@@ -3741,6 +3741,9 @@ static tileidx_t _tileidx_misc(const item_def &item)
     case MISC_HORN_OF_GERYON:
         return TILE_MISC_HORN_OF_GERYON;
 
+    case MISC_HELL_KEY:
+        return TILE_MISC_HELL_KEY;
+
     case MISC_BOX_OF_BEASTS:
         return TILE_MISC_BOX_OF_BEASTS;
 

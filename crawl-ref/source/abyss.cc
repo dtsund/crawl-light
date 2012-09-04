@@ -304,6 +304,43 @@ static bool _abyss_place_rune(const map_mask &abyss_genlevel_mask,
     return (false);
 }
 
+static bool _abyss_place_hell_key(const map_mask &abyss_genlevel_mask)
+{
+    coord_def chosen_spot;
+    int places_found = 0;
+
+    // Pick a random spot to drop the rune. We specifically do not use
+    // random_in_bounds and similar, because we may be dealing with a
+    // non-rectangular region, and we want to place the rune fairly.
+    for (rectangle_iterator ri(MAPGEN_BORDER); ri; ++ri)
+    {
+        const coord_def p(*ri);
+        if (abyss_genlevel_mask(p)
+            && grd(p) == DNGN_FLOOR && igrd(p) == NON_ITEM
+            && one_chance_in(++places_found))
+        {
+            chosen_spot = p;
+        }
+    }
+
+    if (places_found)
+    {
+        dprf("Placing hell key at (%d,%d)", chosen_spot.x, chosen_spot.y);
+        int thing_created = items(1, OBJ_MISCELLANY,
+                                  MISC_HELL_KEY, true,
+                                  DEPTH_ABYSS, 0);
+        if (thing_created != NON_ITEM)
+        {
+            item_colour(mitm[thing_created]);
+            mpr("+++DIVIDE BY CUCUMBER ERROR+++");
+        }
+        move_item_to_grid(&thing_created, chosen_spot);
+        return (thing_created != NON_ITEM);
+    }
+
+    return (false);
+}
+
 // Returns true if items can be generated on the given square.
 static bool _abyss_square_accepts_items(const map_mask &abyss_genlevel_mask,
                                         coord_def p)
@@ -316,6 +353,7 @@ static bool _abyss_square_accepts_items(const map_mask &abyss_genlevel_mask,
 
 static int _abyss_create_items(const map_mask &abyss_genlevel_mask,
                                bool placed_abyssal_rune,
+                               bool placed_hell_key,
                                bool use_vaults)
 {
     // During game start, number and level of items mustn't be higher than
@@ -336,12 +374,15 @@ static int _abyss_create_items(const map_mask &abyss_genlevel_mask,
 
     const int abyssal_rune_roll = _abyssal_rune_roll();
     bool should_place_abyssal_rune = false;
+    bool should_place_hell_key = (env.can_find_hell_key && !you.found_hell_key);
     std::vector<coord_def> chosen_item_places;
     for (rectangle_iterator ri(MAPGEN_BORDER); ri; ++ri)
     {
         if (_abyss_square_accepts_items(abyss_genlevel_mask, *ri))
         {
-            if (items_placed < num_items && one_chance_in(200))
+            // dtsund: Don't place the Abyssal rune when searching
+            // for the Hell key.  Let it appear after the key is taken, though.
+            if (items_placed < num_items && one_chance_in(200) && !should_place_hell_key)
             {
                 // [ds] Don't place abyssal rune in this loop to avoid
                 // biasing rune placement toward the north-west of the
@@ -364,7 +405,16 @@ static int _abyss_create_items(const map_mask &abyss_genlevel_mask,
         }
     }
 
-    if (!placed_abyssal_rune && should_place_abyssal_rune)
+    //Guarantee the Hell Key to be *somewhere* on the Abyss floor.
+    //The player searching for it is likely to be scared, since hardmode
+    //Abyss is active and he/she hasn't seen the second half of the dungeon
+    //yet.
+    if(should_place_hell_key && !placed_hell_key)
+    {
+        if(_abyss_place_hell_key(abyss_genlevel_mask))
+            ++items_placed;
+    }
+    else if (!placed_abyssal_rune && should_place_abyssal_rune)
     {
         if (_abyss_place_rune(abyss_genlevel_mask, use_vaults))
             ++items_placed;
@@ -566,6 +616,9 @@ static void _generate_area(const map_mask &abyss_genlevel_mask,
     const bool placed_abyssal_rune =
         find_floor_item(OBJ_MISCELLANY, MISC_RUNE_OF_ZOT);
 
+    const bool placed_hell_key =
+        find_floor_item(OBJ_MISCELLANY, MISC_HELL_KEY);
+
 #ifdef DEBUG_ABYSS
     mprf(MSGCH_DIAGNOSTICS,
          "_generate_area(). turns_on_level: %d, rune_on_floor: %s",
@@ -577,7 +630,8 @@ static void _generate_area(const map_mask &abyss_genlevel_mask,
     _abyss_apply_terrain(abyss_genlevel_mask);
     if (use_vaults)
         _abyss_place_vaults(abyss_genlevel_mask);
-    _abyss_create_items(abyss_genlevel_mask, placed_abyssal_rune, use_vaults);
+    _abyss_create_items(abyss_genlevel_mask, placed_abyssal_rune,
+                        placed_hell_key, use_vaults);
     generate_random_blood_spatter_on_level(&abyss_genlevel_mask);
     setup_environment_effects();
 

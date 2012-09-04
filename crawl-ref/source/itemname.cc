@@ -152,8 +152,8 @@ std::string item_def::name(description_level_type descrip,
     }
 
     if (this->base_type == OBJ_MISCELLANY
-        && this->sub_type == MISC_HORN_OF_GERYON
-        || is_artefact(*this))
+        && (this->sub_type == MISC_HORN_OF_GERYON
+        || is_artefact(*this) || this->sub_type == MISC_HELL_KEY))
     {
         // Artefacts always get "the" unless we just want the plain name.
         switch (descrip)
@@ -683,6 +683,7 @@ static const char* misc_type_name(int type, bool known)
         case MISC_LAMP_OF_FIRE:             return "lamp of fire";
         case MISC_LANTERN_OF_SHADOWS:       return "lantern of shadows";
         case MISC_HORN_OF_GERYON:           return "horn of Geryon";
+        case MISC_HELL_KEY:                 return "key to Hell";
         case MISC_DISC_OF_STORMS:           return "disc of storms";
         case MISC_BOTTLED_EFREET:           return "bottled efreet";
         case MISC_STONE_OF_EARTH_ELEMENTALS:
@@ -721,6 +722,7 @@ static const char* misc_type_name(int type, bool known)
         case MISC_LAMP_OF_FIRE:              return "blazing lamp";
         case MISC_LANTERN_OF_SHADOWS:        return "bone lantern";
         case MISC_HORN_OF_GERYON:            return "silver horn";
+        case MISC_HELL_KEY:                  return "blood-red key";
         case MISC_DISC_OF_STORMS:            return "grey disc";
         case MISC_STONE_OF_EARTH_ELEMENTALS: return "nondescript stone";
         case MISC_BOTTLED_EFREET:            return "sealed bronze flask";
@@ -1844,18 +1846,32 @@ void display_runes()
             items.push_back(ptmp);
         }
     }
+    
+    if(you.found_hell_key)
+    {
+        item_def* ptmp = new item_def;
+        if (ptmp != 0)
+        {
+            ptmp->base_type = OBJ_MISCELLANY;
+            ptmp->sub_type  = MISC_HELL_KEY;
+            ptmp->quantity  = 1;
+            ptmp->plus      = 0;
+            item_colour(*ptmp);
+            items.push_back(ptmp);
+        }
+    }
 
     if (items.empty())
     {
-        mpr("You haven't found any rune yet.");
+        mpr("You haven't found any runes yet.");
         return;
     }
 
     InvMenu menu;
 
-    menu.set_title("Runes of Zot");
+    menu.set_title("Runes of Zot and other supernatural keys");
     menu.set_flags(MF_NOSELECT);
-    menu.set_type(MT_RUNES);
+    menu.set_type(MT_KNOW);
     menu.load_items(items, discoveries_item_mangle);
     menu.show();
     menu.getkey();

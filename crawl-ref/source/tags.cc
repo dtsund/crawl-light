@@ -1205,6 +1205,8 @@ static void tag_construct_you(writer &th)
     
     marshallInt(th, you.difficulty_level);
 
+    marshallBoolean(th, you.found_hell_key);
+
     marshallShort(th, you.magic_contamination);
 
     marshallShort(th, you.transit_stair);
@@ -1904,6 +1906,11 @@ static void tag_read_you(reader &th)
     
     //How many pandooras have been opened
     you.difficulty_level = unmarshallInt(th);
+    
+    if (th.getMinorVersion() < TAG_MINOR_HELL_KEY)
+        you.found_hell_key = true;
+    else
+        you.found_hell_key = unmarshallBoolean(th);
 
     you.magic_contamination = unmarshallShort(th);
     

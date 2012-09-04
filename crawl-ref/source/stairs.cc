@@ -871,6 +871,12 @@ void down_stairs(dungeon_feature_type force_stair,
         return;
     }
 
+    if (stair_find == DNGN_ENTER_HELL && !you.found_hell_key)
+    {
+        mpr("The massive gates leading into Hell are barred, and you lack the key.");
+        return;
+    }
+
     if (stair_find == DNGN_ENTER_HELL && you.level_type != LEVEL_DUNGEON)
     {
         mpr("You can't enter Hell from outside the dungeon!",

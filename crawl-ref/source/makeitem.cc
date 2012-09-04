@@ -716,6 +716,10 @@ void item_colour(item_def &item)
         case MISC_LANTERN_OF_SHADOWS:
             item.colour = LIGHTGREY;
             break;
+        
+        case MISC_HELL_KEY:
+            item.colour = RED;
+            break;
 
         case MISC_LAMP_OF_FIRE:
             item.colour = YELLOW;
@@ -3047,6 +3051,7 @@ static void _generate_misc_item(item_def& item, int force_type, int force_ego)
             // never randomly generated
             (item.sub_type == MISC_RUNE_OF_ZOT
              || item.sub_type == MISC_HORN_OF_GERYON
+             || item.sub_type == MISC_HELL_KEY
              || item.sub_type == MISC_DECK_OF_PUNISHMENT
              || item.sub_type == MISC_QUAD_DAMAGE
 #if TAG_MAJOR_VERSION == 32
