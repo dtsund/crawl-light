@@ -1634,6 +1634,10 @@ unsigned int item_value(item_def item, bool ident)
         case SCR_IMMOLATION:
             valued += 10;
             break;
+
+        default:
+            valued += 0;
+            break;
         }
         break;
 

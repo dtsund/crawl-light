@@ -4727,20 +4727,22 @@ void read_scroll(int slot)
                           scroll.name(DESC_QUALNAME).c_str());
     if (you.confused()
         || (which_scroll != SCR_IMMOLATION
-            && !_is_cancellable_scroll(which_scroll)))
+            && !_is_cancellable_scroll(which_scroll)
+            && which_scroll != SCR_FORBIDDEN_KNOWLEDGE))
     {
         mpr(pre_succ_msg.c_str());
         // Actual removal of scroll done afterwards. -- bwr
     }
 
-    if (you.confused())
+    if (you.confused() && which_scroll != SCR_FORBIDDEN_KNOWLEDGE)
     {
         random_uselessness(item_slot);
         dec_inv_item_quantity(item_slot, 1);
         return;
     }
 
-    practise(EX_WILL_READ_SCROLL);
+    if(which_scroll != SCR_FORBIDDEN_KNOWLEDGE)
+        practise(EX_WILL_READ_SCROLL);
 
     // It is the exception, not the rule, that the scroll will not
     // be identified. {dlb}
@@ -4953,6 +4955,16 @@ void read_scroll(int slot)
     case SCR_VULNERABILITY:
         _vulnerability_scroll();
         break;
+
+    case SCR_FORBIDDEN_KNOWLEDGE:
+        mpr("The words before you appear to be the work of a mad sorcerer who "
+            "intended to breach the gates of Hell. Most of it is "
+            "unintelligible, but from what you can tell, he was constructing "
+            "a portal to lead to the key to that dread place. However, there "
+            "was not enough ambient evil for it to work, and the door shielding "
+            "it from Zot's energies was beginning to fail.");
+        you.turn_is_over = true;
+        return;
 
     default:
         mpr("Read a buggy scroll, please report this.");

@@ -381,6 +381,10 @@ corpse
 
 A corpse. You can butcher it to produce edible meat chunks.
 %%%%
+corpse of a mad sorcerer
+
+The body of an elderly archmage, who appears to have died quite recently. Various personal effects seem to indicate an obsession with the unholy.
+%%%%
 crossbow
 
 A piece of machinery used for firing bolts, which takes some time to load and fire. It does very good damage in combat.
@@ -1105,6 +1109,10 @@ This scroll causes great fear in those who see the one who reads it.
 scroll of fog
 
 This scroll surrounds the reader with a dense cloud of fog.
+%%%%
+scroll of forbidden knowledge
+
+This scroll contains what are probably the final writings of a powerful but mad archmage.
 %%%%
 scroll of holy word
 

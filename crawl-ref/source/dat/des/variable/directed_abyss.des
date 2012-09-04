@@ -46,13 +46,15 @@ end
 NAME:   directed_abyss_1
 PLACE:  D:hard_checkpoint
 ORIENT: float
-TAGS:   no_rotate
+TAGS:   no_rotate no_monster_gen
 MARKER: A = lua:portal_desc {portal_phase = 1}
 :if you.difficulty_level() > 1 then
 KFEAT:  A = enter_abyss_directed
 :else
 KFEAT:  A = stone_arch
 :end
+KITEM:  1 = scroll of forbidden knowledge
+: dgn.delayed_decay(_G, '2', 'wizard name:a_mad_sorcerer corpse')
 {{
 local sealed_door_marker = TriggerableFunction:new {
     func="open_sealed_door"}
@@ -103,8 +105,8 @@ cccXBXccc
 c.......c
 c.......c
 c.......c
-c...A...c
-c.......c
+c...A.1.c
+c.....2.c
 c.......c
 c.......c
 cccc+cccc

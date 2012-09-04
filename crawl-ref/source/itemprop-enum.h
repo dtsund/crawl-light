@@ -320,6 +320,7 @@ enum scroll_type
     SCR_HOLY_WORD,
     SCR_VULNERABILITY,
     SCR_SILENCE,
+    SCR_FORBIDDEN_KNOWLEDGE,
     NUM_SCROLLS
 };
 
