@@ -612,6 +612,10 @@ katana
 
 A very rare and extremely effective imported weapon, featuring a long single-edged blade.
 %%%%
+key to hell
+
+A blood-red key, glowing with unholy energy. It permits the bearer to unlock the gates of Hell.
+%%%%
 lajatang
 
 A very rare and extremely effective imported weapon, featuring a pole with half-moon blades at both ends.
