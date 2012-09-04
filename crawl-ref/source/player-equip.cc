@@ -944,15 +944,10 @@ static void _remove_amulet_of_faith(item_def &item)
 
 static void _equip_jewellery_effect(item_def &item, bool unmeld)
 {
-    item_type_id_state_type ident        = ID_TRIED_TYPE;
-    artefact_prop_type      fake_rap     = ARTP_NUM_PROPERTIES;
-    bool                    learn_pluses = false;
-
     // Randart jewellery shouldn't auto-ID just because the base type
     // is known. Somehow the player should still be told, preferably
     // by message. (jpeg)
     const bool artefact     = is_artefact(item);
-    const bool known_pluses = item_ident(item, ISFLAG_KNOW_PLUSES);
 
     switch (item.sub_type)
     {
@@ -970,8 +965,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_WIZARDRY:
-        if (player_spell_skills())
-            ident = ID_KNOWN_TYPE;
         break;
 
     case RING_SEE_INVISIBLE:
@@ -984,53 +977,23 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     case RING_PROTECTION:
         you.redraw_armour_class = true;
-        if (item.plus != 0)
-        {
-            if (!artefact)
-                ident = ID_KNOWN_TYPE;
-            else if (!known_pluses)
-            {
-                mprf("You feel %s.", item.plus > 0 ?
-                     "well-protected" : "more vulnerable");
-            }
-            learn_pluses = true;
-        }
         break;
 
     case RING_INVISIBILITY:
         if (!you.duration[DUR_INVIS])
         {
             mpr("You become transparent for a moment.");
-            if (artefact)
-                fake_rap = ARTP_INVISIBLE;
-            else
-                ident = ID_KNOWN_TYPE;
         }
         break;
 
     case RING_EVASION:
         you.redraw_evasion = true;
-        if (item.plus != 0)
-        {
-            if (!artefact)
-                ident = ID_KNOWN_TYPE;
-            else if (!known_pluses)
-                mprf("You feel %s.", item.plus > 0? "nimbler" : "more awkward");
-            learn_pluses = true;
-        }
         break;
 
     case RING_STRENGTH:
         if (item.plus)
         {
             notify_stat_change(STAT_STR, item.plus, false, item);
-
-            if (artefact)
-                fake_rap = ARTP_STRENGTH;
-            else
-                ident = ID_KNOWN_TYPE;
-
-           learn_pluses = true;
         }
         break;
 
@@ -1038,13 +1001,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (item.plus)
         {
             notify_stat_change(STAT_DEX, item.plus, false, item);
-
-            if (artefact)
-                fake_rap = ARTP_DEXTERITY;
-            else
-                ident = ID_KNOWN_TYPE;
-
-           learn_pluses = true;
         }
         break;
 
@@ -1052,13 +1008,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (item.plus)
         {
             notify_stat_change(STAT_INT, item.plus, false, item);
-
-            if (artefact)
-                fake_rap = ARTP_INTELLIGENCE;
-            else
-                ident = ID_KNOWN_TYPE;
-
-           learn_pluses = true;
         }
         break;
 
@@ -1070,10 +1019,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             canned_msg(MSG_MANA_INCREASE);
 
         calc_mp();
-        if (artefact)
-            fake_rap = ARTP_MAGICAL_POWER;
-        else
-            ident = ID_KNOWN_TYPE;
         break;
 
     case RING_LEVITATION:
@@ -1083,10 +1028,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                 mpr("You feel vaguely more buoyant than before.");
             else
                 mpr("You feel buoyant.");
-            if (artefact)
-                fake_rap = ARTP_LEVITATE;
-            else
-                ident = ID_KNOWN_TYPE;
         }
         break;
 
@@ -1095,20 +1036,12 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr("You feel a slight, muted jump rush through you.");
         else
             mpr("You feel slightly jumpy.");
-        if (artefact)
-            fake_rap = ARTP_CAUSE_TELEPORTATION;
-        else
-            ident = ID_KNOWN_TYPE;
         break;
 
     case AMU_RAGE:
         if (!scan_artefacts(ARTP_BERSERK))
         {
             mpr("You feel a brief urge to hack something to bits.");
-            if (artefact)
-                fake_rap = ARTP_BERSERK;
-            else
-                ident = ID_KNOWN_TYPE;
         }
         break;
 
@@ -1116,16 +1049,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (you.religion != GOD_NO_GOD)
         {
             mpr("You feel a surge of divine interest.", MSGCH_GOD);
-            ident = ID_KNOWN_TYPE;
         }
         break;
 
     case AMU_CONTROLLED_FLIGHT:
-        if (you.is_levitating()
-            && !extrinsic_amulet_effect(AMU_CONTROLLED_FLIGHT))
-        {
-            ident = ID_KNOWN_TYPE;
-        }
         break;
 
     case AMU_GUARDIAN_SPIRIT:
@@ -1135,15 +1062,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr("You feel your power drawn to a protective spirit.");
             if (you.species == SP_DEEP_DWARF)
                 mpr("Now linked to your health, your magic stops regenerating.");
-            ident = ID_KNOWN_TYPE;
         }
         break;
 
     case RING_REGENERATION:
-        // To be exact, bloodless vampires should get the id only after they
-        // drink anything.  Not worth complicating the code, IMHO. [1KB]
-        if (player_mutation_level(MUT_SLOW_HEALING) < 3)
-            ident = ID_KNOWN_TYPE;
         break;
 
     case AMU_STASIS:
@@ -1159,7 +1081,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                  (amount > 250) ? " massive" :
                  (amount >  50) ? " violent" :
                                   "");
-            ident = ID_KNOWN_TYPE;
 
             contaminate_player(pow(amount, 0.333), true);
 
@@ -1197,13 +1118,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     {
         bool show_msgs = true;
         _equip_artefact_effect(item, &show_msgs, unmeld);
-    }
-    else
-    {
-        set_ident_type(item, ident);
-
-        if (ident == ID_KNOWN_TYPE)
-            set_ident_flags(item, ISFLAG_EQ_JEWELLERY_MASK);
     }
 
     mpr(item.name(DESC_INVENTORY_EQUIP).c_str());

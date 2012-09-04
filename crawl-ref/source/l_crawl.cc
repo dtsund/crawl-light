@@ -106,8 +106,8 @@ LUAFN(crawl_dpr)
     const char *text = luaL_checkstring(ls, 1);
     if (crawl_state.io_inited)
         dprf("%s", text);
-    return (0);
 #endif
+    return (0);
 }
 
 LUAWRAP(crawl_delay, delay(luaL_checkint(ls, 1)))

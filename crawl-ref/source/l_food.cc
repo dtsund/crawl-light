@@ -56,10 +56,6 @@ static int food_can_eat(lua_State *ls)
 {
     mpr("food_can_eat in l_food.cc called, please file a bug report.");
     LUA_ITEM(ls, item, 1);
-    bool hungercheck = true;
-
-    if (lua_isboolean(ls, 2))
-        hungercheck = lua_toboolean(ls, 2);
 
     lua_pushboolean(ls, false);
     return (1);

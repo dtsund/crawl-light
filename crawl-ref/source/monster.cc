@@ -521,13 +521,9 @@ bool monster::can_wield(const item_def& item, bool ignore_curse,
     if (inv[MSLOT_WEAPON] != NON_ITEM)
         weap1 = &mitm[inv[MSLOT_WEAPON]];
 
-    int       avail_slots = 1;
     item_def* weap2       = NULL;
     if (mons_wields_two_weapons(this))
     {
-        if (!weap1 || hands_reqd(*weap1, body_size()) != HANDS_TWO)
-            avail_slots = 2;
-
         const int offhand = _mons_offhand_weapon_index(this);
         if (offhand != NON_ITEM)
             weap2 = &mitm[offhand];
@@ -541,15 +537,12 @@ bool monster::can_wield(const item_def& item, bool ignore_curse,
     const bool two_handed = item.base_type == OBJ_UNASSIGNED
                             || hands_reqd(item, body_size()) == HANDS_TWO;
 
-    item_def* _shield = NULL;
     if (inv[MSLOT_SHIELD] != NON_ITEM)
     {
         ASSERT(!(weap1 && weap2));
 
         if (two_handed && !ignore_shield)
             return (false);
-
-        _shield = &mitm[inv[MSLOT_SHIELD]];
     }
 
     return could_wield(item, ignore_brand, ignore_transform);
@@ -803,7 +796,6 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
 
     if (msg)
     {
-        bool message_given = true;
         switch (brand)
         {
         case SPWPN_FLAMING:
@@ -852,9 +844,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
             break;
 
         default:
-            // A ranged weapon without special message is known to be unbranded.
-            if (brand != SPWPN_NORMAL || !is_range_weapon(item))
-                message_given = false;
+            break;
         }
     }
 }
@@ -924,7 +914,6 @@ void monster::unequip_weapon(item_def &item, int near, bool msg)
 
     if (msg && brand != SPWPN_NORMAL)
     {
-        bool message_given = true;
         switch (brand)
         {
         case SPWPN_FLAMING:
@@ -948,7 +937,7 @@ void monster::unequip_weapon(item_def &item, int near, bool msg)
             break;
 
         default:
-            message_given = false;
+            break;
         }
     }
 }
