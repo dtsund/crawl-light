@@ -2322,8 +2322,6 @@ TAGS:   no_monster_gen
 COLOUR: v = lightred
 COLOUR: = = lightred
 TILE:   v = DNGN_METAL_WALL_BROWN
-FTILE:  .Yv+*|m1234567d$' = FLOOR_INFERNAL_BLANK
-FTILE:  = = FLOOR_INFERNAL_BLANK
 KFEAT:  7 = altar_makhleb
 KFEAT:  m = iron_grate
 NSUBST: * = 2:| / *:*
