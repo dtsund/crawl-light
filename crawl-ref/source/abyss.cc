@@ -332,7 +332,6 @@ static bool _abyss_place_hell_key(const map_mask &abyss_genlevel_mask)
         if (thing_created != NON_ITEM)
         {
             item_colour(mitm[thing_created]);
-            mpr("+++DIVIDE BY CUCUMBER ERROR+++");
         }
         move_item_to_grid(&thing_created, chosen_spot);
         return (thing_created != NON_ITEM);
