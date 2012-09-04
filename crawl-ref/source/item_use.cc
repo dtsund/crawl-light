@@ -3123,7 +3123,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                         << " fails to return to your pack!" << std::endl;
         }
         if(!implicit_ammo)
-            dec_inv_item_quantity(throw_2, 1);
+        {
+            if(dec_inv_item_quantity(throw_2, 1) && can_fire_implicit_ammo())
+                you.m_quiver->empty_quiver();
+        }
         if (unwielded)
             canned_msg(MSG_EMPTY_HANDED);
     }
