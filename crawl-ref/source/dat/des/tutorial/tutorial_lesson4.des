@@ -345,10 +345,6 @@ MONS:    hobgoblin always_corpse; shield not_cursed . ring mail race:none not_cu
 MONS:    rat
 MONS:    goblin
 MONS:    gnoll; nothing
-# Kind-of ugly hack, this.  In order to suppress "You feel relatively safe now"
-# on entering the second floor with the placed skeletons, we put a newt above
-# the skeletons so that it gets generated before they do.
-MONS:    giant newt
 MARKER:  A = lua:tutorial_msg4.forget_spell()
 MARKER:  d = lua:tutorial_msg4.memorise2()
 MARKER:  B = lua:tutorial_msg4.displace_allies()
@@ -370,28 +366,28 @@ MARKER:  ] = lua:one_way_stair { dst  = "tutorial_lesson4", \
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxx5.xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxx......B.xxxx.T..xxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxx......B...x.egf.xxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxCCCxxxx...+.gde.....xxxxxxxxxxxxxxx
-xxxxxxxxxxx+++xxxxx..x.fhh.xxxx.Axxxxxxxxxxxxx
-xxxxxxxxxx.....xxxxxxxx.T..xxxxxx.xxxxxxxxxxxx
-xxxxxxxxxx.....xxxxxxxxx..xxxxxxxx.xxxxxxxxxxx
-xxxxxxxxxx.....xxxxxxxxxxxxxxxxxxx.xxxxxxxxxxx
-xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx...xxxxxxxxxx
-xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx{([xxxxxxxxxx
-xxxxxxxxxx.i1j.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxDxxxxxxx.2..xxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxx.xxxxGx.....4]xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxx.xxxGf+...2....xxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxx...Eeg+......3.)xxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxGh+...3....xxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxGx.....2}xxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxx2...xxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxGx.....2}xxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxGh+...3....xxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxx...Eeg+......3.)xxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxx.xxxGf+...2....xxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxx.xxxxGx.....4]xxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxDxxxxxxx.2..xxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxx.i1j.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx{([xxxxxxxxxx
+xxxxxxxxxx.....xxxxxxxxxxxxxxxxxx...xxxxxxxxxx
+xxxxxxxxxx.....xxxxxxxxxxxxxxxxxxx.xxxxxxxxxxx
+xxxxxxxxxx.....xxxxxxxxx..xxxxxxxx.xxxxxxxxxxx
+xxxxxxxxxx.....xxxxxxxx.T..xxxxxx.xxxxxxxxxxxx
+xxxxxxxxxxx+++xxxxx..x.fhh.xxxx.Axxxxxxxxxxxxx
+xxxxxxxxxxxCCCxxxx...+.gde.....xxxxxxxxxxxxxxx
+xxxxxxxxxxx......B...x.egf.xxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxx......B.xxxx.T..xxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxx..xxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
