@@ -1091,6 +1091,7 @@ coord_def direction_chooser::find_default_target() const
         // Try to find an enemy monster.
 
         // First try to pick our previous target.
+        // dtsund: Sweet Christmas, this is the devil's own if statement.
         const monster* mon_target = get_current_target();
         if (mon_target != NULL
             && (mode != TARG_EVOLVABLE_PLANTS
@@ -1100,7 +1101,9 @@ coord_def direction_chooser::find_default_target() const
                     && mons_is_evolvable(mon_target))
                 || mode == TARG_INJURED_FRIEND
                     && (mon_target->friendly() && mons_get_damage_level(mon_target) > MDAM_OKAY
-                       || !mon_target->friendly() && is_pacifiable(mon_target) >= 0)
+                       || (!mon_target->wont_attack()
+                           && !mon_target->neutral()
+                           && is_pacifiable(mon_target) >= 0)))
             && in_range(mon_target->pos()))
         {
             result = mon_target->pos();
@@ -2486,7 +2489,7 @@ static bool _find_monster(const coord_def& where, int mode, bool need_path,
 
     if (mode == TARG_INJURED_FRIEND)
         return (mon->friendly() && mons_get_damage_level(mon) > MDAM_OKAY
-                || !mon->friendly() && is_pacifiable(mon) >= 0);
+                || !mon->wont_attack() && !mon->neutral() && is_pacifiable(mon) >= 0);
 
     if (mode == TARG_EVOLVABLE_PLANTS)
         return (mons_is_evolvable(mon));
