@@ -1338,6 +1338,9 @@ bool load(dungeon_feature_type stair_taken, load_mode_type load_mode,
         _redraw_all();
     }
 
+    // Remove monsters that have left the level.
+    remove_doomed_monsters();
+
     // Clear map knowledge stair emphasis.
     show_update_emphasis();
 
