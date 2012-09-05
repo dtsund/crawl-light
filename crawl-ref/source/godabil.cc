@@ -3901,16 +3901,16 @@ bool makhleb_minor_destruction()
 
     // Since the actual beam is random, check with BEAM_MMISSILE and the
     // highest range possible (electricity).
-    if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 13))
+    if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 7))
         return (false);
 
     switch (random2(5))
     {
     case 0: beam.range =  7; zapping(ZAP_FLAME, power, beam); break;
-    case 1: beam.range =  8; zapping(ZAP_PAIN,  power, beam); break;
+    case 1: beam.range =  7; zapping(ZAP_PAIN,  power, beam); break;
     case 2: beam.range =  5; zapping(ZAP_STONE_ARROW, power, beam); break;
-    case 3: beam.range = 13; zapping(ZAP_ELECTRICITY, power, beam); break;
-    case 4: beam.range =  8; zapping(ZAP_BREATHE_ACID, power/2, beam); break;
+    case 3: beam.range =  7; zapping(ZAP_ELECTRICITY, power, beam); break;
+    case 4: beam.range =  7; zapping(ZAP_BREATHE_ACID, power/2, beam); break;
     }
     
     return true;
@@ -3940,24 +3940,24 @@ bool makhleb_major_destruction()
 
     // Since the actual beam is random, check with BEAM_MMISSILE and the
     // highest range possible (orb of electricity).
-    if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 20))
+    if (!player_tracer(ZAP_DEBUGGING_RAY, power, beam, 7))
         return (false);
     // Inform the player if the chosen target might be unwise, in the
     // Orb of Electrocution case.
-    if (!player_tracer(ZAP_ORB_OF_ELECTRICITY, power, beam, 20))
+    if (!player_tracer(ZAP_ORB_OF_ELECTRICITY, power, beam, 7))
         return false;
 
     {
         zap_type ztype = ZAP_DEBUGGING_RAY;
         switch (random2(7))
         {
-        case 0: beam.range =  6; ztype = ZAP_FIRE;               break;
+        case 0: beam.range =  7; ztype = ZAP_FIRE;               break;
         case 1: beam.range =  6; ztype = ZAP_FIREBALL;           break;
-        case 2: beam.range = 10; ztype = ZAP_LIGHTNING;          break;
+        case 2: beam.range =  7; ztype = ZAP_LIGHTNING;          break;
         case 3: beam.range =  5; ztype = ZAP_STICKY_FLAME;       break;
         case 4: beam.range =  5; ztype = ZAP_IRON_SHOT;          break;
         case 5: beam.range =  6; ztype = ZAP_NEGATIVE_ENERGY;    break;
-        case 6: beam.range = 20; ztype = ZAP_ORB_OF_ELECTRICITY; break;
+        case 6: beam.range =  7; ztype = ZAP_ORB_OF_ELECTRICITY; break;
         }
         zapping(ztype, power, beam);
     }
