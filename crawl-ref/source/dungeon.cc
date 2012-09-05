@@ -1192,6 +1192,7 @@ void dgn_reset_level(bool enable_random_maps)
 
     const cloud_struct empty;
     env.cloud.init(empty);
+    env.cloud_no = 0;
 
     mgrd.init(NON_MONSTER);
     igrd.init(NON_ITEM);
