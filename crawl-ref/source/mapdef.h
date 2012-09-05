@@ -22,7 +22,7 @@
 #include "enum.h"
 #include "externs.h"
 #include "matrix.h"
-#include "monster.h"
+#include "mon-ench.h"
 #include "fprop.h"
 #include "makeitem.h"
 #include "travel_defs.h"
