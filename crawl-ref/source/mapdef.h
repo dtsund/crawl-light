@@ -22,6 +22,7 @@
 #include "enum.h"
 #include "externs.h"
 #include "matrix.h"
+#include "monster.h"
 #include "fprop.h"
 #include "makeitem.h"
 #include "travel_defs.h"
@@ -665,6 +666,7 @@ class mons_spec
     bool explicit_spells;
     std::vector<monster_spells> spells;
     uint64_t extra_monster_flags;
+    std::vector<mon_enchant> ench;
 
     CrawlHashTable props;
 
@@ -734,6 +736,7 @@ private:
                                     monster_type zomb) const;
     mons_spec_slot parse_mons_spec(std::string spec);
     void parse_mons_spells(mons_spec &slot, std::vector<std::string> &spells);
+    mon_enchant parse_ench(std::string &ench_str, bool perm);
     mons_spec pick_monster(mons_spec_slot &slot);
     int fix_demon(int id) const;
     bool check_mimic(const std::string &s, int *mid, bool *fix) const;
