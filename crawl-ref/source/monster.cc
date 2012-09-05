@@ -3399,7 +3399,7 @@ int monster::res_torment() const
 
 int monster::res_wind() const
 {
-    if (has_ench(ENCH_PERM_TORNADO))
+    if (has_ench(ENCH_TORNADO))
         return 1;
     return mons_class_res_wind(type);
 }
@@ -4688,6 +4688,9 @@ bool monster::lose_ench_duration(const mon_enchant &e, int dur)
     if (!dur)
         return (false);
 
+    if (e.duration >= INFINITE_DURATION)
+        return false;
+
     if (e.duration <= dur)
     {
         del_ench(e.ench);
@@ -4858,6 +4861,9 @@ static inline int _mod_speed(int val, int speed)
 
 bool monster::decay_enchantment(const mon_enchant &me, bool decay_degree)
 {
+    if (me.duration >= INFINITE_DURATION)
+        return false;
+
     // Faster monsters can wiggle out of the net more quickly.
     const int spd = (me.ench == ENCH_HELD) ? speed :
                                              10;
@@ -4967,6 +4973,10 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_INNER_FLAME:
     case ENCH_OFF_BALANCE:
     case ENCH_RESISTANT:
+    case ENCH_MUTE:
+    case ENCH_BLIND:
+    case ENCH_DUMB:
+    case ENCH_MAD:
         decay_enchantment(me);
         break;
 
@@ -5477,8 +5487,9 @@ void monster::apply_enchantment(const mon_enchant &me)
         decay_enchantment(me);
         break;
 
-    case ENCH_PERM_TORNADO:
+    case ENCH_TORNADO:
         tornado_damage(this, speed_to_duration(speed));
+        decay_enchantment(me);
         break;
 
     case ENCH_BLEED:
@@ -6579,7 +6590,7 @@ static const char *enchant_names[] =
     "tethered", "severed", "antimagic", "fading_away", "preparing_resurrect", "regen",
     "magic_res", "mirror_dam", "stoneskin", "fear inspiring", "temporarily pacified",
     "withdrawn", "attached", "guardian_timer", "levitation",
-    "helpless", "liquefying", "perm_tornado", "fake_abjuration",
+    "helpless", "liquefying", "tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
     "inner flame", "off-balance", "resistant", "buggy",
 };
@@ -6662,6 +6673,8 @@ mon_enchant &mon_enchant::operator += (const mon_enchant &other)
         degree   += other.degree;
         cap_degree();
         duration += other.duration;
+        if (duration > INFINITE_DURATION)
+            duration = INFINITE_DURATION;
         merge_killer(other.who, other.source);
     }
     return (*this);
