@@ -2687,7 +2687,7 @@ static void _summon_flying(int power, deck_rarity_type rarity)
             hostile_invis = true;
     }
     if (hostile_invis)
-        mpr("Whatever you just summoned cannot be friendly.");
+        mpr("You sense the presence of something unfriendly.");
 }
 
 static void _summon_skeleton(int power, deck_rarity_type rarity)
