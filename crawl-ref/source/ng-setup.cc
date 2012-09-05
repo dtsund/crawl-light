@@ -1185,6 +1185,12 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_SHIELDS] = 0;
     }
 
+    if (you.species == SP_BASE_DRACONIAN)
+    {
+        you.skills[SK_DODGING] += you.skills[SK_ARMOUR];
+        you.skills[SK_ARMOUR] = 0;
+    }
+
     if (you.religion != GOD_NO_GOD)
     {
         you.worshipped[you.religion] = 1;
