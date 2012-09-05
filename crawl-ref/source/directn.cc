@@ -1103,7 +1103,7 @@ coord_def direction_chooser::find_default_target() const
                     && (mon_target->friendly() && mons_get_damage_level(mon_target) > MDAM_OKAY
                        || (!mon_target->wont_attack()
                            && !mon_target->neutral()
-                           && is_pacifiable(mon_target) >= 0)))
+                           && is_pacifiable(mon_target) >= 0))
             && in_range(mon_target->pos()))
         {
             result = mon_target->pos();
