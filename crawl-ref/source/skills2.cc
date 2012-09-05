@@ -1675,6 +1675,8 @@ bool is_useless_skill(int skill)
 {
     if (you.species == SP_DEMIGOD && skill == SK_INVOCATIONS)
         return true;
+    if (player_genus(GENPC_DRACONIAN) && skill == SK_ARMOUR)
+        return true;
     if (you.species == SP_CAT)
         switch(skill)
         {
