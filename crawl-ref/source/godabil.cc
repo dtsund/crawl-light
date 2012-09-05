@@ -1416,7 +1416,7 @@ bool zin_imprison()
         return (false);
     }
 
-    power = 3 + roll_dice(3, 10 * (3 + you.skill(SK_INVOCATIONS))
+    power = 3 + roll_dice(6, (30 + you.skill(SK_INVOCATIONS, 10))
                                     / (3 + mons->hit_dice)) / 3;
 
     if (!cast_imprison(power, mons, -GOD_ZIN))
