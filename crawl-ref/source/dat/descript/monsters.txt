@@ -503,7 +503,7 @@ centaur warrior
 
 A hybrid with the torso of a human atop the body of a large horse. It looks strong and aggressive.
 %%%%
-Chaos spawn
+chaos spawn
 
 A being of pure chaos, its form is constantly shifting, growing and then losing eyes, mouths, claws and tentacles.
 %%%%
