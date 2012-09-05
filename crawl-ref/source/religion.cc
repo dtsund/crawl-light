@@ -2251,14 +2251,6 @@ bool do_god_gift(bool forced)
     return (success);
 }
 
-bool do_zin_sustenance()
-{
-    //This always returns false, currently.
-    if (!zin_sustenance())
-        return false;
-    return true;
-}
-
 std::string god_name(god_type which_god, bool long_name)
 {
     if (which_god == GOD_JIYVA)
