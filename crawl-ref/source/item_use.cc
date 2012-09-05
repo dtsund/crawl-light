@@ -245,11 +245,15 @@ static bool _valid_weapon_swap(const item_def &item)
     return (false);
 }
 
-// If force is true, don't check weapon inscriptions.
-// (Assuming the player was already prompted for that.)
+/**
+ * @param force If true, don't check weapon inscriptions.
+ * (Assuming the player was already prompted for that.)
+ */
 bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
                   bool force, bool show_unwield_msg, bool show_wield_msg)
 {
+    const bool was_barehanded = you.equip[EQ_WEAPON] == -1;
+
     if (inv_count() < 1)
     {
         canned_msg(MSG_NOTHING_CARRIED);
@@ -339,7 +343,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             // Switching to bare hands is extra fast.
             you.turn_is_over = true;
             you.time_taken *= 3;
-            you.time_taken /= 10;
+            you.time_taken /= 5;
         }
         else
             canned_msg(MSG_EMPTY_HANDED);
@@ -349,8 +353,21 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
 
     item_def& new_wpn(you.inv[item_slot]);
 
-    if (!can_wield(&new_wpn, true))
-        return (false);
+    // Ensure wieldable, stat loss non-fatal
+    if (!can_wield(&new_wpn, true)
+        || !safe_to_remove_or_wear(new_wpn, false))
+    {
+        if (!was_barehanded)
+        {
+            canned_msg(MSG_EMPTY_HANDED_NOW);
+            // Switching to bare hands is extra fast.
+            you.turn_is_over = true;
+            you.time_taken *= 3;
+            you.time_taken /= 10;
+
+            return (false);
+        }
+    }
 
     // For non-auto_wield cases checked above.
     if (auto_wield && !force
@@ -358,10 +375,6 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
     {
         return (false);
     }
-
-    // Check for stat losses.
-    if (!safe_to_remove_or_wear(new_wpn, false))
-        return (false);
 
     // Unwield any old weapon.
     if (you.weapon() && !unwield_item(show_weff_messages))
