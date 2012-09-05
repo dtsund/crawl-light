@@ -1399,7 +1399,7 @@ bool zin_imprison()
     dist spd;
     
     beam.range = LOS_RADIUS;
-    if (!spell_direction(spd, beam))
+    if (!spell_direction(spd, beam, DIR_TARGET, TARG_HOSTILE, 0, false))
         return (false);
 
     if (beam.target == you.pos())
