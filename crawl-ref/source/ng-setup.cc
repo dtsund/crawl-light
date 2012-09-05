@@ -1380,6 +1380,11 @@ static void _give_basic_spells(job_type which_job)
     case JOB_EARTH_ELEMENTALIST:
         which_spell = SPELL_SANDBLAST;
         break;
+    case JOB_STALKER:
+        which_spell = SPELL_CORONA;
+        break;
+    case JOB_WARPER:
+        which_spell = SPELL_APPORTATION;
 
     default:
         break;
