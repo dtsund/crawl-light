@@ -379,7 +379,7 @@ ancient lich
 
 A lich who has grown mighty over countless years.
 %%%%
-Angel
+angel
 
 A divine warrior of The Shining One, it is a towering winged figure of unnatural beauty surrounded by an aura of brilliant white light. It appears to be weightless and quite agile while flying, despite wearing heavy armour.
 %%%%
@@ -535,7 +535,7 @@ cyclops
 
 A giant with one eye in the centre of its forehead. Despite their lack of binocular vision, cyclopes throw boulders with fearsome accuracy.
 %%%%
-Daeva
+daeva
 
 A divine agent of the Shining One, it is a towering winged figure with an aura of brilliant golden light.
 %%%%
