@@ -55,6 +55,7 @@ static void _god_smites_you(god_type god, const char *message = NULL,
 static bool _beogh_idol_revenge();
 static void _tso_blasts_cleansing_flame(const char *message = NULL);
 static bool _tso_holy_revenge();
+static bool _ely_holy_revenge(const monster *victim);
 
 static bool _yred_random_zombified_hostile()
 {
