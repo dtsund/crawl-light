@@ -1158,7 +1158,8 @@ $(CONTRIB_LIBS): .contrib-libs
 
 .contrib-libs: .cflags
 ifneq (,$(CONTRIBS))
-	  +@$(MAKE) -C contrib $(CONTRIBS)
+	@echo "    * Need to build contribs: $(CONTRIBS)"
+	+@$(MAKE) -C contrib $(CONTRIBS) ARCH=$(ARCH)
 endif
 	@touch $@
 
