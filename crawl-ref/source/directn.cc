@@ -1100,7 +1100,7 @@ coord_def direction_chooser::find_default_target() const
                     && mons_is_evolvable(mon_target))
                 || mode == TARG_INJURED_FRIEND
                     && (mon_target->friendly() && mons_get_damage_level(mon_target) > MDAM_OKAY
-                       || !mon_target->friendly() && is_pacifiable(mon_target) >= 0))
+                       || !mon_target->friendly() && is_pacifiable(mon_target) >= 0)
             && in_range(mon_target->pos()))
         {
             result = mon_target->pos();

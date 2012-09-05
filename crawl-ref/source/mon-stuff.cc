@@ -850,7 +850,7 @@ int exp_rate(int killer)
 
 // Elyvilon will occasionally (5% chance) protect the life of one of
 // your allies.
-static bool _ely_protect_ally(monster* mons)
+static bool _ely_protect_ally(monster* mons, killer_type killer)
 {
     if (you.religion != GOD_ELYVILON)
         return (false);
