@@ -677,6 +677,8 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
 {
     ASSERT(is_valid_species(ng.species));
     ASSERT(is_valid_job(ng.job));
+    ASSERT(ng.species == SP_BASE_DRACONIAN
+           || species_genus(ng.species) != GENPC_DRACONIAN);
     switch (wpn)
     {
         case WPN_UNARMED:
@@ -742,11 +744,11 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
             case SP_DEMIGOD:
             case SP_DEMONSPAWN:
             case SP_VAMPIRE:
+            case SP_BASE_DRACONIAN:
                 return (CC_UNRESTRICTED);
 
             default:
-                return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                        : CC_RESTRICTED);
+                return (CC_RESTRICTED);
             }
 
         case WPN_SPEAR:
@@ -765,6 +767,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
             case SP_DEMIGOD:
             case SP_DEMONSPAWN:
             case SP_MUMMY:
+            case SP_BASE_DRACONIAN:
                 return (CC_UNRESTRICTED);
                 
             case SP_SPRIGGAN:
@@ -777,8 +780,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
                     return (CC_BANNED);
 
             default:
-                return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                        : CC_RESTRICTED);
+                return (CC_RESTRICTED);
             }
         case WPN_FALCHION:
             if (ng.job != JOB_FIGHTER && ng.job != JOB_GLADIATOR)
@@ -800,11 +802,11 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
             case SP_DEMONSPAWN:
             case SP_MUMMY:
             case SP_VAMPIRE:
+            case SP_BASE_DRACONIAN:
                 return (CC_UNRESTRICTED);
 
             default:
-                return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                        : CC_RESTRICTED);
+                return (CC_RESTRICTED);
             }
 
         case WPN_TRIDENT:
