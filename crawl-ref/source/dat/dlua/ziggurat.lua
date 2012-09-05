@@ -326,11 +326,12 @@ local function mset_if(condition, ...)
 end
 
 mset(with_props("place:Slime:$", { jelly_protect = true }),
-     "place:Snake:$",
+     with_props("place:Snake:$", { weight = 5 }),
      with_props("place:Lair:$", { weight = 5 }),
-     "place:Spider:$ w:50 / ghost moth / red wasp / tarantella",
+     with_props("place:Spider:$ w:50 / ghost moth / red wasp / tarantella",
+                { weight = 5}),
      "place:Crypt:$",
-     "place:Dwarf:$",
+     with_props("place:Dwarf:$", { weight = 5 }),
      "place:Abyss",
      with_props("place:Forest:$ w:50 / spriggan defender / " ..
                 "spriggan air mage / spriggan druid / spriggan berserker",
