@@ -3879,7 +3879,11 @@ monster_type summon_any_holy_being(holy_being_class_type hbct)
     switch (hbct)
     {
     case HOLY_BEING_WARRIOR:
-        mon = coinflip() ? MONS_DAEVA : MONS_ANGEL;
+        // XXX: Add MONS_CHERUB to this list when they're improved.
+        mon = static_cast<monster_type>(random_choose_weighted(
+            1, MONS_ANGEL,
+            1, MONS_DAEVA,
+            0));
         break;
 
     default:
