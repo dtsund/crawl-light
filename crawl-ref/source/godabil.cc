@@ -1554,7 +1554,7 @@ bool elyvilon_lesser_healing(const bool self)
 
     if (cast_healing(3 + (you.skill(SK_INVOCATIONS) / 6), true,
                      self ? you.pos() : coord_def(0, 0), !self,
-                     self ? TARG_NUM_MODES : TARG_HOSTILE) < 0)
+                     self ? TARG_NUM_MODES : TARG_INJURED_FRIEND) < 0)
     {
         return (false);
     }
@@ -1568,7 +1568,7 @@ bool elyvilon_greater_healing(const ability_type abil)
 
     if (cast_healing(10 + (you.skill(SK_INVOCATIONS) / 3), true,
                      self ? you.pos() : coord_def(0, 0), !self,
-                     self ? TARG_NUM_MODES : TARG_HOSTILE) < 0)
+                     self ? TARG_NUM_MODES : TARG_INJURED_FRIEND) < 0)
     {
         return (false);
     }
