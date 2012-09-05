@@ -2476,12 +2476,8 @@ bool is_useless_item(const item_def &item, bool temp)
         return (!can_wear_armour(item, false, true));
 
     case OBJ_SCROLLS:
-        // No scroll is useless if you haven't learned spellcasting yet,
-        // except if you worship Trog.
-        if (!you.skills[SK_SPELLCASTING] && you.religion != GOD_TROG)
-        {
+        if (!you.skills[SK_SPELLCASTING])
             return (false);
-        }
 
         // A bad item is always useless.
         if (is_bad_item(item, temp))
