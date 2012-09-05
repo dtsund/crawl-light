@@ -4080,7 +4080,7 @@ static void _move_player(coord_def move)
         else if (you.is_wall_clinging())
             verb = "cling";
         else if (you.species == SP_NAGA && !form_changed_physiology())
-            verb = "crawl";
+            verb = "slither";
         else
             verb = "walk";
 
