@@ -609,7 +609,7 @@ endif
 
 # Debug
 # No optimization, full debugging.
-ifneq (,$(findstring debug,$(MAKECMDGOALS)))
+ifneq (,$(filter debug,$(MAKECMDGOALS)))
 	FULLDEBUG=YesPlease
 	DEBUG=YesPlease
 	NO_OPTIMIZE=YesPlease
@@ -617,7 +617,7 @@ endif
 
 # Profile
 # Optimized, with full debugging.
-ifneq (,$(findstring profile,$(MAKECMDGOALS)))
+ifneq (,$(filter profile,$(MAKECMDGOALS)))
 	FULLDEBUG=YesPlease
 	DEBUG=YesPlease
 endif
