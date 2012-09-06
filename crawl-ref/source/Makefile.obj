@@ -62,6 +62,7 @@ ghost.o \
 godabil.o \
 godconduct.o \
 goditem.o \
+godmenu.o \
 godpassive.o \
 godprayer.o \
 godwrath.o \
