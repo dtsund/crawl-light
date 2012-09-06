@@ -3735,11 +3735,6 @@ void handle_god_time()
                 gain_piety(1, 10);
             return;
 
-        case GOD_ZIN:
-            if (_need_free_piety())
-                gain_piety(1, 8);
-            return;
-
         case GOD_JIYVA:
             if (one_chance_in(20))
                 lose_piety(1);
@@ -3748,6 +3743,7 @@ void handle_god_time()
         case GOD_YREDELEMNUL:
         case GOD_KIKUBAAQUDGHA:
         case GOD_VEHUMET:
+        case GOD_ZIN:
             if (one_chance_in(17))
                 lose_piety(1);
             break;
