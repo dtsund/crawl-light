@@ -1241,7 +1241,7 @@ bool zin_vitalisation()
 
     const int stamina_amt = std::max(1, you.skill(SK_INVOCATIONS));
     you.attribute[ATTR_DIVINE_STAMINA] = stamina_amt;
-    you.set_duration(DUR_DIVINE_STAMINA, 60);
+    you.set_duration(DUR_DIVINE_STAMINA, 60 + roll_dice(2, 10));
 
     notify_stat_change(STAT_STR, stamina_amt, true, "");
     notify_stat_change(STAT_INT, stamina_amt, true, "");

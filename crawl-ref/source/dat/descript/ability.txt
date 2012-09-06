@@ -135,7 +135,7 @@ Preach to monsters about Zin's laws, which can lead to various results. There ar
 %%%%
 Vitalisation
 
-Vitalise yourself. This will remove a negative affliction from you, or restore one of your attributes. In case neither of these is necessary, it will give you temporary boosts to your attributes instead.
+Vitalise yourself. This will remove negative afflictions from you, restore and boost your attributes, and remove some magical contamination. Additionally, you will gain divine stamina, protecting you from the effects of sickness, poison, confusion, and rot.
 %%%%
 Imprison
 
