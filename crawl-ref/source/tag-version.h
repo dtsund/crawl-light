@@ -19,6 +19,7 @@ enum tag_minor_version
     TAG_MINOR_MAP_MASK,            // Wider map mask.
     TAG_MINOR_POLEARMS_REACH,      // Purge reaching from polearms (built-in now).
     TAG_MINOR_HELL_KEY,            // Add the key to Hell.
+    TAG_MINOR_NUM_LEVEL_CONN,      // Fix level connectivity data hard-coding NUM_BRANCHES.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
