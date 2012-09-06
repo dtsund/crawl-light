@@ -238,6 +238,7 @@ void discover_mimic(monster* mimic);
 
 bool mons_is_statue(int mc, bool allow_disintegrate = false);
 bool mons_is_demon(int mc);
+int mons_demon_tier(monster_type mc);
 bool mons_is_draconian(int mc);
 bool mons_is_conjured(int mc);
 
