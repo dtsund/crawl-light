@@ -2869,4 +2869,7 @@ void seen_item(const item_def &item)
             you.seen_misc.set(item.sub_type);
         }
     }
+    //Mark gold seen before taking on Zin so it won't improve piety.
+    if (item.base_type == OBJ_GOLD && !item.plus)
+        ((item_def*)&item)->plus = (you.religion == GOD_ZIN) ? 2 : 1;
 }
