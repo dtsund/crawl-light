@@ -367,6 +367,8 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
 
             return (false);
         }
+
+        return (false);
     }
 
     // For non-auto_wield cases checked above.
