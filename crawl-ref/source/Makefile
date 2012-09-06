@@ -1126,6 +1126,7 @@ endif
 # Precompiled headers
 #
 ifdef PCH
+# FIXME: This dependancy list is obviously incomplete...
 %.h.gch: %.h
 	$(QUIET_PCH)$(CXX) $(ALL_CFLAGS) -c $< -o $@
 
