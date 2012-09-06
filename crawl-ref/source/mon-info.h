@@ -77,6 +77,7 @@ enum monster_info_flags
     MB_UMBRAED,
     MB_OFF_BALANCE,
     MB_RESISTANT,
+    MB_ROUSED,
     NUM_MB_FLAGS
 };
 

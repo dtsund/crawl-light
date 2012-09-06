@@ -1707,15 +1707,24 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl, bool sideste
     }
     pbolt.damage.size = diceMult * pbolt.damage.size / 100;
 
+    int frenzy_degree = -1;
+
     if (mons->has_ench(ENCH_BATTLE_FRENZY))
     {
-        const mon_enchant ench = mons->get_ench(ENCH_BATTLE_FRENZY);
+        frenzy_degree = mons->get_ench(ENCH_BATTLE_FRENZY).degree;
+    }
+    else if (mons->has_ench(ENCH_ROUSED))
+    {
+        frenzy_degree = mons->get_ench(ENCH_ROUSED).degree;
+    }
 
+    if (frenzy_degree != -1)
+    {
 #ifdef DEBUG_DIAGNOSTICS
         const dice_def orig_damage = pbolt.damage;
 #endif
 
-        pbolt.damage.size = pbolt.damage.size * (115 + ench.degree * 15) / 100;
+        pbolt.damage.size = pbolt.damage.size * (115 + frenzy_degree * 15) / 100;
 
 #ifdef DEBUG_DIAGNOSTICS
         mprf(MSGCH_DIAGNOSTICS, "%s frenzy damage: %dd%d -> %dd%d",
