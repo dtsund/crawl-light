@@ -1471,6 +1471,7 @@ enum enchant_type
     ENCH_OFF_BALANCE,   // Just hit an illusion, now ripe for stabbing.
     ENCH_RESISTANT,     // Potion of resistance.
     ENCH_ROUSED,        // Monster has been roused to greatness
+    ENCH_BREATH_WEAPON, // just a simple timer for dragon breathweapon spam
     // Update enchantment names in monster.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS

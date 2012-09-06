@@ -804,6 +804,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_MIRROR_DAMAGE: case ENCH_STONESKIN: case ENCH_LIQUEFYING:
         case ENCH_SILVER_CORONA: case ENCH_DAZED: case ENCH_FAKE_ABJURATION:
         case ENCH_OFF_BALANCE: case ENCH_RESISTANT: case ENCH_ROUSED:
+        case ENCH_BREATH_WEAPON:
             lose_ench_levels(i->second, levels);
             break;
 
@@ -1018,6 +1019,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_BLIND:
     case ENCH_DUMB:
     case ENCH_MAD:
+    case ENCH_BREATH_WEAPON:
         decay_enchantment(me);
         break;
 
@@ -1688,7 +1690,7 @@ static const char *enchant_names[] =
     "withdrawn", "attached", "guardian_timer", "levitation",
     "helpless", "liquefying", "tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "inner flame", "off-balance", "resistant", "roused", "buggy",
+    "inner flame", "off-balance", "resistant", "roused", "breath weapon", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
@@ -1905,6 +1907,10 @@ int mon_enchant::calc_duration(const monster* mons,
 
     case ENCH_PORTAL_PACIFIED:
         // Must be set by spell.
+        return (0);
+
+    case ENCH_BREATH_WEAPON:
+        // Must be set by creature.
         return (0);
 
     case ENCH_PORTAL_TIMER:

@@ -134,6 +134,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_INNER_FLAME;
     case ENCH_RESISTANT:
         return MB_RESISTANT;
+    case ENCH_BREATH_WEAPON:
+        return MB_BREATH_WEAPON;
     default:
         return NUM_MB_FLAGS;
     }
@@ -1114,6 +1116,8 @@ std::vector<std::string> monster_info::attributes() const
 */
     if (is(MB_FEAR_INSPIRING))
         v.push_back("inspiring fear");
+    if (is(MB_BREATH_WEAPON))
+        v.push_back("catching its breath");
     if (is(MB_WITHDRAWN))
     {
         v.push_back("regenerating health quickly");
