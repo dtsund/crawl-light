@@ -1067,6 +1067,11 @@ static void _inc_penance(int val)
     _inc_penance(you.religion, val);
 }
 
+static void _set_penance(god_type god, int val)
+{
+    you.penance[god] = val;
+}
+
 static void _inc_gift_timeout(int val)
 {
     if (200 - you.gift_timeout < val)
@@ -2867,11 +2872,11 @@ void excommunication(god_type new_god)
     switch (old_god)
     {
     case GOD_XOM:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_KIKUBAAQUDGHA:
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_YREDELEMNUL:
@@ -2882,15 +2887,15 @@ void excommunication(god_type new_god)
                                GOD_YREDELEMNUL);
             add_daction(DACT_ALLY_YRED_SLAVE);
         }
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_VEHUMET:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
 
     case GOD_MAKHLEB:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
 
     case GOD_TROG:
@@ -2899,7 +2904,7 @@ void excommunication(god_type new_god)
 
         add_daction(DACT_ALLY_TROG);
 
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_BEOGH:
@@ -2916,20 +2921,20 @@ void excommunication(god_type new_god)
         if (_need_water_walking())
             fall_into_a_pool(you.pos(), true, grd(you.pos()));
 
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_SIF_MUNA:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_NEMELEX_XOBEH:
         nemelex_shuffle_decks();
-        _inc_penance(old_god, 150); // Nemelex penance is special
+        _set_penance(old_god, 150); // Nemelex penance is special
         break;
 
     case GOD_LUGONU:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_SHINING_ONE:
@@ -2946,7 +2951,7 @@ void excommunication(god_type new_god)
         // his power, but not his servants) alone.
         if (!is_good_god(new_god))
         {
-            _inc_penance(old_god, 50);
+            _set_penance(old_god, 50);
             add_daction(DACT_ALLY_HOLY);
         }
         else
@@ -2965,7 +2970,7 @@ void excommunication(god_type new_god)
         // (originally from TSO) abandon you.
         if (!is_good_god(new_god))
         {
-            _inc_penance(old_god, 25);
+            _set_penance(old_god, 25);
 
             add_daction(DACT_ALLY_HOLY);
         }
@@ -2980,7 +2985,7 @@ void excommunication(god_type new_god)
         // followers (originally from TSO) abandon you.
         if (!is_good_god(new_god))
         {
-            _inc_penance(old_god, 30);
+            _set_penance(old_god, 30);
 
             add_daction(DACT_ALLY_HOLY);
         }
@@ -2999,7 +3004,7 @@ void excommunication(god_type new_god)
         if (you.duration[DUR_SLIMIFY])
             you.duration[DUR_SLIMIFY] = 0;
 
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
     case GOD_FEDHAS:
         if (query_da_counter(DACT_ALLY_PLANT))
@@ -3007,12 +3012,12 @@ void excommunication(god_type new_god)
             mpr("The plants of the dungeon turn on you.", MSGCH_GOD, GOD_FEDHAS);
             add_daction(DACT_ALLY_PLANT);
         }
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_CHEIBRIADOS:
     default:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
     }
 
