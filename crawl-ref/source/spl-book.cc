@@ -1270,14 +1270,6 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         return (false);
     }
 
-    if (player_mutation_level(MUT_BLURRY_VISION) > 0
-        && x_chance_in_y(player_mutation_level(MUT_BLURRY_VISION), 4))
-    {
-        mpr("The writing blurs into unreadable gibberish.");
-        you.turn_is_over = true;
-        return (false);
-    }
-
     if (random2(40) + random2(40) + random2(40) < chance)
     {
         mpr("You fail to memorise the spell.");
