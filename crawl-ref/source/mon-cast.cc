@@ -3644,7 +3644,6 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         }
         return;
         }
-    }
 
     case SPELL_DEATHS_DOOR:
         if (!mons->has_ench(ENCH_DEATHS_DOOR))
@@ -3658,13 +3657,14 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         return;
 
     case SPELL_REGENERATION:
-    {
+        {
         simple_monster_message(mons,
                                "'s wounds begin to heal before your eyes!");
         const int dur = BASELINE_DELAY
             * std::min(5 + roll_dice(2, (mons->hit_dice * 10) / 3 + 1), 100);
         mons->add_ench(mon_enchant(ENCH_REGENERATION, 0, mons, dur));
         return;
+        }
     }
 
     // If a monster just came into view and immediately cast a spell,

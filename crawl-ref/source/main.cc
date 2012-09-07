@@ -4447,7 +4447,6 @@ static void _compile_time_asserts()
     // Travel cache, traversable_terrain.
     COMPILE_CHECK(NUM_FEATURES <= 256);
     COMPILE_CHECK(NUM_GODS <= MAX_NUM_GODS);
-    COMPILE_CHECK(TAG_CHR_FORMAT < 256);
     COMPILE_CHECK(TAG_MAJOR_VERSION < 256);
     COMPILE_CHECK(NUM_TAG_MINORS < 256);
 
