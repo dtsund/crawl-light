@@ -49,10 +49,7 @@ static int _create_fsim_monster(int mtype, int hp)
 
 static skill_type _fsim_melee_skill(const item_def *item)
 {
-    skill_type sk = SK_UNARMED_COMBAT;
-    if (item)
-        sk = weapon_skill(*item);
-    return (sk);
+    return (item ? weapon_skill(*item) : SK_UNARMED_COMBAT);
 }
 
 static void _fsim_set_melee_skill(int skill, const item_def *item)
@@ -68,7 +65,6 @@ static void _fsim_set_melee_skill(int skill, const item_def *item)
 static void _fsim_set_ranged_skill(int skill, const item_def *item)
 {
     you.skills[range_skill(*item)] = skill;
-    you.skills[SK_THROWING]        = skill * 15 / 27;
 }
 
 static void _fsim_item(FILE *out,
