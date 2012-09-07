@@ -63,11 +63,11 @@ The skins of several animals.
 %%%%
 apple
 
-A delicious, firm red fruit, tart to the tongue.
+A delicious, firm red fruit, tart to the tongue. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 apricot
 
-A succulent yellow-orange fruit, prunus armeniaca.
+A succulent yellow-orange fruit, prunus armeniaca. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 arrow
 
@@ -75,7 +75,7 @@ An arrow, to be shot with a bow.
 %%%%
 banana
 
-A delicious yellow fruit, probably grown and imported by some amoral multinational as the result of a corrupt trade deal.
+A delicious yellow fruit, probably grown and imported by some amoral multinational as the result of a corrupt trade deal. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 banded mail
 
@@ -363,7 +363,7 @@ A lump of cheese.
 %%%%
 choko
 
-An almost tasteless green vegetable, which grows on a vine.
+An almost tasteless green vegetable, which grows on a vine. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 chunk of flesh
 
@@ -553,7 +553,7 @@ A deathly silence seems to surround you as you open this book; even the very air
 %%%%
 grape
 
-A small fruit.
+A small fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 great mace
 
@@ -664,7 +664,7 @@ A suit made of hardened leather.
 %%%%
 lemon
 
-A yellow fruit.
+A yellow fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 long sword
 
@@ -676,7 +676,7 @@ A long, strong bow made of yew. It does excellent damage in combat and a skilled
 %%%%
 lychee
 
-A tropical fruit.
+A tropical fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 mace
 
@@ -720,7 +720,7 @@ A needle. It can be fired with a blowgun.
 %%%%
 orange
 
-A delicious, juicy orange fruit.
+A delicious, juicy orange fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 orb of zot
 
@@ -744,7 +744,7 @@ A pair of gloves.
 %%%%
 pear
 
-A delicious juicy fruit.
+A delicious juicy fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 pearl dragon armour
 
@@ -892,7 +892,7 @@ A small and magically quick sword.
 %%%%
 rambutan
 
-A small but delicious tropical fruit. How it got into this dungeon is anyone's guess.
+A small but delicious tropical fruit. How it got into this dungeon is anyone's guess. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 ring mail
 
@@ -1206,7 +1206,7 @@ A small, heavy projectile shaped specifically for use with slings, and more effe
 %%%%
 snozzcumber
 
-A repulsive cucumber-shaped vegetable.
+A repulsive cucumber-shaped vegetable. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 spear
 
@@ -1302,11 +1302,11 @@ The hide of a storm dragon, covered in extremely hard blue scales. In its raw fo
 %%%%
 strawberry
 
-A small but delicious red fruit.
+A small but delicious red fruit. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 sultana
 
-A humble raisin.
+A humble raisin. Worshippers of Fedhas may sacrifice it in exchange for favors.
 %%%%
 swamp dragon armour
 
