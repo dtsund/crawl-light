@@ -4742,7 +4742,11 @@ void debuff_monster(monster* mon)
         ENCH_PARALYSIS,
         ENCH_PETRIFYING,
         ENCH_PETRIFIED,
-        ENCH_RESISTANT
+        ENCH_RESISTANT,
+        ENCH_REGENERATION,
+        ENCH_STICKY_FLAME,
+        ENCH_TP,
+        ENCH_INNER_FLAME
     };
 
     // Dispel all magical enchantments...

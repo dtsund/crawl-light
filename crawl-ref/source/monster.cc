@@ -3578,6 +3578,10 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
                 return (0);
         }
 
+        if (amount != INSTANT_DEATH)
+            if (this->has_ench(ENCH_DEATHS_DOOR))
+               return (0);
+
         if (amount == INSTANT_DEATH)
             amount = hit_points;
         else if (hit_dice <= 0)
