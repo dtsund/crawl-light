@@ -1315,8 +1315,8 @@ std::string scorefile_entry::game_time(death_desc_verbosity verbosity) const
     {
         char scratch[INFO_SIZE];
 
-        snprintf(scratch, INFO_SIZE, "The game lasted %s (%d turns).",
-                 make_time_string(real_time).c_str(), num_turns);
+        snprintf(scratch, INFO_SIZE, "The game lasted %s (%d turns, %d Pandooras opened).",
+                 make_time_string(real_time).c_str(), num_turns, you.difficulty_level);
 
         line += scratch;
         line += _hiscore_newline_string();
