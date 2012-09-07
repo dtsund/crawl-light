@@ -915,7 +915,7 @@ NAME:   evilmike_haunted_forest
 ORIENT: encompass
 PLACE:  Crypt:3
 TAGS:   no_monster_gen no_item_gen no_pool_fixup no_rotate
-SUBST : T = t., w = Wwww
+SUBST:  T = t., w = Wwww
 SUBST:  v = cccc.-
 COLOUR: t = w:5 lightgrey / w:5 darkgrey / brown
 COLOUR: x'D = white
