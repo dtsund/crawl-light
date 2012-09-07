@@ -153,7 +153,7 @@ std::string item_def::name(description_level_type descrip,
 
     if (this->base_type == OBJ_MISCELLANY
         && (this->sub_type == MISC_HORN_OF_GERYON
-        || is_artefact(*this) || this->sub_type == MISC_HELL_KEY))
+        || this->sub_type == MISC_HELL_KEY) || is_artefact(*this))
     {
         // Artefacts always get "the" unless we just want the plain name.
         switch (descrip)
