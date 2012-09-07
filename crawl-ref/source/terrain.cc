@@ -1439,7 +1439,7 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
             }
             else
             {
-                mpr("The lava burns you!");
+                mpr("The lava sears you!");
             }
 
             ouch(damage, NON_MONSTER, KILLED_BY_LAVA);
@@ -1496,7 +1496,15 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
         }
     }
 
-    mpr("You drown...");
+    if (you.species == SP_MUMMY)
+    {
+        if (terrain == DNGN_LAVA)
+            mpr("You burn to ash...");
+        else if (terrain == DNGN_DEEP_WATER)
+            mpr("You fall apart...");
+    }
+    else
+        mpr("You drown...");
 
     if (terrain == DNGN_LAVA)
         ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_LAVA);
