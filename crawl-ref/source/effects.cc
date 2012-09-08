@@ -2220,7 +2220,7 @@ void handle_time()
         _hell_effects();
     
     // In particular, Tartarus slowly drains your experience...
-    if(you.where_are_you == BRANCH_TARTARUS)
+    if(you.where_are_you == BRANCH_TARTARUS && you.level_type != LEVEL_ABYSS)
     {
         you.experience = you.experience * 49 / 50;
         level_change();
