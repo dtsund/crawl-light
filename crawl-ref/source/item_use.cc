@@ -4635,12 +4635,6 @@ void read_scroll(int slot)
         canned_msg(MSG_NOTHING_CARRIED);
         return;
     }
-    
-    if(you.where_are_you == BRANCH_GEHENNA)
-    {
-        mpr("You don't dare expose your books and scrolls to this infernal heat!");
-        return;
-    }
 
     int item_slot = (slot != -1) ? slot
                                  : prompt_invent_item("Read which item?",
@@ -4658,6 +4652,12 @@ void read_scroll(int slot)
     {
         mpr("You can't read that!");
         crawl_state.zero_turns_taken();
+        return;
+    }
+
+    if(you.where_are_you == BRANCH_GEHENNA && scroll.base_type == OBJ_SCROLLS)
+    {
+        mpr("You don't dare expose your scrolls to this infernal heat!");
         return;
     }
 
