@@ -508,6 +508,11 @@ static bool _tag_follower_at(const coord_def &pos, bool &real_follower)
     {
         return (false);
     }
+    
+    // Confused monsters won't follow. This check mostly matters for confused
+    // allies (notably, fire vortices from Fire Storm).
+    if(fmenv->has_ench(ENCH_CONFUSION))
+        return (false);
 
     // Monsters that can't use stairs can still be marked as followers
     // (though they'll be ignored for transit), so any adjacent real
