@@ -435,7 +435,7 @@ bool follower::place(bool near_player)
                  m.name(DESC_PLAIN).c_str());
 #endif
             //dtsund: I know what I'm doing, about half the time.
-            if(you.can_see(actor_at(m.pos())))
+            if(you.can_see(&m))
                 mprf("%s follows you onto the level.", m.name(DESC_CAP_A).c_str());
             
             m.target.reset();
