@@ -434,6 +434,10 @@ bool follower::place(bool near_player)
             mprf(MSGCH_DIAGNOSTICS, "Placed follower: %s",
                  m.name(DESC_PLAIN).c_str());
 #endif
+            //dtsund: I know what I'm doing, about half the time.
+            if(you.can_see(actor_at(m.pos())))
+                mprf("%s follows you onto the level.", m.name(DESC_CAP_A).c_str());
+            
             m.target.reset();
 
             m.flags &= ~MF_TAKING_STAIRS;
