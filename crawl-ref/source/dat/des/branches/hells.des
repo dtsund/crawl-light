@@ -1188,7 +1188,7 @@ xxxx.............ccccc..cccc.....ccc.cccc.........................xxxx
 xxxx...........ccc.........ccccccc.....cc.........................xxxx
 xxxx.........ccc.......2............V..cc.........................xxxx
 xxxx........cc4........................cc...........xxxxxxxx......xxxx
-xxxx........cc44xxx==xxx......D........cc..........xx......xx.....xxxx
+xxxx........cc44xxx++xxx......D........cc..........xx......xx.....xxxx
 xxxx........ccxxx......xxx.......ccc++ccc.........xx........xx....xxxx
 xxxx........cxx..........xxx.....ccc44ccc.........x..........x....xxxx
 xxxx........cx............xx....cccc44cc.........xx..........xx...xxxx
@@ -1202,7 +1202,7 @@ xxxx.......ccx.F........F.xcc.......................xxxxxxxx......xxxx
 xxxx........cx............xc......................................xxxx
 xxxx........cxx....17....xxc....x.........x.......................xxxx
 xxxx........ccxxx......xxxcc......................................xxxx
-xxxx........cccc=xxxxxx=cccc......................................xxxx
+xxxx........cccc+xxxxxx+cccc......................................xxxx
 xxxx........cc||cccccccc||cc......................................xxxx
 xxxx.........cc||||O|||||cc.......................................xxxx
 xxxx..........cccccccccccc......x.........x............V..........xxxx
@@ -1217,15 +1217,15 @@ xxxx...........................................xx44444xx22222xx...xxxx
 xxxx.......xxxxxxxxx+xxxxxxxxx.................xx44444xx22222xx...xxxx
 xxxx.......x3.2..........3...x..x.........x..xxxxxxxxxxxxxxxxxx...xxxx
 xxxx.......x.x.x.x.x.x.x.x.x.x.................xxxxxxxxxxxxxxxx...xxxx
-xxxx.......x...2.3..4..5..4..x......................=.......xxx...xxxx
-xxxx.......xx.x.x.x.x.x.x.x.xx......................=.......xxx...xxxx
+xxxx.......x...2.3..4..5..4..x......................+.......xxx...xxxx
+xxxx.......xx.x.x.x.x.x.x.x.xx......................+.......xxx...xxxx
 xxxx.......x..65..3..6.6...5.x.................xxxxxxxxxxxxxxxx...xxxx
 xxxx.......x.x.x.x.x.x.x.x.x.x..x.........x..xxxxxxxxxxxxxxxxxx...xxxx
 xxxx.......x...4...3.....4...x.................xx.....xx555555x...xxxx
-xxxx.......xx=xxxxx.x.xxxxxxxx.................xx.....xx555555x...xxxx
+xxxx.......xx+xxxxx.x.xxxxxxxx.................xx.....xx555555x...xxxx
 xxxx.......x$$$$$$x.25.x$$$||x.................xxxxxxxxxxxxxxxx...xxxx
 xxxx.......x$x$$x$xx.x.x$x$x|x.................xxxxxxxxxxxxxxxx...xxxx
-xxxx.......x||||||x.556=$$$||x..x.........x....xx$$xx56565xx$|x...xxxx
+xxxx.......x||||||x.556+$$$||x..x.........x....xx$$xx56565xx$|x...xxxx
 xxxx.......xxxxxxxxxxxxxxxxxxx.................xx$$xx65656xx|7x...xxxx
 xxxx...........................................xxxxxxxxxxxxxxxx...xxxx
 xxxx...........................................xxxxxxxxxxxxxxxx...xxxx
@@ -1252,20 +1252,20 @@ MONS:    patrolling Ereshkigal, shadow fiend, reaper, soul eater, shadow demon
 MONS:    shadow dragon, shadow wraith
 KMONS:   8 = shadow imp
 : serpent_of_hell_setup(_G)
- ## Randomising the secret doors to get into the pyramid.
- ## There may be secret doors that lead nowhere.
+ ## Randomising the doors to get into the pyramid.
+ ## There may be doors that lead nowhere.
 SHUFFLE: FfGgHh
-SUBST:   F = =
-SUBST:   f : fff=c, f = =c
-SUBST:   G : Gcc,   G = =cc
-SUBST:   g : gcccc, g = =cc
+SUBST:   F = +
+SUBST:   f : fff+c, f = +c
+SUBST:   G : Gcc,   G = +cc
+SUBST:   g : gcccc, g = +cc
 SUBST:   H = c
 SUBST:   h = c
  ## position of the loot chamber varies
 SHUFFLE: AB
 SUBST:   A = %
 SUBST:   B = x
-NSUBST:  " = 1:= / *:x
+NSUBST:  " = 1:+ / *:x
 KFEAT:   % = .
 KMONS:   % = soul eater / shadow wraith / nothing
 KITEM:   % = | / $
@@ -1290,10 +1290,10 @@ xxxx..cc..c..c.h...xnnx...f.c..c..cc.........ccc.2.$$$$$.2.ccc....xxxx
 xxxx..cc..c..c.c...x$$x...c.c..c..cc........ccc....xxxxx....ccc...xxxx
 xxxx..cc..c..c.c...x||x...c.c..h..cc........ccc..xxxxxxxxx..ccc...xxxx
 xxxx..cc..c..h.c.xxx..xxx.c.c..c..cc........cc..xxxxxxxxxxx..cc...xxxx
-xxxx..cc..c..c.c.nO..2.1n.c.c..c..cc........cc=cxxxxxxxxxxxc=cc...xxxx
+xxxx..cc..c..c.c.nO..2.1n.c.c..c..cc........cc+cxxxxxxxxxxxc+cc...xxxx
 xxxx..cc..c..c.c.xxx..xxx.c.c..cD.cc........cc.c...........c.cc...xxxx
 xxxx..cc..c..c.c...x||x...c.c..c..cc........cc.c.xxxxxxxxx.c.cc...xxxx
-xxxx..cc..c..c.c...x$$x...c.c..c..cc........cc.c=xxxxxxxxc=c.cc...xxxx
+xxxx..cc..c..c.c...x$$x...c.c..c..cc........cc.c+xxxxxxxxc+c.cc...xxxx
 xxxx..cc..c..G.c...xnnx...c.c..g..cc........cc.c.xx.444.xc.c.cc...xxxx
 xxxx..cc..c..c.c..........c.c..c..cc........cc.c.cx.444.xc.c.cc...xxxx
 xxxx..cc..c..cFccHccccGcFcc.H..f..cc........cc.c.cxxxxxxxc.c.cc...xxxx
@@ -1301,13 +1301,13 @@ xxxx..cc..c..G............c.c..c..cc........cc.c.cccxxxccc.c.cc...xxxx
 xxxx..cc..c..cccccccccccHccfcgcc..cc........cc.c...cxxxc...c.cc...xxxx
 xxxx..cc..F..c.................c..cc........cc.c.cccxxxccc.c.cc...xxxx
 xxxx..cc..c..g.................c..cc........cc.c.cx|2.2|xc.c.cc...xxxx
-xxxx..cccHcfcccHcccccccccccccfcc==cc........cc.c.cx|$$$|xc.c.cc...xxxx
+xxxx..cccHcfcccHcccccccccccccfcc++cc........cc.c.cx|$$$|xc.c.cc...xxxx
 xxxx..cc.......................c..cc........cc.c.ccccxcccc.c.cc...xxxx
 xxxx..cc.......................c..cc........cc.c....cxc....c.cc...xxxx
 xxxx..cccccccccccccccccccccccccc++cc........cc.c.ccccxcccc.c.cc...xxxx
 xxxx..cccccccccccccccccccccccccc++cc........cc.c.cxx|||xxc.c.cc...xxxx
 xxxx........................................cc.c.cxx|||xxc.c.cc...xxxx
-xxxx.........................xx....xx.......cc=c.ccccccccc.c=cc...xxxx
+xxxx.........................xx....xx.......cc+c.ccccccccc.c+cc...xxxx
 xxxx.........................xx....xx........c.c.....c.....c.c....xxxx
 xxxx...........................................c...........c......xxxx
 xxxx..............................................................xxxx
@@ -1325,7 +1325,7 @@ xxxx......................................xxxxxxxxxx.......xxxxxxxxxxx
 xxxx..........................x....x......xxxxxxxxxxx.....xxAAAAAAAAxx
 xxxx.....................................xxBBBBBBBxxxx...xxxAAAAAAAAxx
 xxxx.....................................xxBBBBBBBxxxxx.xxxxAAAAAAAAxx
-xxxx..........................x....x....xxxBBBBBBBxxxxx=xxxxxxxxxxxxxx
+xxxx..........................x....x....xxxBBBBBBBxxxxx+xxxxxxxxxxxxxx
 xxxx....................................xxxxxxxxxxxx..............$$xx
 xxxx...................................xxxBBBBxBBBBx.4...4.......$$$xx
 xxxx..........................x....x...xxxBBBBxBBBBx...4..4.....$$$$xx
