@@ -2623,7 +2623,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         if (projected == LRET_LAUNCHED)
         {
             sk = range_skill(*you.weapon());
-            ammoHitBonus = ammoDamBonus = std::min(7, you.skill(sk)/3) - 4;
+            ammoDamBonus = std::min(7, you.skill(sk)/3) - 4;
+            ammoHitBonus = std::min(3, you.skill(sk)/3);
         }
         else
             ammoHitBonus = ammoDamBonus = std::min(3, you.skill(sk)/3);
