@@ -2737,20 +2737,6 @@ static const std::string _item_prefix(const item_def &item, bool temp,
     case OBJ_FOOD:
         if (is_forbidden_food(item))
             prefixes.push_back("evil_eating");
-
-        // Don't include these for filtering, since the user might want
-        // to use "muta" to search for "potion of cure mutation", and
-        // similar.
-        if (filter)
-            ;
-        else if (is_poisonous(item))
-            prefixes.push_back("poisonous");
-        else if (is_mutagenic(item))
-            prefixes.push_back("mutagenic");
-        else if (is_contaminated(item))
-            prefixes.push_back("contaminated");
-        else if (causes_rot(item))
-            prefixes.push_back("rot-inducing");
         break;
 
     case OBJ_WEAPONS:
