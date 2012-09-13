@@ -42,7 +42,7 @@ function pandoora_portal(e)
         desc = "sinister portal",
         desc_long = desc_long,
         dst = "pandoora",
-        dstname = "pandoora",
+        dstname = "Hall of Pan",
         dstorigin = "near a Pandoora",
         overview = "sinister portal",
         floor = "stone_arch",
