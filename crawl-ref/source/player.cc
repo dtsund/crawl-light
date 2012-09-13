@@ -1969,6 +1969,11 @@ int player_speed(void)
         ps /= 10;
     }
 
+    if(you.where_are_you == BRANCH_COCYTUS)
+    {
+        ps = div_rand_round(ps * 5, 4);
+    }
+
     return ps;
 }
 
