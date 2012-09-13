@@ -229,8 +229,6 @@ void unfocus_stats()
 
 void give_basic_mutations(species_type speci)
 {
-    // We should switch over to a size-based system
-    // for the fast/slow metabolism when we get around to it.
     switch (speci)
     {
     case SP_HILL_ORC:
@@ -238,27 +236,25 @@ void give_basic_mutations(species_type speci)
         break;
     case SP_OGRE:
         you.mutation[MUT_TOUGH_SKIN]      = 1;
-        you.mutation[MUT_FAST_METABOLISM] = 1;
         you.mutation[MUT_SAPROVOROUS]     = 1;
         break;
     case SP_HALFLING:
-        you.mutation[MUT_SLOW_METABOLISM]     = 1;
         you.mutation[MUT_MUTATION_RESISTANCE] = 1;
+        you.mutation[MUT_GLOW_TOLERANCE]      = 1;
         break;
     case SP_MINOTAUR:
         you.mutation[MUT_HORNS] = 2;
         break;
     case SP_SPRIGGAN:
-        you.mutation[MUT_ACUTE_VISION]    = 1;
-        you.mutation[MUT_FAST]            = 3;
-        you.mutation[MUT_HERBIVOROUS]     = 3;
-        you.mutation[MUT_SLOW_METABOLISM] = 3;
+        you.mutation[MUT_ACUTE_VISION]      = 1;
+        you.mutation[MUT_FAST]              = 3;
+        you.mutation[MUT_HERBIVOROUS]       = 3;
+        you.mutation[MUT_GLOW_INTOLERANCE]  = 3;
         break;
     case SP_CENTAUR:
         you.mutation[MUT_TOUGH_SKIN]      = 3;
         you.mutation[MUT_FAST]            = 2;
         you.mutation[MUT_DEFORMED]        = 1;
-        you.mutation[MUT_FAST_METABOLISM] = 2;
         you.mutation[MUT_HOOVES]          = 3;
         break;
     case SP_NAGA:
@@ -273,6 +269,7 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_COLD_RESISTANCE]            = 1;
         you.mutation[MUT_NEGATIVE_ENERGY_RESISTANCE] = 3;
         you.mutation[MUT_UNBREATHING]                = 1;
+        you.mutation[MUT_GLOW_TOLERANCE]             = 3;
         break;
     case SP_DEEP_DWARF:
         you.mutation[MUT_SLOW_HEALING]    = 3;
@@ -293,12 +290,12 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_TALONS] = 3;
         break;
     case SP_TROLL:
-        you.mutation[MUT_TOUGH_SKIN]      = 2;
-        you.mutation[MUT_REGENERATION]    = 2;
-        you.mutation[MUT_FAST_METABOLISM] = 3;
-        you.mutation[MUT_SAPROVOROUS]     = 2;
-        you.mutation[MUT_GOURMAND]        = 1;
-        you.mutation[MUT_SHAGGY_FUR]      = 1;
+        you.mutation[MUT_TOUGH_SKIN]       = 2;
+        you.mutation[MUT_REGENERATION]     = 2;
+        you.mutation[MUT_GLOW_INTOLERANCE] = 3;
+        you.mutation[MUT_SAPROVOROUS]      = 2;
+        you.mutation[MUT_GOURMAND]         = 1;
+        you.mutation[MUT_SHAGGY_FUR]       = 1;
         break;
     case SP_KOBOLD:
         you.mutation[MUT_SAPROVOROUS] = 2;
@@ -315,7 +312,6 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_ACUTE_VISION]    = 1;
         you.mutation[MUT_FAST]            = 1;
         you.mutation[MUT_CARNIVOROUS]     = 3;
-        you.mutation[MUT_SLOW_METABOLISM] = 2;
         break;
     default:
         break;
@@ -1628,7 +1624,7 @@ static void _setup_generic(const newgame_def& ng)
     you.difficulty_level = 0;
     
     // Set max glow according to race.
-    you.max_magic_contamination = get_max_magic_contamination(you.species);
+    you.max_magic_contamination = get_max_magic_contamination();
 
     // tmpfile purging removed in favour of marking
     Generated_Levels.clear();

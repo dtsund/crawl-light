@@ -7003,10 +7003,23 @@ bool need_expiration_warning(coord_def p)
            || need_expiration_warning(DUR_TRANSFORMATION, p);
 }
 
-int get_max_magic_contamination(species_type species)
+int get_max_magic_contamination()
 {
-    if(species == SP_SPRIGGAN)
-        return 7;
+    //Levels 1, 2, and 3 of contamination intolerance mean
+    //max contamination of 9, 8, and 7 respectively.
+    if(you.mutation[MUT_GLOW_INTOLERANCE] > 0)
+        return 10 - you.mutation[MUT_GLOW_INTOLERANCE];
+    
+    //Levels 1, 2, and 3 of contamination tolerance mean
+    //max contamination of 11, 13, and 15 respectively.
+    if(you.mutation[MUT_GLOW_TOLERANCE] == 1)
+        return 11;
+    if(you.mutation[MUT_GLOW_TOLERANCE] == 2)
+        return 13;
+    if(you.mutation[MUT_GLOW_TOLERANCE] == 3)
+        return 15;
+
+    //For everyone else, max contamination is 10.
     return 10;
 }
 

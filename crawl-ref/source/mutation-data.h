@@ -206,40 +206,40 @@
   "slow healing"
 },
 
-{ MUT_FAST_METABOLISM,           10,  3,  true, false,
-  "fast metabolism",
+{ MUT_GLOW_INTOLERANCE,           10,  3,  true, false,
+  "contamination intolerance",
 
-  {"You have a fast metabolism.",
-   "You have a very fast metabolism.",
-   "Your metabolism is lightning-fast."},
+  {"You tolerate magical contamination poorly.",
+   "You tolerate magical contamination very poorly.",
+   "You tolerate magical contamination extremely poorly."},
 
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
-   "You feel a little hungry."},
+  {"You feel averse to contamination.",
+   "You feel averse to contamination.",
+   "You feel averse to contamination."},
 
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
-   "Your metabolism slows."},
+  {"You feel more resistant to magical contamination.",
+   "You feel more resistant to magical contamination.",
+   "You feel more resistant to magical contamination."},
 
-  "fast metabolism"
+  "contamination intolerance"
 },
 
-{ MUT_SLOW_METABOLISM,            7,  3, false, false,
-  "slow metabolism",
+{ MUT_GLOW_TOLERANCE,            7,  3, false, false,
+  "contamination tolerance",
 
-  {"You have a slow metabolism.",
-   "You have a slow metabolism.",
-   "You need consume almost no food."},
+  {"You tolerate magical contamination well.",
+   "You tolerate magical contamination very well.",
+   "You tolerate magical contamination extremely well."},
 
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
-   "Your metabolism slows."},
+  {"You feel more resistant to magical contamination.",
+   "You feel more resistant to magical contamination.",
+   "You feel more resistant to magical contamination."},
 
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
-   "You feel a little hungry."},
+  {"You feel averse to contamination.",
+   "You feel averse to contamination.",
+   "You feel averse to contamination."},
 
-  "slow metabolism"
+  "contamination tolerance"
 },
 
 { MUT_WEAK,                      10, 14,  true,  true,

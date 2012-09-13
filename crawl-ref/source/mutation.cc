@@ -571,7 +571,7 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_POISON_RESISTANCE:
     case MUT_SHOCK_RESISTANCE:
     case MUT_REGENERATION:
-    case MUT_SLOW_METABOLISM:
+    case MUT_GLOW_TOLERANCE:
     case MUT_TELEPORT_CONTROL:
     case MUT_MAGIC_RESISTANCE:
     case MUT_TELEPORT_AT_WILL:
@@ -585,7 +585,7 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_CARNIVOROUS:
     case MUT_HERBIVOROUS:
     case MUT_SLOW_HEALING:
-    case MUT_FAST_METABOLISM:
+    case MUT_GLOW_INTOLERANCE:
     case MUT_WEAK:
     case MUT_DOPEY:
     case MUT_CLUMSY:
@@ -757,7 +757,6 @@ static int _handle_conflicting_mutations(mutation_type mutation,
                                          bool override)
 {
     const int conflict[][3] = {
-        { MUT_REGENERATION,    MUT_SLOW_METABOLISM,   0},
         { MUT_REGENERATION,    MUT_SLOW_HEALING,      0},
         { MUT_ACUTE_VISION,    MUT_BLURRY_VISION,     0},
         { MUT_FAST,            MUT_SLOW,              0},
@@ -771,7 +770,7 @@ static int _handle_conflicting_mutations(mutation_type mutation,
         { MUT_ROBUST,          MUT_FRAIL,             1},
         { MUT_HIGH_MAGIC,      MUT_LOW_MAGIC,         1},
         { MUT_CARNIVOROUS,     MUT_HERBIVOROUS,       1},
-        { MUT_SLOW_METABOLISM, MUT_FAST_METABOLISM,   1},
+        { MUT_GLOW_TOLERANCE,  MUT_GLOW_INTOLERANCE,  1},
         { MUT_REGENERATION,    MUT_SLOW_HEALING,      1},
         { MUT_ACUTE_VISION,    MUT_BLURRY_VISION,     1},
         { MUT_FAST,            MUT_SLOW,              1},
@@ -904,15 +903,6 @@ static bool _physiology_mutation_conflict(mutation_type mutat)
     // Only Draconians can get wings.
     if (mutat == MUT_BIG_WINGS && !player_genus(GENPC_DRACONIAN))
         return (true);
-
-    // Vampires' healing and thirst rates depend on their blood level.
-    if (you.species == SP_VAMPIRE
-        && (mutat == MUT_CARNIVOROUS || mutat == MUT_HERBIVOROUS
-            || mutat == MUT_REGENERATION || mutat == MUT_SLOW_HEALING
-            || mutat == MUT_FAST_METABOLISM || mutat == MUT_SLOW_METABOLISM))
-    {
-        return (true);
-    }
 
     // Already innate, and unlike trolls/ghouls, no increases for you!
     if (mutat == MUT_CLAWS && you.species == SP_CAT)
@@ -1203,6 +1193,12 @@ bool mutate(mutation_type which_mutation, bool failMsg,
     case MUT_RUGGED_BROWN_SCALES:
         calc_hp();
         break;
+    
+    case MUT_GLOW_TOLERANCE:
+    case MUT_GLOW_INTOLERANCE:
+        you.max_magic_contamination = get_max_magic_contamination();
+        you.redraw_glow = true;
+        break;
 
     case MUT_LOW_MAGIC:
     case MUT_HIGH_MAGIC:
@@ -1330,6 +1326,11 @@ static bool _delete_single_mutation_level(mutation_type mutat)
     }
     if (mutat == MUT_LOW_MAGIC || mutat == MUT_HIGH_MAGIC)
         calc_mp();
+    if (mutat == MUT_GLOW_TOLERANCE || mutat == MUT_GLOW_INTOLERANCE)
+    {
+        you.max_magic_contamination = get_max_magic_contamination();
+        you.redraw_glow = true;
+    }
 
     // Did we gain a slot?
     slots = player_armour_slots() - slots;

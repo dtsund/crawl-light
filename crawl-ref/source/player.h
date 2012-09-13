@@ -944,7 +944,7 @@ int count_worn_ego(int which_ego);
 bool need_expiration_warning(duration_type dur, coord_def p = you.pos());
 bool need_expiration_warning(coord_def p = you.pos());
 
-int get_max_magic_contamination(species_type species);
+int get_max_magic_contamination();
 bool contamination_warning_prompt(int cost);
 
 void check_relatively_safe(bool maybe_print_message);
