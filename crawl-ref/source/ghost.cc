@@ -854,6 +854,12 @@ std::vector<ghost_demon> ghost_demon::find_ghosts()
     if (player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
         return (gs);
 
+    if (you.level_type == LEVEL_PORTAL_VAULT && 
+        you.level_type_name == "Hall of Pan")
+    {
+        return (gs);
+    }
+
     if (!you.is_undead)
     {
         ghost_demon player;
