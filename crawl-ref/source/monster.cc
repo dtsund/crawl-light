@@ -4064,9 +4064,9 @@ void monster::calc_speed()
     if (!is_liquefied && (has_ench(ENCH_BERSERK) || has_ench(ENCH_INSANE)))
         speed *= 2;
     else if (has_ench(ENCH_HASTE))
-        speed = haste_mul(speed);
+        speed = mons_haste_mul(speed);
     if (has_ench(ENCH_SLOW))
-        speed = haste_div(speed);
+        speed = mons_haste_div(speed);
 }
 
 // Check speed and speed_increment sanity.
