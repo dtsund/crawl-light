@@ -1215,6 +1215,14 @@ void down_stairs(dungeon_feature_type force_stair,
                 you.experience = exp_needed(you.experience_level) - 1;
             level_change();
         }
+        else if(you.where_are_you == BRANCH_COCYTUS)
+        {
+            mpr("You feel the numbing cold slowing your every movement!");
+        }
+        else if(you.where_are_you == BRANCH_GEHENNA)
+        {
+            mpr("You shove your potions and scrolls deeper in your knapsack against the searing heat.");
+        }
     }
 
     if (stair_find == DNGN_ENTER_HELL)
