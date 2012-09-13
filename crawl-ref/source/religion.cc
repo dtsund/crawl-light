@@ -310,7 +310,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "control the weather"
     },
     // Cheibriados
-    { "Cheibriados supports the use of ponderous armour."
+    { "Cheibriados supports the use of ponderous armour.",
       "bend time to slow others",
       "",
       "inflict damage to those overly hasty",
