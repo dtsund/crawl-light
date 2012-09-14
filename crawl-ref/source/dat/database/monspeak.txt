@@ -5718,6 +5718,25 @@ yak
 
 @The_monster@ snorts and paws the @surface@.
 %%%%
+# Screaming statues in Dis.
+default screaming statue
+
+w:10
+@The_monster@ produces an earsplitting wail!
+
+@The_monster@ howls in unspeakable agony!
+
+VISUAL:@The_monster@ looks at you imploringly.
+
+@The_monster@ sobs with pain.
+
+@The_monster@ issues a shriek that sets your teeth on edge!
+
+@The_monster@ begs for release.
+
+w:1
+@The_monster@ lives up to its name.
+%%%%
 ################################################
 # Religious messaging
 ################################################
