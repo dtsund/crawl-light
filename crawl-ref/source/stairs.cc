@@ -1223,6 +1223,10 @@ void down_stairs(dungeon_feature_type force_stair,
         {
             mpr("You shove your potions and scrolls deeper in your knapsack against the searing heat.");
         }
+        else if(you.where_are_you == BRANCH_DIS)
+        {
+            mpr("The metal walls around you radiate an unnatural silence, broken only by screams of agony.");
+        }
     }
 
     if (stair_find == DNGN_ENTER_HELL)
