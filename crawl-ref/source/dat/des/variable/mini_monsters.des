@@ -572,33 +572,6 @@ MAP
 ...1...
 ENDMAP
 
-# Things aren't always what they seem (Lemuel)
-#
-# Intentionally moved this deeper because explore will gladly run into the
-# room, and being hit by multiple mimics is un-fun.
-# Slight tweak by having a fraction (unknown to the player) of items be
-# real. (dp)
-NAME:  fake_guardian_serpent_vault
-DEPTH: D:10-17, Vault, Elf, Snake
-MONS:  mimic, patrolling guardian serpent
-ITEM:  any good_item
-: local b = crawl.random2(10)
-: if b > 7 then
-SUBST: 1 = 1d
-: elseif b > 1 then
-SUBST: 1 = 111d
-: end
-MAP
-...........
-.xxxxxxxxx.
-.x1111111x.
-.x1111111x.
-.x1111111x.
-.x11.2.11x.
-.xxxx+xxxx.
-...........
-ENDMAP
-
 NAME:  minmay_serpent_palace
 TAGS:  no_monster_gen no_item_gen
 DEPTH: D:12-

@@ -758,12 +758,6 @@ int mons_standard_level(int mcls)
     case MONS_MANTICORE:
     case MONS_PLANT:
     case MONS_WYVERN:
-    // item mimics
-    case MONS_ARMOUR_MIMIC:
-    case MONS_GOLD_MIMIC:
-    case MONS_POTION_MIMIC:
-    case MONS_SCROLL_MIMIC:
-    case MONS_WEAPON_MIMIC:
         return 8;
 
     case MONS_BIG_KOBOLD:
@@ -792,11 +786,6 @@ int mons_standard_level(int mcls)
     case MONS_HYDRA:
     case MONS_MOTTLED_DRAGON:
     case MONS_SKELETAL_WARRIOR:
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
         return 10;
 
     case MONS_BLINK_FROG:
@@ -1121,17 +1110,6 @@ int mons_standard_rare(int mcls, bool force_normal)
     case MONS_RED_WASP:
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
-    // item mimics
-    case MONS_ARMOUR_MIMIC:
-    case MONS_GOLD_MIMIC:
-    case MONS_POTION_MIMIC:
-    case MONS_SCROLL_MIMIC:
-    case MONS_WEAPON_MIMIC:
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
         return 25;
 
     case MONS_BUTTERFLY:
@@ -1430,17 +1408,6 @@ static int _mons_standard_rare_hard(int mcls)
     case MONS_RED_WASP:
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
-    // item mimics
-    case MONS_ARMOUR_MIMIC:
-    case MONS_GOLD_MIMIC:
-    case MONS_POTION_MIMIC:
-    case MONS_SCROLL_MIMIC:
-    case MONS_WEAPON_MIMIC:
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
         return 25;
 
     case MONS_BUTTERFLY:
@@ -1854,7 +1821,6 @@ int mons_lair_level(int mcls)
     case MONS_BOULDER_BEETLE:
     case MONS_DEATH_YAK:
     case MONS_SPINY_WORM:
-    case MONS_STAIR_MIMIC:
     case MONS_FIRE_CRAB:
         mlev += 5;
         break;
@@ -1983,7 +1949,6 @@ int mons_lair_rare(int mcls, bool force_normal)
     case MONS_GIANT_SPORE:
         return 2;
 
-    case MONS_STAIR_MIMIC:
     case MONS_FIRE_CRAB:
         return 1;
 
@@ -2037,7 +2002,6 @@ int mons_swamp_level(int mcls)
     case MONS_RED_WASP:
     case MONS_SPINY_FROG:
     case MONS_SWAMP_DRAGON:
-    // case MONS_PORTAL_MIMIC:
     case MONS_UGLY_THING:
         mlev += 2;
         break;
@@ -2112,7 +2076,6 @@ int mons_swamp_rare(int mcls, bool force_normal)
         return 25;
 
     case MONS_WORM:
-    // case MONS_PORTAL_MIMIC:
         return 20;
 
     case MONS_KOMODO_DRAGON:
@@ -2179,7 +2142,6 @@ int mons_shoals_level(int mcls)
 
     case MONS_ALLIGATOR_SNAPPING_TURTLE:
     case MONS_MERFOLK_AQUAMANCER:
-    // case MONS_PORTAL_MIMIC:
         mlev += 3;
         break;
 
@@ -2228,7 +2190,6 @@ int mons_shoals_rare(int mcls, bool force_normal)
 
     case MONS_OKLOB_PLANT:
     case MONS_ALLIGATOR_SNAPPING_TURTLE:
-    // case MONS_PORTAL_MIMIC:
         return 10;
 
     default:
@@ -2266,7 +2227,6 @@ int mons_pitsnake_level(int mcls)
         break;
 
     case MONS_GREATER_NAGA:
-    // case MONS_PORTAL_MIMIC:
         mlev += 3;
         break;
 
@@ -2302,7 +2262,6 @@ int mons_pitsnake_rare(int mcls, bool force_normal)
     case MONS_GREATER_NAGA:
     case MONS_GUARDIAN_SERPENT:
     case MONS_SMALL_SNAKE:
-    // case MONS_PORTAL_MIMIC:
         return 15;
 
     default:
@@ -2604,11 +2563,6 @@ int mons_crypt_level(int mcls)
     case MONS_ANCIENT_LICH:
     case MONS_LICH:
     case MONS_CURSE_SKULL:
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
         mlev += 3;
         break;
 
@@ -2688,11 +2642,6 @@ int mons_crypt_rare(int mcls, bool force_normal)
         return 10;
 
     case MONS_ANCIENT_LICH:
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
         return 8;
 
     case MONS_ABOMINATION_SMALL:
@@ -2776,13 +2725,6 @@ static int _mons_crypt_rare_hard(int mcls)
 
     case MONS_SHADOW_WRAITH:
         return 10;
-
-    // feature mimics
-    // case MONS_PORTAL_MIMIC:
-    case MONS_STAIR_MIMIC:
-    case MONS_SHOP_MIMIC:
-    case MONS_FOUNTAIN_MIMIC:
-        return 8;
 
     case MONS_ABOMINATION_SMALL:
         return 5;
