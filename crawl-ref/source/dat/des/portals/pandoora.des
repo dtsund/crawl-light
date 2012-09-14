@@ -101,6 +101,24 @@ function unrestrict_door(data, triggerable, trigger, marker, ev)
     dgn.unrestrict_door_daction()
 end
 
+function pandoora_make_monsters(data, triggerable, trigger, marker, ev)
+    if data.trig == true then
+        return
+    else
+        data.trig = true
+    end
+    
+    crawl.mpr("The Pandoora summons defenders!")
+    
+    for slave in iter.slave_iterator("make_monster_pandoora", 1) do
+        dgn.create_monster(slave.x, slave.y, "hill giant dur:6")
+    end
+
+    for slave in iter.slave_iterator("make_monster_pandoora", 2) do
+        dgn.create_monster(slave.x, slave.y, "kobold demonologist dur:6")
+    end
+end
+
 
 local tm = TriggerableFunction:new{func="destroy_pandoora_portal"}
 tm:add_triggerer(DgnTriggerer:new{type="pressure_plate"})
@@ -170,8 +188,8 @@ default-depth:
 NAME:   pandoora_vault_1
 TAGS:   pandoora no_rotate allow_dup
 ORIENT: encompass
-MONS:   hill giant
-MONS:   kobold demonologist
+#MONS:   hill giant
+#MONS:   kobold demonologist
 KFEAT:  > = exit_portal_vault
 {{
 local pandoora_marker = TriggerableFunction:new {
@@ -187,8 +205,15 @@ local unrestrict_door_marker = TriggerableFunction:new {
 unrestrict_door_marker:add_triggerer(DgnTriggerer:new {
     type="player_move"})
 
+local pandoora_make_monsters_marker = TriggerableFunction:new {
+    func="pandoora_make_monsters"}
+
+pandoora_make_monsters_marker:add_triggerer(DgnTriggerer:new {
+    type="player_los"})
+
 lua_marker("/", pandoora_marker)
 lua_marker(">", unrestrict_door_marker)
+lua_marker("2", pandoora_make_monsters_marker)
 }}
 MARKER:  / = lua:props_marker { \
              door_open_prompt="You sense great evil behind this door. Open " .. \
@@ -213,6 +238,11 @@ SUBST:   /B = +
 KITEM:   a = scroll of acquirement
 KPROP:   "a = no_tele_into
 SUBST:   " = .
+{{
+lua_marker("1", props_marker { make_monster_pandoora=1 })
+lua_marker("2", props_marker { make_monster_pandoora=2 })
+}}
+SUBST:   12 = .
 MAP
 xxxxxxxxxx
 x........x
