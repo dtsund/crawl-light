@@ -1323,7 +1323,7 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 
     _mons_set_priest_wizard_god(mons, priest, wizard, god);
 
-    if ((silenced(mons->pos()) || mons->has_ench(ENCH_MUTE))
+    if ((truly_silenced(mons->pos()) || mons->has_ench(ENCH_MUTE))
         && (priest || wizard || spellcasting_poly
             || mons_class_flag(mons->type, M_SPELL_NO_SILENT)))
     {
@@ -3392,7 +3392,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (!msg.empty() && msg != "__NONE")
         {
             mons_speaks_msg(mons, msg, MSGCH_TALK,
-                            silenced(you.pos()) || silenced(mons->pos()));
+                            truly_silenced(you.pos()) || truly_silenced(mons->pos()));
         }
         break;
     }
@@ -3404,7 +3404,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (!msg.empty() && msg != "__NONE")
         {
             mons_speaks_msg(mons, msg, MSGCH_TALK,
-                            silenced(you.pos()) || silenced(mons->pos()));
+                            truly_silenced(you.pos()) || truly_silenced(mons->pos()));
         }
         break;
     }
@@ -4063,7 +4063,7 @@ void mons_cast_noise(monster* mons, const bolt &pbolt,
         force_silent = true;
 
     const bool unseen    = !you.can_see(mons);
-    const bool silent    = silenced(mons->pos()) || force_silent;
+    const bool silent    = truly_silenced(mons->pos()) || force_silent;
     const bool no_silent = mons_class_flag(mons->type, M_SPELL_NO_SILENT);
 
     if (unseen && silent)

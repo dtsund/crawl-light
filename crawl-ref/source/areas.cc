@@ -38,7 +38,8 @@ enum areaprop_flag
     APROP_HALO          = (1 << 3),
     APROP_LIQUID        = (1 << 4),
     APROP_ACTUAL_LIQUID = (1 << 5),
-    APROP_UMBRA      = (1 << 6),
+    APROP_UMBRA         = (1 << 6),
+    APROP_ANTISILENCE   = (1 << 7),
 };
 
 struct area_centre
@@ -154,6 +155,16 @@ static void _update_agrid()
             }
             no_areas = false;
         }
+        
+        if (ai->type == MONS_SCREAMING_STATUE)
+        {
+            const int antisilence_radius = 4;
+            _agrid_centres.push_back(area_centre(AREA_HALO, ai->pos(), antisilence_radius));
+
+            for (radius_iterator ri(ai->pos(), antisilence_radius, C_SQUARE); ri; ++ri)
+                _set_agrid_flag(*ri, APROP_ANTISILENCE);
+            no_areas = false;
+        }
 
     }
 
@@ -171,6 +182,8 @@ static area_centre_type _get_first_area (const coord_def& f)
         return AREA_SANCTUARY;
     if (a & APROP_SILENCE)
         return AREA_SILENCE;
+    if (a & APROP_ANTISILENCE)
+        return AREA_ANTISILENCE;
     if (a & APROP_HALO)
         return AREA_HALO;
     if (a & APROP_UMBRA)
@@ -505,7 +518,28 @@ bool silenced(const coord_def& p)
         return (false);
     if (!_agrid_valid)
         _update_agrid();
+
+    // Dis is permanently silenced, except where there are spaces of antisilence.
+    if(you.where_are_you == BRANCH_DIS)
+        return true;
+
     return (_check_agrid_flag(p, APROP_SILENCE));
+}
+
+bool antisilenced(const coord_def& p)
+{
+    if (!map_bounds(p))
+        return (false);
+    if (!_agrid_valid)
+        _update_agrid();
+
+    return (_check_agrid_flag(p, APROP_ANTISILENCE));
+}
+
+//Returns true if silenced and NOT antisilenced.
+bool truly_silenced(const coord_def& p)
+{
+    return (silenced(p) && !antisilenced(p));
 }
 
 /////////////

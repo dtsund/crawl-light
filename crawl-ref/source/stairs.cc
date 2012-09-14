@@ -1021,7 +1021,7 @@ void down_stairs(dungeon_feature_type force_stair,
 
         mprf("You insert the %s rune into the lock.", rune_type_name(runes[2]));
 
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
             mpr("The gate opens wide!");
         else
             mpr("With a loud hiss the gate opens wide!");

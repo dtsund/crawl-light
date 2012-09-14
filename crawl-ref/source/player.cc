@@ -1173,8 +1173,7 @@ bool player_can_hit_monster(const monster* mon)
 
 bool player_can_hear(const coord_def& p, int hear_distance)
 {
-    return (!silenced(p)
-            && !silenced(you.pos())
+    return (!truly_silenced(p) && !truly_silenced(you.pos())
             && you.pos().distance_from(p) <= hear_distance);
 }
 
@@ -5522,7 +5521,7 @@ bool player::has_spell(spell_type spell) const
 
 bool player::cannot_speak() const
 {
-    if (silenced(pos()))
+    if (truly_silenced(pos()))
         return (true);
 
     if (cannot_move()) // we allow talking during sleep ;)

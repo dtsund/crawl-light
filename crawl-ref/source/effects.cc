@@ -1074,7 +1074,7 @@ void yell(bool force)
     else if (shout_verb == "scream")
         noise_level = 16;
 
-    if (silenced(you.pos()) || you.cannot_speak())
+    if (truly_silenced(you.pos()) || you.cannot_speak())
         noise_level = 0;
 
     if (noise_level == 0)
@@ -1905,8 +1905,8 @@ void change_labyrinth(bool msg)
     fix_item_coordinates();
 
     // Finally, give the player a clue about what just happened.
-    const int which = (silenced(you.pos()) ? 2 + random2(2)
-                                           : random2(4));
+    const int which = (truly_silenced(you.pos())
+                       ? 2 + random2(2) : random2(4));
     switch (which)
     {
     case 0: mpr("You hear an odd grinding sound!"); break;
@@ -2392,7 +2392,7 @@ void handle_time()
                 success = true;
         }
 
-        if (success && !silenced(you.pos()))
+        if (success && !truly_silenced(you.pos()))
         {
             switch (random2(3))
             {

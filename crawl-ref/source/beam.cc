@@ -4190,7 +4190,7 @@ bool bolt::handle_statue_disintegration(monster* mon)
     {
         rc = true;
         // Disintegrate the statue.
-        if (!silenced(you.pos()))
+        if (!truly_silenced(you.pos()))
         {
             if (!you.see_cell(mon->pos()))
                 mpr("You hear a hideous screaming!", MSGCH_SOUND);
@@ -4460,8 +4460,8 @@ void bolt::affect_monster(monster* mon)
         mprf(MSGCH_SOUND, "%s", noise_msg.c_str());
     // The player might hear something, if _they_ fired a missile
     // (not magic beam).
-    else if (!silenced(you.pos()) && flavour == BEAM_MISSILE
-             && YOU_KILL(thrower))
+    else if (!truly_silenced(you.pos())
+             && flavour == BEAM_MISSILE && YOU_KILL(thrower))
     {
         mprf(MSGCH_SOUND, "The %s hits something.", name.c_str());
     }

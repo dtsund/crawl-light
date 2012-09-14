@@ -1895,7 +1895,7 @@ bool move_item_to_grid(int *const obj, const coord_def& p, bool silent)
 
     item_def& item(mitm[ob]);
 
-    if (feat_destroys_item(grd(p), mitm[ob], !silenced(p) && !silent))
+    if (feat_destroys_item(grd(p), mitm[ob], !truly_silenced(p) && !silent))
     {
         item_was_destroyed(item, NON_MONSTER);
         destroy_item(ob);
@@ -1992,7 +1992,7 @@ bool copy_item_to_grid(const item_def &item, const coord_def& p,
     if (quant_drop == 0)
         return (false);
 
-    if (feat_destroys_item(grd(p), item, !silenced(p) && !silent))
+    if (feat_destroys_item(grd(p), item, !truly_silenced(p) && !silent))
     {
         if (item_is_spellbook(item))
             destroy_spellbook(item);
@@ -2201,7 +2201,7 @@ bool drop_item(int item_dropped, int quant_drop)
     mprf("You drop %s.",
          quant_name(you.inv[item_dropped], quant_drop, DESC_NOCAP_A).c_str());
 
-    bool quiet = silenced(you.pos());
+    bool quiet = truly_silenced(you.pos());
 
     // If you drop an item in as a merfolk, it is below the water line and
     // makes no noise falling.

@@ -135,7 +135,7 @@ bool project_noise()
 
     dprf("Target square (%d,%d)", pos.x, pos.y);
 
-    if (!in_bounds(pos) || !silenced(pos))
+    if (!in_bounds(pos) || !truly_silenced(pos))
     {
         if (in_bounds(pos) && !feat_is_solid(grd(pos)))
         {
@@ -143,7 +143,7 @@ bool project_noise()
             success = true;
         }
 
-        if (!silenced(you.pos()))
+        if (!truly_silenced(you.pos()))
         {
             if (success)
             {

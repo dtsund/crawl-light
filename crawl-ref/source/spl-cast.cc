@@ -613,7 +613,7 @@ static bool _can_cast()
         return false;
     }
 
-    if (silenced(you.pos()))
+    if (truly_silenced(you.pos()))
     {
         mpr("You cannot cast spells when silenced!");
         more();

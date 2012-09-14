@@ -441,7 +441,7 @@ bool noisy(int original_loudness, const coord_def& where,
 
     // If the origin is silenced there is no noise, unless we're
     // faking it.
-    if (silenced(where) && !fake_noise)
+    if (truly_silenced(where) && !fake_noise)
         return (false);
 
     // [ds] Reduce noise propagation for Sprint.
@@ -697,8 +697,8 @@ void noise_grid::propagate_noise()
                             {
                                 const coord_def next_position(p.x + xi,
                                                               p.y + yi);
-                                if (in_bounds(next_position)
-                                    && !silenced(next_position))
+                                if (in_bounds(next_position) 
+                                    && !truly_silenced(next_position))
                                 {
                                     if (propagate_noise_to_neighbour(
                                             attenuation,

@@ -4617,7 +4617,7 @@ static void _steal_item_from_player(monster* mon)
         // Found no item worth stealing, try gold.
         if (you.gold == 0)
         {
-            if (silenced(mon->pos()))
+            if (truly_silenced(mon->pos()))
                 return;
 
             std::string complaint = getSpeakString("Maurice nonstealing");

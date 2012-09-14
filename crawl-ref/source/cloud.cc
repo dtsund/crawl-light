@@ -298,8 +298,7 @@ void manage_clouds()
                     if (env.cloud[env.cgrid(*ai)].type == CLOUD_GLOOM)
                         count++;
 
-            if (!umbraed(cloud.pos) && haloed(cloud.pos)
-                && !silenced(cloud.pos))
+            if (!umbraed(cloud.pos) && haloed(cloud.pos) && !truly_silenced(cloud.pos))
                 count = 0;
 
             if (count < 4)
@@ -853,7 +852,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
             {
                 mprf("%s %s in the rain.",
                      act->name(DESC_CAP_THE).c_str(),
-                     act->conj_verb(silenced(act->pos())?
+                     act->conj_verb((silenced(act->pos()) && !antisilenced(act->pos()))?
                                     "steam" : "sizzle").c_str());
             }
         }

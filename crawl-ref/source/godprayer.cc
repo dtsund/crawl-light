@@ -366,7 +366,7 @@ static int _sacrifice_all_in_los()
 
 void pray()
 {
-    if (silenced(you.pos()))
+    if (truly_silenced(you.pos()))
     {
         mpr("You are unable to make a sound!");
         return;

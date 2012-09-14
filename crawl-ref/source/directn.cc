@@ -1456,7 +1456,7 @@ std::string direction_chooser::target_sanctuary_description() const
 
 std::string direction_chooser::target_silence_description() const
 {
-    return silenced(target()) ? "silenced" : "";
+    return truly_silenced(target()) ? "silenced" : "";
 }
 
 static void _push_back_if_nonempty(const std::string& str,
@@ -3826,7 +3826,7 @@ static void _print_cloud_desc(const coord_def where, bool &cloud_described)
     std::vector<std::string> areas;
     if (is_sanctuary(where))
         areas.push_back("lies inside a sanctuary");
-    if (silenced(where))
+    if (truly_silenced(where))
         areas.push_back("is shrouded in silence");
     if (haloed(where) && !umbraed(where))
         areas.push_back("is lit by a halo");

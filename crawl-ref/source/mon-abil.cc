@@ -824,7 +824,7 @@ static void _orc_battle_cry(monster* chief)
 
     if (foe
         && (foe != &you || !chief->friendly())
-        && !silenced(chief->pos())
+        && !truly_silenced(chief->pos())
         && chief->can_see(foe)
         && coinflip())
     {
@@ -923,7 +923,7 @@ static void _cherub_hymn(monster* chief)
 
     if (foe
         && (foe != &you || !chief->friendly())
-        && !silenced(chief->pos())
+        && !truly_silenced(chief->pos())
         && chief->can_see(foe)
         && coinflip())
     {

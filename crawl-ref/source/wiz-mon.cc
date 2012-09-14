@@ -604,9 +604,9 @@ void debug_make_monster_shout(monster* mon)
 
     if (type == 's')
     {
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
             mpr("You are silenced and likely won't hear any shouts.");
-        else if (silenced(mon->pos()))
+        else if (truly_silenced(mon->pos()))
             mpr("The monster is silenced and likely won't give any shouts.");
 
         for (int i = 0; i < num_times; ++i)
@@ -617,14 +617,14 @@ void debug_make_monster_shout(monster* mon)
         if (mon->invisible())
             mpr("The monster is invisible and likely won't speak.");
 
-        if (silenced(you.pos()) && !silenced(mon->pos()))
+        if (truly_silenced(you.pos()) && !truly_silenced(mon->pos()))
         {
             mpr("You are silenced but the monster isn't; you will "
                 "probably hear/see nothing.");
         }
-        else if (!silenced(you.pos()) && silenced(mon->pos()))
+        else if (!truly_silenced(you.pos()) && truly_silenced(mon->pos()))
             mpr("The monster is silenced and likely won't say anything.");
-        else if (silenced(you.pos()) && silenced(mon->pos()))
+        else if (truly_silenced(you.pos()) && truly_silenced(mon->pos()))
         {
             mpr("Both you and the monster are silenced, so you likely "
                 "won't hear anything.");

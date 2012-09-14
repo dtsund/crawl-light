@@ -2193,6 +2193,9 @@ enum monster_type                      // (int) menv[].type
     MONS_ICE_STATUE,
     MONS_STATUE,
     MONS_TRAINING_DUMMY,
+#if TAG_MAJOR_VERSION != 32
+    MONS_SCREAMING_STATUE,
+#endif
 
     // Demons:
     MONS_IMP,
@@ -2416,6 +2419,7 @@ enum monster_type                      // (int) menv[].type
     MONS_PROFANE_SERVITOR,
     MONS_ILLUSION,              // Illude
     MONS_PRIMORDIAL_LICH,
+    MONS_SCREAMING_STATUE,
 
     NUM_MONSTERS,                      // used for polymorph
 

@@ -183,7 +183,7 @@ static void _removed_beholder_msg(const monster* mon)
 
     if (you.can_see(mon))
     {
-        if (silenced(you.pos()) || silenced(mon->pos()))
+        if (truly_silenced(you.pos()) || truly_silenced(mon->pos()))
         {
             if (_mermaid_beholder(mon))
             {
@@ -271,7 +271,7 @@ bool player::possible_beholder(const monster* mon) const
          && !mon->wont_attack() && !mon->pacified()
          && ((mons_genus(mon->type) == MONS_MERMAID
               || mon->has_spell(SPELL_MESMERISE))
-         && !silenced(pos()) && !silenced(mon->pos())
+         && !truly_silenced(pos()) && !truly_silenced(mon->pos())
          && !mon->has_ench(ENCH_MUTE)
          && !mon->confused()
          && !mon->asleep() && !mon->cannot_move()

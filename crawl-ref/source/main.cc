@@ -3512,7 +3512,7 @@ static void _open_door(coord_def move, bool check_confused)
     if (you.berserk())
     {
         // XXX: Better flavour for larger doors?
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
         {
             if (!berserk_open.empty())
             {
@@ -3537,7 +3537,7 @@ static void _open_door(coord_def move, bool check_confused)
             noisy(15, you.pos());
         }
     }
-    else if (one_chance_in(skill) && !silenced(you.pos()))
+    else if (one_chance_in(skill) && !truly_silenced(you.pos()))
     {
         if (!door_open_creak.empty())
             mprf(MSGCH_SOUND, door_open_creak.c_str(), adj, noun);
@@ -3738,7 +3738,7 @@ static void _close_door(coord_def move)
 
         if (you.berserk())
         {
-            if (silenced(you.pos()))
+            if (truly_silenced(you.pos()))
             {
                 if (!berserk_close.empty())
                 {
@@ -3763,7 +3763,7 @@ static void _close_door(coord_def move)
                 noisy(15, you.pos());
             }
         }
-        else if (one_chance_in(skill) && !silenced(you.pos()))
+        else if (one_chance_in(skill) && !truly_silenced(you.pos()))
         {
             if (!door_close_creak.empty())
                 mprf(MSGCH_SOUND, door_close_creak.c_str(), adj, noun);

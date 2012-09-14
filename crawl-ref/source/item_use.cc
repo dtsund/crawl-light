@@ -4544,7 +4544,7 @@ static void _handle_read_book(int item_slot)
 
     if (book.sub_type == BOOK_DESTRUCTION)
     {
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
             mpr("This book does not work if you cannot read it aloud!");
         else
             tome_of_power(item_slot);
@@ -4669,7 +4669,7 @@ void read_scroll(int slot)
         return;
     }
 
-    if (silenced(you.pos()))
+    if (truly_silenced(you.pos()))
     {
         mpr("Magic scrolls do not work when you're silenced!");
         crawl_state.zero_turns_taken();

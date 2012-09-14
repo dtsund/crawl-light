@@ -3441,12 +3441,97 @@ static void _place_aquatic_monsters(int level_number, level_area_type level_type
     }
 }
 
+//Fuzzes coordinates a little bit so that screaming statues don't get placed
+//on top of the gateways to Hell in Dis.
+coord_def _fuzz_coords(coord_def c)
+{
+    //Try 50 times to place randomly.
+    for(int i = 0; i < 50; i++)
+    {
+        coord_def to_return = c;
+        to_return.x += random_range(-1,1);
+        to_return.y += random_range(-1,1);
+        
+        if(grd(to_return) == DNGN_FLOOR)
+            return to_return;
+    }
+
+    //If we still haven't found an empty square, do it systematically.
+    //Check every square adjacent to the staircase.
+    coord_def to_return = c;
+    
+    to_return.x += -1;
+    to_return.y += -1;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    to_return.x += 1;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    to_return.x += 1;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    
+    to_return.y += 1;
+    to_return.x += -2;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    to_return.x += 2;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    
+    to_return.y +=1;
+    to_return.x += -2;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    to_return.x += 1;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    to_return.x += 1;
+    if(grd(to_return) == DNGN_FLOOR)
+        return to_return;
+    
+    //Screw it, just place it on the gate (though this should be very rare).
+    return c;
+}
+
 static void _builder_monsters(int level_number, level_area_type level_type, int mon_wanted)
 {
     if (level_type == LEVEL_PANDEMONIUM
         || player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
     {
         return;
+    }
+
+    //Place the screaming statues in Dis.
+    //This is done before regular monster placement to ensure that there's
+    //room near staircases for them, but there'd probably be enough room for
+    //them even if it were done afterward.
+    if(you.where_are_you == BRANCH_DIS)
+    {
+        //First, place them near the exits; we'll be nice and ensure that
+        //the player always gets some sound when entering the floor.
+        for (rectangle_iterator ri(1); ri; ++ri)
+        {
+            //The stairs haven't yet been converted to hell gates.
+            if (grd(*ri) >= DNGN_STONE_STAIRS_UP_I
+                && grd(*ri) <= DNGN_ESCAPE_HATCH_UP)
+            {
+                mgen_data mg;
+                mg.cls = MONS_SCREAMING_STATUE;
+                mg.base_type = MONS_NO_MONSTER;
+                mg.pos = _fuzz_coords(*ri);
+                place_monster(mg);
+            }
+        }
+
+        //Now, place the random ones.
+        for(int i = 0; i < 20; i++)
+        {
+            mgen_data mg;
+            mg.cls = MONS_SCREAMING_STATUE;
+            mg.base_type = MONS_NO_MONSTER;
+            place_monster(mg);
+        }
     }
 
     const bool in_shoals = player_in_branch(BRANCH_SHOALS);

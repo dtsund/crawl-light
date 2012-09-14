@@ -2887,9 +2887,9 @@ std::vector<talent> your_talents(bool check_confused)
         _add_talent(talents, ABIL_TELEPORTATION, check_confused);
 
     // Religious abilities.
-    if (you.religion == GOD_TROG && !silenced(you.pos()))
+    if (you.religion == GOD_TROG && !truly_silenced(you.pos()))
         _add_talent(talents, ABIL_TROG_BURN_SPELLBOOKS, check_confused);
-    else if (you.religion == GOD_CHEIBRIADOS && !silenced(you.pos()))
+    else if (you.religion == GOD_CHEIBRIADOS && !truly_silenced(you.pos()))
         _add_talent(talents, ABIL_CHEIBRIADOS_PONDEROUSIFY, check_confused);
     else if (you.transfer_skill_points > 0)
         _add_talent(talents, ABIL_ASHENZARI_END_TRANSFER, check_confused);
@@ -2897,7 +2897,7 @@ std::vector<talent> your_talents(bool check_confused)
     // Gods take abilities away until penance completed. -- bwr
     // God abilities generally don't work while silenced (they require
     // invoking the god), but Nemelex is an exception.
-    if (!player_under_penance() && (!silenced(you.pos())
+    if (!player_under_penance() && (!truly_silenced(you.pos())
                                     || you.religion == GOD_NEMELEX_XOBEH))
     {
         for (int i = 0; i < MAX_GOD_ABILITIES; ++i)
@@ -2955,7 +2955,7 @@ std::vector<talent> your_talents(bool check_confused)
         _add_talent(talents, ABIL_FORGET_SPELL, check_confused);
 
     // And finally, the ability to opt-out of your faith {dlb}:
-    if (you.religion != GOD_NO_GOD && !silenced(you.pos()))
+    if (you.religion != GOD_NO_GOD && !truly_silenced(you.pos()))
         _add_talent(talents, ABIL_RENOUNCE_RELIGION, check_confused);
 
     //jmf: Check for breath weapons - they're exclusive of each other, I hope!

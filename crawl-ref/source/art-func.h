@@ -503,7 +503,7 @@ static void _STORM_BOW_world_reacts(item_def *item)
 static void _GONG_melee_effect(item_def* item, actor* wearer,
                                actor* attacker, bool dummy)
 {
-    if (silenced(wearer->pos()))
+    if (truly_silenced(wearer->pos()))
         return;
 
     std::string msg = getSpeakString("shield of the gong");

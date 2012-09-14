@@ -28,7 +28,7 @@ bool orb_noise (const coord_def& where, int loudness)
     // XXX: Fake noisy doesn't work. Oops.
     fake_noisy(loudness, where);
 
-    if (silenced(where))
+    if (truly_silenced(where))
     {
         flash_view_delay(MAGENTA, 100);
         flash_view_delay(LIGHTMAGENTA, 100);

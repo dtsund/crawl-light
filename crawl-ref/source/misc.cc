@@ -1776,7 +1776,7 @@ static void _drop_tomb(const coord_def& pos, bool premature)
             (mon) ? mon->name(DESC_NOCAP_THE).c_str() : "the silver walls,",
             (mon) ? "from its prison" : "but there is nothing inside them");
         else {
-            if (!silenced(you.pos()))
+            if (!truly_silenced(you.pos()))
                 mpr("You hear a deep rumble.", MSGCH_SOUND);
             else
                 mpr("You feel the ground shudder.");

@@ -1021,7 +1021,7 @@ static void _jiyva_died()
     if (!player_in_branch(BRANCH_SLIME_PITS))
         return;
 
-    if (silenced(you.pos()))
+    if (truly_silenced(you.pos()))
     {
         god_speaks(GOD_JIYVA, "With an infernal shudder, the power ruling "
                    "this place vanishes!");
@@ -1815,7 +1815,7 @@ int monster_die(monster* mons, killer_type killer,
         {
             if (you.can_see(mons))
             {
-                mpr(silenced(mons->pos()) ?
+                mpr(truly_silenced(mons->pos()) ?
                     "The tentacle is hauled back through the portal!" :
                     "With a roar, the tentacle is hauled back through the portal!",
                     MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
@@ -2555,6 +2555,10 @@ int monster_die(monster* mons, killer_type killer,
     // Likewise silence and umbras
     if (mons->type == MONS_SILENT_SPECTRE
         || mons->type == MONS_PROFANE_SERVITOR)
+        invalidate_agrid();
+    
+    //And antisilence froms screaming statues.
+    if (mons->type == MONS_SCREAMING_STATUE)
         invalidate_agrid();
 
     const coord_def mwhere = mons->pos();

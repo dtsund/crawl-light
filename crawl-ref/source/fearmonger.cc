@@ -183,7 +183,7 @@ bool player::_possible_fearmonger(const monster* mon) const
         return (false);
 
     return (mon->alive()
-         && !silenced(pos()) && !silenced(mon->pos())
+         && !truly_silenced(pos()) && !truly_silenced(mon->pos())
          && see_cell(mon->pos()) && mon->see_cell(pos())
          && !mon->submerged() && !mon->confused()
          && !mon->asleep() && !mon->cannot_move()

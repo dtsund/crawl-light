@@ -173,7 +173,7 @@ bool brand_weapon(brand_type which_brand, int power)
         // Well, in theory, we could be silenced, but then how are
         // we casting the brand spell?
         // 1KB: Xom can cast it.  The Blade card currently can't.
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
             msg += " writhes in agony.";
         else
         {

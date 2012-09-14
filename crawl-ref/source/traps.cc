@@ -559,7 +559,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                 mpr("The alarm trap gives no sound.");
             trap_destroyed = true;
         }
-        else if (silenced(this->pos))
+        else if (truly_silenced(this->pos))
         {
             if (you_know && in_sight)
                 mpr("The alarm trap is silent.");

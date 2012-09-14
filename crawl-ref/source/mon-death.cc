@@ -339,7 +339,7 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
 
     // Check if they can speak or not: they may have been polymorphed.
     if (mons_near(mons) && !death_message.empty() && mons->can_speak())
-        mons_speaks_msg(mons, death_message, MSGCH_TALK, silenced(you.pos()));
+        mons_speaks_msg(mons, death_message, MSGCH_TALK, truly_silenced(you.pos()));
     else if (mons->can_speak())
         mprf("%s", death_message.c_str());
 

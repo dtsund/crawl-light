@@ -1198,7 +1198,7 @@ static msg_colour_type prepare_message(const std::string& imsg,
     if (suppress_messages)
         return MSGCOL_MUTED;
 
-    if (silenced(you.pos())
+    if (truly_silenced(you.pos())
         && (channel == MSGCH_SOUND || channel == MSGCH_TALK))
     {
         return MSGCOL_MUTED;

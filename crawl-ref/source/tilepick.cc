@@ -1676,6 +1676,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_SILVER_STATUE;
     case MONS_ORANGE_STATUE:
         return TILEP_MONS_ORANGE_STATUE;
+    case MONS_SCREAMING_STATUE:
+        return TILEP_MONS_SCREAMING_STATUE;
 
     // gargoyles ('9')
     case MONS_GARGOYLE:

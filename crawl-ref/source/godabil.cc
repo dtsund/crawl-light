@@ -1289,7 +1289,7 @@ bool zin_sanctuary()
         return (false);
 
     // Yes, shamelessly stolen from NetHack...
-    if (!silenced(you.pos())) // How did you manage that?
+    if (!truly_silenced(you.pos())) // How did you manage that?
         mpr("You hear a choir sing!", MSGCH_SOUND);
     else
         mpr("You are suddenly bathed in radiance!");

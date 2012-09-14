@@ -676,7 +676,7 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
               0, 0, GOD_XOM);
 
     if (feat_destroys_item(grd(you.pos()), mitm[thing_created],
-                           !silenced(you.pos())))
+                           !truly_silenced(you.pos())))
     {
         simple_god_message(" snickers.", GOD_XOM);
         destroy_item(thing_created, true);

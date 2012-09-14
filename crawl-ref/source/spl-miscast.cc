@@ -283,7 +283,7 @@ std::string MiscastEffect::get_default_cause(bool attribute_to_user) const
 
 bool MiscastEffect::neither_end_silenced()
 {
-    return (!silenced(you.pos()) && !silenced(target->pos()));
+    return (!truly_silenced(you.pos()) && !truly_silenced(target->pos()));
 }
 
 void MiscastEffect::do_miscast()
@@ -1455,7 +1455,7 @@ void MiscastEffect::_divination_you(int severity)
             mpr("Weird images run through your mind.");
             break;
         case 1:
-            if (!silenced(you.pos()))
+            if (!truly_silenced(you.pos()))
             {
                 mpr("You hear strange voices.", MSGCH_SOUND);
                 noisy(2, you.pos());
@@ -2573,7 +2573,7 @@ void MiscastEffect::_air(int severity)
             mon_msg_seen = "@The_monster@ is briefly showered in sparks.";
             break;
         case 8:
-            if (silenced(you.pos()))
+            if (truly_silenced(you.pos()))
             {
                you_msg        = "The wind whips around you!";
                mon_msg_seen   = "The wind whips around @the_monster@!";

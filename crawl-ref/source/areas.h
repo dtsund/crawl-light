@@ -9,6 +9,7 @@ enum area_centre_type
     AREA_HALO,
     AREA_LIQUID,
     AREA_UMBRA,
+    AREA_ANTISILENCE,
 };
 
 void invalidate_agrid(bool recheck_new = false);
@@ -23,6 +24,9 @@ void decrease_sanctuary_radius();
 coord_def find_centre_for (const coord_def& f, area_centre_type at = AREA_NONE);
 
 bool silenced(const coord_def& p);
+bool antisilenced(const coord_def& p);
+//Returns true if silenced and NOT antisilenced.
+bool truly_silenced(const coord_def& p);
 
 // Does the given point lie within a halo?
 bool haloed(const coord_def& p);

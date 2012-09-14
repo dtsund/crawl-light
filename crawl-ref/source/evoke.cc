@@ -48,7 +48,7 @@
 // TODO: Let artefacts besides weapons generate noise.
 void noisy_equipment()
 {
-    if (silenced(you.pos()) || !one_chance_in(20))
+    if (truly_silenced(you.pos()) || !one_chance_in(20))
         return;
 
     std::string msg;
@@ -323,7 +323,7 @@ static bool _evoke_horn_of_geryon(item_def &item)
     // Note: This assumes that the Vestibule has not been changed.
     bool rc = false;
 
-    if (silenced(you.pos()))
+    if (truly_silenced(you.pos()))
     {
         mpr("You can't produce a sound!");
         return false;
@@ -407,7 +407,7 @@ static bool _efreet_flask(int slot)
         if (player_angers_monster(&menv[mons]))
             friendly = false;
 
-        if (silenced(you.pos()))
+        if (truly_silenced(you.pos()))
         {
             mpr(friendly ? "It nods graciously at you."
                          : "It snaps in your direction!", MSGCH_TALK_VISUAL);

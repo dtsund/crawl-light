@@ -372,7 +372,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 
     case ENCH_SILENCE:
         invalidate_agrid();
-        if (!quiet && !silenced(pos()))
+        if (!quiet && !truly_silenced(pos()))
             if (alive())
                 simple_monster_message(this, " becomes audible again.");
             else
@@ -1473,7 +1473,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             if (!this->friendly())
                 break;
 
-            if (!silenced(you.pos()))
+            if (!truly_silenced(you.pos()))
             {
                 if (you.can_see(this))
                     simple_monster_message(this, " suddenly becomes enraged!");

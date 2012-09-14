@@ -1109,7 +1109,7 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
     if (is_sanctuary(gc))
         cell.is_sanctuary = true;
 
-    if (silenced(gc))
+    if (truly_silenced(gc))
         cell.is_silenced = true;
 
     if (feat == DNGN_SWAMP_TREE)

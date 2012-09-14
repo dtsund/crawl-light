@@ -836,7 +836,7 @@ static bool _handle_scroll(monster* mons)
     if (mons_itemuse(mons) < MONUSE_STARTING_EQUIPMENT)
         return (false);
 
-    if (silenced(mons->pos()))
+    if (truly_silenced(mons->pos()))
         return (false);
 
     // Make sure the item actually is a scroll.
@@ -984,7 +984,7 @@ static void _rod_fired_pre(monster* mons, bool nice_spell)
         make_mons_stop_fleeing(mons);
 
     if (!simple_monster_message(mons, " zaps a rod.")
-        && !silenced(you.pos()))
+        && !truly_silenced(you.pos()))
     {
         mpr("You hear a zap.", MSGCH_SOUND);
     }
@@ -1352,7 +1352,7 @@ static bool _handle_wand(monster* mons, bolt &beem, bool sidestep_attempt)
 
         if (!simple_monster_message(mons, " zaps a wand."))
         {
-            if (!silenced(you.pos()))
+            if (!truly_silenced(you.pos()))
                 mpr("You hear a zap.", MSGCH_SOUND);
         }
 

@@ -32,6 +32,10 @@ static bool _mon_needs_auto_exclude(const monster* mon, bool sleepy = false)
         if (sleepy)
             return (false);
 
+        // I cannot conceive a reason why these would ever be excluded. -dtsund
+        if (mon->type == MONS_SCREAMING_STATUE)
+            return false;
+
         // Don't give away mimics unless already known.
         return (!mons_is_mimic(mon->type)
                 || testbits(mon->flags, MF_KNOWN_MIMIC));

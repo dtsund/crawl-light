@@ -860,7 +860,7 @@ static int _shatter_walls(coord_def where, int pow, int, actor *)
 
 void cast_shatter(int pow)
 {
-    const bool silence = silenced(you.pos());
+    const bool silence = truly_silenced(you.pos());
 
     if (silence)
         mpr("The dungeon shakes!");

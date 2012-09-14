@@ -418,7 +418,7 @@ bool mons_speaks(monster* mons)
         // unless they're normally silent (S_SILENT).  Use
         // get_monster_data(mons->type) to bypass mon_shouts()
         // replacing S_RANDOM with a random value.
-        if (silenced(mons->pos()) || mons->has_ench(ENCH_MUTE)
+        if (truly_silenced(mons->pos()) || mons->has_ench(ENCH_MUTE)
             && get_monster_data(mons->type)->shouts != S_SILENT)
         {
             if (!one_chance_in(3))
@@ -455,8 +455,8 @@ bool mons_speaks(monster* mons)
     if (mons_is_fleeing(mons))
         prefixes.push_back("fleeing");
 
-    bool silence = silenced(you.pos());
-    if (silenced(mons->pos()) || mons->has_ench(ENCH_MUTE))
+    bool silence = truly_silenced(you.pos());
+    if (truly_silenced(mons->pos()) || mons->has_ench(ENCH_MUTE))
     {
         silence = true;
         prefixes.push_back("silenced");
