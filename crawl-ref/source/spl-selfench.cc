@@ -298,8 +298,10 @@ void cast_see_invisible(int pow)
 
 void cast_silence(int pow)
 {
-    if (!you.attribute[ATTR_WAS_SILENCED])
+    if (!you.attribute[ATTR_WAS_SILENCED] && !antisilenced(you.pos()))
         mpr("A profound silence engulfs you.");
+    else if(!you.attribute[ATTR_WAS_SILENCED])
+        mpr("A profound silence briefly engulfs you, but is quickly dispelled.");
 
     you.attribute[ATTR_WAS_SILENCED] = 1;
 
