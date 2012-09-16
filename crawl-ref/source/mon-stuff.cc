@@ -95,7 +95,7 @@ static int _make_mimic_item(monster_type type)
     {
     case MONS_WEAPON_MIMIC:
         item.base_type = OBJ_WEAPONS;
-        item.sub_type = random2(WPN_MAX_NONBLESSED + 1);
+        item.sub_type = WPN_SLING;
 
         prop = random2(100);
 
