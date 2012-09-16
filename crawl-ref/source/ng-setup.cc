@@ -231,12 +231,8 @@ void give_basic_mutations(species_type speci)
 {
     switch (speci)
     {
-    case SP_HILL_ORC:
-        you.mutation[MUT_SAPROVOROUS] = 1;
-        break;
     case SP_OGRE:
         you.mutation[MUT_TOUGH_SKIN]      = 1;
-        you.mutation[MUT_SAPROVOROUS]     = 1;
         break;
     case SP_HALFLING:
         you.mutation[MUT_MUTATION_RESISTANCE] = 1;
@@ -248,7 +244,6 @@ void give_basic_mutations(species_type speci)
     case SP_SPRIGGAN:
         you.mutation[MUT_ACUTE_VISION]      = 1;
         you.mutation[MUT_FAST]              = 3;
-        you.mutation[MUT_HERBIVOROUS]       = 3;
         you.mutation[MUT_GLOW_INTOLERANCE]  = 3;
         break;
     case SP_CENTAUR:
@@ -280,8 +275,6 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_POISON_RESISTANCE]          = 1;
         you.mutation[MUT_COLD_RESISTANCE]            = 1;
         you.mutation[MUT_NEGATIVE_ENERGY_RESISTANCE] = 3;
-        you.mutation[MUT_SAPROVOROUS]                = 3;
-        you.mutation[MUT_CARNIVOROUS]                = 3;
         you.mutation[MUT_SLOW_HEALING]               = 1;
         you.mutation[MUT_UNBREATHING]                = 1;
         break;
@@ -293,13 +286,7 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_TOUGH_SKIN]       = 2;
         you.mutation[MUT_REGENERATION]     = 2;
         you.mutation[MUT_GLOW_INTOLERANCE] = 3;
-        you.mutation[MUT_SAPROVOROUS]      = 2;
-        you.mutation[MUT_GOURMAND]         = 1;
         you.mutation[MUT_SHAGGY_FUR]       = 1;
-        break;
-    case SP_KOBOLD:
-        you.mutation[MUT_SAPROVOROUS] = 2;
-        you.mutation[MUT_CARNIVOROUS] = 3;
         break;
     case SP_VAMPIRE:
         you.mutation[MUT_FANGS]        = 3;
@@ -311,7 +298,6 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_SHAGGY_FUR]      = 1;
         you.mutation[MUT_ACUTE_VISION]    = 1;
         you.mutation[MUT_FAST]            = 1;
-        you.mutation[MUT_CARNIVOROUS]     = 3;
         break;
     default:
         break;

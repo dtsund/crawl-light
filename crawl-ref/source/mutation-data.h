@@ -70,7 +70,7 @@
   "poison resistance"
 },
 
-{ MUT_CARNIVOROUS,                5,  3, false, false,
+{ MUT_CARNIVOROUS,                0,  3, false, false,
   "carnivore",
 
   {"Your digestive system is specialised to digest meat.",
@@ -88,7 +88,7 @@
   "carnivorous"
 },
 
-{ MUT_HERBIVOROUS,                5,  3,  true, false,
+{ MUT_HERBIVOROUS,                0,  3,  true, false,
   "herbivore",
 
   {"You digest meat inefficiently.",
