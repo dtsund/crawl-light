@@ -1148,7 +1148,7 @@ endif
 #
 ifdef PCH
 -include AppHdr.h.d
-%.gch: % .cflags
+%.gch: % .cflags $(CONTRIB_LIBS)
 	$(QUIET_PCH)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
 CC_DEP := AppHdr.h.gch
