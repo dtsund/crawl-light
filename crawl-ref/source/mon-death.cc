@@ -64,9 +64,9 @@ void pikel_band_neutralise()
         }
     }
     if (visible_slaves == 1)
-        mprf("With Pikel's spell broken, the former slave thanks you for the gift of freedom.");
+        mpr("With Pikel's spell broken, the former slave thanks you for the gift of freedom.");
     else if (visible_slaves > 1)
-        mprf("With Pikel's spell broken, the former slaves thank you for their freedom.");
+        mpr("With Pikel's spell broken, the former slaves thank you for their freedom.");
 
     add_daction(DACT_PIKEL_SLAVES);
 }
