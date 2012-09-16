@@ -2420,6 +2420,8 @@ enum monster_type                      // (int) menv[].type
     MONS_ILLUSION,              // Illude
     MONS_PRIMORDIAL_LICH,
     MONS_SCREAMING_STATUE,
+    MONS_GNOLL_SHAMAN,
+    MONS_GNOLL_SERGEANT,
 
     NUM_MONSTERS,                      // used for polymorph
 
