@@ -1014,6 +1014,9 @@ static void tag_construct_char(writer &th)
     marshallString(th, you.jiyva_second_name);
 
     marshallByte(th, you.wizard);
+
+    if (crawl_state.game_is_tutorial())
+        marshallString(th, crawl_state.map);
 }
 
 static void tag_construct_you(writer &th)
@@ -1671,6 +1674,12 @@ static void tag_read_char(reader &th)
     you.jiyva_second_name = unmarshallString(th);
 
     you.wizard            = unmarshallBoolean(th);
+
+    if(th.getMinorVersion() >= TAG_MINOR_SAVE_MAP)
+    {
+    if(crawl_state.game_is_tutorial())
+        crawl_state.map = unmarshallString(th);
+    }
 }
 
 static void tag_read_you(reader &th)

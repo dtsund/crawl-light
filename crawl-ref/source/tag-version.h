@@ -21,6 +21,7 @@ enum tag_minor_version
     TAG_MINOR_HELL_KEY,            // Add the key to Hell.
     TAG_MINOR_NUM_LEVEL_CONN,      // Fix level connectivity data hard-coding NUM_BRANCHES.
     TAG_MINOR_CHERUB_ATTACKS,      // Give Cherubs a new attack flavour.
+    TAG_MINOR_SAVE_MAP,            // Save the name of the loaded tutorial map.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
