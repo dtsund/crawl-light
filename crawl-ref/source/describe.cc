@@ -1182,8 +1182,7 @@ static std::string _describe_ammo(const item_def &item)
             break;
         case SPMSL_STEEL:
             description += "Compared to normal ammo, it does 50% more "
-                "damage, is destroyed upon impact only 1/10th of the "
-                "time, and weighs three times as much.";
+                "damage, but weighs three times as much.";
             break;
         case SPMSL_SILVER:
             description += "The touch of silver hurts beings which are out "
@@ -1258,8 +1257,7 @@ void append_armour_stats(std::string &description, const item_def &item)
 
 void append_missile_info(std::string &description)
 {
-    description += "\nAll pieces of ammunition may get destroyed upon impact. "
-                   "Enchantment reduces the chances of such loss.";
+    description += "\nAll such pieces of ammunition will be destroyed upon impact.";
 }
 
 //---------------------------------------------------------------
