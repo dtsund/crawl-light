@@ -1656,8 +1656,6 @@ static void tag_construct_lost_items(writer &th)
 static void tag_construct_game_state(writer &th)
 {
     marshallByte(th, crawl_state.type);
-    if (crawl_state.game_is_tutorial())
-        marshallString(th, get_tutorial_map());
 }
 
 static void tag_read_char(reader &th)
@@ -2243,8 +2241,11 @@ static void tag_read_lost_items(reader &th)
 static void tag_read_game_state(reader &th)
 {
     crawl_state.type = (game_type) unmarshallByte(th);
+    if(th.getMinorVersion() < TAG_MINOR_SAVE_MAP)
+    {
     if (crawl_state.game_is_tutorial())
-        set_tutorial_map(unmarshallString(th));
+        unmarshallString(th);
+    }
 }
 
 template <typename Z>
