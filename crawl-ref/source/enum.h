@@ -2581,6 +2581,9 @@ enum mutation_type
     MUT_SCREAM,
     MUT_SHAGGY_FUR,
     MUT_SHOCK_RESISTANCE,
+#if TAG_MAJOR_VERSION != 32
+    MUT_SLOW,
+#endif
     MUT_SLOW_HEALING,
 #if TAG_MAJOR_VERSION == 32
     MUT_GLOW_TOLERANCE,
@@ -2598,7 +2601,11 @@ enum mutation_type
     MUT_TORMENT_RESISTANCE,
     MUT_TOUGH_SKIN,
     MUT_WEAK,
+#if TAG_MAJOR_VERSION != 32
+    MUT_WILD_MAGIC,
+#else
     MUT_SLOW,
+#endif
     MUT_UNBREATHING,
 
     // Jiyva-specific mutations
@@ -2613,6 +2620,7 @@ enum mutation_type
     MUT_POWERED_BY_PAIN,
 #endif
     MUT_CAMOUFLAGE,
+    MUT_WILD_MAGIC,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION = NUM_MUTATIONS + 1,
