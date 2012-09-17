@@ -441,7 +441,7 @@ LFLOORCOL: red
 LROCKCOL:  red
 KITEM:     O = fiery rune of zot
 MONS:      patrolling Cerebov, balrug, pit fiend
-MONS:      red devil, sun demon, imp
+MONS:      red devil, sun demon, crimson imp
 epilogue{{
   pan_lord_epilogue('Cerebov')
 }}

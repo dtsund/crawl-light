@@ -2198,7 +2198,7 @@ enum monster_type                      // (int) menv[].type
 #endif
 
     // Demons:
-    MONS_IMP,
+    MONS_CRIMSON_IMP,
     MONS_QUASIT,
     MONS_WHITE_IMP,
     MONS_LEMURE,

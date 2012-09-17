@@ -1109,7 +1109,7 @@ bool cast_call_imp(int pow, god_type god)
     if (random2(pow) >= 46 || one_chance_in(6))
         mon = one_chance_in(3) ? MONS_IRON_IMP : MONS_SHADOW_IMP;
     else
-        mon = one_chance_in(3) ? MONS_WHITE_IMP : MONS_IMP;
+        mon = one_chance_in(3) ? MONS_WHITE_IMP : MONS_CRIMSON_IMP;
 
     const int dur = std::min(2 + (random2(pow) / 4), 6);
 
