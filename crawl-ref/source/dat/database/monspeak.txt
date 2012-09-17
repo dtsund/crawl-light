@@ -5512,7 +5512,7 @@ default ice statue
 
 VISUAL:@The_monster@ glitters in the dim dungeon light.
 %%%%
-imp
+crimson imp
 
 w:1
 @_imp_taunt_@
