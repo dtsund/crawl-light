@@ -1474,7 +1474,8 @@ static spret_type _do_cast(spell_type spell, int powc,
         break;
 
     case SPELL_SHATTER:
-        cast_shatter(powc);
+        if(!cast_shatter(powc))
+            return SPRET_ABORT;
         break;
 
     case SPELL_LEDAS_LIQUEFACTION:
@@ -1503,7 +1504,8 @@ static spret_type _do_cast(spell_type spell, int powc,
 #endif
 
     case SPELL_OZOCUBUS_REFRIGERATION:
-        cast_refrigeration(powc);
+        if (!cast_refrigeration(powc))
+            return SPRET_ABORT;
         break;
 
     case SPELL_IGNITE_POISON:

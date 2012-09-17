@@ -370,8 +370,14 @@ void cast_toxic_radiance(bool non_player)
     }
 }
 
-void cast_refrigeration(int pow, bool non_player, bool freeze_potions)
+bool cast_refrigeration(int pow, bool non_player, bool freeze_potions)
 {
+    {
+        targetter_los hitfunc(&you);
+        if (stop_attack_prompt(hitfunc, "harm"))
+            return false;
+    }
+
     if (non_player)
         mpr("Something drains the heat from around you.");
     else
@@ -455,6 +461,8 @@ void cast_refrigeration(int pow, bool non_player, bool freeze_potions)
             mi->add_ench(ENCH_SLOW);
         }
     }
+    
+    return true;
 }
 
 bool vampiric_drain(int pow, monster* mons)
@@ -685,13 +693,10 @@ static bool _player_hurt_monster(monster& m, int damage,
 }
 
 // Here begin the actual spells:
-static int _shatter_monsters(coord_def where, int pow, int, actor *)
+static int _shatter_mon_dice(const monster *mon)
 {
-    dice_def dam_dice(0, 5 + pow / 3); // Number of dice set below.
-    monster* mon = monster_at(where);
-
-    if (mon == NULL)
-        return (0);
+    if (!mon)
+        return 0;
 
     // Removed a lot of silly monsters down here... people, just because
     // it says ice, rock, or iron in the name doesn't mean it's actually
@@ -711,14 +716,12 @@ static int _shatter_monsters(coord_def where, int pow, int, actor *)
     case MONS_SILVER_STATUE:
     case MONS_ORANGE_STATUE:
     case MONS_ROXANNE:
-        dam_dice.num = 6;
-        break;
+        return 6;
 
     // 1/3 damage to liquids.
     case MONS_JELLYFISH:
     case MONS_WATER_ELEMENTAL:
-        dam_dice.num = 1;
-        break;
+        return 1;
 
     default:
         const bool petrifying = mon->petrifying();
@@ -726,24 +729,34 @@ static int _shatter_monsters(coord_def where, int pow, int, actor *)
 
         // Extra damage to petrifying/petrified things.
         if (petrifying || petrified)
-            dam_dice.num = petrifying ? 4 : 6;
+            return petrifying ? 4 : 6;
         // No damage to insubstantials.
         else if (mon->is_insubstantial())
-            dam_dice.num = 0;
+            return 0;
         // 1/3 damage to fliers and slimes.
         else if (mons_flies(mon) || mons_is_slime(mon))
-            dam_dice.num = 1;
+            return 1;
         // 3/2 damage to ice.
         else if (mon->is_icy())
-            dam_dice.num = 4;
+            return 4;
         // Double damage to bone.
         else if (mon->is_skeletal())
-            dam_dice.num = 6;
+            return 6;
         // Normal damage to everything else.
         else
-            dam_dice.num = 3;
-        break;
+            return 3;
     }
+}
+
+static int _shatter_monsters(coord_def where, int pow, int, actor *)
+{
+    dice_def dam_dice(0, 5 + pow / 3); // Number of dice set below.
+    monster* mon = monster_at(where);
+
+    if (mon == NULL)
+        return (0);
+
+    dam_dice.num = _shatter_mon_dice(mon);
 
     int damage = std::max(0, dam_dice.roll() - random2(mon->armour_class()));
 
@@ -858,8 +871,22 @@ static int _shatter_walls(coord_def where, int pow, int, actor *)
     return (0);
 }
 
-void cast_shatter(int pow)
+static bool _shatterable(const actor *act)
 {
+    if (act->atype() != ACT_MONSTER)
+        return true; // no player ghostlies... at least user-controllable ones
+    return _shatter_mon_dice(act->as_monster());
+}
+
+bool cast_shatter(int pow)
+{
+    {
+        int r_min = std::min(3 + you.skill(SK_EARTH_MAGIC) / 5, 7);
+        targetter_los hitfunc(&you, LOS_ARENA, r_min, std::min(r_min + 1, 7));
+        if (stop_attack_prompt(hitfunc, "harm", _shatterable))
+            return false;
+    }
+
     const bool silence = truly_silenced(you.pos());
 
     if (silence)
@@ -879,6 +906,7 @@ void cast_shatter(int pow)
 
     if (dest && !silence)
         mpr("Ka-crash!", MSGCH_SOUND);
+    return true;
 }
 
 static int _ignite_poison_affect_item(item_def& item, bool in_inv)

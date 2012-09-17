@@ -13,12 +13,12 @@ bool cast_hellfire_burst(int pow, bolt &beam);
 void cast_chain_lightning(int pow, const actor *caster);
 
 void cast_toxic_radiance(bool non_player = false);
-void cast_refrigeration(int pow, bool non_player = false,
+bool cast_refrigeration(int pow, bool non_player = false,
                         bool freeze_potions = true);
 bool vampiric_drain(int pow, monster* mons);
 bool cast_freeze(int pow, monster* mons);
 bool cast_airstrike(int pow, const dist &beam);
-void cast_shatter(int pow);
+bool cast_shatter(int pow);
 void cast_ignite_poison(int pow);
 bool cast_discharge(int pow);
 int disperse_monsters(coord_def where, int pow);

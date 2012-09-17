@@ -293,3 +293,44 @@ aff_type targetter_splash::is_affected(coord_def loc)
 
     return anyone_there(loc) ? AFF_YES : AFF_MAYBE;
 }
+
+
+targetter_los::targetter_los(const actor *act, los_type _los,
+                             int input_range, int input_range_max)
+{
+    ASSERT(act);
+    agent = act;
+    origin = aim = act->pos();
+    los = _los;
+    range = input_range;
+    if (!input_range_max)
+        input_range_max = input_range;
+    ASSERT(input_range_max >= input_range);
+    range_max = input_range_max;
+}
+
+bool targetter_los::valid_aim(coord_def a)
+{
+    if ((a - origin).rdist() > range_max)
+        return notify_fail("Out of range.");
+    // If this message ever becomes used, please improve it.  I did not
+    // bother adding complexity just for monsters and "hit allies" prompts
+    // which don't need it.
+    if (!is_affected(a))
+        return notify_fail("The effect is blocked.");
+    return true;
+}
+
+aff_type targetter_los::is_affected(coord_def loc)
+{
+    if (loc == aim)
+        return AFF_YES;
+
+    if ((loc - origin).rdist() > range_max)
+        return AFF_NO;
+
+    if (!cell_see_cell(loc, origin, los))
+        return AFF_NO;
+
+    return (loc - origin).rdist() > range_max ? AFF_MAYBE : AFF_YES;
+}
