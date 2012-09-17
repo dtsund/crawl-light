@@ -913,9 +913,13 @@ SRC_PKG_TAR_NODEPS := $(PKG_SRC_DIR)-nodeps.tar.bz2
 SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
 .PHONY: all test install clean clean-contrib clean-rltiles distclean debug debug-lite\
-        profile package-source source build-windows package-windows
+        profile package-source source build-windows package-windows greet
 
-all: buildscript $(GAME) $(GENERATED_DOCS)
+all: greet buildscript $(GAME) $(GENERATED_DOCS)
+
+greet:
+	@echo "  * If you experience any problems building Crawl, please take a second look"
+	@echo "    at INSTALL.txt: the solution to your problem just might be in there!"
 
 buildscript:
 ifdef FINAL
