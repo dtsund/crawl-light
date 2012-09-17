@@ -4602,7 +4602,7 @@ static monsterentry mondata[] = {
 // minor demons: imps, etc. ('5')
 // note: these things regenerate
 {
-    MONS_CRIMSON_IMP, '5', RED, "imp",
+    MONS_CRIMSON_IMP, '5', RED, "crimson imp",
     M_SPEAKS,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 13, MONS_CRIMSON_IMP, MONS_CRIMSON_IMP, MH_DEMONIC, -9,

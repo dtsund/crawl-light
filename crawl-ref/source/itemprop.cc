@@ -97,7 +97,7 @@ static armour_def Armour_prop[NUM_ARMOURS] =
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_FIRE_DRAGON_HIDE,     "fire dragon hide",       3, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_FIRE_DRAGON_ARMOUR,   "fir edragon armour",     8, -3,  350,
+    { ARM_FIRE_DRAGON_ARMOUR,   "fire dragon armour",     8, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_ICE_DRAGON_HIDE,      "ice dragon hide",        4, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
