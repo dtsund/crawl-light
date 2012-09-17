@@ -1098,6 +1098,7 @@ ENDMAP
 NAME:  feat_on_display
 DEPTH: D, Elf, Crypt, Vault
 TAGS:  serial_glass_rare allow_dup
+KPROP: ? = no_rtele_into
 SUBST: ? = TUl
 TAGS:  no_monster_gen no_item_gen
 MAP
@@ -1112,6 +1113,7 @@ NAME:   item_on_display_a
 DEPTH:  D, Elf, Crypt, Vault
 TAGS:   serial_glass_rare allow_dup
 WEIGHT: 9
+KPROP:  % = no_rtele_into
 SUBST:  % = %%%*
 TAGS:   no_monster_gen no_item_gen
 MAP
@@ -1126,6 +1128,7 @@ NAME:   item_on_display_b
 DEPTH:  D, Elf, Crypt, Vault
 TAGS:   serial_glass_rare allow_dup
 WEIGHT: 1
+KPROP:  * = no_rtele_into
 SUBST:  * = ***|
 TAGS:   no_monster_gen no_item_gen
 MAP
@@ -1142,6 +1145,7 @@ NAME:   unseen_surprise_small
 WEIGHT: 1
 TAGS:   serial_glass_rare allow_dup no_wall_fixup
 DEPTH:  D:5-18, Elf, Crypt, Vault
+KPROP:  a = no_rtele_into
 KMONS:  a = generate_awake unseen_horror
 KITEM:  a = | / *
 MAP
@@ -1156,6 +1160,7 @@ ENDMAP
 NAME:   due_unseen_surprise
 DEPTH:  D, Elf, Crypt, Vault
 TAGS:   serial_glass_rare allow_dup no_wall_fixup luniq
+KPROP:  ab = no_rtele_into
 : if you.absdepth()<8 or crawl.random2(18)>you.absdepth() then
 SUBST:  a = %
 SUBST:  b = %**
@@ -1210,6 +1215,7 @@ ENDMAP
 NAME:  minmay_statues_item
 TAGS:  extra luniq_mini
 DEPTH: D:1-17
+KPROP: % = no_rtele_into
 MAP
 .....
 .GcG.
