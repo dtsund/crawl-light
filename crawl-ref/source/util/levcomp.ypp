@@ -1,9 +1,8 @@
 %{
 
+#include "AppHdr.h"
 #include <map>
 #include <algorithm>
-
-#include "AppHdr.h"
 #include "l_defs.h"
 #include "libutil.h"
 #include "mapdef.h"
