@@ -12,7 +12,7 @@
 
 struct bolt;
 
-std::string zin_recite_text(int* trits, size_t len, int prayertype, int step);
+std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
 bool zin_check_able_to_recite();
 int zin_check_recite_to_monsters(recite_type *prayertype);
 bool zin_recite_to_single_monster(const coord_def& where,
@@ -92,7 +92,7 @@ void lugonu_abyss_enter();
 bool is_ponderousifiable(const item_def& item);
 bool ponderousify_armour();
 void cheibriados_time_bend(int pow);
-int cheibriados_slouch(int pow);
+bool cheibriados_slouch(int pow);
 void cheibriados_time_step(int pow);
 
 bool ashenzari_transfer_knowledge();

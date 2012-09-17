@@ -2471,7 +2471,11 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_CHEIBRIADOS_SLOUCH:
-        cheibriados_slouch(0);
+        if (!cheibriados_slouch(0))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         break;
 
     case ABIL_ASHENZARI_SCRYING:
