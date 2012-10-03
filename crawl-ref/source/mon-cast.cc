@@ -340,6 +340,11 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
         beam.is_beam  = true;
         break;
 
+    case SPELL_RANDOM_STATUS:
+        beam.flavour  = BEAM_PARALYSIS; //FIXME
+        beam.is_beam  = true;
+        break;
+
     case SPELL_SLOW:
         beam.flavour  = BEAM_SLOW;
         beam.is_beam  = true;
@@ -3665,6 +3670,12 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         mons->add_ench(mon_enchant(ENCH_REGENERATION, 0, mons, dur));
         return;
         }
+    case SPELL_RANDOM_STATUS:
+        {
+            //Do nothing, currently.
+            simple_monster_message(mons, " does something completely random!");
+        }
+        return;
     }
 
     // If a monster just came into view and immediately cast a spell,

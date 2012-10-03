@@ -3022,6 +3022,19 @@ struct spell_desc
 },
 
 {
+    SPELL_RANDOM_STATUS, "Random Status",
+     SPTYP_SORCERY,
+     SPFLAG_MONSTER,
+     4,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
      0,
      SPFLAG_TESTING,
