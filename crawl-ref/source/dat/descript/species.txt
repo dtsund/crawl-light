@@ -1,7 +1,7 @@
 %%%%
 Centaur
 
-Swift, strong and bulky, they need more food than other species.
+Swift, strong and bulky, they excel at ranged combat.
 %%%%
 Deep Dwarf
 
@@ -53,7 +53,7 @@ Bird-men who love to fight, both with weapons and spells. They are quite fragile
 %%%%
 Kobold
 
-Small, mischievous and a little fragile, but multi-talented. They can and will eat any meat.
+Small, mischievous and a little fragile, but multi-talented.
 %%%%
 Merfolk
 
@@ -69,7 +69,7 @@ Sturdy, strong and not too intelligent, they love heavy weapons and armours.
 %%%%
 Mummy
 
-An undead figure covered in bandages and embalming fluids, compelled to walk by an ancient curse.
+An undead figure covered in bandages and embalming fluids. Being undead, they are resistant to magical contamination.
 %%%%
 Naga
 
@@ -89,7 +89,7 @@ Very small, very frail and very fast. Spriggans make highly competent stabbers a
 %%%%
 Troll
 
-Large brutes, ready to maim anything with their claws, never thinking twice. They're always hungry.
+Large brutes, ready to maim anything with their claws, never thinking twice.
 %%%%
 Vampire
 
