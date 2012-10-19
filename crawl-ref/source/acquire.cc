@@ -1933,7 +1933,7 @@ bool acquirement(object_class_type class_wanted, int agent,
 
         const std::string hello = "What would you like to acquire?";
         
-        std::vector<int> stock(8);
+        std::vector<int> stock(9);
         
         if(you.species == SP_CAT)
         {
@@ -1952,6 +1952,9 @@ bool acquirement(object_class_type class_wanted, int agent,
             index++;
             stock[index] = acquirement_create_item_general(OBJ_ARMOUR, agent, tempQuiet,
                                                    stock_loc, debug, false);
+            index++;
+            stock[index] = acquirement_create_item_general(OBJ_MISSILES, agent, tempQuiet,
+                                                       stock_loc, debug, false);
             index++;
         }
         stock[index] = acquirement_create_item_general(OBJ_JEWELLERY, agent, tempQuiet,
@@ -1973,9 +1976,6 @@ bool acquirement(object_class_type class_wanted, int agent,
                                                    stock_loc, debug, false);
         index++;
         stock[index] = acquirement_create_item_general(OBJ_GOLD, agent, tempQuiet,
-                                                   stock_loc, debug, false);
-        index++;
-        stock[index] = acquirement_create_item_general(OBJ_MISSILES, agent, tempQuiet,
                                                    stock_loc, debug, false);
         index++;
 
