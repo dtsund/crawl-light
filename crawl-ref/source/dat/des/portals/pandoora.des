@@ -159,6 +159,7 @@ MARKER:  / = lua:props_marker { \
              veto_disintegrate="veto", \
              veto_shatter="veto", \
              veto_fragmentation="veto", \
+             veto_corruption="veto", \
              }
 MARKER: O = lua:portal_desc {pandoora_portal_phase = 1}
 MARKER: / = lua:portal_desc {restricted_door_phase = 1}
@@ -166,13 +167,13 @@ KPROP:  "({[O = no_tele_into
 SUBST:   "^ = .
 SUBST:   / = +
 MAP
-xxxxx
-x("[x
-x"{"x
-x"""x
-x"O"x
-xx/xx
- x^x
+XXXXX
+X("[X
+X"{"X
+X"""X
+X"O"X
+XX/XX
+ X^X
  x.x
  x+x
 ENDMAP

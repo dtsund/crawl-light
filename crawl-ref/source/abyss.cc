@@ -1289,6 +1289,10 @@ static bool _is_grid_corruptible(const coord_def &c)
     // Stairs and portals cannot be corrupted.
     if (feat_stair_direction(feat) != CMD_NO_CMD)
         return (false);
+    
+    // Don't corrupt places flagged as incorruptible.
+    if(env.markers.property_at(c, MAT_ANY, "veto_corruption") == "veto")
+        return (false);
 
     switch (feat)
     {
