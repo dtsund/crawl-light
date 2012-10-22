@@ -1098,12 +1098,12 @@ coord_def direction_chooser::find_default_target() const
                     && mons_attitude(mon_target) == ATT_HOSTILE
                 || mode == TARG_ENEMY && !mon_target->friendly()
                 || mode == TARG_EVOLVABLE_PLANTS
-                    && mons_is_evolvable(mon_target))
+                    && mons_is_evolvable(mon_target)
                 || mode == TARG_INJURED_FRIEND
                     && (mon_target->friendly() && mons_get_damage_level(mon_target) > MDAM_OKAY
                        || (!mon_target->wont_attack()
                            && !mon_target->neutral()
-                           && is_pacifiable(mon_target) >= 0))
+                           && is_pacifiable(mon_target) >= 0)))
             && in_range(mon_target->pos()))
         {
             result = mon_target->pos();
