@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -6,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Crawl Light</string>
 	<key>CFBundleExecutable</key>
-	<string>%EXECUTABLE%</string>
+	<string>Crawl Light</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.crawl-ref</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -16,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
-        <key>CFBundleVersion</key>
-        <string>%VERSION%</string>
+	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.4.2</string>
 	<key>LSMultipleInstancesProhibited</key>
@@ -28,6 +29,6 @@
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright %YEAR%, Crawl Light DevTeam</string>
+	<string>Copyright 2012, Crawl Light DevTeam</string>
 </dict>
 </plist>
