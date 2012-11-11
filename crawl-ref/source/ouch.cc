@@ -515,16 +515,6 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     if (target_class == OBJ_UNASSIGNED)
         return (false);
 
-    // Fedhas worshipers are exempt from the food destruction effect
-    // of spores.
-    if (flavour == BEAM_SPORE
-        && you.religion == GOD_FEDHAS)
-    {
-        simple_god_message(" protects your food from the spores.",
-                           GOD_FEDHAS);
-        return (false);
-    }
-
     // Currently we test against each stack (and item in the stack)
     // independently at strength%... perhaps we don't want that either
     // because it makes the system very fair and removes the protection
@@ -538,13 +528,6 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             || target_class == OBJ_FOOD
                && you.inv[i].base_type == OBJ_CORPSES)
         {
-            // Conservation doesn't help against harpies' devouring food.
-            if (flavour != BEAM_DEVOUR_FOOD
-                && player_item_conserve() && !one_chance_in(10))
-            {
-                continue;
-            }
-
             // These stack with conservation; they're supposed to be good.
             if (target_class == OBJ_SCROLLS
                 && you.mutation[MUT_CONSERVE_SCROLLS]
@@ -606,16 +589,6 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                          item_name.c_str(),
                          (num_dest == 1) ? "s" : "",
                          (num_dest == 1) ? "s" : "");
-                     break;
-
-                case OBJ_FOOD:
-                    // Message handled elsewhere.
-                    if (flavour == BEAM_DEVOUR_FOOD)
-                        break;
-                    mprf("%s %s %s covered with spores!",
-                         part_stack_string(num_dest, quantity).c_str(),
-                         item_name.c_str(),
-                         (num_dest == 1) ? "is" : "are");
                      break;
 
                 default:
