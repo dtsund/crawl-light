@@ -15,8 +15,6 @@
 		4C59B0AD11E798C400760867 /* tiledef-feat.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B0AA11E798C400760867 /* tiledef-feat.cc */; };
 		4C59B0AE11E798C400760867 /* tiledef-floor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B0AB11E798C400760867 /* tiledef-floor.cc */; };
 		4C59B0AF11E798C400760867 /* tiledef-wall.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B0AC11E798C400760867 /* tiledef-wall.cc */; };
-		4C59B0BF11E79BB100760867 /* dgn-actions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B08911E7964700760867 /* dgn-actions.cc */; };
-		4C59B0C011E79BB600760867 /* dgn-actions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B08911E7964700760867 /* dgn-actions.cc */; };
 		4C59B0D611E79F6800760867 /* hints.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C59B08A11E7964700760867 /* hints.cc */; };
 		4C59B0E711E7A06D00760867 /* feat.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C59B0E411E7A06D00760867 /* feat.png */; };
 		4C59B0E811E7A06D00760867 /* floor.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C59B0E511E7A06D00760867 /* floor.png */; };
@@ -79,7 +77,6 @@
 		7B09F5981133D6AB004F149D /* hiscores.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FCE10BD494400A99626 /* hiscores.cc */; };
 		7B09F5991133D6AB004F149D /* initfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD010BD494400A99626 /* initfile.cc */; };
 		7B09F59A1133D6AB004F149D /* invent.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD210BD494400A99626 /* invent.cc */; };
-		7B09F59C1133D6AB004F149D /* it_use3.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD610BD494400A99626 /* it_use3.cc */; };
 		7B09F59D1133D6AB004F149D /* item_use.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD810BD494400A99626 /* item_use.cc */; };
 		7B09F59E1133D6AB004F149D /* itemname.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FDA10BD494400A99626 /* itemname.cc */; };
 		7B09F59F1133D6AB004F149D /* itemprop.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FDD10BD494400A99626 /* itemprop.cc */; };
@@ -389,6 +386,12 @@
 		B0F7DF8C1086F0DB008FFA70 /* SDL_image.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = B0F7DF861086F0CB008FFA70 /* SDL_image.framework */; };
 		B0F7DFEF1086F4F1008FFA70 /* libpng.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F7DFEE1086F4EA008FFA70 /* libpng.framework */; };
 		B0F7DFF01086F4F6008FFA70 /* libpng.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = B0F7DFEE1086F4EA008FFA70 /* libpng.framework */; };
+		BD17D79416462A5300D0C67E /* dactions.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D79216462A5300D0C67E /* dactions.cc */; };
+		BD17D79916462A6E00D0C67E /* dgn-labyrinth.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D79516462A6E00D0C67E /* dgn-labyrinth.cc */; };
+		BD17D79A16462A6E00D0C67E /* dgn-layouts.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D79716462A6E00D0C67E /* dgn-layouts.cc */; };
+		BD17D79D16462A9C00D0C67E /* evoke.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D79B16462A9C00D0C67E /* evoke.cc */; };
+		BD17D7A016462ACF00D0C67E /* godmenu.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D79E16462ACF00D0C67E /* godmenu.cc */; };
+		BD17D7A316462B0D00D0C67E /* mon-ench.cc in Sources */ = {isa = PBXBuildFile; fileRef = BD17D7A116462B0D00D0C67E /* mon-ench.cc */; };
 		BDE4326C13F7647C00B88AFD /* zotdef.cc in Sources */ = {isa = PBXBuildFile; fileRef = BDE4326A13F7647C00B88AFD /* zotdef.cc */; };
 		BDE4326F13F765CD00B88AFD /* acquire.cc in Sources */ = {isa = PBXBuildFile; fileRef = BDE4326D13F765CD00B88AFD /* acquire.cc */; };
 		BDE4328513F766B200B88AFD /* spl-clouds.cc in Sources */ = {isa = PBXBuildFile; fileRef = BDE4327013F766B100B88AFD /* spl-clouds.cc */; };
@@ -488,7 +491,6 @@
 		E5D640F210BD494500A99626 /* hiscores.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FCE10BD494400A99626 /* hiscores.cc */; };
 		E5D640F310BD494500A99626 /* initfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD010BD494400A99626 /* initfile.cc */; };
 		E5D640F410BD494500A99626 /* invent.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD210BD494400A99626 /* invent.cc */; };
-		E5D640F610BD494500A99626 /* it_use3.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD610BD494400A99626 /* it_use3.cc */; };
 		E5D640F710BD494500A99626 /* item_use.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FD810BD494400A99626 /* item_use.cc */; };
 		E5D640F810BD494500A99626 /* itemname.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FDA10BD494400A99626 /* itemname.cc */; };
 		E5D640F910BD494500A99626 /* itemprop.cc in Sources */ = {isa = PBXBuildFile; fileRef = E5D63FDD10BD494400A99626 /* itemprop.cc */; };
@@ -864,9 +866,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C59B08711E7964700760867 /* dgn-actions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dgn-actions.h"; sourceTree = "<group>"; };
 		4C59B08811E7964700760867 /* hints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hints.h; sourceTree = "<group>"; };
-		4C59B08911E7964700760867 /* dgn-actions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dgn-actions.cc"; sourceTree = "<group>"; };
 		4C59B08A11E7964700760867 /* hints.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hints.cc; sourceTree = "<group>"; };
 		4C59B08B11E7964700760867 /* tiledgnbuf.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tiledgnbuf.cc; sourceTree = "<group>"; };
 		4C59B08C11E7964700760867 /* tilepick-p.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tilepick-p.cc"; sourceTree = "<group>"; };
@@ -1065,7 +1065,7 @@
 		B02C575F10670ED2006AC96D /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
 		B02C576010670ED2006AC96D /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
 		B02C57901067129A006AC96D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		B032D527106C01AF0002D70D /* Dungeon Crawl Stone Soup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dungeon Crawl Stone Soup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B032D527106C01AF0002D70D /* Dungeon Crawl Stone Soup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Dungeon Crawl Stone Soup.app"; path = "Crawl Light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B082656F10731A95006EEC5A /* libSQLite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSQLite.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B082657610731AB5006EEC5A /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = contrib/sqlite/sqlite3.c; sourceTree = "<group>"; };
 		B082657710731AB5006EEC5A /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = contrib/sqlite/sqlite3.h; sourceTree = "<group>"; };
@@ -1093,6 +1093,18 @@
 		B0F7DEF91086EE79008FFA70 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = contrib/sdl/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
 		B0F7DF7B1086F0CB008FFA70 /* SDL_image.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL_image.xcodeproj; path = "contrib/sdl-image/Xcode/SDL_image.xcodeproj"; sourceTree = "<group>"; };
 		B0F7DFE61086F4EA008FFA70 /* libpng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpng.xcodeproj; path = contrib/libpng/projects/xcode/libpng.xcodeproj; sourceTree = "<group>"; };
+		BD17D79216462A5300D0C67E /* dactions.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dactions.cc; sourceTree = "<group>"; };
+		BD17D79316462A5300D0C67E /* dactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dactions.h; sourceTree = "<group>"; };
+		BD17D79516462A6E00D0C67E /* dgn-labyrinth.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dgn-labyrinth.cc"; sourceTree = "<group>"; };
+		BD17D79616462A6E00D0C67E /* dgn-labyrinth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dgn-labyrinth.h"; sourceTree = "<group>"; };
+		BD17D79716462A6E00D0C67E /* dgn-layouts.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dgn-layouts.cc"; sourceTree = "<group>"; };
+		BD17D79816462A6E00D0C67E /* dgn-layouts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dgn-layouts.h"; sourceTree = "<group>"; };
+		BD17D79B16462A9C00D0C67E /* evoke.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = evoke.cc; sourceTree = "<group>"; };
+		BD17D79C16462A9C00D0C67E /* evoke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evoke.h; sourceTree = "<group>"; };
+		BD17D79E16462ACF00D0C67E /* godmenu.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = godmenu.cc; sourceTree = "<group>"; };
+		BD17D79F16462ACF00D0C67E /* godmenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = godmenu.h; sourceTree = "<group>"; };
+		BD17D7A116462B0D00D0C67E /* mon-ench.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mon-ench.cc"; sourceTree = "<group>"; };
+		BD17D7A216462B0D00D0C67E /* mon-ench.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mon-ench.h"; sourceTree = "<group>"; };
 		BDE4326A13F7647C00B88AFD /* zotdef.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zotdef.cc; sourceTree = "<group>"; };
 		BDE4326B13F7647C00B88AFD /* zotdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zotdef.h; sourceTree = "<group>"; };
 		BDE4326D13F765CD00B88AFD /* acquire.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acquire.cc; sourceTree = "<group>"; };
@@ -1317,8 +1329,6 @@
 		E5D63FD110BD494400A99626 /* initfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = initfile.h; sourceTree = "<group>"; };
 		E5D63FD210BD494400A99626 /* invent.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = invent.cc; sourceTree = "<group>"; };
 		E5D63FD310BD494400A99626 /* invent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invent.h; sourceTree = "<group>"; };
-		E5D63FD610BD494400A99626 /* it_use3.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = it_use3.cc; sourceTree = "<group>"; };
-		E5D63FD710BD494400A99626 /* it_use3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = it_use3.h; sourceTree = "<group>"; };
 		E5D63FD810BD494400A99626 /* item_use.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = item_use.cc; sourceTree = "<group>"; };
 		E5D63FD910BD494400A99626 /* item_use.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = item_use.h; sourceTree = "<group>"; };
 		E5D63FDA10BD494400A99626 /* itemname.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = itemname.cc; sourceTree = "<group>"; };
@@ -1704,7 +1714,6 @@
 		7B352EF00B001F5B00CABB32 /* Crawl */ = {
 			isa = PBXGroup;
 			children = (
-				4C59B08711E7964700760867 /* dgn-actions.h */,
 				4C59B08811E7964700760867 /* hints.h */,
 				4C59B08A11E7964700760867 /* hints.cc */,
 				E5D63F5D10BD494300A99626 /* abl-show.cc */,
@@ -1762,6 +1771,8 @@
 				E5D63F9210BD494400A99626 /* crash.h */,
 				E5D63F9310BD494400A99626 /* ctest.cc */,
 				E5D63F9410BD494400A99626 /* ctest.h */,
+				BD17D79216462A5300D0C67E /* dactions.cc */,
+				BD17D79316462A5300D0C67E /* dactions.h */,
 				E5D63F9510BD494400A99626 /* database.cc */,
 				E5D63F9610BD494400A99626 /* database.h */,
 				E5D63F9710BD494400A99626 /* dbg-asrt.cc */,
@@ -1782,9 +1793,12 @@
 				E5D63FA610BD494400A99626 /* describe.h */,
 				7B51659911859D30005B23ED /* dgl-message.cc */,
 				7B51659A11859D30005B23ED /* dgl-message.h */,
-				4C59B08911E7964700760867 /* dgn-actions.cc */,
 				7B09F6371133D823004F149D /* dgn-height.cc */,
 				7B09F6381133D823004F149D /* dgn-height.h */,
+				BD17D79516462A6E00D0C67E /* dgn-labyrinth.cc */,
+				BD17D79616462A6E00D0C67E /* dgn-labyrinth.h */,
+				BD17D79716462A6E00D0C67E /* dgn-layouts.cc */,
+				BD17D79816462A6E00D0C67E /* dgn-layouts.h */,
 				7B09F6391133D823004F149D /* dgn-overview.cc */,
 				7B09F63A1133D823004F149D /* dgn-overview.h */,
 				7B09F63B1133D823004F149D /* dgn-shoals.cc */,
@@ -1807,6 +1821,8 @@
 				BDE432A713F76BD900B88AFD /* errors.cc */,
 				BDE432A813F76BD900B88AFD /* errors.h */,
 				E5D63FB210BD494400A99626 /* env.h */,
+				BD17D79B16462A9C00D0C67E /* evoke.cc */,
+				BD17D79C16462A9C00D0C67E /* evoke.h */,
 				E5D63FB310BD494400A99626 /* exclude.cc */,
 				E5D63FB410BD494400A99626 /* exclude.h */,
 				BDE432B313F76D3A00B88AFD /* fearmonger.cc */,
@@ -1844,6 +1860,8 @@
 				7B09F53C1133D63E004F149D /* godconduct.h */,
 				E5D63FCA10BD494400A99626 /* goditem.cc */,
 				E5D63FCB10BD494400A99626 /* goditem.h */,
+				BD17D79E16462ACF00D0C67E /* godmenu.cc */,
+				BD17D79F16462ACF00D0C67E /* godmenu.h */,
 				7B09F53D1133D63E004F149D /* godpassive.cc */,
 				7B09F53E1133D63E004F149D /* godpassive.h */,
 				7B09F53F1133D63E004F149D /* godprayer.cc */,
@@ -1856,8 +1874,6 @@
 				E5D63FD110BD494400A99626 /* initfile.h */,
 				E5D63FD210BD494400A99626 /* invent.cc */,
 				E5D63FD310BD494400A99626 /* invent.h */,
-				E5D63FD610BD494400A99626 /* it_use3.cc */,
-				E5D63FD710BD494400A99626 /* it_use3.h */,
 				E5D63FD810BD494400A99626 /* item_use.cc */,
 				E5D63FD910BD494400A99626 /* item_use.h */,
 				E5D63FDA10BD494400A99626 /* itemname.cc */,
@@ -1955,6 +1971,8 @@
 				E5D6402C10BD494400A99626 /* mon-data.h */,
 				7B09F5561133D66C004F149D /* mon-death.cc */,
 				7B09F5571133D66C004F149D /* mon-death.h */,
+				BD17D7A116462B0D00D0C67E /* mon-ench.cc */,
+				BD17D7A216462B0D00D0C67E /* mon-ench.h */,
 				7B09F5581133D66C004F149D /* mon-enum.h */,
 				E5D6402D10BD494400A99626 /* mon-gear.cc */,
 				E5D6402E10BD494400A99626 /* mon-gear.h */,
@@ -2901,7 +2919,6 @@
 				7B09F5981133D6AB004F149D /* hiscores.cc in Sources */,
 				7B09F5991133D6AB004F149D /* initfile.cc in Sources */,
 				7B09F59A1133D6AB004F149D /* invent.cc in Sources */,
-				7B09F59C1133D6AB004F149D /* it_use3.cc in Sources */,
 				7B09F59D1133D6AB004F149D /* item_use.cc in Sources */,
 				7B09F59E1133D6AB004F149D /* itemname.cc in Sources */,
 				7B09F59F1133D6AB004F149D /* itemprop.cc in Sources */,
@@ -3041,7 +3058,6 @@
 				7B09F62C1133D6AB004F149D /* wiz-mon.cc in Sources */,
 				7B09F62D1133D6AB004F149D /* wiz-you.cc in Sources */,
 				7B09F62E1133D6AB004F149D /* xom.cc in Sources */,
-				4C59B0C011E79BB600760867 /* dgn-actions.cc in Sources */,
 				4C59B0D611E79F6800760867 /* hints.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3115,7 +3131,6 @@
 				E5D640F210BD494500A99626 /* hiscores.cc in Sources */,
 				E5D640F310BD494500A99626 /* initfile.cc in Sources */,
 				E5D640F410BD494500A99626 /* invent.cc in Sources */,
-				E5D640F610BD494500A99626 /* it_use3.cc in Sources */,
 				E5D640F710BD494500A99626 /* item_use.cc in Sources */,
 				E5D640F810BD494500A99626 /* itemname.cc in Sources */,
 				E5D640F910BD494500A99626 /* itemprop.cc in Sources */,
@@ -3291,7 +3306,6 @@
 				4C59B0AD11E798C400760867 /* tiledef-feat.cc in Sources */,
 				4C59B0AE11E798C400760867 /* tiledef-floor.cc in Sources */,
 				4C59B0AF11E798C400760867 /* tiledef-wall.cc in Sources */,
-				4C59B0BF11E79BB100760867 /* dgn-actions.cc in Sources */,
 				BDE4326C13F7647C00B88AFD /* zotdef.cc in Sources */,
 				BDE4326F13F765CD00B88AFD /* acquire.cc in Sources */,
 				BDE4328513F766B200B88AFD /* spl-clouds.cc in Sources */,
@@ -3334,6 +3348,12 @@
 				BDE432E113F7701600B88AFD /* uncompr.c in Sources */,
 				BDE432E213F7701600B88AFD /* zutil.c in Sources */,
 				BDE432E513F7735400B88AFD /* tiledef-icons.cc in Sources */,
+				BD17D79416462A5300D0C67E /* dactions.cc in Sources */,
+				BD17D79916462A6E00D0C67E /* dgn-labyrinth.cc in Sources */,
+				BD17D79A16462A6E00D0C67E /* dgn-layouts.cc in Sources */,
+				BD17D79D16462A9C00D0C67E /* evoke.cc in Sources */,
+				BD17D7A016462ACF00D0C67E /* godmenu.cc in Sources */,
+				BD17D7A316462B0D00D0C67E /* mon-ench.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
