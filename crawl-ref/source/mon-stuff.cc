@@ -2511,7 +2511,11 @@ int monster_die(monster* mons, killer_type killer,
     // and ready for stabbing.
     // Don't put a monster off-balance if it deliberately clawed through an illusion to
     // reach the player.
-    if (killer == KILL_MON && menv[killer_index].foe != MHITYOU && mons->type == MONS_ILLUSION)
+    // Need to check killer_index for being at most NON_MONSTER because of crude hackery
+    // in place in beam.cc to avoid ballisto and spore kills being counted as Fedhas
+    // misconduct.
+    if (killer == KILL_MON && killer_index <= NON_MONSTER &&
+	menv[killer_index].foe != MHITYOU && mons->type == MONS_ILLUSION)
     {
         menv[killer_index].add_ench(ENCH_OFF_BALANCE);
         simple_monster_message(&menv[killer_index], " is thrown off-balance!");
