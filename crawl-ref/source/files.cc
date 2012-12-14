@@ -1261,7 +1261,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
     // This block is to grab followers and save the old level to disk.
     if (load_mode == LOAD_ENTER_LEVEL)
     {
-        ASSERT(old_level.depth != -1); // what's this for?
+        //ASSERT(old_level.depth != -1); // what's this for?
         
         _grab_followers(old_level);
 
