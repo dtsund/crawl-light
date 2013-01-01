@@ -441,7 +441,19 @@ void pray()
     {
         int sacrifice_result = _sacrifice_all_in_los();
         if (sacrifice_result > 0)
+        {
+            //Flash a god-appropriate color.
+            if(you.religion == GOD_TROG || you.religion == GOD_MAKHLEB 
+               || you.religion == GOD_OKAWARU)
+            {
+                flash_view_delay(RED, 300);
+            }
+            else if(you.religion == GOD_LUGONU)
+            {
+                flash_view_delay(MAGENTA, 300);
+            }
             something_happened = true;
+        }
         else if (sacrifice_result < 0)
             simple_god_message(" only cares about fresh corpses!");
         break;
@@ -451,7 +463,11 @@ void pray()
     {
         int sacrifice_result = _sacrifice_all_in_los();
         if (sacrifice_result > 0)
+        {
+            //Flash a god-appropriate color.
+            flash_view_delay(RED, 300);
             something_happened = true;
+        }
         else if (sacrifice_result < 0)
             simple_god_message(" only cares about orcish remains!");
         break;
