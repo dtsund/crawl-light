@@ -230,7 +230,7 @@ public:
   int           exploration;          // levels explored (16.16 bit real number)
   
   int           difficulty_level;     // Difficulty level (how many of the Pandooras
-                                      // have been opened
+                                      // have been opened)
 
   int           last_view_update;     // what turn was the view last updated?
   
