@@ -3197,11 +3197,16 @@ static const char* _challenge_description(challenge_type t)
                "against incredible odds.  You wish you hadn't been chosen to be that hero, as "
                "you find yourself gaining experience at half the normal rate...";
     case CHALLENGE_TROG:
-        return "Wrath of Trog";
+        return "Do you like being berserk?  How about being berserk ALL THE TIME?  Thanks (or "
+               "no thanks) to Trog, now you are, with all the benefits - and drawbacks - this "
+               "entails.";
     case CHALLENGE_JIYVA:
-        return "Wrath of Jiyva";
+        return "Hope you weren't going to the dungeon hoping to find treasure; Jiyva's slimes "
+               "have already been through the place and eaten half the loot!";
     case CHALLENGE_VEHUMET:
-        return "Wrath of Vehumet";
+        return "Vehumet loves destruction and hates all that which undoes it.  Ever since the 
+               "god took an interest in the dungeon, all healing effects save natural "
+               "regeneration have stopped working."
     default:
         break;
     }
@@ -3211,7 +3216,7 @@ static const char* _challenge_description(challenge_type t)
 
 static void _construct_challenge_menu(const newgame_def& defaults,
                                       MenuFreeform* menu)
-{
+{Wrath of Jiyva
     static const int ITEMS_START_Y = 5;
     static const int MENU_COLUMN_WIDTH = get_number_of_cols();
     TextItem* tmp = NULL;
