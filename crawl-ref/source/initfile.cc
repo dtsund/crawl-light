@@ -293,6 +293,8 @@ std::string gametype_to_str(game_type type)
     {
     case GAME_TYPE_NORMAL:
         return ("normal");
+    case GAME_TYPE_CHALLENGE:
+        return ("challenge");
     case GAME_TYPE_TUTORIAL:
         return ("tutorial");
     case GAME_TYPE_ARENA:

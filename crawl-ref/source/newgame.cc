@@ -23,6 +23,7 @@
 #include "ng-input.h"
 #include "ng-restr.h"
 #include "options.h"
+#include "player.h"
 #include "random.h"
 #include "religion.h"
 #include "species.h"
@@ -45,6 +46,8 @@ static bool _choose_god(newgame_def* ng, newgame_def* ng_choice,
                         const newgame_def& defaults);
 static bool _choose_wand(newgame_def* ng, newgame_def* ng_choice,
                          const newgame_def& defaults);
+static void _choose_challenge(newgame_def* ng, newgame_def* ng_choice,
+                              const newgame_def& defaults);
 
 ////////////////////////////////////////////////////////////////////////
 // Remember player's startup options
@@ -477,6 +480,12 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
 
     if (ng->type == GAME_TYPE_SPRINT || ng->type == GAME_TYPE_TUTORIAL)
         _choose_gamemode_map(ng, choice, defaults);
+    
+    // you.challenge is set here instead of you.init, which is called later
+    if (ng->type == GAME_TYPE_CHALLENGE)
+        _choose_challenge(ng, choice, defaults);
+    else
+        you.challenge = CHALLENGE_NONE;
 
     _choose_char(ng, choice, defaults);
 
@@ -3160,4 +3169,241 @@ static void _choose_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
     }
 
     _resolve_gamemode_map(ng, ng_choice, maps);
+}
+
+static const char* _challenge_description(challenge_type t)
+{
+    switch (t)
+    {
+              //80-character visual aid
+              //---------+---------+---------+---------+---------+---------+---------+---------+
+    case CHALLENGE_XOM:
+        return "In a previous life, you angered Xom; now you suffer the capricious god's "
+               "unending wrath!";
+    case CHALLENGE_NEMELEX:
+        return "Nemelex thought your life was too orderly, and so the gambler tempted you with "
+               "some inexhaustible decks.  Little did you know that you'd be unable to do much "
+               "else but use them forever!";
+    case CHALLENGE_CHEIBRIADOS:
+        return "Once, you were a champion runner, one of the fastest people alive.  The curse "
+               "Cheibriados placed upon you changed that forever, and now you're 25% slower than "
+               "the average person!";
+    case CHALLENGE_SIF_MUNA:
+        return "Everything Sif Muna knows, the wise god learned from books.  Now you must do "
+               "the same; you won't be able to advance skills except through manuals!  As "
+               "compensation, manuals are a lot more common than normal.";
+    case CHALLENGE_OKAWARU:
+        return "If there's one thing Okawaru loves, it's a hero achieving victory in battle "
+               "against incredible odds.  You wish you hadn't been chosen to be that hero, as "
+               "you find yourself gaining experience at half the normal rate...";
+    case CHALLENGE_TROG:
+        return "Wrath of Trog";
+    case CHALLENGE_JIYVA:
+        return "Wrath of Jiyva";
+    case CHALLENGE_VEHUMET:
+        return "Wrath of Vehumet";
+    default:
+        break;
+    }
+    return "UNKNOWN CHALLENGE";
+}
+
+
+static void _construct_challenge_menu(const newgame_def& defaults,
+                                      MenuFreeform* menu)
+{
+    static const int ITEMS_START_Y = 5;
+    static const int MENU_COLUMN_WIDTH = get_number_of_cols();
+    TextItem* tmp = NULL;
+    std::string text;
+    coord_def min_coord(0,0);
+    coord_def max_coord(0,0);
+    bool activate_next = false;
+
+    unsigned int padding_width = 0;
+    for (int i = 1; i < (int) NUM_CHALLENGE_TYPES; i++)
+    {
+        padding_width = std::max<int>(padding_width,
+                                      strwidth(challenge_type_to_string((challenge_type) i)));
+    }
+    padding_width += 4; // Count the letter and " - "
+    padding_width = std::min<int>(padding_width, MENU_COLUMN_WIDTH - 1);
+
+    for (int i = 1; i < (int) NUM_CHALLENGE_TYPES; i++)
+    {
+        tmp = new TextItem();
+        text.clear();
+
+        tmp->set_fg_colour(LIGHTGREY);
+        tmp->set_highlight_colour(GREEN);
+
+        const char letter = 'a' + i - 1;
+        text += letter;
+        text += " - ";
+
+        text += challenge_type_to_string((challenge_type) i);
+        text = chop_string(text, padding_width);
+
+        tmp->set_text(text);
+        tmp->add_hotkey(letter);
+        tmp->set_id(i); // ID corresponds to location in vector
+        tmp->set_description_text(_challenge_description((challenge_type) i));
+
+        min_coord.x = X_MARGIN;
+        min_coord.y = ITEMS_START_Y + i;
+        max_coord.x = min_coord.x + text.size();
+        max_coord.y = min_coord.y + 1;
+        tmp->set_bounds(min_coord, max_coord);
+
+        menu->attach_item(tmp);
+        tmp->set_visible(true);
+
+        if (activate_next)
+        {
+            menu->set_active_item(tmp);
+            activate_next = false;
+        }
+    }
+
+    // TODO: let players escape back to first screen menu
+    // Adjust the end marker to align the - because Bksp text is longer by 3
+    //tmp = new TextItem();
+    //tmp->set_text("Bksp - Return to character menu");
+    //tmp->set_description_text("Lets you return back to Character choice menu");
+    //min_coord.x = X_MARGIN + COLUMN_WIDTH - 3;
+    //min_coord.y = SPECIAL_KEYS_START_Y + 1;
+    //max_coord.x = min_coord.x + tmp->get_text().size();
+    //max_coord.y = min_coord.y + 1;
+    //tmp->set_bounds(min_coord, max_coord);
+    //tmp->set_fg_colour(BROWN);
+    //tmp->add_hotkey(CK_BKSP);
+    //tmp->set_id(M_ABORT);
+    //tmp->set_highlight_colour(LIGHTGRAY);
+    //menu->attach_item(tmp);
+    //tmp->set_visible(true);
+
+    // Only add tab entry if we have a previous map choice
+    if (crawl_state.game_is_sprint() && !defaults.map.empty()
+        && defaults.type == GAME_TYPE_SPRINT && _char_defined(defaults))
+    {
+        tmp = new TextItem();
+        text.clear();
+        text += "Tab - ";
+        text += defaults.map;
+
+        // Adjust the end marker to align the - because
+        // Tab text is longer by 2
+        tmp->set_text(text);
+        min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
+        min_coord.y = SPECIAL_KEYS_START_Y + 2;
+        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.y = min_coord.y + 1;
+        tmp->set_bounds(min_coord, max_coord);
+        tmp->set_fg_colour(BROWN);
+        tmp->add_hotkey('\t');
+        tmp->set_id(M_DEFAULT_CHOICE);
+        tmp->set_highlight_colour(LIGHTGRAY);
+        tmp->set_description_text("Select your previous challenge and character");
+        menu->attach_item(tmp);
+        tmp->set_visible(true);
+    }
+}
+
+
+static void _choose_challenge(newgame_def* ng, newgame_def* ng_choice,
+                              const newgame_def& defaults)
+{
+    PrecisionMenu menu;
+    menu.set_select_type(PrecisionMenu::PRECISION_SINGLESELECT);
+    MenuFreeform* freeform = new MenuFreeform();
+    freeform->init(coord_def(1,1), coord_def(get_number_of_cols(),
+                   get_number_of_lines()), "freeform");
+    menu.attach_object(freeform);
+    menu.set_active_object(freeform);
+
+    _construct_challenge_menu(defaults, freeform);
+
+    BoxMenuHighlighter* highlighter = new BoxMenuHighlighter(&menu);
+    highlighter->init(coord_def(0,0), coord_def(0,0), "highlighter");
+    menu.attach_object(highlighter);
+
+    freeform->activate_first_item();
+
+#ifdef USE_TILE
+    const int max_col    = tiles.get_crt()->mx;
+#else
+    const int max_col    = get_number_of_cols() - 1;
+#endif
+
+    const int desc_y = 20; //FIXME, FIXME VERY HARD
+
+    MenuDescriptor* descriptor = new MenuDescriptor(&menu);
+    descriptor->init(coord_def(1, desc_y), coord_def(max_col, desc_y + 3),
+                     "descriptor");
+    menu.attach_object(descriptor);
+    descriptor->set_visible(true);
+
+    _print_character_info(ng); // calls clrscr() so needs to be before attach()
+
+#ifdef USE_TILE
+    tiles.get_crt()->attach_menu(&menu);
+#endif
+
+    freeform->set_visible(true);
+    highlighter->set_visible(true);
+
+    textcolor(CYAN);
+    cprintf("\nYou have a choice of challenges:\n\n");
+
+    while (true)
+    {
+        menu.draw_menu();
+
+        int keyn = getch_ck();
+
+        // First process menu entries
+        if (!menu.process_key(keyn))
+        {
+            // Process all the keys that are not attached to items
+            switch (keyn)
+            {
+            case 'X':
+                cprintf("\nGoodbye!");
+                end(0);
+                break;
+            CASE_ESCAPE
+                game_ended();
+                break;
+            case ' ':
+                return;
+            default:
+                // if we get this far, we did not get a significant selection
+                // from the menu, nor did we get an escape character
+                // continue the while loop from the beginning and poll a new key
+                continue;
+            }
+        }
+        // We have a significant key input!
+        // Construct selection vector
+        std::vector<MenuItem*> selection = menu.get_selected_items();
+        // There should only be one selection, otherwise something broke
+        if (selection.size() != 1)
+        {
+            // poll a new key
+            continue;
+        }
+
+        // Get the stored id from the selection
+        int selection_ID = selection.at(0)->get_id();
+        switch (selection_ID)
+        {
+        case M_ABORT:
+            // TODO: fix
+            return;
+        default:
+            // We got an item selection
+            you.challenge = (challenge_type) selection_ID;
+            return;
+        }
+    }
 }

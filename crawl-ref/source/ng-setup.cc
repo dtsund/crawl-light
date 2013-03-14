@@ -1443,6 +1443,7 @@ void setup_game(const newgame_def& ng)
 
     switch (crawl_state.type)
     {
+    case GAME_TYPE_CHALLENGE:
     case GAME_TYPE_NORMAL:
         _setup_normal_game();
         break;

@@ -4557,6 +4557,8 @@ tileidx_t tileidx_gametype(const game_type gtype)
         return TILEG_STARTUP_STONESOUP;
     case GAME_TYPE_TUTORIAL:
         return TILEG_STARTUP_TUTORIAL;
+    case GAME_TYPE_CHALLENGE:
+        return TILEG_STARTUP_CHALLENGE;
     case GAME_TYPE_HINTS:
         return TILEG_STARTUP_HINTS;
     case GAME_TYPE_SPRINT:

@@ -1022,7 +1022,23 @@ enum game_type
     GAME_TYPE_HINTS,
     GAME_TYPE_ZOTDEF,
     GAME_TYPE_INSTRUCTIONS,
+    GAME_TYPE_CHALLENGE,
     NUM_GAME_TYPE
+};
+
+enum challenge_type
+{
+    CHALLENGE_NONE,          //Normal game.
+    CHALLENGE_XOM,           //Permanently angry Xom watching over you.
+    CHALLENGE_FIRST = CHALLENGE_XOM,
+    CHALLENGE_NEMELEX,       //No actions but drawing from decks.
+    CHALLENGE_CHEIBRIADOS,   //Permanent 25% speed reduction.
+    CHALLENGE_SIF_MUNA,      //All skill increases come from manuals.
+    CHALLENGE_OKAWARU,       //Half experience gain.
+    CHALLENGE_TROG,          //Permanent Berserk status?
+    CHALLENGE_JIYVA,         //Half loot.
+    CHALLENGE_VEHUMET,       //Healing doesn't work.
+    NUM_CHALLENGE_TYPES
 };
 
 enum level_flag_type

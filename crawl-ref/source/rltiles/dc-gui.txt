@@ -11,6 +11,7 @@ dc-dngn/dngn_unseen
 %sdir gui/startup
 stonesoup STARTUP_STONESOUP
 tutorial STARTUP_TUTORIAL
+challenge STARTUP_CHALLENGE
 hints_mode STARTUP_HINTS
 dungeon_sprint STARTUP_SPRINT
 zot_defence STARTUP_ZOTDEF

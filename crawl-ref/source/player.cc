@@ -5309,8 +5309,15 @@ void player::init()
     real_time        = 0;
     num_turns        = 0;
     exploration      = 0;
+    
+    difficulty_level = 0;
+    //you.challenge should already have been initialized in newgame.cc in any
+    //case where it might matter, so don't reset it to CHALLENGE_NONE here
 
     last_view_update = 0;
+
+    feel_relatively_safe = false;
+    found_hell_key = false;
 
     spell_letter_table.init(-1);
     ability_letter_table.init(ABIL_NON_ABILITY);
@@ -5420,6 +5427,7 @@ player_save_info& player_save_info::operator=(const player& rhs)
     class_name       = rhs.class_name;
     religion         = rhs.religion;
     jiyva_second_name  = rhs.jiyva_second_name;
+    challenge        = rhs.challenge;
 
     // [ds] Perhaps we should move game type to player?
     saved_game_type  = crawl_state.type;
@@ -5441,10 +5449,17 @@ std::string player_save_info::short_desc() const
 {
     std::ostringstream desc;
 
-    const std::string qualifier =
-        game_state::game_type_name_for(saved_game_type);
-    if (!qualifier.empty())
-        desc << "[" << qualifier << "] ";
+    if(saved_game_type == GAME_TYPE_CHALLENGE)
+    {
+        desc << "[" << challenge_type_to_string(challenge) << "] ";
+    }
+    else
+    {
+        const std::string qualifier =
+            game_state::game_type_name_for(saved_game_type);
+        if (!qualifier.empty())
+            desc << "[" << qualifier << "] ";
+    }
 
     desc << name << ", a level " << experience_level << ' '
          << species_name(species) << ' ' << class_name;
@@ -7085,3 +7100,30 @@ void check_relatively_safe(bool maybe_print_message)
     you.feel_relatively_safe = true;
     print_stats_level();
 }
+
+const char* challenge_type_to_string(challenge_type t)
+{
+    switch (t)
+    {
+    case CHALLENGE_XOM:
+        return "Wrath of Xom";
+    case CHALLENGE_NEMELEX:
+        return "Wrath of Nemelex Xobeh";
+    case CHALLENGE_CHEIBRIADOS:
+        return "Wrath of Cheibriados";
+    case CHALLENGE_SIF_MUNA:
+        return "Wrath of Sif Muna";
+    case CHALLENGE_OKAWARU:
+        return "Wrath of Okawaru";
+    case CHALLENGE_TROG:
+        return "Wrath of Trog";
+    case CHALLENGE_JIYVA:
+        return "Wrath of Jiyva";
+    case CHALLENGE_VEHUMET:
+        return "Wrath of Vehumet";
+    default:
+        break;
+    }
+    return "UNKNOWN CHALLENGE";
+}
+

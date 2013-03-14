@@ -3213,6 +3213,10 @@ bool player_can_join_god(god_type which_god)
     if (which_god == GOD_SIF_MUNA && !you.spell_no)
         return (false);
 
+    // Xom doesn't let you join if you're permanently under his wrath.
+    if (which_god == GOD_XOM && you.challenge == CHALLENGE_XOM)
+        return (false);
+
     return (true);
 }
 
@@ -3731,6 +3735,15 @@ void handle_god_time()
 
         if (which_god != GOD_NO_GOD)
             divine_retribution(which_god);
+    }
+    
+    mprf("%d", you.challenge);
+    
+    //Wrath of Xom players suffer constant hyperactive Xom penance,
+    //and it doesn't dilute other penance.
+    if (you.challenge == CHALLENGE_XOM && one_chance_in(10))
+    {
+        divine_retribution(GOD_XOM);
     }
 
     // Update the god's opinion of the player.

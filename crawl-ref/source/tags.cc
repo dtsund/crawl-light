@@ -1012,6 +1012,9 @@ static void tag_construct_char(writer &th)
     marshallString(th, you.class_name);
     marshallByte(th, you.religion);
     marshallString(th, you.jiyva_second_name);
+    
+    //TODO: Move difficulty here so that it can be shown on file select
+    marshallInt(th, you.challenge);
 
     marshallByte(th, you.wizard);
 
@@ -1670,6 +1673,12 @@ static void tag_read_char(reader &th)
     you.class_name        = unmarshallString(th);
     you.religion          = static_cast<god_type>(unmarshallByte(th));
     you.jiyva_second_name = unmarshallString(th);
+
+    //Challenge game being played
+    if(th.getMinorVersion() < TAG_MINOR_CHALLENGE_GAMES)
+        you.challenge = CHALLENGE_NONE;
+    else
+        you.challenge = (challenge_type) unmarshallInt(th);
 
     you.wizard            = unmarshallBoolean(th);
 

@@ -343,6 +343,25 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 
 #ifdef USE_TILE
     tmp = new TextTileItem();
+    tmp->add_tile(tile_def(tileidx_gametype(GAME_TYPE_CHALLENGE), TEX_GUI));
+#else
+    tmp = new TextItem();
+#endif
+    text = "Dungeon Crawl (Challenge Mode)";
+    tmp->set_text(text);
+    tmp->set_fg_colour(WHITE);
+    tmp->set_highlight_colour(WHITE);
+    tmp->set_id(GAME_TYPE_CHALLENGE);
+    // Scroller does not care about x-coordinates and only cares about
+    // item height obtained from max.y - min.y
+    tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
+    tmp->set_description_text("Test your skills with extra restrictions and "
+                              "obstacles!");
+    menu->attach_item(tmp);
+    tmp->set_visible(true);
+
+#ifdef USE_TILE
+    tmp = new TextTileItem();
     tmp->add_tile(tile_def(tileidx_gametype(GAME_TYPE_TUTORIAL), TEX_GUI));
 #else
     tmp = new TextItem();
@@ -771,6 +790,7 @@ static void _show_startup_menu(newgame_def* ng_choice,
                 case GAME_TYPE_SPRINT:
                 case GAME_TYPE_ZOTDEF:
                 case GAME_TYPE_HINTS:
+                case GAME_TYPE_CHALLENGE:
                     // If a game type is chosen, the user expects
                     // to start a new game. Just blanking the name
                     // it it clashes for now.
@@ -805,6 +825,7 @@ static void _show_startup_menu(newgame_def* ng_choice,
         case GAME_TYPE_SPRINT:
         case GAME_TYPE_ZOTDEF:
         case GAME_TYPE_HINTS:
+        case GAME_TYPE_CHALLENGE:
             trim_string(input_string);
             if (is_good_name(input_string, true, false))
             {
@@ -902,7 +923,8 @@ bool startup_step()
 
 #ifndef DGAMELAUNCH
     if (crawl_state.last_type == GAME_TYPE_TUTORIAL
-        || crawl_state.last_type == GAME_TYPE_SPRINT)
+        || crawl_state.last_type == GAME_TYPE_SPRINT
+        || crawl_state.last_type == GAME_TYPE_CHALLENGE)
     {
         choice.type = crawl_state.last_type;
         crawl_state.type = crawl_state.last_type;

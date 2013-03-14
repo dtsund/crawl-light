@@ -232,6 +232,8 @@ public:
   int           difficulty_level;     // Difficulty level (how many of the Pandooras
                                       // have been opened)
 
+  challenge_type challenge;           // Challenge game currently being run
+
   int           last_view_update;     // what turn was the view last updated?
   
   bool          feel_relatively_safe; // True if no hostiles on the floor.
@@ -696,6 +698,7 @@ struct player_save_info
     god_type religion;
     std::string jiyva_second_name;
     game_type saved_game_type;
+    challenge_type challenge;
 
 #ifdef USE_TILE
     dolls_data doll;
@@ -948,4 +951,6 @@ int get_max_magic_contamination();
 bool contamination_warning_prompt(int cost);
 
 void check_relatively_safe(bool maybe_print_message);
+
+const char* challenge_type_to_string(challenge_type t);
 #endif
