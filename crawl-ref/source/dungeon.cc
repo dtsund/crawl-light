@@ -1297,7 +1297,11 @@ static int _num_items_wanted(int level_number)
     // ~30% malus in Hard mode.
     if(player_in_hard_mode())
         return num_items * 7 / 10;
-        
+
+    // 50% malus in Wrath of Jiyva challenges.
+    if(you.challenge == CHALLENGE_JIYVA)
+        num_items = num_items / 2;
+
     return num_items;
 }
 
