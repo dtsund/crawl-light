@@ -3204,9 +3204,9 @@ static const char* _challenge_description(challenge_type t)
         return "Hope you weren't going to the dungeon hoping to find treasure; Jiyva's slimes "
                "have already been through the place and eaten half the loot!";
     case CHALLENGE_VEHUMET:
-        return "Vehumet loves destruction and hates all that which undoes it.  Ever since the 
+        return "Vehumet loves destruction and hates all that which undoes it.  Ever since the "
                "god took an interest in the dungeon, all healing effects save natural "
-               "regeneration have stopped working."
+               "regeneration have stopped working.";
     default:
         break;
     }
@@ -3216,7 +3216,7 @@ static const char* _challenge_description(challenge_type t)
 
 static void _construct_challenge_menu(const newgame_def& defaults,
                                       MenuFreeform* menu)
-{Wrath of Jiyva
+{
     static const int ITEMS_START_Y = 5;
     static const int MENU_COLUMN_WIDTH = get_number_of_cols();
     TextItem* tmp = NULL;
