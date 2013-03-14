@@ -3201,10 +3201,10 @@ static const char* _challenge_description(challenge_type t)
                "no thanks) to Trog, now you are, with all the benefits - and drawbacks - this "
                "entails.";
     case CHALLENGE_JIYVA:
-        return "Hope you weren't going to the dungeon hoping to find treasure; Jiyva's slimes "
+        return "Hope you weren't going to the dungeon expecting to find treasure; Jiyva's slimes "
                "have already been through the place and eaten half the loot!";
     case CHALLENGE_VEHUMET:
-        return "Vehumet loves destruction and hates all that which undoes it.  Ever since the "
+        return "Vehumet loves destruction and hates all that undoes it.  Ever since the "
                "god took an interest in the dungeon, all healing effects save natural "
                "regeneration have stopped working.";
     default:
