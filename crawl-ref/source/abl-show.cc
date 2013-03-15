@@ -2715,6 +2715,23 @@ static std::string _describe_talent(const talent& tal)
 static void _add_talent(std::vector<talent>& vec, const ability_type ability,
                         bool check_confused)
 {
+    // Players in Wrath of Nemelex challenge games only get Renounce Religion
+    // and card-related abilities.
+    if (you.challenge == CHALLENGE_NEMELEX)
+    {
+        switch (ability)
+        {
+        case ABIL_NEMELEX_DRAW_ONE:
+        case ABIL_NEMELEX_PEEK_TWO:
+        case ABIL_NEMELEX_TRIPLE_DRAW:
+        case ABIL_NEMELEX_MARK_FOUR:
+        case ABIL_NEMELEX_STACK_FIVE:
+        case ABIL_RENOUNCE_RELIGION:
+            break;
+        default:
+            return;
+        }
+    }
     const talent t = _get_talent(ability, check_confused);
     if (t.which != ABIL_NON_ABILITY)
         vec.push_back(t);

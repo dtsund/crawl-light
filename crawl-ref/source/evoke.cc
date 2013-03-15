@@ -778,6 +778,13 @@ bool evoke_item(int slot)
         return (false);
     }
 
+    if (you.challenge == CHALLENGE_NEMELEX && (slot == -1
+                                           || !is_deck(you.inv[slot])))
+    {
+        mpr("Sorry, but Nemelex has forbidden that!");
+        return (false);
+    }
+
     if (!player_can_handle_equipment())
     {
         canned_msg(MSG_PRESENT_FORM);

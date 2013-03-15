@@ -973,6 +973,40 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     return (false);
 }
 
+//Can this command be used in a Wrath of Nemelex game?
+static bool _cmd_is_wrath_nemelex_okay(command_type cmd)
+{
+    //Special-cased later:
+    //  CMD_EVOKE_WIELDED (only allowed with decks)
+    //  CMD_USE_ABILITY (only allowed with Nemelex abilities)
+    //  movement (only allowed when not attacking)
+    //  mouse movement and clicking (likewise)
+    switch (cmd)
+    {
+    case CMD_EVOKE:
+    case CMD_FIRE:
+    case CMD_THROW_ITEM_NO_QUIVER:
+    case CMD_CYCLE_QUIVER_FORWARD:
+    case CMD_CYCLE_QUIVER_BACKWARD:
+    case CMD_ZAP_WAND:
+    case CMD_CAST_SPELL:
+    case CMD_FORCE_CAST_SPELL:
+    case CMD_MEMORISE_SPELL:
+    case CMD_QUAFF:
+    case CMD_READ:
+
+#ifdef CLUA_BINDINGS
+    case CMD_AUTOFIGHT:
+    case CMD_AUTOFIGHT_NOMOVE:
+#endif
+        return (false);
+    default:
+        return (true);
+    }
+
+    return (false);
+}
+
 // Used to determine whether to apply the berserk penalty at end of round.
 bool apply_berserk_penalty = false;
 
@@ -1780,6 +1814,15 @@ void process_command(command_type cmd)
     //If the player doesn't move here, he shouldn't get to sidestep.
     //On the other hand, if he does, it'll overwrite this.
     you.snap_last_pos_to_current();
+
+    //If we're in a Wrath of Nemelex game, check whether the command is
+    //obviously illegal.
+    if (you.challenge == CHALLENGE_NEMELEX &&
+        !_cmd_is_wrath_nemelex_okay(cmd))
+    {
+        mpr("Sorry, but Nemelex has forbidden that!");
+        return;
+    }
     
     apply_berserk_penalty = true;
     switch (cmd)
@@ -4034,7 +4077,18 @@ static void _move_player(coord_def move)
             // the player to figure out which adjacent wall an invis
             // monster is in "for free".
             you.turn_is_over = true;
-            you_attack(targ_monst->mindex(), true);
+            // Don't let Wrath of Nemelex players use physical attacks.
+            if (you.challenge != CHALLENGE_NEMELEX)
+            {
+                you_attack(targ_monst->mindex(), true);
+            }
+            else
+            {
+                //This does let you sense invisible creatures, but also
+                //wastes a turn.
+                mpr("Sorry, but Nemelex has forbidden direct attacks!");
+                return;
+            }
 
             // We don't want to create a penalty if there isn't
             // supposed to be one.

@@ -1370,6 +1370,10 @@ std::string item_def::name_aux(description_level_type desc,
                     buff << "BUGGY deck of cards";
                     break;
                 }
+                else if (this->plus < 0 && !dbname)
+                {
+                    buff << "infinite ";
+                }
                 if (!dbname)
                     buff << deck_rarity_name(deck_rarity(*this)) << ' ';
             }

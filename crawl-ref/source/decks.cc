@@ -225,6 +225,10 @@ int cards_in_deck(const item_def &deck)
 {
     ASSERT(is_deck(deck));
 
+    //Infinite deck?
+    if(deck.plus < 0)
+        return -1;
+
     const CrawlHashTable &props = deck.props;
     ASSERT(props.exists("cards"));
 
@@ -234,6 +238,10 @@ int cards_in_deck(const item_def &deck)
 static void _shuffle_deck(item_def &deck)
 {
     ASSERT(is_deck(deck));
+
+    //Don't shuffle infinite decks
+    if(deck.plus < 0)
+        return;
 
     CrawlHashTable &props = deck.props;
     ASSERT(props.exists("cards"));
@@ -431,6 +439,12 @@ static card_type _random_card(uint8_t deck_type, deck_rarity_type rarity,
     return _choose_from_archetype(pdeck, rarity);
 }
 
+static card_type _random_card_no_oddity(const item_def& item)
+{
+    const deck_archetype *pdeck = _random_sub_deck(item.sub_type);
+    return _choose_from_archetype(pdeck, deck_rarity(item));
+}
+
 static card_type _random_card(const item_def& item, bool &was_oddity)
 {
     return _random_card(item.sub_type, deck_rarity(item), was_oddity);
@@ -509,6 +523,9 @@ static bool _check_buggy_deck(item_def& deck)
         strm << "This isn't a deck at all!" << std::endl;
         return (true);
     }
+    
+    if (deck.plus < 0)
+        return (false);
 
     CrawlHashTable &props = deck.props;
 
@@ -795,6 +812,13 @@ bool deck_peek()
         return (false);
     }
     item_def& deck(you.inv[slot]);
+    
+    if(deck.plus < 0)
+    {
+        mpr("You can't hope to understand a deck this big!");
+        crawl_state.zero_turns_taken();
+        return (false);
+    }
 
     if (_check_buggy_deck(deck))
         return (false);
@@ -864,6 +888,13 @@ bool deck_mark()
         return (false);
     }
     item_def& deck(you.inv[slot]);
+    // Don't mark infinite decks.
+    if(deck.plus < 0)
+    {
+        mpr("You don't dare try that with a deck like this!");
+        crawl_state.zero_turns_taken();
+        return (false);
+    }
     if (_check_buggy_deck(deck))
         return (false);
 
@@ -973,8 +1004,16 @@ bool deck_stack()
         crawl_state.zero_turns_taken();
         return (false);
     }
-
     item_def& deck(you.inv[slot]);
+
+    // Don't stack infinite decks.
+    if(deck.plus < 0)
+    {
+        mpr("You don't dare try that with a deck like this!");
+        crawl_state.zero_turns_taken();
+        return (false);
+    }
+    
     if (_check_buggy_deck(deck))
         return (false);
 
@@ -1130,14 +1169,26 @@ bool deck_triple_draw()
         return (true);
     }
 
-    const int num_to_draw = (num_cards < 3 ? num_cards : 3);
+    int num_to_draw = (num_cards < 3 ? num_cards : 3);
+    //We could be triple drawing an infinite deck...
+    num_to_draw = (num_to_draw < 0 ? 3 : num_to_draw);
     std::vector<card_type> draws;
     std::vector<uint8_t>   flags;
 
     for (int i = 0; i < num_to_draw; ++i)
     {
         uint8_t _flags;
-        card_type card = _draw_top_card(deck, false, _flags);
+        //Infinite deck draws are determined at the time of draw
+        card_type card;
+        if (deck.plus < 0)
+        {
+            card = _random_card_no_oddity(deck);
+            _flags = 0;
+        }
+        else
+        {
+            card = _draw_top_card(deck, false, _flags);
+        }
 
         draws.push_back(card);
         flags.push_back(_flags);
@@ -1172,22 +1223,26 @@ bool deck_triple_draw()
             canned_msg(MSG_HUH);
     }
 
-    // Note how many cards were removed from the deck.
-    deck.plus2 += num_to_draw;
-
-    // Don't forget to update the number of marked ones, too.
-    // But don't reduce the number of non-brownie draws.
-    uint8_t num_marked_left = deck.props["num_marked"].get_byte();
-    for (int i = 0; i < num_to_draw; ++i)
+    // Some stuff that doesn't apply to infinite decks:
+    if (num_cards >= 0)
     {
-        _remember_drawn_card(deck, draws[i]);
-        if (flags[i] & CFLAG_MARKED)
+        // Note how many cards were removed from the deck.
+        deck.plus2 += num_to_draw;
+
+        // Don't forget to update the number of marked ones, too.
+        // But don't reduce the number of non-brownie draws.
+        uint8_t num_marked_left = deck.props["num_marked"].get_byte();
+        for (int i = 0; i < num_to_draw; ++i)
         {
-            ASSERT(num_marked_left > 0);
-            --num_marked_left;
+            _remember_drawn_card(deck, draws[i]);
+            if (flags[i] & CFLAG_MARKED)
+            {
+                ASSERT(num_marked_left > 0);
+                --num_marked_left;
+            }
         }
+        deck.props["num_marked"] = num_marked_left;
     }
-    deck.props["num_marked"] = num_marked_left;
 
     you.wield_change = true;
 
@@ -1264,6 +1319,17 @@ void evoke_deck(item_def& deck)
 {
     if (_check_buggy_deck(deck))
         return;
+
+    //Handle infinite deck case here.  You get no Nemelex piety from them.
+    if (deck.plus < 0)
+    {
+        card_type card = _random_card_no_oddity(deck);
+        deck_rarity_type rarity = deck_rarity(deck);
+        uint8_t flags = 0;
+        mprf("You draw a card... It is %s.", card_name(card));
+        card_effect(card, rarity, flags, false);
+        return;
+    }
 
     int brownie_points = 0;
 
@@ -2963,6 +3029,9 @@ bool top_card_is_known(const item_def &deck)
     if (!is_deck(deck))
         return (false);
 
+    if (deck.plus < 0)
+        return (false);
+
     uint8_t flags;
     get_card_and_flags(deck, -1, flags);
 
@@ -2972,6 +3041,9 @@ bool top_card_is_known(const item_def &deck)
 card_type top_card(const item_def &deck)
 {
     if (!is_deck(deck))
+        return (NUM_CARDS);
+
+    if (deck.plus < 0)
         return (NUM_CARDS);
 
     uint8_t flags;
@@ -2992,6 +3064,10 @@ bool is_deck(const item_def &item)
 bool bad_deck(const item_def &item)
 {
     if (!is_deck(item))
+        return (false);
+
+    //Special case: infinite decks
+    if (item.plus < 0)
         return (false);
 
     return (!item.props.exists("cards")
@@ -3036,7 +3112,8 @@ void init_deck(item_def &item)
 
     ASSERT(is_deck(item));
     ASSERT(!props.exists("cards"));
-    ASSERT(item.plus > 0);
+    //No longer true, inexhaustible decks have negative item.plus
+    //ASSERT(item.plus > 0);
     ASSERT(item.plus <= 127);
     ASSERT(item.special >= DECK_RARITY_COMMON
            && item.special <= DECK_RARITY_LEGENDARY);
@@ -3047,24 +3124,28 @@ void init_deck(item_def &item)
     props["card_flags"].new_vector(SV_BYTE, fl).resize((vec_size)item.plus);
     props["drawn_cards"].new_vector(SV_BYTE, fl);
 
-    for (int i = 0; i < item.plus; ++i)
+    //Normal case, true for all decks outside of Wrath of Nemelex
+    if(item.plus > 0)
     {
-        bool      was_odd = false;
-        card_type card    = _random_card(item, was_odd);
+        for (int i = 0; i < item.plus; ++i)
+        {
+            bool      was_odd = false;
+            card_type card    = _random_card(item, was_odd);
 
-        uint8_t flags = 0;
-        if (was_odd)
-            flags = CFLAG_ODDITY;
+            uint8_t flags = 0;
+            if (was_odd)
+                flags = CFLAG_ODDITY;
 
-        _set_card_and_flags(item, i, card, flags);
+            _set_card_and_flags(item, i, card, flags);
+        }
+
+        ASSERT(cards_in_deck(item) == item.plus);
+
+        props["num_marked"]        = (char) 0;
+        props["non_brownie_draws"] = (char) 0;
+
+        props.assert_validity();
     }
-
-    ASSERT(cards_in_deck(item) == item.plus);
-
-    props["num_marked"]        = (char) 0;
-    props["non_brownie_draws"] = (char) 0;
-
-    props.assert_validity();
 
     item.plus2  = 0;
     item.colour = deck_rarity_to_color((deck_rarity_type) item.special);
@@ -3073,6 +3154,10 @@ void init_deck(item_def &item)
 static void _unmark_deck(item_def& deck)
 {
     if (!is_deck(deck))
+        return;
+    
+    //Skip inexhaustible decks, they can't be marked in the first place
+    if (deck.plus < 0)
         return;
 
     CrawlHashTable &props = deck.props;

@@ -381,6 +381,10 @@ void newgame_make_item(int slot, equipment_type eqslot,
 
     if (eqslot != EQ_NONE && you.equip[eqslot] == -1)
         you.equip[eqslot] = slot;
+
+    //Set deck rarity; always plain for now.
+    if (is_deck(item))
+        item.special = DECK_RARITY_COMMON;
 }
 
 void newgame_give_item(object_class_type base, int sub_type,
@@ -1134,6 +1138,23 @@ static void _give_items_skills(const newgame_def& ng)
 
     default:
         break;
+    }
+    
+    // Wrath of Nemelex characters worship Nemelex regardless of class.
+    // They also start with infinite plain decks of Summoning, Destruction,
+    // and Escape.
+    // Maybe I'll give them Dungeons later too (probably not).  Wonders is out
+    // of the question, though.
+    if (you.challenge == CHALLENGE_NEMELEX)
+    {
+        you.religion = GOD_NEMELEX_XOBEH;
+        you.piety = 35;
+        newgame_make_item(-1, EQ_NONE, OBJ_MISCELLANY,
+                          MISC_DECK_OF_DESTRUCTION, -1, 1, -1);
+        newgame_make_item(-1, EQ_NONE, OBJ_MISCELLANY,
+                          MISC_DECK_OF_DUNGEONS, -1, 1, -1);
+        newgame_make_item(-1, EQ_NONE, OBJ_MISCELLANY,
+                          MISC_DECK_OF_ESCAPE, -1, 1, -1);
     }
 
     // Deep Dwarves get a wand of healing (5).
