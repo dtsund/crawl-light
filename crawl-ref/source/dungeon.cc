@@ -3576,6 +3576,26 @@ static void _builder_items(int level_number, int items_wanted)
         items(1, specif_type, OBJ_RANDOM, false, items_levels, 250,
               MMT_NO_ITEM);
     }
+
+    if(you.challenge == CHALLENGE_SIF_MUNA && !monsters_can_respawn() &&
+       !player_in_branch(BRANCH_ORCISH_MINES) && items_wanted > 0)
+    {
+        //Average of two manuals per floor for now.  Much higher average skill
+        //level than most players ever get, offset greatly by a complete lack
+        //of control over where they actually go.
+        int num_manuals = random2(2) + random2(2) + random2(2) + random2(2);
+        
+        //First few levels get some extras too.  Skill advancement early on is
+        //fast, and you need tools to survive the early game.
+        if(level_number <= 3)
+            num_manuals += random2(2) + random2(2) + random2(2) + random2(2);
+
+        for(i = 0; i < num_manuals; i++)
+        {
+            items(1, OBJ_BOOKS, BOOK_MANUAL, false, items_levels, 250, 
+                  MMT_NO_ITEM);
+        }
+    }
 }
 
 static bool _connect_vault_exit(const coord_def& exit)

@@ -2631,7 +2631,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
     else
         you.experience += exp_gained;
 
-    if (you.duration[DUR_SAGE])
+    if (you.duration[DUR_SAGE] && you.challenge != CHALLENGE_SIF_MUNA)
     {
         // Bonus skill training from Sage.
         you.exp_available =
@@ -2646,7 +2646,8 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
         exp_gained = sprint_modify_exp(exp_gained);
     }
 
-    you.exp_available += exp_gained;
+    if(you.challenge != CHALLENGE_SIF_MUNA)
+        you.exp_available += exp_gained;
     autotrain();
 
     level_change();

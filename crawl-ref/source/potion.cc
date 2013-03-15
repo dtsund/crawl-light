@@ -334,9 +334,13 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
             // dec_inv_item_quantity. This prevents using SIGHUP to get infinite
             // potions of experience. Confer Mantis #3245. [due]
         }
-        else
+        else if (you.challenge != CHALLENGE_SIF_MUNA)
             mpr("A flood of memories washes over you.");
-        you.exp_available += 750 * you.experience_level;
+        else
+            mpr("A flood of useless memories washes over you.");
+        
+        if (you.challenge != CHALLENGE_SIF_MUNA)
+            you.exp_available += 750 * you.experience_level;
         autotrain();
         break;
 

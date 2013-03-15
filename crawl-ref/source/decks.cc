@@ -2013,7 +2013,9 @@ static void _experience_card(int power, deck_rarity_type rarity)
     int exp_gain = HIGH_EXP_POOL;
     if (power_level <= 1)
         exp_gain = std::min(exp_gain, power * 50);
-    you.exp_available += exp_gain;
+    // Nothing goes into the pool if you're playing a Wrath of Sif game
+    if(you.challenge != CHALLENGE_SIF_MUNA)
+        you.exp_available += exp_gain;
     autotrain();
 
     // After level 27, boosts you get don't get increased (matters for
