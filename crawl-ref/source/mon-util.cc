@@ -1766,6 +1766,10 @@ int exper_value(const monster* mon)
     else if (x_val > 22500)
         x_val = 22500;
 
+    // Deduct some for Wrath of Okawaru.
+    if(you.challenge == CHALLENGE_OKAWARU)
+        x_val = div_rand_round(x_val, 2);
+
     return (x_val);
 }
 
