@@ -1554,7 +1554,8 @@ int melee_attack::player_apply_fighting_skill(int damage, bool aux)
 
 int melee_attack::player_apply_misc_modifiers(int damage)
 {
-    if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK])
+    if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK]
+        || you.challenge == CHALLENGE_TROG)
         damage += 1 + random2(10);
         
     // not additive, statues are supposed to be bad with tiny toothpicks but

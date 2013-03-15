@@ -3900,7 +3900,7 @@ static void _do_berserk_no_combat_penalty(void)
     if (you.berserk_penalty == NO_BERSERK_PENALTY)
         return;
 
-    if (you.berserk())
+    if (you.berserk() && you.challenge != CHALLENGE_TROG)
     {
         you.berserk_penalty++;
 

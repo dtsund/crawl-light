@@ -1961,7 +1961,8 @@ int player_speed(void)
     if (you.challenge == CHALLENGE_CHEIBRIADOS)
         ps = wrath_of_chei_mul(ps);
 
-    if (you.duration[DUR_BERSERK] && you.religion != GOD_CHEIBRIADOS)
+    if (you.duration[DUR_BERSERK] || you.challenge == CHALLENGE_TROG
+        && you.religion != GOD_CHEIBRIADOS)
         ps /= 2;
     else if (you.duration[DUR_HASTE])
         ps = haste_div(ps);

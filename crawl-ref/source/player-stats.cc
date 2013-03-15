@@ -314,7 +314,8 @@ static int _strength_modifier()
 {
     int result = 0;
 
-    if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK])
+    if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK]
+        || you.challenge == CHALLENGE_TROG)
         result += 5;
 
     if (you.duration[DUR_DIVINE_STAMINA])

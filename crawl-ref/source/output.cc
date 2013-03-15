@@ -368,6 +368,7 @@ static short _get_stat_colour(stat_type stat)
     if (you.duration[DUR_DIVINE_STAMINA]
         || stat == STAT_STR && you.duration[DUR_MIGHT]
         || stat == STAT_STR && you.duration[DUR_BERSERK]
+        || stat == STAT_STR && you.challenge == CHALLENGE_TROG
         || stat == STAT_INT && you.duration[DUR_BRILLIANCE]
         || stat == STAT_DEX && you.duration[DUR_AGILITY])
     {
@@ -1577,7 +1578,8 @@ static std::vector<formatted_string> _get_overview_stats()
     const bool boosted_mp  = you.duration[DUR_DIVINE_VIGOUR];
     const bool boosted_str = you.duration[DUR_DIVINE_STAMINA]
                                 || you.duration[DUR_MIGHT]
-                                || you.duration[DUR_BERSERK];
+                                || you.duration[DUR_BERSERK]
+                                || you.challenge == CHALLENGE_TROG;
     const bool boosted_int = you.duration[DUR_DIVINE_STAMINA]
                                 || you.duration[DUR_BRILLIANCE];
     const bool boosted_dex = you.duration[DUR_DIVINE_STAMINA]

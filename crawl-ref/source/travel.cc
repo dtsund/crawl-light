@@ -3022,7 +3022,9 @@ void do_explore_cmd()
         mpr("You can't think straight enough!");
     else if (you.stat(STAT_DEX) <= 0)
         mpr("You're stumbling too much!");
-    else if (you.berserk())
+    // Autotravel normally isn't allowed under berserk, but we'll make an
+    // exception for Wrath of Trog; it'd be insufferalbe otherwise!
+    else if (you.berserk() && you.challenge != CHALLENGE_TROG)
         mpr("Calm down first, please.");
     else if (you.level_type == LEVEL_LABYRINTH)
         mpr("No exploration algorithm can help you here.");

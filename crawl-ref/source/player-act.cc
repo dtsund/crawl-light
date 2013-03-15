@@ -607,7 +607,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
 
 bool player::berserk() const
 {
-    return (duration[DUR_BERSERK]);
+    return (duration[DUR_BERSERK] || you.challenge == CHALLENGE_TROG);
 }
 
 bool player::can_cling_to_walls() const
