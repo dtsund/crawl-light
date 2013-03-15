@@ -3737,8 +3737,6 @@ void handle_god_time()
             divine_retribution(which_god);
     }
     
-    mprf("%d", you.challenge);
-    
     //Wrath of Xom players suffer constant hyperactive Xom penance,
     //and it doesn't dilute other penance.
     if (you.challenge == CHALLENGE_XOM && one_chance_in(10))
