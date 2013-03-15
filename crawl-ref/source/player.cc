@@ -1946,6 +1946,7 @@ int player_movement_speed(bool ignore_burden)
 // This function differs from the above in that it's used to set the
 // initial time_taken value for the turn.  Everything else (movement,
 // spellcasting, combat) applies a ratio to this value.
+// Higher ps == slower player.  Yyyyep.
 int player_speed(void)
 {
     int ps = 10;
@@ -1956,6 +1957,9 @@ int player_speed(void)
 
     if (you.duration[DUR_SLOW])
         ps = haste_mul(ps);
+
+    if (you.challenge == CHALLENGE_CHEIBRIADOS)
+        ps = wrath_of_chei_mul(ps);
 
     if (you.duration[DUR_BERSERK] && you.religion != GOD_CHEIBRIADOS)
         ps /= 2;

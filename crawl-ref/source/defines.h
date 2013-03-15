@@ -234,6 +234,8 @@ const int ANTITRAIN_PENALTY = 2;
 #define haste_div(x) div_rand_round((x) * 4, 7)
 #define mons_haste_mul(x) div_rand_round((x) * 7, 4)
 #define mons_haste_div(x) div_rand_round((x) * 2, 4)
+#define wrath_of_chei_modifier(x) div_rand_round((x) * 3, 4)
+#define wrath_of_chei_mul(x) div_rand_round((x) * 4, 3)
 
 #define MAX_MONSTER_HP 10000
 
