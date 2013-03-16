@@ -171,8 +171,15 @@ static int _healing_spell(int healed, bool divine_ability,
             return (-1);
         }
 
-        mpr("You are healed.");
-        inc_hp(healed, false);
+        if (you.challenge != CHALLENGE_VEHUMET)
+        {
+            mpr("You are healed.");
+            inc_hp(healed, false);
+        }
+        else
+        {
+            mpr("Your attempt at healing fails.");
+        }
         return (1);
     }
 
@@ -278,6 +285,8 @@ bool cast_revivification(int pow)
 {
     if (you.hp == you.hp_max)
         canned_msg(MSG_NOTHING_HAPPENS);
+    else if (you.challenge == CHALLENGE_VEHUMET)
+        mpr("Vehumet's influence prevents the spell from working!");
     else if (you.hp_max < 21)
         mpr("You lack the resilience to cast this spell.");
     else

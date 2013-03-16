@@ -129,6 +129,13 @@ void remove_regen(bool divine_ability)
 
 void cast_regen(int pow, bool divine_ability)
 {
+    //Maybe Trog's Hand should provide enchantment resistance, but would
+    //require hackery to allow this.
+    if (you.challenge == CHALLENGE_VEHUMET)
+    {
+        mpr("Your skin crawls momentarily, but then stops.");
+        return;
+    }
     you.increase_duration(DUR_REGENERATION, 5 + roll_dice(2, pow / 3 + 1), 100,
                           "Your skin crawls.");
 

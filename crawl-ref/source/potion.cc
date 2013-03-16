@@ -74,14 +74,20 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
             break;
         }
 
-        inc_hp((5 + random2(7)) / factor, false);
-        mpr("You feel better.");
-
-        // Only fix rot when healed to full.
-        if (you.hp == you.hp_max)
+        if(you.challenge != CHALLENGE_VEHUMET)
         {
-            unrot_hp(1);
-            set_hp(you.hp_max, false);
+            inc_hp((5 + random2(7)) / factor, false);
+            mpr("You feel better.");
+            // Only fix rot when healed to full.
+            if (you.hp == you.hp_max)
+            {
+                unrot_hp(1);
+                set_hp(you.hp_max, false);
+            }
+        }
+        else
+        {
+            mpr("You don't feel much better.");
         }
 
         you.duration[DUR_POISONING] = 0;
@@ -95,6 +101,11 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool already_war
         if (you.duration[DUR_DEATHS_DOOR])
         {
             mpr("You feel queasy.");
+            break;
+        }
+        else if (you.challenge == CHALLENGE_VEHUMET)
+        {
+            mpr("You don't feel any better.");
             break;
         }
 

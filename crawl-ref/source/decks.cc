@@ -2812,10 +2812,17 @@ static void _alchemist_card(int power, deck_rarity_type rarity)
     int hp = std::min(gold_used / 3, you.hp_max - you.hp);
     if (hp > 0)
     {
-        inc_hp(hp, false);
+        if (you.challenge != CHALLENGE_VEHUMET)
+        {
+            inc_hp(hp, false);
+            mpr("You feel better.");
+        }
+        else
+        {
+            mpr("You somehow fail to feel better.");
+        }
         gold_used -= hp * 2;
         done_stuff = true;
-        mpr("You feel better.");
         dprf("Gained %d health, %d gold remaining.", hp, gold_used);
     }
 

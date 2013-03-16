@@ -2010,14 +2010,21 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
             && !one_chance_in(5)
             && !you.duration[DUR_DEATHS_DOOR])
         {
-            mpr("You feel better.");
+            if (you.challenge != CHALLENGE_VEHUMET)
+            {
+                mpr("You feel better.");
 
-            // More than if not killed.
-            const int heal = 1 + random2(damage_done);
+                // More than if not killed.
+                const int heal = 1 + random2(damage_done);
 
-            dprf("Vampiric healing: damage %d, healed %d",
-                 damage_done, heal);
-            inc_hp(heal, false);
+                dprf("Vampiric healing: damage %d, healed %d",
+                     damage_done, heal);
+                inc_hp(heal, false);
+            }
+            else
+            {
+                mpr("You don't feel any better, though.");
+            }
 
             did_god_conduct(DID_NECROMANCY, 2);
         }
@@ -3144,7 +3151,12 @@ bool melee_attack::apply_damage_brand()
         // worries on that score.
 
         if (attacker->atype() == ACT_PLAYER)
-            mpr("You feel better.");
+        {
+            if (you.challenge != CHALLENGE_VEHUMET)
+                mpr("You feel better.");
+            else
+                mpr("You don't feel any better, though.");
+        }
         else if (attacker_visible)
         {
             if (defender->atype() == ACT_PLAYER)
@@ -3172,7 +3184,9 @@ bool melee_attack::apply_damage_brand()
 
         dprf("Vampiric healing: damage %d, healed %d",
              damage_done, hp_boost);
-        attacker->heal(hp_boost);
+        //Don't heal the player in Wrath of Vehumet games.
+        if (attacker->atype() != ACT_PLAYER || you.challenge != CHALLENGE_VEHUMET)
+            attacker->heal(hp_boost);
 
         attacker->god_conduct(DID_NECROMANCY, 2);
         break;

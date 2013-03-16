@@ -542,8 +542,13 @@ bool vampiric_drain(int pow, monster* mons)
 
     if (hp_gain && !mons_was_summoned)
     {
-        mpr("You feel life coursing into your body.");
-        inc_hp(hp_gain, false);
+        if(you.challenge != CHALLENGE_VEHUMET)
+        {
+            mpr("You feel life coursing into your body.");
+            inc_hp(hp_gain, false);
+        }
+        else
+            mpr("For some reason, you fail to gain life from its injuries.");
     }
 
     return (true);

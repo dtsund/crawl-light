@@ -3204,9 +3204,9 @@ static const char* _challenge_description(challenge_type t)
         return "Hope you weren't going to the dungeon expecting to find treasure; Jiyva's slimes "
                "have already been through the place and eaten half the loot!";
     case CHALLENGE_VEHUMET:
-        return "Vehumet loves destruction and hates all that undoes it.  Ever since the "
-               "god took an interest in the dungeon, all healing effects save natural "
-               "regeneration have stopped working.";
+        return "Vehumet loves destruction and hates all that undoes it.  Unfortunately for you, "
+               "the Vehumet seems to have taken a special interest in your case; healing effects "
+               "won't work on you!";
     default:
         break;
     }

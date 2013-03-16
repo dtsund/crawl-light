@@ -1983,11 +1983,15 @@ int monster_die(monster* mons, killer_type killer,
                 && random2(you.piety) >= piety_breakpoint(0)
                 && !you.duration[DUR_DEATHS_DOOR])
             {
-                if (you.hp < you.hp_max)
+                if (you.hp < you.hp_max && you.challenge != CHALLENGE_VEHUMET)
                 {
                     mpr("You feel a little better.");
                     inc_hp(mons->hit_dice + random2(mons->hit_dice),
                            false);
+                }
+                else if (you.hp < you.hp_max)
+                {
+                    mpr("You somehow fail to feel any better.");
                 }
             }
 

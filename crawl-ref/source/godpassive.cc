@@ -232,8 +232,10 @@ void jiyva_slurp_message(int js)
             mpr("You feel a little less hungry.");
         if (js & JS_MP)
             mpr("You feel your power returning.");
-        if (js & JS_HP)
+        if (js & JS_HP && you.challenge != CHALLENGE_VEHUMET)
             mpr("You feel a little better.");
+        else if (js & JS_HP)
+            mpr("You somehow fail to feel any better.");
     }
 }
 
