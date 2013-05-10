@@ -2616,6 +2616,10 @@ static void _decrement_durations()
         if (!you.backlit())
             mpr("You are no longer glowing.", MSGCH_DURATION);
 
+	if (_decrement_a_duration(DUR_NAUSEOUS, delay))
+		if (!you.duration[DUR_NAUSEOUS] == 0)
+			mpr("You are no longer nauseous.", MSGCH_DURATION);
+
     // Leak piety from the piety pool into actual piety.
     // Note that changes of religious status without corresponding actions
     // (killing monsters, offering items, ...) might be confusing for characters

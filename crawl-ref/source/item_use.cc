@@ -3975,6 +3975,12 @@ void drink(int slot)
         return;
     }
 
+	if (you.duration[DUR_NAUSEOUS] > 0)
+	{
+		mpr("You're too nauseous to hold down liquids right now.");
+		return;
+	}
+
     if (slot == -1)
     {
         const dungeon_feature_type feat = grd(you.pos());

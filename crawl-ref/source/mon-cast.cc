@@ -341,7 +341,7 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_RANDOM_STATUS:
-        beam.flavour  = BEAM_PARALYSIS; //FIXME
+        beam.flavour  = BEAM_RANDOM_STATUS; //MEFIXED
         beam.is_beam  = true;
         break;
 
@@ -3675,7 +3675,8 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             //Do nothing, currently.
             simple_monster_message(mons, " does something completely random!");
         }
-        return;
+		break;
+        //return;
     }
 
     // If a monster just came into view and immediately cast a spell,
@@ -4422,6 +4423,7 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
     case SPELL_PARALYSE:
     case SPELL_SLEEP:
     case SPELL_HIBERNATION:
+	case SPELL_RANDOM_STATUS:
     {
         if (monspell == SPELL_HIBERNATION && (!foe || foe->asleep()))
         {

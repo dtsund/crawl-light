@@ -6362,6 +6362,42 @@ void player::paralyse(actor *who, int str)
         paralysis = 13 * BASELINE_DELAY;
 }
 
+void player::random_status(actor *who, int str)
+{
+	//for right now, always generates nausea.
+	//incorporate other debilitrums as implemented
+	nauseate(who, str);
+
+	/*mpr("+++SORRY BOSS I BROKE YOUR CUCUMBER+++")
+	if(one_chance_in(4))
+		nauseate(who, str)
+	else if (one_chance_in(3))
+		blind(who, str)
+	else if (one_chance_in(2))
+		immobilize(who, str)
+	else
+		atrophy(who, str)*/
+}
+
+void player::nauseate(actor *who, int str)
+{
+	ASSERT(!crawl_state.game_is_arena());
+
+	int &nauseous(duration[DUR_NAUSEOUS]);
+
+	if (nauseous)
+		mpr("You feel even more nauseated.");
+	else
+		mpr("You feel terribly nauseous.");
+
+	str *= BASELINE_DELAY;
+	if (str > nauseous && (nauseous < 3 || one_chance_in(nauseous)))
+		nauseous = str;
+
+	if (nauseous > 13 * BASELINE_DELAY)
+		nauseous = 13 * BASELINE_DELAY;
+}
+
 void player::petrify(actor *who, int str)
 {
     ASSERT(!crawl_state.game_is_arena());

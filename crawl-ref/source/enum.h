@@ -329,7 +329,8 @@ enum beam_type                  // beam[].flavour
     BEAM_SLEEP,
 #if TAG_MAJOR_VERSION != 32
     BEAM_INNER_FLAME,
-    BEAM_LAST_ENCHANTMENT = BEAM_INNER_FLAME,
+	BEAM_RANDOM_STATUS,
+    BEAM_LAST_ENCHANTMENT = BEAM_RANDOM_STATUS,
 #else
     BEAM_LAST_ENCHANTMENT = BEAM_SLEEP,
 #endif
@@ -355,7 +356,8 @@ enum beam_type                  // beam[].flavour
     BEAM_AIR,
 #if TAG_MAJOR_VERSION == 32
     BEAM_INNER_FLAME,
-    BEAM_LAST_REAL = BEAM_INNER_FLAME,
+	BEAM_RANDOM_STATUS,
+    BEAM_LAST_REAL = BEAM_RANDOM_STATUS,
 #else
 
     BEAM_LAST_REAL = BEAM_AIR,
@@ -1401,6 +1403,10 @@ enum duration_type
     DUR_DARKNESS,
     DUR_TORNADO_COOLDOWN,
     DUR_SPAWNING_ILLUSIONS,
+	DUR_NAUSEOUS,               // no potions
+//  DUR_IMMOBILE,             // can't move
+//  DUR_BLIND,                // sight goes away
+//  DUR_ATROPHY,              // lyle is a weakling and cannot wield melee cubes
     NUM_DURATIONS
 };
 

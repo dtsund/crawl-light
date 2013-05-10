@@ -546,7 +546,7 @@ static beam_type _chaos_beam_flavour()
             10, BEAM_MIGHT,
             10, BEAM_BERSERK,
             10, BEAM_HEALING,
-            10, BEAM_PARALYSIS,
+            10, BEAM_RANDOM_STATUS,
             10, BEAM_CONFUSION,
             10, BEAM_INVISIBILITY,
             10, BEAM_POLYMORPH,
@@ -3297,6 +3297,11 @@ void bolt::affect_player_enchantment()
         obvious_effect = true;
         break;
 
+	case BEAM_RANDOM_STATUS:
+		you.random_status(agent(), 2 + random2(6));
+		obvious_effect = true;
+		break;
+
     case BEAM_PETRIFY:
         you.petrify(agent(), ench_power);
         obvious_effect = true;
@@ -5671,6 +5676,8 @@ bool bolt::is_enchantment() const
 #if TAG_MAJOR_VERSION == 32
     if (flavour == BEAM_INNER_FLAME)
         return (true);
+	if (flavour == BEAM_RANDOM_STATUS)
+		return (true);
 #endif
     return (flavour >= BEAM_FIRST_ENCHANTMENT
             && flavour <= BEAM_LAST_ENCHANTMENT);
@@ -5755,6 +5762,7 @@ static std::string _beam_type_name(beam_type type)
     case BEAM_MIGHT:                 return ("might");
     case BEAM_HEALING:               return ("healing");
     case BEAM_PARALYSIS:             return ("paralysis");
+	case BEAM_RANDOM_STATUS:         return ("debilitation");
     case BEAM_CONFUSION:             return ("confusion");
     case BEAM_INVISIBILITY:          return ("invisibility");
     case BEAM_DIGGING:               return ("digging");

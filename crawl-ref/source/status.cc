@@ -13,6 +13,8 @@
 #include "transform.h"
 #include "spl-transloc.h"
 
+#include <cstdio>
+
 // Status defaults for durations that are handled straight-forwardly.
 struct duration_def
 {
@@ -139,6 +141,14 @@ static duration_def duration_data[] =
       YELLOW, "Tornado", "", "" ,},
     { DUR_SPAWNING_ILLUSIONS, true,
       BLUE, "Illude", "illude", "You are surrounded by illusions." },
+	{ DUR_NAUSEOUS, false,
+	  RED, "Nausea", "nauseous", "You are nauseated."},
+/*	{ DUR_BLIND, false,
+	  RED, "Blind", "blind", "You have been blinded."},
+	{ DUR_IMMOBILE, false,
+	  RED, "-Move", "immobile", "You are rooted to the ground."},
+	{ DUR_ATROPHY, false,
+	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."}, */
 };
 
 static int duration_index[NUM_DURATIONS];

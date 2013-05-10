@@ -799,6 +799,10 @@ static const char* dur_names[] =
     "darkness",
     "tornado cooldown",
     "illude",
+	"nauseous",
+/*	"blind",
+	"immobile",
+	"atrophy",       */
 };
 
 void wizard_edit_durations(void)
