@@ -470,15 +470,15 @@ static void _give_items_skills(const newgame_def& ng)
         case WPN_SHORT_SWORD:
             //Yes, this isn't a huge upgrade.
             //No, you may not start with a quick blade.
-            newgame_make_item(3, EQ_NONE, OBJ_WEAPONS, WPN_SABRE);
+            newgame_make_item(4, EQ_NONE, OBJ_WEAPONS, WPN_SABRE);
             break;
         case WPN_HAND_AXE:
-            newgame_make_item(3, EQ_NONE, OBJ_WEAPONS, WPN_WAR_AXE);
+            newgame_make_item(4, EQ_NONE, OBJ_WEAPONS, WPN_WAR_AXE);
             break;
         case WPN_MACE:
             //Flails aren't a big enough upgrade from maces to make this
             //interesting, so jump to morningstars.
-            newgame_make_item(3, EQ_NONE, OBJ_WEAPONS, WPN_MORNINGSTAR);
+            newgame_make_item(4, EQ_NONE, OBJ_WEAPONS, WPN_MORNINGSTAR);
             break;
         case WPN_TRIDENT:
             //Halberds can't be used with shields, which would kind of make
@@ -488,7 +488,7 @@ static void _give_items_skills(const newgame_def& ng)
             _enchant_weapon(0, 2, 2);
             break;
         case WPN_FALCHION:
-            newgame_make_item(3, EQ_NONE, OBJ_WEAPONS, WPN_LONG_SWORD);
+            newgame_make_item(4, EQ_NONE, OBJ_WEAPONS, WPN_LONG_SWORD);
             break;
         default:
             break;
