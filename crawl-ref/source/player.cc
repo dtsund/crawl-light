@@ -323,6 +323,14 @@ static bool _check_moveto_exclusion(const coord_def& p,
 
 bool check_moveto(const coord_def& p, const std::string &move_verb)
 {
+	//apparently controlled blinks use this function
+	//this will let immobile players blink properly while
+	//still prohibiting vanilla movement
+	if (you.duration[DUR_IMMOBILE] > 0 && move_verb != "blink")
+	{
+		mpr("You cannot move while immobilized!");
+		return (false);
+	}
     return (_check_moveto_terrain(p, move_verb)
             && _check_moveto_cloud(p, move_verb)
             && _check_moveto_trap(p, move_verb)
@@ -6364,19 +6372,13 @@ void player::paralyse(actor *who, int str)
 
 void player::random_status(actor *who, int str)
 {
-	//for right now, always generates nausea.
 	//incorporate other debilitrums as implemented
-	nauseate(who, str);
 
-	/*mpr("+++SORRY BOSS I BROKE YOUR CUCUMBER+++")
-	if(one_chance_in(4))
-		nauseate(who, str)
-	else if (one_chance_in(3))
-		blind(who, str)
-	else if (one_chance_in(2))
-		immobilize(who, str)
+	//mpr("+++SORRY BOSS I BROKE YOUR CUCUMBER+++");
+	if(one_chance_in(2)) //increase with additional ailments
+		nauseate(who, str);
 	else
-		atrophy(who, str)*/
+		immobilize(who, str);
 }
 
 void player::nauseate(actor *who, int str)
@@ -6396,6 +6398,25 @@ void player::nauseate(actor *who, int str)
 
 	if (nauseous > 13 * BASELINE_DELAY)
 		nauseous = 13 * BASELINE_DELAY;
+}
+
+void player::immobilize(actor *who, int str)
+{
+	ASSERT(!crawl_state.game_is_arena());
+
+	int &immobile(duration[DUR_IMMOBILE]);
+
+	if (immobile)
+		mpr("You feel even more stationary.");
+	else
+		mpr("You are rooted to the spot and cannot move!");
+
+	str *= BASELINE_DELAY;
+	if (str > immobile && (immobile < 3 || one_chance_in(immobile)))
+		immobile = str;
+
+	if (immobile > 13 * BASELINE_DELAY)
+		immobile = 13 * BASELINE_DELAY;
 }
 
 void player::petrify(actor *who, int str)

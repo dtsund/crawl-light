@@ -800,8 +800,8 @@ static const char* dur_names[] =
     "tornado cooldown",
     "illude",
 	"nauseous",
-/*	"blind",
 	"immobile",
+/*	"blind",
 	"atrophy",       */
 };
 

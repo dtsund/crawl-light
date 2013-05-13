@@ -143,10 +143,10 @@ static duration_def duration_data[] =
       BLUE, "Illude", "illude", "You are surrounded by illusions." },
 	{ DUR_NAUSEOUS, false,
 	  RED, "Nausea", "nauseous", "You are nauseated."},
-/*	{ DUR_BLIND, false,
-	  RED, "Blind", "blind", "You have been blinded."},
 	{ DUR_IMMOBILE, false,
 	  RED, "-Move", "immobile", "You are rooted to the ground."},
+/*	{ DUR_BLIND, false,
+	  RED, "Blind", "blind", "You have been blinded."},
 	{ DUR_ATROPHY, false,
 	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."}, */
 };
