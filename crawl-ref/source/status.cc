@@ -146,9 +146,9 @@ static duration_def duration_data[] =
 	{ DUR_IMMOBILE, false,
 	  RED, "-Move", "immobile", "You are rooted to the ground."},
 /*	{ DUR_BLIND, false,
-	  RED, "Blind", "blind", "You have been blinded."},
+	  RED, "Blind", "blind", "You have been blinded."}, */
 	{ DUR_ATROPHY, false,
-	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."}, */
+	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."},
 };
 
 static int duration_index[NUM_DURATIONS];

@@ -1406,7 +1406,7 @@ enum duration_type
 	DUR_NAUSEOUS,               // no potions
     DUR_IMMOBILE,               // can't move
 //  DUR_BLIND,                  // sight goes away
-//  DUR_ATROPHY,                // lyle is a weakling and cannot wield melee cubes
+    DUR_ATROPHY,                // lyle is a weakling and cannot wield melee cubes
     NUM_DURATIONS
 };
 

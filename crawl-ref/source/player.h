@@ -547,7 +547,7 @@ public:
 	void nauseate(actor *, int str);
     //void blind(actor *, int str);
 	void immobilize(actor *, int str);
-	//void atrophy(actor *, int str);
+	void atrophy(actor *, int str);
     void petrify(actor *, int str);
     void slow_down(actor *, int str);
     void confuse(actor *, int strength);

@@ -801,8 +801,8 @@ static const char* dur_names[] =
     "illude",
 	"nauseous",
 	"immobile",
-/*	"blind",
-	"atrophy",       */
+//	"blind",
+	"atrophy",
 };
 
 void wizard_edit_durations(void)

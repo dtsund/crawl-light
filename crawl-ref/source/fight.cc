@@ -525,6 +525,14 @@ bool melee_attack::attack()
         }
     }
 
+	//okay this is probably where to put this
+	//I HOPE
+	if (attacker->atype() == ACT_PLAYER && you.duration[DUR_ATROPHY] > 0) {
+		mpr("Your arms are too weak to strike!");
+		cancel_attack = true;
+		return (false);
+	}
+
     if (attacker != defender)
     {
         // Allow setting of your allies' target, etc.

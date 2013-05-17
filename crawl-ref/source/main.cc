@@ -2617,12 +2617,16 @@ static void _decrement_durations()
             mpr("You are no longer glowing.", MSGCH_DURATION);
 
 	if (_decrement_a_duration(DUR_NAUSEOUS, delay))
-		if (!you.duration[DUR_NAUSEOUS] == 0)
+		if (you.duration[DUR_NAUSEOUS] == 0)
 			mpr("You are no longer nauseous.", MSGCH_DURATION);
 
 	if (_decrement_a_duration(DUR_IMMOBILE, delay))
-		if (!you.duration[DUR_IMMOBILE] == 0)
+		if (you.duration[DUR_IMMOBILE] == 0)
 			mpr("You are no longer immobilized.", MSGCH_DURATION);
+
+	if (_decrement_a_duration(DUR_ATROPHY, delay))
+		if (you.duration[DUR_ATROPHY] == 0)
+			mpr("Your arms are back to their former strength.", MSGCH_DURATION);
 
     // Leak piety from the piety pool into actual piety.
     // Note that changes of religious status without corresponding actions

@@ -194,6 +194,13 @@ extern bool apply_berserk_penalty;
 
 static bool _reaching_weapon_attack(const item_def& wpn)
 {
+	//this is probably safe to put first
+	if (you.duration[DUR_ATROPHY] > 0)
+	{
+		mpr("Your arms are too weak to strike!");
+		return (false);
+	}
+
     dist beam;
 
     direction_chooser_args args;

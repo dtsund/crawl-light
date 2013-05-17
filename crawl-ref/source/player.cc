@@ -6375,10 +6375,12 @@ void player::random_status(actor *who, int str)
 	//incorporate other debilitrums as implemented
 
 	//mpr("+++SORRY BOSS I BROKE YOUR CUCUMBER+++");
-	if(one_chance_in(2)) //increase with additional ailments
+	if(one_chance_in(3)) //increase with additional ailments
 		nauseate(who, str);
-	else
+	else if(one_chance_in(2))
 		immobilize(who, str);
+	else
+		atrophy(who, str);
 }
 
 void player::nauseate(actor *who, int str)
@@ -6417,6 +6419,26 @@ void player::immobilize(actor *who, int str)
 
 	if (immobile > 13 * BASELINE_DELAY)
 		immobile = 13 * BASELINE_DELAY;
+}
+
+//LEL CURRENTLY DOES NOTHING
+void player::atrophy(actor *who, int str)
+{
+	ASSERT(!crawl_state.game_is_arena());
+
+	int &atrophied(duration[DUR_ATROPHY]);
+
+	if (atrophied)
+		mpr("You arms feel even weaker.");
+	else
+		mpr("You arms feel too weak to strike!");
+
+	str *= BASELINE_DELAY;
+	if (str > atrophied && (atrophied < 3 || one_chance_in(atrophied)))
+		atrophied = str;
+
+	if (atrophied > 13 * BASELINE_DELAY)
+		atrophied = 13 * BASELINE_DELAY;
 }
 
 void player::petrify(actor *who, int str)
