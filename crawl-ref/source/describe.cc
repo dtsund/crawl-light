@@ -1233,15 +1233,6 @@ static std::string _describe_ammo(const item_def &item)
     else if (item.sub_type != MI_THROWING_NET)
         append_missile_info(description);
 
-    if (item.plus >= MAX_WPN_ENCHANT)
-        description += "\nIt is maximally enchanted.";
-    else
-    {
-        description += "\nIt can be maximally enchanted to +";
-        _append_value(description, MAX_WPN_ENCHANT, false);
-        description += ".";
-    }
-
     return (description);
 }
 
