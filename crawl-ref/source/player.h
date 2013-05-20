@@ -242,6 +242,10 @@ public:
 
   bool          found_hell_key;       // Found the key to Hell, and can enter Hell.
 
+  int sif_muna_visited_levels;			// For Brogue-style manual of Fight/Splcast
+  int sif_muna_forced_fighting;			// generation: ensuring one per five or so
+  int sif_muna_forced_spellcasting;		// floors.
+
   // Warning: these two are quite different.
   //
   // The spell table is an index to a specific spell slot (you.spells).

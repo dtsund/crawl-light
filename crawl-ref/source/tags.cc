@@ -1211,6 +1211,10 @@ static void tag_construct_you(writer &th)
     
     marshallInt(th, you.difficulty_level);
 
+	marshallInt(th, you.sif_muna_visited_levels);
+	marshallInt(th, you.sif_muna_forced_fighting);
+	marshallInt(th, you.sif_muna_forced_spellcasting);
+
     marshallBoolean(th, you.found_hell_key);
 
     marshallShort(th, you.magic_contamination);
@@ -1922,6 +1926,17 @@ static void tag_read_you(reader &th)
     
     //How many pandooras have been opened
     you.difficulty_level = unmarshallInt(th);
+
+	//manuals of fighting/spellcasting generated in WoSM
+	if (th.getMinorVersion() < TAG_MINOR_MANUAL_CONTROL) {
+		you.sif_muna_visited_levels = 0;
+		you.sif_muna_forced_fighting = 0;
+		you.sif_muna_forced_spellcasting = 0;
+	} else {
+		you.sif_muna_visited_levels = unmarshallInt(th);
+		you.sif_muna_forced_fighting = unmarshallInt(th);
+		you.sif_muna_forced_spellcasting = unmarshallInt(th);
+	}
     
     if (th.getMinorVersion() < TAG_MINOR_HELL_KEY)
         you.found_hell_key = true;

@@ -3581,6 +3581,8 @@ static void _builder_items(int level_number, int items_wanted)
        !player_in_branch(BRANCH_ORCISH_MINES) &&
        !player_in_branch(BRANCH_SLIME_PITS) && items_wanted > 0)
     {
+		bool tried_forced_fighting = false;
+		bool tried_forced_spellcasting = false;
         //Average of three manuals per floor for now.  Much higher average skill
         //level than most players ever get, offset greatly by a complete lack
         //of control over where they actually go.
@@ -3593,9 +3595,29 @@ static void _builder_items(int level_number, int items_wanted)
 
         for(i = 0; i < num_manuals; i++)
         {
-            items(1, OBJ_BOOKS, BOOK_MANUAL, false, items_levels, 250, 
+            int current_manual = items(1, OBJ_BOOKS, BOOK_MANUAL, false, items_levels, 250, 
                   MMT_NO_ITEM);
+
+			if(!tried_forcing_fighting)
+			{
+			    tried_forcing_fighting = true;
+			    if(one_chance_in(std::max(1,5 + you.sif_muna_forced_fighting * 5 - you.sif_muna_visited_levels)))
+			    {
+			        mitm[made_item].plus = SK_FIGHTING;
+					you.sif_muna_forced_fighting++;
+			    }
+			}
+			else if(!tried_forcing_spellcasting)
+			{
+			    tried_forcing_spellcasting = true;
+			    if(one_chance_in(std::max(1,5 + you.sif_muna_forced_spellcasting * 5 -you.sif_muna_visited_levels)))
+			    {
+			        mitm[made_item].plus = SK_SPELLCASTING;
+					you.sif_muna_forced_spellcasting++;
+			    }
+			}
         }
+		you.sif_muna_visited_levels++;
     }
 }
 

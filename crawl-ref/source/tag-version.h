@@ -23,6 +23,7 @@ enum tag_minor_version
     TAG_MINOR_CHERUB_ATTACKS,      // Give Cherubs a new attack flavour.
     TAG_MINOR_SAVE_MAP,            // Save the name of the loaded tutorial map.
     TAG_MINOR_CHALLENGE_GAMES,     // Add challenge games.
+	TAG_MINOR_MANUAL_CONTROL,	   // Less randomness in Wrath of Sif Muna
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
