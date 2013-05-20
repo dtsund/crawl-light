@@ -3578,7 +3578,8 @@ static void _builder_items(int level_number, int items_wanted)
     }
 
     if(you.challenge == CHALLENGE_SIF_MUNA && !monsters_can_respawn() &&
-       !player_in_branch(BRANCH_ORCISH_MINES) && items_wanted > 0)
+       !player_in_branch(BRANCH_ORCISH_MINES) &&
+       !player_in_branch(BRANCH_SLIME_PITS) && items_wanted > 0)
     {
         //Average of three manuals per floor for now.  Much higher average skill
         //level than most players ever get, offset greatly by a complete lack
