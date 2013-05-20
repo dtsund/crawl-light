@@ -2886,10 +2886,15 @@ static void _generate_book_item(item_def& item, int allow_uniques,
     // Determine which skill for a manual.
     if (item.sub_type == BOOK_MANUAL)
     {
-        if (one_chance_in(4))
-            item.plus = SK_SPELLCASTING + random2(NUM_SKILLS - SK_SPELLCASTING);
-        else
-            item.plus = random2(SK_UNARMED_COMBAT);
+		if (you.challenge != CHALLENGE_SIF_MUNA) {
+	        if (one_chance_in(4))
+	            item.plus = SK_SPELLCASTING + random2(NUM_SKILLS - SK_SPELLCASTING);
+    	    else
+    	        item.plus = random2(SK_LAST_MUNDANE + 1);
+				//adding one IS IMPORTANT. CRAWL SOURCE DECREES IT.
+		} else {
+			item.plus = random2(NUM_SKILLS);
+		}
         // Set number of reads possible before it "crumbles to dust".
         item.plus2 = 3 + random2(15);
     }

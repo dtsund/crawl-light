@@ -6421,7 +6421,6 @@ void player::immobilize(actor *who, int str)
 		immobile = 13 * BASELINE_DELAY;
 }
 
-//LEL CURRENTLY DOES NOTHING
 void player::atrophy(actor *who, int str)
 {
 	ASSERT(!crawl_state.game_is_arena());
