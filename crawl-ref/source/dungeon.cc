@@ -3583,8 +3583,7 @@ static void _builder_items(int level_number, int items_wanted)
         //Average of two manuals per floor for now.  Much higher average skill
         //level than most players ever get, offset greatly by a complete lack
         //of control over where they actually go.
-		// ...there's got to be a cleaner way to do this.
-        int num_manuals = random2(2) + random2(2) + random2(2) + random2(2) + random2(2) + random2(2);
+        int num_manuals = binomial_generator(6, 50);
         
         //First few levels get some extras too.  Skill advancement early on is
         //fast, and you need tools to survive the early game.
