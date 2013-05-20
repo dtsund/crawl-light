@@ -1928,11 +1928,14 @@ static void tag_read_you(reader &th)
     you.difficulty_level = unmarshallInt(th);
 
 	//manuals of fighting/spellcasting generated in WoSM
-	if (th.getMinorVersion() < TAG_MINOR_MANUAL_CONTROL) {
+	if (th.getMinorVersion() < TAG_MINOR_MANUAL_CONTROL)
+	{
 		you.sif_muna_visited_levels = 0;
 		you.sif_muna_forced_fighting = 0;
 		you.sif_muna_forced_spellcasting = 0;
-	} else {
+	}
+	else
+	{
 		you.sif_muna_visited_levels = unmarshallInt(th);
 		you.sif_muna_forced_fighting = unmarshallInt(th);
 		you.sif_muna_forced_spellcasting = unmarshallInt(th);

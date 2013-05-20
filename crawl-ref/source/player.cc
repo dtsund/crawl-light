@@ -5329,8 +5329,8 @@ void player::init()
     //case where it might matter, so don't reset it to CHALLENGE_NONE here
 	
 	sif_muna_visited_levels = 0;
-	sif_muna_fixed_fighting = 0;
-	sif_muna_fixed_spellcasting = 0;
+	sif_muna_forced_fighting = 0;
+	sif_muna_forced_spellcasting = 0;
 
     last_view_update = 0;
 
