@@ -151,6 +151,8 @@ public:
     std::string hiscore_line(death_desc_verbosity verbosity) const;
 
     std::string character_description(death_desc_verbosity) const;
+	// adds the challenge mode to the hiscore death describe
+	std::string challenge_description(death_desc_verbosity) const;
     // Full description of death: Killed by an xyz wielding foo
     std::string death_description(death_desc_verbosity) const;
     std::string death_place(death_desc_verbosity) const;

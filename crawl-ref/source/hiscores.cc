@@ -1300,11 +1300,55 @@ void scorefile_entry::init(time_t dt)
 std::string scorefile_entry::hiscore_line(death_desc_verbosity verbosity) const
 {
     std::string line = character_description(verbosity);
+	line += challenge_description(verbosity);
     line += death_description(verbosity);
     line += death_place(verbosity);
     line += game_time(verbosity);
 
     return (line);
+}
+
+// adds the challenge mode to the hiscore death describe
+std::string scorefile_entry::challenge_description(death_desc_verbosity verbosity) const
+{
+	std::string line;
+	if (you.challenge != CHALLENGE_NONE && verbosity == DDV_VERBOSE)
+	{
+		line += "Suffered the wrath of ";
+		switch (you.challenge)
+		{
+		case CHALLENGE_XOM:
+			line += "Xom.";
+			break;
+		case CHALLENGE_NEMELEX:
+			line += "Nemelex Xobeh.";
+			break;
+		case CHALLENGE_CHEIBRIADOS:
+			line += "Cheibriados.";
+			break;
+		case CHALLENGE_SIF_MUNA:
+			line += "Sif Muna.";
+			break;
+		case CHALLENGE_OKAWARU:
+			line += "Okawaru.";
+			break;
+		case CHALLENGE_TROG:
+			line += "Trog.";
+			break;
+		case CHALLENGE_JIYVA:
+			line += "Jiyva.";
+			break;
+		case CHALLENGE_VEHUMET:
+			line += "Vehumet.";
+			break;
+		default:
+			// U BORK ET
+			line += "absolutely nobody.";
+			break;
+		}
+		line += _hiscore_newline_string();
+	}
+	return (line);
 }
 
 std::string scorefile_entry::game_time(death_desc_verbosity verbosity) const
@@ -2209,6 +2253,8 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         trim_string(desc);
         desc = strip_article_a(desc);
     }
+	
+	
 
     return (desc);
 }
