@@ -1410,6 +1410,26 @@ enum duration_type
     NUM_DURATIONS
 };
 
+// Edicts declared by Zin followers.
+enum edict_type
+{
+    EDICT_NONE = 0,
+    EDICT_NO_SHORT_BLADES,
+    EDICT_NO_LONG_BLADES,
+    EDICT_NO_AXES,
+    EDICT_NO_MACES_FLAILS,
+    EDICT_NO_POLEARMS,
+    EDICT_NO_STAVES,
+    EDICT_NO_PROJECTILES,
+    EDICT_NO_POISON,
+    EDICT_NO_TRANSLOCATIONS,
+    EDICT_NO_FIRE,
+    EDICT_NO_COLD,
+    EDICT_NO_INVISIBILITY,
+    EDICT_NO_SELF_ENCH,
+    EDICT_NO_SUMMONING,
+};
+
 // This list must match the enchant_names array in monster.cc or Crawl
 // will CRASH, we kid you not.
 // Enchantments that imply other enchantments should come first
