@@ -24,6 +24,8 @@ enum tag_minor_version
     TAG_MINOR_SAVE_MAP,            // Save the name of the loaded tutorial map.
     TAG_MINOR_CHALLENGE_GAMES,     // Add challenge games.
 	TAG_MINOR_MANUAL_CONTROL,	   // Less randomness in Wrath of Sif Muna
+	TAG_MINOR_MOVE_DIFFICULTY,     // Move difficulty level to tag_read/write_char,
+	                               // so that it can be displayed in file select
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
