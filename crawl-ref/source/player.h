@@ -707,6 +707,7 @@ struct player_save_info
     god_type religion;
     std::string jiyva_second_name;
     game_type saved_game_type;
+    int difficulty_level;
     challenge_type challenge;
 
 #ifdef USE_TILE
@@ -962,4 +963,5 @@ bool contamination_warning_prompt(int cost);
 void check_relatively_safe(bool maybe_print_message);
 
 const char* challenge_type_to_string(challenge_type t);
+const char* challenge_type_to_string_short(challenge_type t);
 #endif
