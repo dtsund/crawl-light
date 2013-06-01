@@ -149,6 +149,8 @@ static duration_def duration_data[] =
 	  RED, "Blind", "blind", "You have been blinded."}, */
 	{ DUR_ATROPHY, false,
 	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."},
+	{ DUR_ISSUING_COMMANDMENT, true,
+	  LIGHTBLUE, "Command", "commandment", "You are issuing a commandment." },
 };
 
 static int duration_index[NUM_DURATIONS];

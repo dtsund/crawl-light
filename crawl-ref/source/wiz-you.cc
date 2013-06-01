@@ -803,6 +803,7 @@ static const char* dur_names[] =
 	"immobile",
 //	"blind",
 	"atrophy",
+	"issuing commandment",
 };
 
 void wizard_edit_durations(void)

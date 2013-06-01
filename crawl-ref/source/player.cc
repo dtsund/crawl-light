@@ -3612,6 +3612,7 @@ int get_expiration_threshold(duration_type dur)
     case DUR_CONTROL_TELEPORT:
     case DUR_DEATH_CHANNEL:
     case DUR_SEE_INVISIBLE:
+    case DUR_ISSUING_COMMANDMENT:
         return (6 * BASELINE_DELAY);
 
     case DUR_LEVITATION:
@@ -5290,6 +5291,10 @@ void player::init()
 
     religion         = GOD_NO_GOD;
     jiyva_second_name.clear();
+    edicts[0]        = EDICT_NONE;
+    edicts[1]        = EDICT_NONE;
+    edicts[2]        = EDICT_NONE;
+    commandment      = COMMANDMENT_NONE;
     piety            = 0;
     piety_hysteresis = 0;
     gift_timeout     = 0;

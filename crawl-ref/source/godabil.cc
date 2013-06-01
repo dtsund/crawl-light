@@ -1360,6 +1360,203 @@ bool zin_imprison()
     return true;
 }
 
+const char* _describe_edict(edict_type edict)
+{
+    switch (edict)
+    {
+    case EDICT_NO_SHORT_BLADES:
+        return "Edict against Short Blades";
+    case EDICT_NO_LONG_BLADES:
+        return "Edict against Long Blades";
+    case EDICT_NO_AXES:
+        return "Edict against Axes";
+    case EDICT_NO_MACES_FLAILS:
+        return "Edict against Maces and Flails";
+    case EDICT_NO_POLEARMS:
+        return "Edict against Polearms";
+    case EDICT_NO_STAVES:
+        return "Edict against Staves";
+    case EDICT_NO_PROJECTILES:
+        return "Edict against projectile weapons";
+    case EDICT_NO_POISON:
+        return "Edict against poison";
+    case EDICT_NO_TRANSLOCATIONS:
+        return "Edict against magical translocations";
+    case EDICT_NO_FIRE:
+        return "Edict against fiery attacks";
+    case EDICT_NO_COLD:
+        return "Edict against cold attacks";
+    case EDICT_NO_INVISIBILITY:
+        return "Edict against invisibility";
+    case EDICT_NO_SELF_ENCH:
+        return "Edict against self-enchantment";
+    case EDICT_NO_SUMMONING:
+        return "Edict against summoning";
+    default:
+        return "Edict against bugginess";
+    }
+}
+
+const char* _describe_commandment(commandment_type commandment)
+{
+    switch (commandment)
+    {
+    case COMMANDMENT_NO_FIGHTING:
+        return "Commandment forbidding physical attacks";
+    case COMMANDMENT_NO_SPELLCASTING:
+        return "Commandment forbidding spellcasting";
+    case COMMANDMENT_NO_MOVEMENT:
+        return "Commandment forbidding movement";
+    case COMMANDMENT_NO_TORMENT:
+        return "Commandment forbidding torment";
+    default:
+        return "Commandment forbidding bugginess";
+    }
+}
+
+bool zin_issue_edict()
+{
+    edict_type chosen_edict = EDICT_NONE;
+
+    Menu edict_menu(MF_SINGLESELECT | MF_SELECT_BY_PAGE | MF_ANYPRINTABLE, 
+                    "edict");
+    edict_menu.set_highlighter(NULL);
+    edict_menu.set_title(new MenuEntry("  Issue what edict?"));
+    edict_menu.set_flags(MF_SINGLESELECT | MF_ANYPRINTABLE
+                         | MF_ALWAYS_SHOW_MORE);
+
+    edict_menu.menu_action  = Menu::ACT_EXECUTE;
+    
+    //Necessary because C++ is dumb
+    int numbers[52];
+    for (int i = 0; i < 52; ++i)
+        numbers[i] = i;
+
+    for (int i = 1; i < (int) NUM_EDICTS; i++)
+    {
+        //i+96: translate i to the ith lowercase letter in ASCII.
+        //If we go over 26 edicts, we'll need to change this.
+        MenuEntry* me = new MenuEntry(_describe_edict((edict_type) i), MEL_ITEM, 1, i + 96);
+        me->data = &numbers[i];
+        edict_menu.add_entry(me);
+    }
+
+    std::vector<MenuEntry*> sel = edict_menu.show(false);
+    if (!crawl_state.doing_prev_cmd_again)
+        redraw_screen();
+    if (sel.empty())
+    {
+        //We didn't get an edict, abort.
+        canned_msg(MSG_OK);
+        return false;
+    }
+
+    //Oh, C++.  You just keep bein' C++.
+    chosen_edict = *(static_cast<edict_type*>(sel[0]->data));
+
+    //We got an edict.  Let's add it.
+    bool edict_added = false;
+    //First, add the edict if there's room and abort if it's already in there.
+    //TODO: Flavor message when an edict is added.
+    for (int i = 0; i < 3; i++)
+    {
+        if(you.edicts[i] == EDICT_NONE)
+        {
+            you.edicts[i] = chosen_edict;
+            edict_added = true;
+            break;
+        }
+        else if(you.edicts[i] == chosen_edict)
+        {
+            mpr("That edict is already in effect!");
+            return false;
+        }
+    }
+    
+    //If we didn't add or abort above, shift the existing edicts.
+    //Note: edict[0] is the oldest, so that one is eliminated first.
+    if(!edict_added)
+    {
+        you.edicts[0] = you.edicts[1];
+        you.edicts[1] = you.edicts[2];
+        you.edicts[2] = chosen_edict;
+    }
+    return true;
+}
+
+bool zin_absolution()
+{
+    //Don't charge the player a turn and piety if there aren't
+    //any edicts or commandments in effect.
+    if(you.edicts[0] == EDICT_NONE &&
+       you.edicts[1] == EDICT_NONE &&
+       you.edicts[2] == EDICT_NONE &&
+       you.duration[DUR_ISSUING_COMMANDMENT] == 0)
+    {
+        mpr("There aren't any edicts or commandments in effect!");
+        return false;
+    }
+    
+    //Wipe all edicts and commandments.
+    mpr("Zin's forgiveness washes over the dungeon.");
+    you.edicts[0] = EDICT_NONE;
+    you.edicts[1] = EDICT_NONE;
+    you.edicts[2] = EDICT_NONE;
+    you.commandment = COMMANDMENT_NONE;
+    you.duration[DUR_ISSUING_COMMANDMENT] = 0;
+    return true;
+}
+
+bool zin_issue_commandment()
+{
+    commandment_type chosen_commandment = COMMANDMENT_NONE;
+
+    Menu commandment_menu(MF_SINGLESELECT | MF_SELECT_BY_PAGE | MF_ANYPRINTABLE, 
+                          "commandment");
+    commandment_menu.set_highlighter(NULL);
+    commandment_menu.set_title(new MenuEntry("  Issue what commandment?"));
+    commandment_menu.set_flags(MF_SINGLESELECT | MF_ANYPRINTABLE
+                               | MF_ALWAYS_SHOW_MORE);
+
+    commandment_menu.menu_action  = Menu::ACT_EXECUTE;
+    
+    //Necessary because C++ is dumb
+    int numbers[52];
+    for (int i = 0; i < 52; ++i)
+        numbers[i] = i;
+
+    for (int i = 1; i < (int) NUM_COMMANDMENTS; i++)
+    {
+        //i+96: translate i to the ith lowercase letter in ASCII.
+        //If we go over 26 commandments (unlikely), we'll need to change this.
+        MenuEntry* me = new MenuEntry(_describe_commandment((commandment_type) i), 
+                                      MEL_ITEM, 1, i + 96);
+        me->data = &numbers[i];
+        commandment_menu.add_entry(me);
+    }
+
+    std::vector<MenuEntry*> sel = commandment_menu.show(false);
+    if (!crawl_state.doing_prev_cmd_again)
+        redraw_screen();
+    if (sel.empty())
+    {
+        //We didn't get a commandment, abort.
+        canned_msg(MSG_OK);
+        return false;
+    }
+
+    //Oh, C++.  You just keep bein' C++.
+    chosen_commandment = *(static_cast<commandment_type*>(sel[0]->data));
+
+    //Activate the chosen commandment.
+    you.commandment = chosen_commandment;
+    //TODO: Make this something other than 20 turns, possibly
+    //dependent on Invocations skill.
+    //Also TODO: Flavor message.
+    you.set_duration(DUR_ISSUING_COMMANDMENT, 20);
+
+    return true;
+}
 
 // shield bonus = attribute for duration turns, then decreasing by 1
 //                every two out of three turns

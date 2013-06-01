@@ -23,6 +23,9 @@ bool zin_remove_all_mutations();
 bool zin_sanctuary();
 bool zin_recite();
 bool zin_imprison();
+bool zin_issue_edict();
+bool zin_absolution();
+bool zin_issue_commandment();
 
 void tso_divine_shield();
 void tso_remove_divine_shield();

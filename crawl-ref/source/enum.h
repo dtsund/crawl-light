@@ -65,6 +65,9 @@ enum ability_type
     ABIL_ZIN_IMPRISON,
     ABIL_ZIN_SANCTUARY,
     ABIL_ZIN_CURE_ALL_MUTATIONS,
+    ABIL_ZIN_ISSUE_EDICT,
+    ABIL_ZIN_ABSOLUTION,
+    ABIL_ZIN_ISSUE_COMMANDMENT,
     // TSO
     ABIL_TSO_DIVINE_SHIELD = 60,
     ABIL_TSO_CLEANSING_FLAME,
@@ -1407,6 +1410,7 @@ enum duration_type
     DUR_IMMOBILE,               // can't move
 //  DUR_BLIND,                  // sight goes away
     DUR_ATROPHY,                // lyle is a weakling and cannot wield melee cubes
+    DUR_ISSUING_COMMANDMENT,    // Using the Issue Commandment invocation
     NUM_DURATIONS
 };
 
@@ -1428,6 +1432,18 @@ enum edict_type
     EDICT_NO_INVISIBILITY,
     EDICT_NO_SELF_ENCH,
     EDICT_NO_SUMMONING,
+    NUM_EDICTS,
+};
+
+// Commandments temporarily issued by Zin followers.
+enum commandment_type
+{
+    COMMANDMENT_NONE = 0,
+    COMMANDMENT_NO_FIGHTING,
+    COMMANDMENT_NO_SPELLCASTING,
+    COMMANDMENT_NO_MOVEMENT,
+    COMMANDMENT_NO_TORMENT,
+    NUM_COMMANDMENTS,
 };
 
 // This list must match the enchant_names array in monster.cc or Crawl

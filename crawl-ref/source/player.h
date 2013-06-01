@@ -186,6 +186,8 @@ public:
 
   god_type religion;
   std::string jiyva_second_name; // Random second name of Jiyva
+  edict_type edicts[3];
+  commandment_type commandment;
   uint8_t piety;
   uint8_t piety_hysteresis;       // amount of stored-up docking
   uint8_t gift_timeout;

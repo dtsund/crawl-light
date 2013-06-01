@@ -2288,6 +2288,15 @@ static void _decrement_durations()
     }
 
     _decrement_a_duration(DUR_JELLY_PRAYER, delay, "Your prayer is over.");
+    
+    _decrement_a_duration(DUR_ISSUING_COMMANDMENT, delay,
+                          "Your commandment has expired.",
+                          coinflip(),
+                          "Your commandment's hold over the dungeon is expiring...");
+
+    //Some cleanup; wipe out you.commandment if it expired.
+    if (you.duration[DUR_ISSUING_COMMANDMENT] == 0)
+        you.commandment = COMMANDMENT_NONE;
 
     if (you.duration[DUR_DIVINE_SHIELD] > 0)
     {

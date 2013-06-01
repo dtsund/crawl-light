@@ -178,8 +178,8 @@ ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
     { ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
       ABIL_NON_ABILITY },
     // Zin
-    { ABIL_ZIN_RECITE, ABIL_ZIN_VITALISATION, ABIL_ZIN_IMPRISON,
-      ABIL_NON_ABILITY, ABIL_ZIN_SANCTUARY },
+    { ABIL_ZIN_ISSUE_EDICT, ABIL_ZIN_ABSOLUTION, ABIL_NON_ABILITY,
+      ABIL_ZIN_ISSUE_COMMANDMENT, ABIL_ZIN_SANCTUARY },
     // TSO
     { ABIL_NON_ABILITY, ABIL_TSO_DIVINE_SHIELD, ABIL_NON_ABILITY,
       ABIL_TSO_CLEANSING_FLAME, ABIL_TSO_SUMMON_DIVINE_WARRIOR },
@@ -312,6 +312,9 @@ static const ability_def Ability_List[] =
     { ABIL_ZIN_SANCTUARY, "Sanctuary", 7, 0, 0, 15, ABFLAG_NONE },
     { ABIL_ZIN_CURE_ALL_MUTATIONS, "Cure All Mutations",
       0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_ZIN_ISSUE_EDICT, "Issue Edict", 0, 0, 0, 6, ABFLAG_NONE },
+    { ABIL_ZIN_ABSOLUTION, "Absolution", 0, 0, 0, 6, ABFLAG_NONE },
+    { ABIL_ZIN_ISSUE_COMMANDMENT, "Issue Commandment", 12, 0, 0, 10, ABFLAG_NONE },
 
     // The Shining One
     { ABIL_TSO_DIVINE_SHIELD, "Divine Shield", 3, 0, 1, 2, ABFLAG_NONE },
@@ -1143,6 +1146,9 @@ static talent _get_talent(ability_type ability, bool check_confused)
         failure = 30 - (you.piety / 20) - (6 * you.skill(SK_INVOCATIONS));
         break;
 
+    case ABIL_ZIN_ISSUE_EDICT:
+    case ABIL_ZIN_ABSOLUTION:
+    case ABIL_ZIN_ISSUE_COMMANDMENT:
     // These don't train anything.
     case ABIL_ZIN_CURE_ALL_MUTATIONS:
     case ABIL_ELYVILON_LIFESAVING:
@@ -2231,6 +2237,20 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_ZIN_CURE_ALL_MUTATIONS:
         zin_remove_all_mutations();
+        break;
+    
+    case ABIL_ZIN_ISSUE_EDICT:
+        if(!zin_issue_edict())
+            return (false);
+        break;
+
+    case ABIL_ZIN_ABSOLUTION:
+        zin_absolution();
+        break;
+
+    case ABIL_ZIN_ISSUE_COMMANDMENT:
+        if(!zin_issue_commandment())
+            return (false);
         break;
 
     case ABIL_TSO_DIVINE_SHIELD:
