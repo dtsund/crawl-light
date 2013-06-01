@@ -3652,8 +3652,18 @@ bool god_loathes_spell(spell_type spell, god_type god)
     return false;
 }
 
+//is_edict_active: Checks whether edict is one of the active edicts.
+//Returns true if the player is a Zin follower not under penance AND
+//edict is one of the chosen edicts.  Returns false otherwise.
 bool is_edict_active(edict_type edict)
 {
+    //No edicts are ever active if you're not a Zin follower
+    //in good standing.
+    if(you.religion != GOD_ZIN || you.penance[GOD_ZIN])
+        return false;
+
+    //Okay, so Zin follower in good standing.  See if it's one of
+    //the edicts.
     return (you.edicts[0] == edict ||
             you.edicts[1] == edict ||
             you.edicts[2] == edict);
