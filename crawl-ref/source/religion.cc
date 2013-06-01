@@ -805,10 +805,6 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
         dislikes.push_back("you allow allies to die");
         break;
 
-    case GOD_ZIN:
-        dislikes.push_back("you allow sentient allies to die");
-        break;
-
     default:
         break;
     }
