@@ -3970,6 +3970,63 @@ std::string god_title(god_type which_god, species_type which_species)
     return (title);
 }
 
+//Be careful when adding entries to this; long names might
+//make the line go over 80 characters, which will eat the 
+//following line on an 80x24 terminal.
+const char* _name_edict(edict_type edict)
+{
+    switch (edict)
+    {
+    case EDICT_NO_SHORT_BLADES:
+        return "No Short Blades";
+    case EDICT_NO_LONG_BLADES:
+        return "No Long Blades";
+    case EDICT_NO_AXES:
+        return "No Axes";
+    case EDICT_NO_MACES_FLAILS:
+        return "No Maces/Flails";
+    case EDICT_NO_POLEARMS:
+        return "No Polearms";
+    case EDICT_NO_STAVES:
+        return "No Staves";
+    case EDICT_NO_PROJECTILES:
+        return "No Projectiles";
+    case EDICT_NO_POISON:
+        return "No Poison";
+    case EDICT_NO_TRANSLOCATIONS:
+        return "No Translocations";
+    case EDICT_NO_FIRE:
+        return "No Fire";
+    case EDICT_NO_COLD:
+        return "No Cold";
+    case EDICT_NO_INVISIBILITY:
+        return "No Invisibility";
+    case EDICT_NO_SELF_ENCH:
+        return "No Self-Enchantment";
+    case EDICT_NO_SUMMONING:
+        return "No Summoning";
+    default:
+        return "No Bugs";
+    }
+}
+
+const char* _name_commandment(commandment_type commandment)
+{
+    switch (commandment)
+    {
+    case COMMANDMENT_NO_FIGHTING:
+        return "No Physical Sttacks";
+    case COMMANDMENT_NO_SPELLCASTING:
+        return "No Spellcasting";
+    case COMMANDMENT_NO_MOVEMENT:
+        return "No Movement";
+    case COMMANDMENT_NO_TORMENT:
+        return "No Torment";
+    default:
+        return "No Bugs";
+    }
+}
+
 static void _detailed_god_description(god_type which_god)
 {
     clrscr();
@@ -4021,7 +4078,42 @@ static void _detailed_god_description(god_type which_god)
             break;
 
         case GOD_ZIN:
-            broken = "Zin will feed starving followers upon <w>p</w>rayer.";
+            broken = "<w>Current edicts: </w>";
+            if(you.edicts[0] == EDICT_NONE)
+            {
+                broken += "None.";
+            }
+            else if(you.edicts[1] == EDICT_NONE)
+            {
+                broken += _name_edict(you.edicts[0]);
+                broken += ".";
+            }
+            else if(you.edicts[2] == EDICT_NONE)
+            {
+                broken += _name_edict(you.edicts[0]);
+                broken += ", ";
+                broken += _name_edict(you.edicts[1]);
+                broken += ".";
+            }
+            else
+            {
+                broken += _name_edict(you.edicts[0]);
+                broken += ", ";
+                broken += _name_edict(you.edicts[1]);
+                broken += ", ";
+                broken += _name_edict(you.edicts[2]);
+                broken += ".";
+            }
+            broken += "\n";
+            broken += "<w>Current commandment: </w>";
+            if(you.commandment == COMMANDMENT_NONE)
+            {
+                broken += "None.";
+            }
+            else
+            {
+                broken += _name_commandment(you.commandment);
+            }
             break;
 
         case GOD_ELYVILON:
