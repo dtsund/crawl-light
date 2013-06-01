@@ -1277,6 +1277,44 @@ static void _mons_set_priest_wizard_god(monster* mons, bool& priest,
         god = mons->god;
 }
 
+//Stochastically filter spells out from the list of castable spells
+//based on the currently active edicts.  Non-intelligent monsters won't
+//lose any spells, but intelligent monsters can.  Low-HD intelligent
+//monsters fear Zin's wrath more, and will thus lose forbidden spells a
+//lot more often.
+static void _edict_filter_spells(monster* mons, monster_spells &spells)
+{
+    //Non-intelligent monsters aren't affected.
+    if (mons_intel(mons) < I_NORMAL)
+        return;
+
+    //Check each spell to see if it violates the current edicts.
+    for (int i = 0; i < NUM_MONSTER_SPELL_SLOTS; i++)
+    {
+        if(spell_violates_edict(spells[i]) != EDICT_NONE)
+        {
+            //Violates an edict.  Make the HD check.
+            //Monsters with HD <= 8 always scrap the spell.
+            //Monsters with HD >= 16 always keep it.
+            //Linear scaling between those.
+            if(mons->hit_dice <= 8)
+            {
+                spells[i] = SPELL_NO_SPELL;
+            }
+            else if(mons->hit_dice >= 16)
+            {
+                //The monsters hit dice won't change on future
+                //iterations, no need to loop again.
+                return;
+            }
+            else if(x_chance_in_y(mons->hit_dice - 8, 8))
+            {
+                spells[i] = SPELL_NO_SPELL;
+            }
+        }
+    }
+}
+
 //---------------------------------------------------------------
 //
 // handle_spell
@@ -1356,6 +1394,10 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
     {
         spell_type spell_cast = SPELL_NO_SPELL;
         monster_spells hspell_pass(mons->spells);
+
+        //Intelligent foes will sometimes (usually if low-HD) avoid casting
+        //spells forbidden by Zin edict.
+        _edict_filter_spells(mons, hspell_pass);
 
         if (!mon_enemies_around(mons))
         {
