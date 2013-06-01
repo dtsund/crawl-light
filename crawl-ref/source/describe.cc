@@ -4015,7 +4015,7 @@ const char* _name_commandment(commandment_type commandment)
     switch (commandment)
     {
     case COMMANDMENT_NO_FIGHTING:
-        return "No Physical Sttacks";
+        return "No Physical Attacks";
     case COMMANDMENT_NO_SPELLCASTING:
         return "No Spellcasting";
     case COMMANDMENT_NO_MOVEMENT:
