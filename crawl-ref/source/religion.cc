@@ -216,10 +216,10 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // no god
     { "", "", "", "", "" },
     // Zin
-    { "recite Zin's Axioms of Law",
-      "call upon Zin for vitalisation",
-      "call upon Zin to imprison the lawless",
+    { "issue edicts that other intelligent beings must follow",
+      "call upon Zin's forgiveness",
       "",
+      "declare inviolable, but temporary, commandments",
       "call upon Zin to create a sanctuary" },
     // TSO
     { "You and your allies can gain power from killing the unholy and evil.",
@@ -323,10 +323,10 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // no god
     { "", "", "", "", "" },
     // Zin
-    { "recite Zin's Axioms of Law",
-      "call upon Zin for vitalisation",
-      "call upon Zin to imprison the lawless",
+    { "issue edicts",
+      "call upon Zin's forgiveness",
       "",
+      "declare commandments",
       "call upon Zin to create a sanctuary" },
     // TSO
     { "You and your allies can no longer gain power from killing the unholy and evil.",
