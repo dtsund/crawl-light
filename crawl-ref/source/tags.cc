@@ -1706,7 +1706,7 @@ static void tag_read_you(reader &th)
     int count;
 
     you.last_mid          = unmarshallInt(th);
-    if(th.getMinorVersion >= TAG_MINOR_ZIN_REFORM)
+    if(th.getMinorVersion() >= TAG_MINOR_ZIN_REFORM)
     {
         you.edicts[0]     = static_cast<edict_type>(unmarshallByte(th));
         you.edicts[1]     = static_cast<edict_type>(unmarshallByte(th));
