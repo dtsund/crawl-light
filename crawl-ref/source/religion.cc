@@ -2957,6 +2957,13 @@ void excommunication(god_type new_god)
         if (env.sanctuary_time)
             remove_sanctuary();
 
+        // No more edicts or commandments.
+        you.edicts[0] = EDICT_NONE;
+        you.edicts[1] = EDICT_NONE;
+        you.edicts[2] = EDICT_NONE;
+        you.commandment = COMMANDMENT_NONE;
+        you.duration[DUR_ISSUING_COMMANDMENT] = 0;
+
         // Leaving Zin for a non-good god will make all your followers
         // (originally from TSO) abandon you.
         if (!is_good_god(new_god))
