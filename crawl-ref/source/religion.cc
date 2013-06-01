@@ -3652,6 +3652,13 @@ bool god_loathes_spell(spell_type spell, god_type god)
     return false;
 }
 
+bool is_edict_active(edict_type edict)
+{
+    return (you.edicts[0] == edict ||
+            you.edicts[1] == edict ||
+            you.edicts[2] == edict);
+}
+
 bool god_can_protect_from_harm(god_type god)
 {
     switch (god)
