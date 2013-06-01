@@ -754,16 +754,8 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     std::vector<std::string> dislikes;        // Piety loss
     std::vector<std::string> really_dislikes; // Penance
 
-    if (god_hates_cannibalism(which_god))
-        really_dislikes.push_back("you perform cannibalism");
-
     if (is_good_god(which_god))
     {
-        if (which_god == GOD_SHINING_ONE)
-            really_dislikes.push_back("you drink blood");
-        else
-            dislikes.push_back("you drink blood");
-
         really_dislikes.push_back("you use necromancy");
         really_dislikes.push_back("you use unholy magic or items");
         really_dislikes.push_back("you attack non-hostile holy beings");
@@ -824,7 +816,6 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
         dislikes.push_back("you deliberately mutate yourself");
         really_dislikes.push_back("you polymorph monsters");
         really_dislikes.push_back("you use unclean or chaotic magic or items");
-        really_dislikes.push_back("you eat the flesh of sentient beings");
         dislikes.push_back("you or your allies attack monsters in a "
                            "sanctuary");
         break;
@@ -3555,11 +3546,6 @@ std::string god_hates_your_god_reaction(god_type god, god_type your_god)
     }
 
     return ("");
-}
-
-bool god_hates_cannibalism(god_type god)
-{
-    return (is_good_god(god) || god == GOD_BEOGH);
 }
 
 bool god_hates_killing(god_type god, const monster* mon)
