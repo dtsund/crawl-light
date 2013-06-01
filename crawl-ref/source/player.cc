@@ -5295,6 +5295,7 @@ void player::init()
     edicts[1]        = EDICT_NONE;
     edicts[2]        = EDICT_NONE;
     commandment      = COMMANDMENT_NONE;
+    zin_anger        = 0;
     piety            = 0;
     piety_hysteresis = 0;
     gift_timeout     = 0;

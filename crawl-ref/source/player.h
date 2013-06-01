@@ -186,8 +186,14 @@ public:
 
   god_type religion;
   std::string jiyva_second_name; // Random second name of Jiyva
-  edict_type edicts[3];
-  commandment_type commandment;
+
+  edict_type edicts[3];          // Active edicts for Zin followers
+  commandment_type commandment;  // Commandment, again for Zin
+  int zin_anger;                 // How pissed-off Zin is at monsters
+                                 // in general; repeated offenses in
+                                 // a short time span make him
+                                 // trigger-happy.
+
   uint8_t piety;
   uint8_t piety_hysteresis;       // amount of stored-up docking
   uint8_t gift_timeout;
