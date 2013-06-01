@@ -1388,8 +1388,8 @@ const char* _describe_edict(edict_type edict)
         return "Edict against cold attacks";
     case EDICT_NO_INVISIBILITY:
         return "Edict against invisibility";
-    case EDICT_NO_SELF_ENCH:
-        return "Edict against self-enchantment";
+    case EDICT_NO_ENCHANTMENT:
+        return "Edict against enchantment";
     case EDICT_NO_SUMMONING:
         return "Edict against summoning";
     default:

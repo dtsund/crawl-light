@@ -4001,8 +4001,8 @@ const char* _name_edict(edict_type edict)
         return "No Cold";
     case EDICT_NO_INVISIBILITY:
         return "No Invisibility";
-    case EDICT_NO_SELF_ENCH:
-        return "No Self-Enchantment";
+    case EDICT_NO_ENCHANTMENT:
+        return "No Enchantment";
     case EDICT_NO_SUMMONING:
         return "No Summoning";
     default:
