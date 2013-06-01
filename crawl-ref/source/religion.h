@@ -67,6 +67,7 @@ bool god_likes_butchery(god_type god);
 bool god_likes_spell(spell_type spell, god_type god);
 bool god_hates_spell(spell_type spell, god_type god);
 bool god_loathes_spell(spell_type spell, god_type god);
+edict_type spell_violates_edict(spell_type spell);
 bool is_edict_active(edict_type edict);
 bool god_can_protect_from_harm(god_type god);
 int elyvilon_lifesaving();

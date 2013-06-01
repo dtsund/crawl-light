@@ -3659,6 +3659,273 @@ bool god_loathes_spell(spell_type spell, god_type god)
     return false;
 }
 
+//spell_violates_edict: Checks whether the spell violates an active
+//Zin edict.  Returns EDICT_NONE if it doesn't, one of the offending
+//edicts if it does.
+//Doesn't just return a bool so that we can have a descriptive
+//warning message if the player tries to cast a proscribed spell.
+//Zin worship is checked in is_edict_active, no need to do it here.
+edict_type spell_violates_edict(spell_type spell)
+{
+    if(is_edict_active(EDICT_NO_POISON))
+    {
+        switch (spell)
+        {
+        //Should Mephitic Cloud go in here?
+        //I'm putting Evaporate in here, though it won't really matter
+        //if I finally manage to cut the spell.
+        case SPELL_OLGREBS_TOXIC_RADIANCE:
+        case SPELL_SUMMON_SCORPIONS: //scorps are poisonous
+        case SPELL_POISONOUS_CLOUD:
+        case SPELL_SUMMON_SWARM: //a lot of these are poisonous
+        case SPELL_FULSOME_DISTILLATION: //doesn't much matter, Zin hates necro anyway
+        case SPELL_POISON_ARROW:
+        case SPELL_STING:
+        case SPELL_CORPSE_ROT:
+        case SPELL_POISON_WEAPON:
+        case SPELL_IGNITE_POISON:
+        case SPELL_STICKS_TO_SNAKES:
+        case SPELL_EVAPORATE:
+        case SPELL_SUMMON_UGLY_THING:
+        case SPELL_POISON_SPLASH:
+        case SPELL_MIASMA_CLOUD:
+        case SPELL_POISON_CLOUD:
+        case SPELL_NOXIOUS_CLOUD:
+        case SPELL_SUMMON_DEMON: //orange demons
+        case SPELL_DEMONIC_HORDE: //orange demons
+            return EDICT_NO_POISON;
+        default:
+            break; //Might violate other edicts, though
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_TRANSLOCATIONS))
+    {
+        switch (spell)
+        {
+        case SPELL_TELEPORT_SELF:
+        case SPELL_APPORTATION:
+        case SPELL_CONTROLLED_BLINK:
+        case SPELL_TELEPORT_OTHER:
+        case SPELL_BANISHMENT:
+        case SPELL_CONTROL_TELEPORT:
+        case SPELL_RECALL:
+        case SPELL_PASSWALL:
+        case SPELL_PHASE_SHIFT:
+        case SPELL_WARP_BRAND:
+        case SPELL_DISPERSAL:
+        case SPELL_PORTAL_PROJECTILE:
+        case SPELL_GOLUBRIAS_PASSAGE:
+        case SPELL_BLINK_OTHER:
+        case SPELL_BLINK_OTHER_CLOSE:
+        case SPELL_BLINK_CLOSE:
+        case SPELL_BLINK_RANGE:
+        case SPELL_BLINK_AWAY:
+        case SPELL_MALIGN_GATEWAY:
+            return EDICT_NO_TRANSLOCATIONS;
+        default:
+            break;
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_FIRE))
+    {
+        switch(spell)
+        {
+        case SPELL_FIREBALL:
+        case SPELL_DELAYED_FIREBALL:
+        case SPELL_CONJURE_FLAME:
+        case SPELL_BOLT_OF_FIRE:
+        case SPELL_BOLT_OF_MAGMA:
+        case SPELL_THROW_FLAME:
+        case SPELL_RING_OF_FLAMES:
+        case SPELL_FIRE_STORM:
+        case SPELL_STICKY_FLAME:
+        case SPELL_HELLFIRE:
+        case SPELL_SUMMON_DEMON: //these might make NO_FIRE
+        case SPELL_DEMONIC_HORDE: //too powerful relative
+        case SPELL_SUMMON_GREATER_DEMON:// to NO_SUMMON
+        case SPELL_FIRE_BRAND:
+        case SPELL_DRAGON_FORM:
+        case SPELL_FLAME_TONGUE:
+        case SPELL_IGNITE_POISON:
+        case SPELL_SUMMON_DRAGON:
+        case SPELL_EVAPORATE:
+        case SPELL_SUMMON_UGLY_THING:
+        case SPELL_HELLFIRE_BURST:
+        case SPELL_SUMMON_DRAKES:
+        case SPELL_STICKY_FLAME_SPLASH:
+        case SPELL_FIRE_BREATH:
+        case SPELL_FIRE_ELEMENTALS:
+        case SPELL_HOLY_FLAMES:
+        case SPELL_HOLY_BREATH:
+        case SPELL_FIRE_CLOUD:
+        case SPELL_STICKY_FLAME_RANGE:
+        case SPELL_FIRE_SUMMON:
+        case SPELL_INNER_FLAME:
+            return EDICT_NO_FIRE;
+        default:
+            break;
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_COLD))
+    {
+        switch(spell)
+        {
+        case SPELL_BOLT_OF_COLD:
+        case SPELL_THROW_FROST:
+        case SPELL_FREEZING_CLOUD:
+        case SPELL_FREEZE:
+        case SPELL_OZOCUBUS_REFRIGERATION:
+        case SPELL_SUMMON_ICE_BEAST:
+        case SPELL_OZOCUBUS_ARMOUR:
+        case SPELL_CALL_IMP:
+        case SPELL_FREEZING_AURA:
+        case SPELL_ICE_FORM:
+        case SPELL_THROW_ICICLE:
+        case SPELL_ICE_STORM:
+        case SPELL_SUMMON_DRAGON:
+        case SPELL_HIBERNATION:
+        case SPELL_ENGLACIATION:
+        case SPELL_SIMULACRUM:
+        case SPELL_SUMMON_UGLY_THING:
+        case SPELL_COLD_BREATH:
+            return EDICT_NO_COLD;
+        default:
+            break;
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_INVISIBILITY))
+    {
+        switch(spell)
+        {
+        case SPELL_INVISIBILITY:
+            return EDICT_NO_INVISIBILITY; //well that was easy
+        default:
+            break;
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_ENCHANTMENT))
+    {
+        switch(spell)
+        {
+        case SPELL_HASTE:
+        case SPELL_INVISIBILITY:
+        case SPELL_RING_OF_FLAMES:
+        case SPELL_MINOR_HEALING: //???
+        case SPELL_MAJOR_HEALING: //??????
+        case SPELL_DEATHS_DOOR:
+    #if TAG_MAJOR_VERSION == 32
+        case SPELL_LEVITATION:
+        case SPELL_EXTENSION:
+    #endif
+        case SPELL_BORGNJORS_REVIVIFICATION: //???
+        case SPELL_OZOCUBUS_ARMOUR:
+        case SPELL_REPEL_MISSILES:
+        case SPELL_BERSERKER_RAGE:
+        case SPELL_REGENERATION:
+        case SPELL_SUBLIMATION_OF_BLOOD:
+        case SPELL_FIRE_BRAND:
+        case SPELL_FREEZING_AURA:
+        case SPELL_LETHAL_INFUSION:
+    #if TAG_MAJOR_VERSION == 32
+        case SPELL_STONEMAIL:
+    #endif
+        case SPELL_SWIFTNESS:
+        case SPELL_FLY:
+        case SPELL_INSULATION:
+        case SPELL_DETECT_CREATURES:
+        case SPELL_CURE_POISON:
+        case SPELL_CONTROL_TELEPORT:
+        case SPELL_POISON_WEAPON:
+        case SPELL_RESIST_POISON:
+        case SPELL_SPIDER_FORM:
+        case SPELL_BLADE_HANDS:
+        case SPELL_STATUE_FORM:
+        case SPELL_ICE_FORM:
+        case SPELL_DRAGON_FORM:
+        case SPELL_NECROMUTATION:
+        case SPELL_DEFLECT_MISSILES:
+        case SPELL_SURE_BLADE:
+        case SPELL_SEE_INVISIBLE:
+        case SPELL_PHASE_SHIFT:
+        case SPELL_WARP_BRAND:
+    #if TAG_MAJOR_VERSION == 32
+        case SPELL_MAXWELLS_SILVER_HAMMER:
+    #endif
+        case SPELL_CONDENSATION_SHIELD:
+        case SPELL_STONESKIN:
+        case SPELL_EXCRUCIATING_WOUNDS:
+        case SPELL_HASTE_OTHER:
+        case SPELL_MIGHT:
+        case SPELL_HEAL_OTHER://???
+        case SPELL_SACRIFICE://???
+        case SPELL_TROGS_HAND:
+        case SPELL_MASS_HASTE:
+            return EDICT_NO_ENCHANTMENT;
+        default:
+            break;
+        }
+    }
+    
+    if(is_edict_active(EDICT_NO_SUMMONING))
+    {
+        //Abjuration is allowed; it's not bringing anything
+        //into existence.
+        switch(spell)
+        {
+        case SPELL_SUMMON_SMALL_MAMMALS:
+        case SPELL_SUMMON_SCORPIONS:
+        case SPELL_SUMMON_SWARM:
+        case SPELL_SUMMON_HORRIBLE_THINGS:
+        case SPELL_HAUNT:
+        case SPELL_SUMMON_ELEMENTAL:
+        case SPELL_SUMMON_ICE_BEAST:
+        case SPELL_CALL_IMP:
+        case SPELL_SUMMON_DEMON:
+        case SPELL_DEMONIC_HORDE:
+        case SPELL_SUMMON_GREATER_DEMON:
+        case SPELL_SHADOW_CREATURES:
+        case SPELL_STICKS_TO_SNAKES:
+        case SPELL_CALL_CANINE_FAMILIAR:
+        case SPELL_SUMMON_DRAGON:
+        case SPELL_SUMMON_BUTTERFLIES:
+        case SPELL_SUMMON_UGLY_THING:
+        case SPELL_VAMPIRE_SUMMON:
+        case SPELL_SUMMON_UFETUBUS:
+        case SPELL_SUMMON_BEAST:
+        case SPELL_SUMMON_UNDEAD:
+        case SPELL_SUMMON_DRAKES:
+        case SPELL_SUMMON_MUSHROOMS:
+        case SPELL_WATER_ELEMENTALS:
+        case SPELL_SUMMON_EYEBALLS:
+        case SPELL_FIRE_ELEMENTALS:
+        case SPELL_EARTH_ELEMENTALS:
+        case SPELL_AIR_ELEMENTALS:
+        case SPELL_SUMMON_ILLUSION:
+        case SPELL_SUMMON_CANIFORMS:
+        case SPELL_IRON_ELEMENTALS:
+        case SPELL_SUMMON_SPECTRAL_ORCS:
+        case SPELL_SUMMON_HOLIES:
+        case SPELL_SUMMON_GREATER_HOLY:
+        case SPELL_BROTHERS_IN_ARMS:
+        case SPELL_MALIGN_GATEWAY:
+        case SPELL_HOMUNCULUS:
+        case SPELL_SUMMON_HYDRA:
+        case SPELL_FIRE_SUMMON:
+            return EDICT_NO_SUMMONING;
+        default:
+            break;
+        }
+    }
+    
+    //Nope, we're good!
+    return EDICT_NONE;
+}
+
 //is_edict_active: Checks whether edict is one of the active edicts.
 //Returns true if the player is a Zin follower not under penance AND
 //edict is one of the chosen edicts.  Returns false otherwise.
