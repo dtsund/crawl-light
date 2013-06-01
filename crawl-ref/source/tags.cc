@@ -1027,6 +1027,11 @@ static void tag_construct_you(writer &th)
     int i, j;
 
     marshallInt(th, you.last_mid);
+    marshallByte(th, you.edicts[0]);
+    marshallByte(th, you.edicts[1]);
+    marshallByte(th, you.edicts[2]);
+    marshallByte(th, you.commandment);
+    marshallInt(th, you.zin_anger);
     marshallByte(th, you.piety);
     marshallByte(th, you.rotting);
     marshallShort(th, you.pet_target);
@@ -1701,6 +1706,14 @@ static void tag_read_you(reader &th)
     int count;
 
     you.last_mid          = unmarshallInt(th);
+    if(th.getMinorVersion >= TAG_MINOR_ZIN_REFORM)
+    {
+        you.edicts[0]     = static_cast<edict_type>(unmarshallByte(th));
+        you.edicts[1]     = static_cast<edict_type>(unmarshallByte(th));
+        you.edicts[2]     = static_cast<edict_type>(unmarshallByte(th));
+        you.commandment   = static_cast<commandment_type>(unmarshallByte(th));
+        you.zin_anger     = unmarshallInt(th);
+    }
     you.piety             = unmarshallByte(th);
     you.rotting           = unmarshallByte(th);
     you.pet_target        = unmarshallShort(th);

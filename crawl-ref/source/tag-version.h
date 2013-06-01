@@ -26,6 +26,7 @@ enum tag_minor_version
 	TAG_MINOR_MANUAL_CONTROL,	   // Less randomness in Wrath of Sif Muna
 	TAG_MINOR_MOVE_DIFFICULTY,     // Move difficulty level to tag_read/write_char,
 	                               // so that it can be displayed in file select
+    TAG_MINOR_ZIN_REFORM,          // Zin overhaul with edicts and commandments
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
