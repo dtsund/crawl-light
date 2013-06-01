@@ -5450,6 +5450,7 @@ player_save_info& player_save_info::operator=(const player& rhs)
     class_name       = rhs.class_name;
     religion         = rhs.religion;
     jiyva_second_name  = rhs.jiyva_second_name;
+    difficulty_level = rhs.difficulty_level;
     challenge        = rhs.challenge;
 
     // [ds] Perhaps we should move game type to player?
@@ -5474,7 +5475,35 @@ std::string player_save_info::short_desc() const
 
     if(saved_game_type == GAME_TYPE_CHALLENGE)
     {
-        desc << "[" << challenge_type_to_string(challenge) << "] ";
+        desc << "[" << challenge_type_to_string_short(challenge) << ", ";
+
+        if(difficulty_level == 0)
+        {
+            desc << "Easy] ";
+        }
+        else if (difficulty_level == 1)
+        {
+            desc << "Normal] ";
+        }
+        else
+        {
+            desc << "Hard] ";
+        }        
+    }
+    else if(saved_game_type == GAME_TYPE_NORMAL || saved_game_type == GAME_TYPE_HINTS)
+    {
+        if(difficulty_level == 0)
+        {
+            desc << "[Easy] ";
+        }
+        else if (difficulty_level == 1)
+        {
+            desc << "[Normal] ";
+        }
+        else
+        {
+            desc << "[Hard] ";
+        }
     }
     else
     {
@@ -7218,5 +7247,31 @@ const char* challenge_type_to_string(challenge_type t)
         break;
     }
     return "UNKNOWN CHALLENGE";
+}
+
+const char* challenge_type_to_string_short(challenge_type t)
+{
+    switch (t)
+    {
+    case CHALLENGE_XOM:
+        return "WoX";
+    case CHALLENGE_NEMELEX:
+        return "WoNX";
+    case CHALLENGE_CHEIBRIADOS:
+        return "WoC";
+    case CHALLENGE_SIF_MUNA:
+        return "WoSM";
+    case CHALLENGE_OKAWARU:
+        return "WoO";
+    case CHALLENGE_TROG:
+        return "WoT";
+    case CHALLENGE_JIYVA:
+        return "WoJ";
+    case CHALLENGE_VEHUMET:
+        return "WoV";
+    default:
+        break;
+    }
+    return "Wo?";
 }
 

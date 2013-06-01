@@ -1013,7 +1013,7 @@ static void tag_construct_char(writer &th)
     marshallByte(th, you.religion);
     marshallString(th, you.jiyva_second_name);
     
-    //TODO: Move difficulty here so that it can be shown on file select
+    marshallInt(th, you.difficulty_level);
     marshallInt(th, you.challenge);
 
     marshallByte(th, you.wizard);
@@ -1208,8 +1208,6 @@ static void tag_construct_you(writer &th)
     marshallInt(th, you.real_time);
     marshallInt(th, you.num_turns);
     marshallInt(th, you.exploration);
-    
-    marshallInt(th, you.difficulty_level);
 
 	marshallInt(th, you.sif_muna_visited_levels);
 	marshallInt(th, you.sif_muna_forced_fighting);
@@ -1678,6 +1676,10 @@ static void tag_read_char(reader &th)
     you.religion          = static_cast<god_type>(unmarshallByte(th));
     you.jiyva_second_name = unmarshallString(th);
 
+    //Number of Pandooras opened
+    if(th.getMinorVersion() >= TAG_MINOR_MOVE_DIFFICULTY)
+        you.difficulty_level = unmarshallInt(th);
+
     //Challenge game being played
     if(th.getMinorVersion() < TAG_MINOR_CHALLENGE_GAMES)
         you.challenge = CHALLENGE_NONE;
@@ -1925,7 +1927,8 @@ static void tag_read_you(reader &th)
     you.exploration = unmarshallInt(th);
     
     //How many pandooras have been opened
-    you.difficulty_level = unmarshallInt(th);
+    if (th.getMinorVersion() < TAG_MINOR_MOVE_DIFFICULTY)    
+        you.difficulty_level = unmarshallInt(th);
 
 	//manuals of fighting/spellcasting generated in WoSM
 	if (th.getMinorVersion() < TAG_MINOR_MANUAL_CONTROL)
