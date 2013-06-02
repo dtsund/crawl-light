@@ -2205,7 +2205,11 @@ void handle_time()
 
     // Every 10 turns, decrement overall Zin anger at monsters.
     if (_div(base_time, 100) > _div(old_time, 100))
+    {
         you.zin_anger--;
+        if(you.zin_anger < 0)
+            you.zin_anger = 0;
+    }
 
     // Every 20 turns, a variety of other effects.
     if (! (_div(base_time, 200) > _div(old_time, 200)))
