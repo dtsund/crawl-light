@@ -1284,33 +1284,12 @@ static void _mons_set_priest_wizard_god(monster* mons, bool& priest,
 //lot more often.
 static void _edict_filter_spells(monster* mons, monster_spells &spells)
 {
-    //Non-intelligent monsters aren't affected.
-    if (mons_intel(mons) < I_NORMAL)
-        return;
-
-    //Check each spell to see if it violates the current edicts.
     for (int i = 0; i < NUM_MONSTER_SPELL_SLOTS; i++)
     {
-        if(spell_violates_edict(spells[i]) != EDICT_NONE)
+        if(spell_violates_edict(spells[i]) != EDICT_NONE &&
+           !mons->should_break_edict())
         {
-            //Violates an edict.  Make the HD check.
-            //Monsters with HD <= 8 always scrap the spell.
-            //Monsters with HD >= 16 always keep it.
-            //Linear scaling between those.
-            if(mons->hit_dice <= 8)
-            {
-                spells[i] = SPELL_NO_SPELL;
-            }
-            else if(mons->hit_dice >= 16)
-            {
-                //The monsters hit dice won't change on future
-                //iterations, no need to loop again.
-                return;
-            }
-            else if(x_chance_in_y(mons->hit_dice - 8, 8))
-            {
-                spells[i] = SPELL_NO_SPELL;
-            }
+            spells[i] = SPELL_NO_SPELL;
         }
     }
 }

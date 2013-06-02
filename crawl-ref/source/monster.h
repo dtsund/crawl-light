@@ -405,6 +405,7 @@ public:
     // Hacks, with a capital H.
     void check_speed();
     void upgrade_type(monster_type after, bool adjust_hd, bool adjust_hp);
+    bool should_break_edict();
 
     std::string describe_enchantments() const;
 

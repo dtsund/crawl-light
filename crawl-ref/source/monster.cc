@@ -4119,6 +4119,25 @@ actor *monster::get_foe() const
     return (my_foe->alive()? my_foe : NULL);
 }
 
+//Returns true whether a monster might try to break an
+//edict, false otherwise.  Whether it might is based on
+//hit dice and intelligence.
+bool monster::should_break_edict()
+{
+    //Non-intelligent monster, not affected by edicts.
+    if(mons_intel(this) < I_NORMAL)
+        return true;
+
+    //For now, monsters with HD <= 8 always keep edicts.
+    //Monsters with HD >= 16 don't care and just eat Zin's
+    //wrath.  Scale linearly between the two.
+    if(hit_dice <= 8)
+        return false;
+    if(hit_dice >= 16)
+        return true;
+    return(x_chance_in_y(hit_dice - 8, 8));
+}
+
 int monster::foe_distance() const
 {
     const actor *afoe = get_foe();
