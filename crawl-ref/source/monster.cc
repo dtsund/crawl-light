@@ -110,6 +110,7 @@ void monster::reset()
     ac              = 0;
     ev              = 0;
     speed_increment = 0;
+    zin_anger       = 0;
     attitude        = ATT_HOSTILE;
     behaviour       = BEH_SLEEP;
     foe             = MHITNOT;
