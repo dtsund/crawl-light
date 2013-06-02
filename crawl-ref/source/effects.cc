@@ -2182,7 +2182,7 @@ void handle_time()
     {
         spawn_random_monsters();
     }
-    
+
     // Every turn, allow following monsters to come up stairs.
     if (_div(base_time, 10) > _div(old_time, 10))
     {
@@ -2202,6 +2202,10 @@ void handle_time()
     {
         contaminate_player(-1, false);
     }
+
+    // Every 10 turns, decrement overall Zin anger at monsters.
+    if (_div(base_time, 100) > _div(old_time, 100))
+        you.zin_anger--;
 
     // Every 20 turns, a variety of other effects.
     if (! (_div(base_time, 200) > _div(old_time, 200)))
@@ -2696,6 +2700,11 @@ void update_level(int elapsedTime)
 
         if (turns >= 10 && mi->alive())
             mi->timeout_enchantments(turns / 10);
+
+        // Zin's anger will have had some time to subside.
+        mi->zin_anger -= turns;
+        if(mi->zin_anger < 0)
+            mi->zin_anger = 0;
     }
 
 #ifdef DEBUG_DIAGNOSTICS

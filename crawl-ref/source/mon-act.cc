@@ -2066,6 +2066,13 @@ void handle_monster_move(monster* mons)
     // Apply monster enchantments once for every normal-speed
     // player turn.
     mons->ench_countdown -= you.time_taken;
+
+    // Likewise, decrement Zin anger once for every normal-speed
+    // player turn.
+    mons->zin_anger--;
+    if(mons->zin_anger < 0)
+        mons->zin_anger = 0;
+
     while (mons->ench_countdown < 0)
     {
         mons->ench_countdown += 10;
