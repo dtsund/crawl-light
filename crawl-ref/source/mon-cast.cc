@@ -1863,6 +1863,10 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
                 mprf("You sidestep the %s!", beem.name.c_str());
             mons->lose_energy(EUT_SPELL);
         }
+        
+        //If the monster is intelligent and just cast a forbidden spell, punish it!
+        if(mons_intel(mons) >= I_NORMAL && spell_violates_edict(spell_cast))
+            zin_punish_monster(mons);
     } // end "if mons_class_flag(mons->type, M_SPELLCASTER)
 
     return (true);

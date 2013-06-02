@@ -73,8 +73,6 @@
 #include "tiledef-main.h"
 #endif
 
-static void _zin_saltify(monster* mon);
-
 #define random_mons(...) static_cast<monster_type>(random_choose(__VA_ARGS__))
 
 std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
@@ -1131,7 +1129,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         break;
 
     case ZIN_SALTIFY:
-        _zin_saltify(mon);
+        zin_saltify(mon);
         break;
 
     case ZIN_ROT:
@@ -1174,7 +1172,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     return (true);
 }
 
-static void _zin_saltify(monster* mon)
+void zin_saltify(monster* mon)
 {
     const coord_def where = mon->pos();
     const monster_type pillar_type =

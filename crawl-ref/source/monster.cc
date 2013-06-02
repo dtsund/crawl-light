@@ -61,7 +61,7 @@
 
 monster::monster()
     : hit_points(0), max_hit_points(0), hit_dice(0),
-      ac(0), ev(0), speed(0), speed_increment(0), target(), firing_pos(),
+      ac(0), ev(0), speed(0), speed_increment(0), zin_anger(0), target(), firing_pos(),
       patrol_point(), travel_target(MTRAV_NONE), inv(NON_ITEM), spells(),
       attitude(ATT_HOSTILE), behaviour(BEH_WANDER), foe(MHITYOU),
       enchantments(), flags(0), experience(0), base_monster(MONS_NO_MONSTER),

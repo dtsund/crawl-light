@@ -34,6 +34,7 @@ public:
     int ev;
     int speed;
     int speed_increment;
+    int zin_anger; //How mad Zin is at this particular monster.
 
     coord_def target;
     coord_def firing_pos;

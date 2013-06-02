@@ -3943,6 +3943,153 @@ bool is_edict_active(edict_type edict)
             you.edicts[2] == edict);
 }
 
+void zin_punish_monster(monster* mons)
+{
+    int punishment_product = (you.zin_anger + 5) * (mons->zin_anger);
+    //Subsequent offenses won't be punished so mildly...
+    mons->zin_anger += 15;
+    you.zin_anger += 1;
+    
+    //Cutoffs:
+    //Less than 200: Smite
+    //201-275: Greater Smite
+    //276-350: Minor status ailment
+    //351+: Major status ailment
+    if(punishment_product < 200)
+    {
+        simple_monster_message(mons, " is smitten by the wrath of Zin.");
+        // Based on code in cast_smiting() and recite_to_single_monster().
+        mons->hurt(&you, 7 + (random2(punishment_product) / 15));
+    }
+    else if(punishment_product < 276)
+    {
+        simple_monster_message(mons, " is blasted by the fury of Zin!");
+        // This will hurt a lot, may need to be toned down
+        mons->hurt(&you, 7 + (bestroll(2, punishment_product) / 15));
+    }
+    else if(punishment_product < 351)
+    {
+        //Possible effects: antimagic (small), confusion (brief), bleed, daze (brief),
+        //mad (brief), saltify (serious HD check), slow (brief)
+        if(one_chance_in(7))
+        {
+            simple_monster_message(mons, " is drained of magical energy by Zin!");
+            mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 1, &you, 
+                           bestroll(2, 8) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(6))
+        {
+            simple_monster_message(mons, " is bewildered by Zin's retribution!");
+            mons->add_ench(mon_enchant(ENCH_CONFUSION, 1, &you, 
+                           bestroll(2, 4) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(5))
+        {
+            simple_monster_message(mons, " bleeds from the eyes and ears!");
+            mons->add_ench(mon_enchant(ENCH_BLEED, 1, &you, 
+                           10 + random2(5) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(4))
+        {
+            simple_monster_message(mons, " is dazed by Zin's retribution!");
+            mons->add_ench(mon_enchant(ENCH_DAZED, 1, &you, 
+                           bestroll(2, 3) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(3))
+        {
+            simple_monster_message(mons, " is driven mad by Zin's retribution!");
+            mons->add_ench(mon_enchant(ENCH_MAD, 1, &you, 
+                           bestroll(2, 3) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(2))
+        {
+            //HD 5 and below always get saltified.
+            //HD 6-12: one chance in HD-4.
+            //Anything that doesn't get saltified takes damage.
+            if(mons->hit_dice <= 12 && (mons->hit_dice <= 5
+                                        || one_chance_in(mons->hit_dice - 9)))
+            {
+                simple_monster_message(mons, " is turned into a pillar "
+                                       "of salt by the wrath of Zin!");
+                zin_saltify(mons);
+            }
+            else
+            {
+                simple_monster_message(mons, " is blasted terribly by Zin!");
+                //Ouch.
+                mons->hurt(&you, 30 + random2(30));
+            }
+        }
+        else
+        {
+            simple_monster_message(mons, " falters and slows in the face of Zin's rage.");
+            mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you, 
+                           bestroll(2, 4) * BASELINE_DELAY));
+        }
+    }
+    else
+    {
+        //Possible effects: paralysis (brief, one of the only remaining sources!),
+        //saltify (HD check), antimagic (large), mad (long), daze (long), bleed (severe),
+        //slow (lengthy)
+        if(one_chance_in(7))
+        {
+            simple_monster_message(mons, " is frozen in place by Zin!");
+            mons->add_ench(mon_enchant(ENCH_PARALYSIS, 2, &you, 
+                           bestroll(2, 4) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(6))
+        {
+            //HD 10 and below always get saltified.
+            //HD 11+: one chance in HD-9.
+            //Anything that doesn't get saltified takes heavy smite damage.
+            if(mons->hit_dice <= 10 || one_chance_in(mons->hit_dice - 9))
+            {
+                simple_monster_message(mons, " is turned into a pillar "
+                                       "of salt by the wrath of Zin!");
+                zin_saltify(mons);
+            }
+            else
+            {
+                simple_monster_message(mons, " writhes under the force of Zin's wrath!");
+                //Very ouch.
+                mons->hurt(&you, 70 + random2(50));
+            }
+        }
+        else if(one_chance_in(5))
+        {
+            simple_monster_message(mons, "'s magic is powerless in the face of Zin's fury!");
+            mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 3, &you, 
+                           bestroll(2, 20) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(4))
+        {
+            simple_monster_message(mons, " is driven hopelessly mad by Zin's retribution!");
+            mons->add_ench(mon_enchant(ENCH_MAD, 2, &you, 
+                           bestroll(2, 8) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(3))
+        {
+            simple_monster_message(mons, " is hopelessly dazed by Zin's retribution!");
+            mons->add_ench(mon_enchant(ENCH_DAZED, 2, &you, 
+                           bestroll(2, 8) * BASELINE_DELAY));
+        }
+        else if(one_chance_in(2))
+        {
+            //This may not seem like many turns, but Bleed 3 hurts a *lot*.
+            simple_monster_message(mons, " hemmorhages from the eyes and ears!");
+            mons->add_ench(mon_enchant(ENCH_BLEED, 3, &you, 
+                           3 + random2(2) * BASELINE_DELAY));
+        }
+        else
+        {
+            simple_monster_message(mons, " is slowed dramatically by Zin's wrath!");
+            mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you,
+                           bestroll(2, 12) * BASELINE_DELAY));
+        }
+    }
+}
+
 bool god_can_protect_from_harm(god_type god)
 {
     switch (god)
