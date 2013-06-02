@@ -3947,7 +3947,7 @@ void zin_punish_monster(monster* mons)
 {
     int punishment_product = (you.zin_anger + 5) * (mons->zin_anger);
     //Subsequent offenses won't be punished so mildly...
-    mons->zin_anger += 15;
+    mons->zin_anger += 20;
     you.zin_anger += 1;
 
     //Let's cap Zin's anger.  Don't want you farming it against something
