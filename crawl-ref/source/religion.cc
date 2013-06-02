@@ -3949,6 +3949,14 @@ void zin_punish_monster(monster* mons)
     //Subsequent offenses won't be punished so mildly...
     mons->zin_anger += 15;
     you.zin_anger += 1;
+
+    //Let's cap Zin's anger.  Don't want you farming it against something
+    //relatively easy to cart to a hard fight...
+    if(mons->zin_anger > 100)
+        mons->zin_anger = 100;
+    if(you.zin_anger > 10)
+        you.zin_anger = 10;
+    //The maximum punishment_product is 1500, still plenty high.
     
     //Cutoffs:
     //Less than 200: Smite
