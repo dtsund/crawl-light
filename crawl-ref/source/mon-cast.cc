@@ -1197,6 +1197,11 @@ static spell_type _get_draconian_breath_spell(monster* mons)
         case MONS_GREY_DRACONIAN:       // no breath
             break;
         default:
+            if(spell_violates_edict(_draco_type_to_breath(draco_subspecies(mons))) &&
+               !mons->should_break_edict())
+            {
+                break;
+            }
             draco_breath = SPELL_DRACONIAN_BREATH;
             break;
         }
@@ -1842,10 +1847,17 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
                 mprf("You sidestep the %s!", beem.name.c_str());
             mons->lose_energy(EUT_SPELL);
         }
-        
+
+        const int drac_type = (mons_genus(mons->type) == MONS_DRACONIAN)
+                                ? draco_subspecies(mons) : mons->type;
         //If the monster is intelligent and just cast a forbidden spell, punish it!
-        if(mons_intel(mons) >= I_NORMAL && spell_violates_edict(spell_cast))
+        if(mons_intel(mons) >= I_NORMAL && 
+           (spell_violates_edict(spell_cast) || 
+            spell_cast == SPELL_DRACONIAN_BREATH && 
+            spell_violates_edict(_draco_type_to_breath(drac_type))))
+        {
             zin_punish_monster(mons);
+        }
     } // end "if mons_class_flag(mons->type, M_SPELLCASTER)
 
     return (true);

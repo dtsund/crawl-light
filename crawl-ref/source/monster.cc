@@ -4119,7 +4119,7 @@ actor *monster::get_foe() const
     return (my_foe->alive()? my_foe : NULL);
 }
 
-//Returns true whether a monster might try to break an
+//Returns true when a monster might try to break an
 //edict, false otherwise.  Whether it might is based on
 //hit dice and intelligence.
 bool monster::should_break_edict()
