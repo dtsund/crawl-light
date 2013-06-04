@@ -263,6 +263,72 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
     return (unchivalric);
 }
 
+bool is_illegal_melee_attack(const skill_type *wpn_skill, const brand_type *damage_brand)
+{
+	switch(wpn_skill)
+	{
+		case SK_SHORT_BLADES:
+			return is_edict_active(EDICT_NO_SHORT_BLADES);
+			break;
+		case SK_LONG_BLADES:
+			return is_edict_active(EDICT_NO_LONG_BLADES);
+			break;
+		case SK_AXES:
+			return is_edict_active(EDICT_NO_AXES);
+			break;
+		case SK_MACES_FLAILS:
+			return is_edict_active(EDICT_NO_MACES_FLAILS);
+			break;
+		case SK_POLEARMS:
+			return is_edict_active(EDICT_NO_LONG_BLADES);
+			break;
+		case SK_STAVES:
+			return is_edict_active(EDICT_NO_STAVES);
+			break;
+		// this seems pretty unlikely but I'm leaving it in anyway
+		case SK_SLINGS:
+		case SK_CROSSBOWS:
+		case SK_BOWS:
+		case SK_THROWING:
+			return is_edict_active(EDICT_NO_PROJECTILES);
+			break;
+		default:
+			// WHOOPS CAN'T FORGET BRANDED WEAPONS
+			switch (damage_brand)
+			{
+				case SPWPN_FLAMING:
+				case SPWPN_FLAME:
+					return is_edict_active(EDICT_NO_FIRE);
+					break;
+				case SPWPN_FREEZING:
+				case SPWPN_FROST:
+					return is_edict_active(EDICT_NO_COLD);
+					break;
+				case SPWPN_VENOM:
+					return is_edict_active(EDICT_NO_POISON);
+					break;
+				case SPWPN_DISTORTION:  // returning is fine
+					return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+					break;
+//				case SPWPN_CONFUSE:
+//					return is_edict_active(EDICT_NO_ENCHANTMENTS);
+//					break;
+				case SPWPN_CHAOS:
+					// too many damn cases for this
+					return (is_edict_active(EDICT_NO_FIRE) ||
+							is_edict_active(EDICT_NO_COLD) ||
+							is_edict_active(EDICT_NO_POISON) ||
+							is_edict_active(EDICT_NO_TRANSLOCATIONS) ||
+							is_edict_active(EDICT_NO_SUMMONING));
+					break;
+				default:
+					return false;
+					break;
+			}
+			break;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Melee attack
 
@@ -540,6 +606,33 @@ bool melee_attack::attack()
 
         check_autoberserk();
     }
+	/*
+	// Check weapon edicts here.
+	if (is_illegal_attack(wpn_skill, damage_brand))
+	{
+		if (attacker->atype() == ACT_PLAYER)
+		{
+			// You'll get a warning if your attack will violate an edict
+
+		}
+		else
+		{
+			// Monsters make an HD check
+			if(!attacker->should_break_edict())
+			{
+				mprf("The %s refuses to attack.",
+					attacker->name(DESC_CAP_THE).c_str());
+				attacker->lose_energy(EUT_ATTACK);
+				return (false);
+			}
+			else
+			{
+				// MAYBE MAKE THIS APPLY ONLY TO INTELLIGENTS
+				zin_punish_monster(attacker);
+			}
+		}
+	}
+	*/
 
     // Xom thinks fumbles are funny...
     if (attacker->fumbles_attack())
