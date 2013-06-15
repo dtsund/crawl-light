@@ -1302,6 +1302,14 @@ bool fire_warn_if_impossible(bool silent)
                      weapon->name(DESC_BASENAME).c_str());
             return (true);
         }
+		// You get a warning if firing a weapon Zin has outlawed, which heeding
+		// will cancel the attack with, and ignoring will go through with but
+		// punish the player.
+		// NOTE TO SELF: CHECK HOW TO MAKE PROMPTS
+		/*if (is_illegal_ranged_attack(get_weapon_brand(weapon))
+		{
+			
+		} */
         // Else shooting is possible.
     }
     if (you.berserk())
@@ -1311,6 +1319,82 @@ bool fire_warn_if_impossible(bool silent)
         return (true);
     }
     return (false);
+}
+
+// if the attack is illegal, this returns true.
+bool is_illegal_ranged_attack(int launcher_brand)
+{
+	switch (launcher_brand)
+	{
+		case SPWPN_FLAMING:
+		case SPWPN_FLAME:
+			return is_edict_active(EDICT_NO_FIRE);
+			break;
+		case SPWPN_FREEZING:
+		case SPWPN_FROST:
+			return is_edict_active(EDICT_NO_COLD);
+			break;
+		case SPWPN_VENOM:
+			return is_edict_active(EDICT_NO_POISON);
+			break;
+		case SPWPN_DISTORTION:  // returning is fine
+			return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+			break;
+//		case SPWPN_CONFUSE:
+//			return is_edict_active(EDICT_NO_ENCHANTMENTS);
+//			break;
+		case SPWPN_CHAOS:
+			// too many damn cases for this
+			return (is_edict_active(EDICT_NO_FIRE) ||
+					is_edict_active(EDICT_NO_COLD) ||
+					is_edict_active(EDICT_NO_POISON) ||
+					is_edict_active(EDICT_NO_TRANSLOCATIONS) ||
+					is_edict_active(EDICT_NO_SUMMONING));
+			break;
+		default:
+			int quiver_index = you.quiver;
+			if (quiver_index == -1) // implicit ammu
+			{
+				return is_edict_active(EDICT_NO_PROJECTILES);
+			}
+			switch (get_ammo_brand(you.inv[quiver_index]))
+			{
+				case SPMSL_FLAME:
+					return is_edict_active(EDICT_NO_FIRE);
+					break;
+				case SPMSL_FROST:
+					return is_edict_active(EDICT_NO_COLD);
+					break;
+				case SPMSL_POISONED:
+				case SPMSL_CURARE:
+				case SPMSL_SICKNESS:
+					return is_edict_active(EDICT_NO_POISON);
+					break;
+				case SPMSL_DISPERSAL:
+					return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+					break;
+//				case SPMSL_PARALYSIS:
+//				case SPMSL_SLEEP:
+//				case SPMSL_SLOW:
+//				case SPMSL_CONFUSION:
+//					return is_edict_active(EDICT_NO_ENCHANTMENTS);
+//					break;
+				case SPWPN_CHAOS:
+					// too many damn cases for this
+					return (is_edict_active(EDICT_NO_FIRE) ||
+							is_edict_active(EDICT_NO_COLD) ||
+							is_edict_active(EDICT_NO_POISON) ||
+							is_edict_active(EDICT_NO_TRANSLOCATIONS) ||
+							is_edict_active(EDICT_NO_SUMMONING));
+					break;
+				default:
+					return is_edict_active(EDICT_NO_PROJECTILES);
+					break;
+			}
+			break;
+	}
+	// thorough
+	return is_edict_active(EDICT_NO_PROJECTILES);
 }
 static bool _autoswitch_to_ranged()
 {
