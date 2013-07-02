@@ -263,7 +263,7 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
     return (unchivalric);
 }
 
-bool is_illegal_melee_attack(const skill_type *wpn_skill, const brand_type *damage_brand)
+bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand)
 {
 	switch(wpn_skill)
 	{
@@ -607,14 +607,14 @@ bool melee_attack::attack()
         check_autoberserk();
     }
 	// Check weapon edicts here.
-	if (is_illegal_attack(wpn_skill, damage_brand))
+	if (is_illegal_melee_attack(wpn_skill, damage_brand))
 	{
 		if (attacker->atype() == ACT_PLAYER)
 		{
 			// You'll get a warning if your attack will violate an edict
-			if (!yesno("Really violate Zin's edict?", false, "n"))
+			if (!yesno("Really violate Zin's edict?", false, 'n'))
 			{
-				cancel_attack = true
+				cancel_attack = true;
 				return (false);
 			}
 			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
@@ -622,7 +622,7 @@ bool melee_attack::attack()
 		else
 		{
 			// Monsters make an HD check
-			if(!attacker->should_break_edict())
+			if(!attacker->as_monster()->should_break_edict())
 			{
 				mprf("The %s refuses to attack.",
 					attacker->name(DESC_CAP_THE).c_str());
@@ -632,7 +632,7 @@ bool melee_attack::attack()
 			else
 			{
 				// MAYBE MAKE THIS APPLY ONLY TO INTELLIGENTS
-				zin_punish_monster(attacker);
+				zin_punish_monster(attacker->as_monster());
 			}
 		}
 	}

@@ -62,7 +62,7 @@ random_var calc_your_attack_delay();
 unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
                                               const actor *defender);
 
-bool is_illegal_melee_attack(const skill_type *wpn_skill, const brand_type *damage_brand);
+bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand);
 
 void chaos_affect_actor(actor *victim);
 
