@@ -1306,10 +1306,15 @@ bool fire_warn_if_impossible(bool silent)
 		// will cancel the attack with, and ignoring will go through with but
 		// punish the player.
 		// NOTE TO SELF: CHECK HOW TO MAKE PROMPTS
-		/*if (is_illegal_ranged_attack(get_weapon_brand(weapon))
+		if (is_illegal_ranged_attack(get_weapon_brand(weapon))
 		{
-			
-		} */
+			if (!yesno("Really violate Zin's edict?", false, "n"))
+			{
+				return (true);
+			}
+			// make Zin shoot you in the face
+			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+		}
         // Else shooting is possible.
     }
     if (you.berserk())

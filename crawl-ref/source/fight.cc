@@ -606,14 +606,18 @@ bool melee_attack::attack()
 
         check_autoberserk();
     }
-	/*
 	// Check weapon edicts here.
 	if (is_illegal_attack(wpn_skill, damage_brand))
 	{
 		if (attacker->atype() == ACT_PLAYER)
 		{
 			// You'll get a warning if your attack will violate an edict
-
+			if (!yesno("Really violate Zin's edict?", false, "n"))
+			{
+				cancel_attack = true
+				return (false);
+			}
+			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
 		}
 		else
 		{
@@ -632,7 +636,6 @@ bool melee_attack::attack()
 			}
 		}
 	}
-	*/
 
     // Xom thinks fumbles are funny...
     if (attacker->fumbles_attack())
