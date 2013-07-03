@@ -1302,20 +1302,6 @@ bool fire_warn_if_impossible(bool silent)
                      weapon->name(DESC_BASENAME).c_str());
             return (true);
         }
-		// You get a warning if firing a weapon Zin has outlawed, which heeding
-		// will cancel the attack with, and ignoring will go through with but
-		// punish the player.
-		// NOTE TO SELF: CHECK HOW TO MAKE PROMPTS
-		if (is_illegal_ranged_attack(get_weapon_brand(weapon))
-		{
-			if (!yesno("Really violate Zin's edict?", false, "n"))
-			{
-				return (true);
-			}
-			// make Zin shoot you in the face
-			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
-		}
-        // Else shooting is possible.
     }
     if (you.berserk())
     {
@@ -1327,7 +1313,7 @@ bool fire_warn_if_impossible(bool silent)
 }
 
 // if the attack is illegal, this returns true.
-bool is_illegal_ranged_attack(int launcher_brand)
+bool is_illegal_ranged_attack(int launcher_brand, int ammo_brand)
 {
 	switch (launcher_brand)
 	{
@@ -1357,12 +1343,7 @@ bool is_illegal_ranged_attack(int launcher_brand)
 					is_edict_active(EDICT_NO_SUMMONING));
 			break;
 		default:
-			int quiver_index = you.quiver;
-			if (quiver_index == -1) // implicit ammu
-			{
-				return is_edict_active(EDICT_NO_PROJECTILES);
-			}
-			switch (get_ammo_brand(you.inv[quiver_index]))
+			switch (ammo_brand)
 			{
 				case SPMSL_FLAME:
 					return is_edict_active(EDICT_NO_FIRE);
@@ -1486,7 +1467,22 @@ void fire_thing(int item)
     item = get_ammo_to_shoot(item, target);
     if (item == -2)
         return;
-
+	
+	// You get a warning if firing a weapon Zin has outlawed, which heeding
+	// will cancel the attack with, and ignoring will go through with but
+	// punish the player. First up though: check if the launcher is relevant
+	if (you.weapon()->sub_type >= WPN_BLOWGUN)
+	{
+		if (is_illegal_ranged_attack(get_weapon_brand(*you.weapon()), get_ammo_brand(you.inv[item])))
+		{
+			if (!yesno("Really violate Zin's edict?", false, 'n'))
+			{
+				return;
+			}
+			// make Zin shoot you in the face
+			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+		}
+	}
     // Need to check whether item is -1, or else you.inv[item] goes out of bounds.
     if (item == -1 || check_warning_inscriptions(you.inv[item], OPER_FIRE))
     {
@@ -1527,6 +1523,18 @@ void throw_item_no_quiver()
     }
 
     // Okay, item is valid.
+	// BUT IS IT ZIN VALID?!
+	if (you.weapon()->sub_type >= WPN_BLOWGUN)
+	{
+		if (is_illegal_ranged_attack(get_weapon_brand(*you.weapon()), get_ammo_brand(you.inv[slot])))
+		{
+			if (!yesno("Really violate Zin's edict?", false, 'n'))
+			{
+				return;
+			}
+			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+		}
+	}
     bolt beam;
     throw_it(beam, slot);
 }
