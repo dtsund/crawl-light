@@ -1397,7 +1397,22 @@ void fire_thing(int item)
     item = get_ammo_to_shoot(item, target);
     if (item == -2)
         return;
-
+	
+	// You get a warning if firing a weapon Zin has outlawed, which heeding
+	// will cancel the attack with, and ignoring will go through with but
+	// punish the player. First up though: check if the launcher is relevant
+	if (you.weapon()->sub_type >= WPN_BLOWGUN)
+	{
+		if (is_illegal_ranged_attack(get_weapon_brand(*you.weapon()), get_ammo_brand(you.inv[item])))
+		{
+			if (!yesno("Really violate Zin's edict?", false, 'n'))
+			{
+				return;
+			}
+			// make Zin shoot you in the face
+			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+		}
+	}
     // Need to check whether item is -1, or else you.inv[item] goes out of bounds.
     if (item == -1 || check_warning_inscriptions(you.inv[item], OPER_FIRE))
     {
@@ -1437,7 +1452,6 @@ void throw_item_no_quiver()
         return;
     }
 
-    // Okay, item is valid.
     bolt beam;
     throw_it(beam, slot);
 }
