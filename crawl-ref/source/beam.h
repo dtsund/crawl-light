@@ -115,6 +115,11 @@ struct bolt
                                                // explosion only affects
                                                // certain grid positions.
 
+    // Storage for a bunch of Zin-edict-important things.
+    bool poisoned;
+    bool disperses;
+    bool sickens;
+
     // Test if the beam can affect a particular actor.
     beam_affect_func affect_func;
 
@@ -206,6 +211,7 @@ public:
     bool can_affect_actor(const actor *act) const;
 
 private:
+    bool has_illegal_ranged_brand();
     void do_fire();
     coord_def pos() const;
     coord_def leg_source() const;

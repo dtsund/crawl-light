@@ -114,6 +114,35 @@ const tracer_info& tracer_info::operator+=(const tracer_info &other)
     return (*this);
 }
 
+// if the attack is illegal, this returns true.
+bool bolt::has_illegal_ranged_brand()
+{
+    if(flavour == BEAM_FIRE || flavour == BEAM_CHAOS
+       && is_edict_active(EDICT_NO_FIRE))
+    {
+        return true;
+    }
+    if(flavour == BEAM_COLD || flavour == BEAM_CHAOS
+       && is_edict_active(EDICT_NO_COLD))
+    {
+        return true;
+    }
+    if(poisoned || flavour == BEAM_CHAOS && is_edict_active(EDICT_NO_POISON))
+    {
+        return true;
+    }
+    if(disperses || flavour == BEAM_CHAOS && is_edict_active(EDICT_NO_TRANSLOCATIONS))
+    {
+        return true;
+    }
+    if(flavour == BEAM_CHAOS && is_edict_active(EDICT_NO_SUMMONING))
+    {
+        return true;
+    }
+    
+    return false;
+}
+
 bool bolt::is_blockable() const
 {
     // BEAM_ELECTRICITY is added here because chain lightning is not
@@ -1297,6 +1326,16 @@ void bolt::fire()
 
     if (is_tracer)
     {
+        //First, check to see whether the beam violates a Zin element edict.
+        //We do that here in the tracer code to allow the player a chance to
+        //abort before firing.
+        if(has_illegal_ranged_brand())
+        {
+            if(!yesno("Really violate an edict of Zin?", false, 'n'))
+            beam_cancelled = true;
+            return;
+        }
+
         bolt boltcopy = *this;
         if (special_explosion != NULL)
             boltcopy.special_explosion = new bolt(*special_explosion);
@@ -5570,7 +5609,8 @@ bolt::bolt() : origin_spell(SPELL_NO_SPELL),
                is_big_cloud(false), aimed_at_spot(false), aux_source(),
                affects_nothing(false), affects_items(true), effect_known(true),
                draw_delay(15), special_explosion(NULL), range_funcs(),
-               damage_funcs(), hit_funcs(), aoe_funcs(), affect_func(NULL),
+               damage_funcs(), hit_funcs(), aoe_funcs(), poisoned(false),
+               disperses(false), sickens(false), affect_func(NULL),
                obvious_effect(false), seen(false), heard(false),
                path_taken(), extra_range_used(0), is_tracer(false),
                aimed_at_feet(false), msg_generated(false),
