@@ -1303,6 +1303,13 @@ bool fire_warn_if_impossible(bool silent)
             return (true);
         }
     }
+
+    if(is_edict_active(EDICT_NO_PROJECTILES))
+    {
+        if(!yesno("Really violate an edict of Zin?", false, 'n'))
+            return true;
+    }
+
     if (you.berserk())
     {
         if (!silent)
