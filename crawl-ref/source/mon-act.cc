@@ -1979,6 +1979,23 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 
     // Clear fake damage (will be set correctly in mons_throw).
     beem.damage = 0;
+
+	// Try not to piss off Zin.
+	// NOTE: DOES NOT YET CHECK SICKEN/POISON/WEIRD STUFF LIKE THAT
+	if (beem->has_illegal_ranged_brand() || is_edict_active(EDICT_NO_PROJECTILES))
+	{
+		if (!mons->should_break_edict())
+		{
+			mprf("The %s refuses to attack.",
+				mons->name(DESC_CAP_THE).c_str());
+			return (false);
+		}
+		else
+		{
+			// We're pissing Zin off anyway.
+			zin_punish_monster(mons);
+		}
+	}
     
     // Good idea?
     if (mons_should_fire(beem))

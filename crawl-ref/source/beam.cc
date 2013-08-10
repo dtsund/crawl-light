@@ -127,7 +127,7 @@ bool bolt::has_illegal_ranged_brand()
     {
         return true;
     }
-    if(poisoned || flavour == BEAM_CHAOS && is_edict_active(EDICT_NO_POISON))
+    if((poisoned || sickens || flavour == BEAM_CHAOS) && is_edict_active(EDICT_NO_POISON))
     {
         return true;
     }
