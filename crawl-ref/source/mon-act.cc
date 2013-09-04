@@ -1980,6 +1980,7 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
     // Clear fake damage (will be set correctly in mons_throw).
     beem.damage = 0;
 
+    bool should_be_punished = false;
 	// Try not to piss off Zin.
 	// NOTE: DOES NOT YET CHECK SICKEN/POISON/WEIRD STUFF LIKE THAT
 	if (beem->has_illegal_ranged_brand() || is_edict_active(EDICT_NO_PROJECTILES))
@@ -1990,8 +1991,8 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 		}
 		else
 		{
-			// We're pissing Zin off anyway.
-			zin_punish_monster(mons);
+            // Oops.  Zin's gonna be mad...
+            should_be_punished = true;
 		}
 	}
     
@@ -2010,7 +2011,15 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
             mons->swap_weapons();
 
         beem.name.clear();
-        return (_mons_throw(mons, beem, mon_item, sidestep_attempt));
+        if (_mons_throw(mons, beem, mon_item, sidestep_attempt))
+        {
+            if(should_be_punished)
+                zin_punish_monster(mons);
+            
+            return true;
+        }
+        
+        return false;
     }
     
     //If we made a temporary piece of implicit ammuntion, delete it.
