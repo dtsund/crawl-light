@@ -1986,8 +1986,6 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
 	{
 		if (!mons->should_break_edict())
 		{
-			mprf("The %s refuses to attack.",
-				mons->name(DESC_CAP_THE).c_str());
 			return (false);
 		}
 		else
