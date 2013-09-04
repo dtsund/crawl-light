@@ -1981,20 +1981,20 @@ static bool _handle_throw(monster* mons, bolt & beem, bool sidestep_attempt)
     beem.damage = 0;
 
     bool should_be_punished = false;
-	// Try not to piss off Zin.
-	// NOTE: DOES NOT YET CHECK SICKEN/POISON/WEIRD STUFF LIKE THAT
-	if (beem->has_illegal_ranged_brand() || is_edict_active(EDICT_NO_PROJECTILES))
-	{
-		if (!mons->should_break_edict())
-		{
-			return (false);
-		}
-		else
-		{
+    // Try not to piss off Zin.
+    // NOTE: DOES NOT YET CHECK SICKEN/POISON/WEIRD STUFF LIKE THAT
+    if (beem->has_illegal_ranged_brand() || is_edict_active(EDICT_NO_PROJECTILES))
+    {
+        if (!mons->should_break_edict())
+        {
+            return (false);
+        }
+        else
+        {
             // Oops.  Zin's gonna be mad...
             should_be_punished = true;
-		}
-	}
+        }
+    }
     
     // Good idea?
     if (mons_should_fire(beem))
