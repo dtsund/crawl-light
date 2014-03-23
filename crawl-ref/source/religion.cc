@@ -3945,6 +3945,10 @@ bool is_edict_active(edict_type edict)
 
 void zin_punish_monster(monster* mons)
 {
+    //Never punish unintelligent monsters.
+    if(mons_intel(mons) < I_NORMAL)
+        return;
+
     int punishment_product = (you.zin_anger + 5) * (mons->zin_anger);
     //Subsequent offenses won't be punished so mildly...
     mons->zin_anger += 20;
