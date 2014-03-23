@@ -331,6 +331,8 @@ static void _equip_use_warning(const item_def& item)
         mpr("You really shouldn't be using a fast item like this.");
     else if (is_poisoned_item(item) && you.religion == GOD_SHINING_ONE)
         mpr("You really shouldn't be using a poisoned item like this.");
+    else if (is_edicted_item(item) && you.religion == GOD_ZIN)
+        mpr("You really shouldn't be using a proscribed item like this."); 
 }
 
 // Provide a function for handling initial wielding of 'special'
