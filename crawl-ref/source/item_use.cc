@@ -1304,12 +1304,6 @@ bool fire_warn_if_impossible(bool silent)
         }
     }
 
-    if(is_edict_active(EDICT_NO_PROJECTILES))
-    {
-        if(!yesno("Really violate an edict of Zin?", false, 'n'))
-            return true;
-    }
-
     if (you.berserk())
     {
         if (!silent)
@@ -1435,9 +1429,9 @@ void fire_thing(int item)
 	// punish the player. First up though: check if the launcher is relevant
 	if (you.weapon()->sub_type >= WPN_BLOWGUN)
 	{
-		if (is_edict_active(EDICT_NO_PROJECTILES) ||
+		if (is_edict_active(EDICT_NO_PROJECTILES) || (item >= 0 &&
 		    is_illegal_ranged_attack(get_weapon_brand(*you.weapon()),
-		                             get_ammo_brand(you.inv[item])))
+		                             get_ammo_brand(you.inv[item]))))
 		{
 			if (!yesno("Really violate Zin's edict?", false, 'n'))
 			{
