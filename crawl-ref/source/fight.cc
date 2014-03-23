@@ -617,14 +617,14 @@ bool melee_attack::attack()
 				cancel_attack = true;
 				return (false);
 			}
-			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+			did_god_conduct(DID_VIOLATE_EDICT, 1);
 		}
 		else
 		{
 			// Monsters make an HD check
 			if(!attacker->as_monster()->should_break_edict())
 			{
-				mprf("The %s refuses to attack.",
+				mprf("The %s thinks better of attacking.",
 					attacker->name(DESC_CAP_THE).c_str());
 				attacker->lose_energy(EUT_ATTACK);
 				return (false);

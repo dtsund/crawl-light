@@ -972,6 +972,23 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             }
             break;
 
+        case DID_VIOLATE_EDICT:
+            if (you.religion == GOD_ZIN)
+            {
+                simple_god_message(" is disappointed in your conduct.");
+                piety_change = -8;
+            }
+            break;
+
+        case DID_VIOLATE_COMMANDMENT:
+            if (you.religion == GOD_ZIN)
+            {
+                //Do not violate commandments.
+                simple_god_message(" is aghast at your blasphemy!");
+                excommunication();
+            }
+            break;
+
         case DID_NOTHING:
         case NUM_CONDUCTS:
             break;
@@ -1015,6 +1032,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 "Kill Artificial", "Undead Slave Kill Artificial",
                 "Servant Kill Artificial", "Destroy Spellbook",
                 "Exploration", "Desecrated Holy Remains", "Seen Monster",
+                "Broke Edict", "Broke Commandment",
             };
 
             COMPILE_CHECK(ARRAYSZ(conducts) == NUM_CONDUCTS);

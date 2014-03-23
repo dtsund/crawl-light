@@ -1443,8 +1443,7 @@ void fire_thing(int item)
 			{
 				return;
 			}
-			// make Zin shoot you in the face
-			mpr("Zin submits a Smiting Report. Expect 6-8 weeks of processing.");
+			did_god_conduct(DID_VIOLATE_EDICT, 1);
 		}
 	}
     // Need to check whether item is -1, or else you.inv[item] goes out of bounds.

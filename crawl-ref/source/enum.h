@@ -928,6 +928,8 @@ enum conduct_type
     DID_EXPLORATION,                      // Ashenzari, wrath timers
     DID_VIOLATE_HOLY_CORPSE,              // Zin/Ely/TSO butchering holy
     DID_SEE_MONSTER,                      // TSO
+    DID_VIOLATE_EDICT,                    // Zin
+    DID_VIOLATE_COMMANDMENT,              // Zin
 
     NUM_CONDUCTS
 };
