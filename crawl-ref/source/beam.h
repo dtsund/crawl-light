@@ -209,9 +209,9 @@ public:
     bool visible() const;
 
     bool can_affect_actor(const actor *act) const;
+    bool has_illegal_ranged_brand();
 
 private:
-    bool has_illegal_ranged_brand();
     void do_fire();
     coord_def pos() const;
     coord_def leg_source() const;

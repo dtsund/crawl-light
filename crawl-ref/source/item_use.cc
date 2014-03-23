@@ -1396,6 +1396,31 @@ int get_ammo_to_shoot(int item, dist &target, bool teleport)
     return (item);
 }
 
+bool is_illegal_ranged_attack(int wep_brand, int ammo_brand)
+{
+    if ((wep_brand == SPWPN_FLAME || wep_brand == SPWPN_CHAOS || 
+        ammo_brand == SPMSL_FLAME) && is_edict_active(EDICT_NO_FIRE))
+    {
+        return (true);
+    }
+    if ((wep_brand == SPWPN_FROST || wep_brand == SPWPN_CHAOS || 
+        ammo_brand == SPMSL_FROST) && is_edict_active(EDICT_NO_COLD))
+    {
+        return (true);
+    }
+    if ((wep_brand == SPWPN_VENOM || wep_brand == SPWPN_CHAOS || 
+        ammo_brand == SPMSL_POISONED) && is_edict_active(EDICT_NO_POISON))
+    {
+        return (true);
+    }
+    if (ammo_brand == SPMSL_DISPERSAL &&
+        is_edict_active(EDICT_NO_TRANSLOCATIONS))
+    {
+        return (true);
+    }
+    return (false);
+}
+
 // If item == -1, use implicit ammo.
 // If item passed, it will be put into the quiver.
 void fire_thing(int item)
@@ -1410,7 +1435,9 @@ void fire_thing(int item)
 	// punish the player. First up though: check if the launcher is relevant
 	if (you.weapon()->sub_type >= WPN_BLOWGUN)
 	{
-		if (is_illegal_ranged_attack(get_weapon_brand(*you.weapon()), get_ammo_brand(you.inv[item])))
+		if (is_edict_active(EDICT_NO_PROJECTILES) ||
+		    is_illegal_ranged_attack(get_weapon_brand(*you.weapon()),
+		                             get_ammo_brand(you.inv[item])))
 		{
 			if (!yesno("Really violate Zin's edict?", false, 'n'))
 			{
@@ -3152,6 +3179,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
     if (ammo_brand == SPMSL_RAGE)
         did_god_conduct(DID_HASTY, 6 + random2(3), ammo_brand_known);
+
+    //TODO: Punish the player for violating a Zin edict, if applicable.
 
     if (did_return)
     {
