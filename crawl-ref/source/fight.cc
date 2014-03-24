@@ -591,8 +591,6 @@ bool melee_attack::attack()
         }
     }
 
-	//okay this is probably where to put this
-	//I HOPE
 	if (attacker->atype() == ACT_PLAYER && you.duration[DUR_ATROPHY] > 0) {
 		mpr("Your arms are too weak to strike!");
 		cancel_attack = true;
@@ -607,6 +605,7 @@ bool melee_attack::attack()
         check_autoberserk();
     }
 	// Check weapon edicts here.
+	bool broke_edict = false;
 	if (is_illegal_melee_attack(wpn_skill, damage_brand))
 	{
 		if (attacker->atype() == ACT_PLAYER)
@@ -617,22 +616,21 @@ bool melee_attack::attack()
 				cancel_attack = true;
 				return (false);
 			}
-			did_god_conduct(DID_VIOLATE_EDICT, 1);
+			broke_edict = true;
 		}
 		else
 		{
 			// Monsters make an HD check
-			if(!attacker->as_monster()->should_break_edict())
+			if (!attacker->as_monster()->should_break_edict())
 			{
 				mprf("%s thinks better of attacking.",
 					attacker->name(DESC_CAP_THE).c_str());
 				attacker->lose_energy(EUT_ATTACK);
 				return (false);
 			}
-			else
+			else if (mons_intel(attacker->as_monster()) >= I_NORMAL)
 			{
-				// MAYBE MAKE THIS APPLY ONLY TO INTELLIGENTS
-				zin_punish_monster(attacker->as_monster());
+			    broke_edict = true;
 			}
 		}
 	}
@@ -749,6 +747,15 @@ bool melee_attack::attack()
             chaos_affects_attacker();
 
         do_miscast();
+
+        if (broke_edict)
+        {
+            did_god_conduct(DID_VIOLATE_EDICT, 1);
+        }
+    }
+    else if (broke_edict)
+    {
+        zin_punish_monster(attacker->as_monster());
     }
 
     // This may invalidate both the attacker and defender.
