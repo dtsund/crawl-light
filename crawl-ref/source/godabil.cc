@@ -1489,7 +1489,10 @@ bool zin_issue_edict()
             "to be anathema.\"");
         break;
     case EDICT_NO_LONG_BLADES:
-        mpr("\"\"");
+        // Source: Kalir
+        mpr("\"On the festival of Saint Arctus, the sword is not to be used "
+            "even in defense; better to kneel before Zin and ask His "
+            "forgiveness at your life's end.\"");
         break;
     case EDICT_NO_AXES:
         mpr("\"When the last tree fell, Zin's wrath came upon those who had "
@@ -1497,23 +1500,33 @@ bool zin_issue_edict()
             "twisted and dulled.\"");
         break;
     case EDICT_NO_MACES_FLAILS:
-        mpr("\"\"");
+        // Source: Satonakaja
+        mpr("\"The ogre warlord struck at Queen Sina the Pious, but in vain, "
+            "for Zin unraveled his fell cudgel into purifying salt.\"");
         break;
     case EDICT_NO_POLEARMS:
-        mpr("\"\"");
+        mpr("\"And when the battle was concluded, all those who held spears "
+            "and glaives against the army of Zin were found slain.\"");
         break;
     case EDICT_NO_STAVES:
-        mpr("\"\"");
+        mpr("\"The priestly staff's simple carved wood represents humility; "
+            "its straight figure represents honesty; defile it not with blood.\"");
         break;
     case EDICT_NO_PROJECTILES:
         mpr("\"The bows were smashed, and the arrows used for kindling, and "
             "henceforth did the people finally know peace.\"");
         break;
     case EDICT_NO_POISON:
-        mpr("\"\"");
+        // Source: Kalir
+        mpr("\"For to be as the viper is to embrace impurity, and to strike "
+            "down even the wretched with an envenomed blade is to strike at "
+            "the Axioms themselves.\"");
         break;
     case EDICT_NO_TRANSLOCATIONS:
-        mpr("\"\"");
+        // Source: Kalir
+        mpr("\"As the emissaries of Lugonu spread corruption and disorder, "
+            "Zin chastized them, and bade them move no further with wards of "
+            "silver.\"");
         break;
     case EDICT_NO_FIRE:
         mpr("\"But lo! the flames did not harm Saint Zeo, for he had faith in "
@@ -1526,13 +1539,19 @@ bool zin_issue_edict()
             "those with His warmth.\"");
         break;
     case EDICT_NO_INVISIBILITY:
-        mpr("\"\"");
+        // Source: Kalir
+        mpr("\"None but the thief and the brigand crave to be unseen; may "
+            "manacles of silver bind them and their wickedness be laid bare.\"");
         break;
     case EDICT_NO_ENCHANTMENT:
-        mpr("\"\"");
+        mpr("\"Rely not overmuch on bewitchment for the betterment of the self."
+            "  True strength comes only from Zin, and from Elyvilon, and "
+            "from The Shining One.\"");
         break;
     case EDICT_NO_SUMMONING:
-        mpr("\"\"");
+        // Source: Satonakaja
+        mpr("\"Saint Elia, with the strength of Zin, then closed the Abyssal "
+            "gate; and the unearthly being thrashed and was still.\"");
         break;
     default:
         mpr("\"The great prophet then foresaw a terrible pox against those who "
