@@ -1431,11 +1431,20 @@ int staff_spell(int staff)
 
     int glow = spell_glow(spell, true);
     
-    if(!contamination_warning_prompt(glow))
+    if (!contamination_warning_prompt(glow))
     {
         canned_msg(MSG_OK);
         return -1;
     }
+
+    bool broke_edict = false;
+    if (spell_violates_edict(spell) != EDICT_NONE)
+    {
+        if (!yesno("Really violate Zin's edict?", false, 'n'))
+            return -1;
+        broke_edict = true;
+    }
+        
 
     if (istaff.plus < mana)
     {
@@ -1466,6 +1475,8 @@ int staff_spell(int staff)
     istaff.plus -= mana;
     you.wield_change = true;
     you.turn_is_over = true;
+    if (broke_edict)
+        did_god_conduct(DID_VIOLATE_EDICT, 1);
 
     return (roll_dice(1, 1 + spell_difficulty(spell) / 2));
 }

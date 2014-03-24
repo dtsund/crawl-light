@@ -3816,6 +3816,14 @@ void zap_wand(int slot)
         return;
     }
 
+    bool broke_edict = false;
+    if (is_edicted_item(wand))
+    {
+        if (!yesno("Really violate Zin's edict?", false, 'n'))
+            return;
+        broke_edict = true;
+    }
+
     // If you happen to be wielding the wand, its display might change.
     if (you.equip[EQ_WEAPON] == item_slot)
         you.wield_change = true;
@@ -3986,6 +3994,10 @@ void zap_wand(int slot)
 
     mprf("This wand has %d charge%s left.",
          wand.plus, wand.plus == 1 ? "" : "s");
+
+    // Did we just break an edict?
+    if (broke_edict)
+        did_god_conduct(DID_VIOLATE_EDICT, 1);
 
     practise(EX_DID_ZAP_WAND);
     alert_nearby_monsters();

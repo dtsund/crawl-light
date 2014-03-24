@@ -24,6 +24,7 @@
 #include "exercise.h"
 #include "fight.h"
 #include "food.h"
+#include "goditem.h"
 #include "invent.h"
 #include "items.h"
 #include "item_use.h"
@@ -813,14 +814,27 @@ bool evoke_item(int slot)
 
     ASSERT(slot >= 0);
 
-#ifdef ASSERTS // Used only by an assert
-    const bool wielded = (you.equip[EQ_WEAPON] == slot);
-#endif /* DEBUG */
-
     item_def& item = you.inv[slot];
+
     // Also handles messages.
     if (!item_is_evokable(item, true, false, false, true))
         return (false);
+
+    // Check if the item is banned by a Zin edict.
+    // Don't check wands and rods here, though, since the functions handling
+    // their usage have to make their own checks.
+    bool broke_edict = false;
+    if (item.base_type != OBJ_WANDS && !(item.base_type == OBJ_STAVES &&
+        item_is_rod(item)) && is_edicted_item(item))
+    {
+        if(!yesno("Really violate Zin's edict?", false, 'n'))
+            return (false);
+            broke_edict = true;
+    }
+
+#ifdef ASSERTS // Used only by an assert
+    const bool wielded = (you.equip[EQ_WEAPON] == slot);
+#endif /* DEBUG */
 
     int pract = 0; // By how much Evocations is practised.
     bool did_work   = false;  // Used for default "nothing happens" message.
@@ -1005,7 +1019,11 @@ bool evoke_item(int slot)
         practise(EX_DID_EVOKE_ITEM, pract);
 
     if (!unevokable)
+    {
         you.turn_is_over = true;
+        if (broke_edict)
+            did_god_conduct(DID_VIOLATE_EDICT, 1);
+    }
     else
         crawl_state.zero_turns_taken();
 
