@@ -1381,9 +1381,9 @@ const char* _describe_edict(edict_type edict)
     case EDICT_NO_TRANSLOCATIONS:
         return "Edict against magical translocations";
     case EDICT_NO_FIRE:
-        return "Edict against fiery attacks";
+        return "Edict against fire";
     case EDICT_NO_COLD:
-        return "Edict against cold attacks";
+        return "Edict against cold";
     case EDICT_NO_INVISIBILITY:
         return "Edict against invisibility";
     case EDICT_NO_ENCHANTMENT:
