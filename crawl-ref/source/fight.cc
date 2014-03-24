@@ -624,7 +624,7 @@ bool melee_attack::attack()
 			// Monsters make an HD check
 			if(!attacker->as_monster()->should_break_edict())
 			{
-				mprf("The %s thinks better of attacking.",
+				mprf("%s thinks better of attacking.",
 					attacker->name(DESC_CAP_THE).c_str());
 				attacker->lose_energy(EUT_ATTACK);
 				return (false);
