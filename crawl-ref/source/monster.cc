@@ -4128,6 +4128,10 @@ bool monster::should_break_edict()
     if(mons_intel(this) < I_NORMAL)
         return true;
 
+    //Friendly monsters should never break edicts.
+    if (friendly())
+        return false;
+
     //For now, monsters with HD <= 8 always keep edicts.
     //Monsters with HD >= 16 don't care and just eat Zin's
     //wrath.  Scale linearly between the two.
