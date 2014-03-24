@@ -1559,6 +1559,8 @@ bool zin_issue_edict()
         break;
     }
 
+    you.redraw_edicts = true;
+
     return true;
 }
 
@@ -1581,6 +1583,7 @@ bool zin_absolution()
     you.edicts[1] = EDICT_NONE;
     you.edicts[2] = EDICT_NONE;
     you.commandment = COMMANDMENT_NONE;
+    you.redraw_edicts = true;
     you.duration[DUR_ISSUING_COMMANDMENT] = 0;
     return true;
 }

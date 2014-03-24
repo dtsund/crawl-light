@@ -395,6 +395,62 @@ static void _print_stat(stat_type stat, int x, int y)
         cprintf("       ");
 }
 
+static void _print_edict(edict_type edict, int x, int y)
+{
+    cgotoxy(x, y, GOTO_STAT);
+
+    textcolor(WHITE);
+
+    switch (edict)
+    {
+    case EDICT_NO_SHORT_BLADES:
+        cprintf("!ShrtBlade");
+        break;
+    case EDICT_NO_LONG_BLADES:
+        cprintf("!LongBlade");
+        break;
+    case EDICT_NO_AXES:
+        cprintf("!Axes     ");
+        break;
+    case EDICT_NO_MACES_FLAILS:
+        cprintf("!MaceFlail");
+        break;
+    case EDICT_NO_POLEARMS:
+        cprintf("!Polearms ");
+        break;
+    case EDICT_NO_STAVES:
+        cprintf("!Staves   ");
+        break;
+    case EDICT_NO_PROJECTILES:
+        cprintf("!Projectil");
+        break;
+    case EDICT_NO_POISON:
+        cprintf("!Poison   ");
+        break;
+    case EDICT_NO_TRANSLOCATIONS:
+        cprintf("!Transloc ");
+        break;
+    case EDICT_NO_FIRE:
+        cprintf("!Fire     ");
+        break;
+    case EDICT_NO_COLD:
+        cprintf("!Cold     ");
+        break;
+    case EDICT_NO_INVISIBILITY:
+        cprintf("!Invis    ");
+        break;
+    case EDICT_NO_ENCHANTMENT:
+        cprintf("!Enchant  ");
+        break;
+    case EDICT_NO_SUMMONING:
+        cprintf("!Summon   ");
+        break;
+    default:
+        cprintf("          ");
+        break;
+    }
+}
+
 static void _print_stats_ac(int x, int y)
 {
     // AC:
@@ -704,6 +760,7 @@ static bool _need_stats_printed()
            || you.redraw_stats[STAT_STR]
            || you.redraw_stats[STAT_INT]
            || you.redraw_stats[STAT_DEX]
+           || you.redraw_edicts
            || you.redraw_experience
            || you.wield_change
            || you.redraw_quiver;
@@ -738,6 +795,15 @@ void print_stats(void)
         if (you.redraw_stats[i])
             _print_stat(static_cast<stat_type>(i), 19, 6 + i);
     you.redraw_stats.init(false);
+
+    if (you.redraw_edicts)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            _print_edict(you.edicts[i], 33, 6 + i);
+        }
+    }
+    you.redraw_edicts = false;
 
     if (you.redraw_experience)
     {

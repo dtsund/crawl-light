@@ -315,6 +315,7 @@ void redraw_screen(void)
     you.redraw_magic_points = true;
     you.redraw_glow         = true;
     you.redraw_stats.init(true);
+    you.redraw_edicts       = true;
     you.redraw_armour_class = true;
     you.redraw_evasion      = true;
     you.redraw_experience   = true;

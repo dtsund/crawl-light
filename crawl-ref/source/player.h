@@ -323,6 +323,7 @@ public:
   bool redraw_experience;
   bool redraw_armour_class;
   bool redraw_evasion;
+  bool redraw_edicts;
 
   uint8_t flash_colour;
 
