@@ -3693,6 +3693,7 @@ edict_type spell_violates_edict(spell_type spell)
         case SPELL_NOXIOUS_CLOUD:
         case SPELL_SUMMON_DEMON: //orange demons
         case SPELL_DEMONIC_HORDE: //orange demons
+        case SPELL_VENOM_BOLT:
             return EDICT_NO_POISON;
         default:
             break; //Might violate other edicts, though
