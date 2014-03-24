@@ -285,13 +285,6 @@ bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand)
 		case SK_STAVES:
 			return is_edict_active(EDICT_NO_STAVES);
 			break;
-		// this seems pretty unlikely but I'm leaving it in anyway
-		case SK_SLINGS:
-		case SK_CROSSBOWS:
-		case SK_BOWS:
-		case SK_THROWING:
-			return is_edict_active(EDICT_NO_PROJECTILES);
-			break;
 		default:
 			// WHOOPS CAN'T FORGET BRANDED WEAPONS
 			switch (damage_brand)
@@ -310,9 +303,6 @@ bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand)
 				case SPWPN_DISTORTION:  // returning is fine
 					return is_edict_active(EDICT_NO_TRANSLOCATIONS);
 					break;
-//				case SPWPN_CONFUSE:
-//					return is_edict_active(EDICT_NO_ENCHANTMENTS);
-//					break;
 				case SPWPN_CHAOS:
 					// too many damn cases for this
 					return (is_edict_active(EDICT_NO_FIRE) ||
