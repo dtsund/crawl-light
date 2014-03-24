@@ -141,6 +141,18 @@ Imprison
 
 Temporarily imprison a monster surrounded by empty space in walls of silver. The duration of the prison is increased by Invocations skill, but strong enemies will be able to break free more easily.
 %%%%
+Issue Edict
+
+Declare a law to be followed by all intelligent beings, including yourself.  Some opponents, particularly powerful ones, may choose to flout this law, but will suffer retribution from Zin for doing so.  Up to three edicts may be active at once.  Unintelligent beings will not suffer direct consequences for violating an edict, but Zin may interfere with their attempts to do so.
+%%%%
+Absolution
+
+Cancel all active edicts and commandments.
+%%%%
+Issue Commandment
+
+Declare a sweeping but temporary law against a wide range of activities.  No intelligent being will dare violate a commandment - and neither should you.
+%%%%
 Sanctuary
 
 For a short duration gain safety in a divine refuge. While you are inside the sanctuary, monsters will not attack you, but the protection will disappear at once should you breach the divine peace.
