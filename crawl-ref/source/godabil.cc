@@ -1493,7 +1493,7 @@ bool zin_issue_edict()
         break;
     case EDICT_NO_AXES:
         mpr("\"When the last tree fell, Zin's wrath came upon those who had "
-            "defiled his sacred grove; their flesh was scarred, and their axes "
+            "defiled His sacred grove; their flesh was scarred, and their axes "
             "twisted and dulled.\"");
         break;
     case EDICT_NO_MACES_FLAILS:
@@ -1521,7 +1521,7 @@ bool zin_issue_edict()
             "afraid.\"");
         break;
     case EDICT_NO_COLD:
-        mpr("\"All those who follow Zin will feel his blessings.  No darkness "
+        mpr("\"All those who follow Zin will feel His blessings.  No darkness "
             "may assail those with the light of Zin; no bitter cold may assail "
             "those with His warmth.\"");
         break;
