@@ -4758,7 +4758,7 @@ void read_scroll(int slot)
         return;
     }
 
-    bool broke_edict = true;
+    bool broke_edict = false;
     if (is_edicted_item(scroll))
     {
         if (!yesno("Really violate Zin's edict?", false, 'n'))
