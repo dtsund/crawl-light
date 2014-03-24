@@ -1479,6 +1479,67 @@ bool zin_issue_edict()
         you.edicts[1] = you.edicts[2];
         you.edicts[2] = chosen_edict;
     }
+
+    mpr("You begin reciting from Zin's holy scriptures.");
+    switch (chosen_edict)
+    {
+    case EDICT_NO_SHORT_BLADES:
+        mpr("\"And so, in memory of Mennas' suffering, Zin declared that on "
+            "each fortieth day thereafter the use of knives and of daggers was "
+            "to be anathema.\"");
+        break;
+    case EDICT_NO_LONG_BLADES:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_AXES:
+        mpr("\"When the last tree fell, Zin's wrath came upon those who had "
+            "defiled his sacred grove; their flesh was scarred, and their axes "
+            "twisted and dulled.\"");
+        break;
+    case EDICT_NO_MACES_FLAILS:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_POLEARMS:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_STAVES:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_PROJECTILES:
+        mpr("\"The bows were smashed, and the arrows used for kindling, and "
+            "henceforth did the people finally know peace.\"");
+        break;
+    case EDICT_NO_POISON:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_TRANSLOCATIONS:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_FIRE:
+        mpr("\"But lo! the flames did not harm Saint Zeo, for he had faith in "
+            "Zin; and the heretics beheld the Saint's triumph, and they were "
+            "afraid.\"");
+        break;
+    case EDICT_NO_COLD:
+        mpr("\"All those who follow Zin will feel his blessings.  No darkness "
+            "may assail those with the light of Zin; no bitter cold may assail "
+            "those with His warmth.\"");
+        break;
+    case EDICT_NO_INVISIBILITY:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_ENCHANTMENT:
+        mpr("\"\"");
+        break;
+    case EDICT_NO_SUMMONING:
+        mpr("\"\"");
+        break;
+    default:
+        mpr("\"The great prophet then foresaw a terrible pox against those who "
+            "would create new edicts without updating zin_issue_edict.\"");
+        break;
+    }
+
     return true;
 }
 
