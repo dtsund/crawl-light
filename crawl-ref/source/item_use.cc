@@ -4113,6 +4113,14 @@ void drink(int slot)
         return;
     }
 
+    bool broke_edict = false;
+    if (is_edicted_item(potion))
+    {
+        if(!yesno("Really violate Zin's edict?", false, 'n'))
+            return;
+        broke_edict = true;
+    }
+
     // Give the player a chance to abort before drinking overly-contaminating stuff.
     if (!potion_effect(static_cast<potion_type>(potion.sub_type),
                       40, true, false))
@@ -4120,6 +4128,10 @@ void drink(int slot)
 
     dec_inv_item_quantity(slot, 1);
     you.turn_is_over = true;
+    if (broke_edict)
+    {
+        did_god_conduct(DID_VIOLATE_EDICT, 1);
+    }
 
     // This got deferred from the it_use2 switch to prevent SIGHUP abuse.
     if (potion.sub_type == POT_EXPERIENCE)
@@ -4746,6 +4758,14 @@ void read_scroll(int slot)
         return;
     }
 
+    bool broke_edict = true;
+    if (is_edicted_item(scroll))
+    {
+        if (!yesno("Really violate Zin's edict?", false, 'n'))
+            return;
+        broke_edict = true;
+    }
+
     const scroll_type which_scroll = static_cast<scroll_type>(scroll.sub_type);
 
     switch (which_scroll)
@@ -5061,8 +5081,17 @@ void read_scroll(int slot)
     }
 
     if (cancel_scroll)
+    {
         you.turn_is_over = false;
-
+    }
+    else
+    {
+        if (broke_edict)
+        {
+            did_god_conduct(DID_VIOLATE_EDICT, 1);
+        }
+    }
+        
     set_ident_type(scroll, id_the_scroll ? ID_KNOWN_TYPE :
                            tried_on_item ? ID_TRIED_ITEM_TYPE
                                          : ID_TRIED_TYPE);
