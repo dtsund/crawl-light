@@ -1326,16 +1326,6 @@ void bolt::fire()
 
     if (is_tracer)
     {
-        //First, check to see whether the beam violates a Zin element edict.
-        //We do that here in the tracer code to allow the player a chance to
-        //abort before firing.
-        if(has_illegal_ranged_brand())
-        {
-            if(!yesno("Really violate an edict of Zin?", false, 'n'))
-            beam_cancelled = true;
-            return;
-        }
-
         bolt boltcopy = *this;
         if (special_explosion != NULL)
             boltcopy.special_explosion = new bolt(*special_explosion);
