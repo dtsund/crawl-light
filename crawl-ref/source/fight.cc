@@ -280,7 +280,7 @@ bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand)
 			return is_edict_active(EDICT_NO_MACES_FLAILS);
 			break;
 		case SK_POLEARMS:
-			return is_edict_active(EDICT_NO_LONG_BLADES);
+			return is_edict_active(EDICT_NO_POLEARMS);
 			break;
 		case SK_STAVES:
 			return is_edict_active(EDICT_NO_STAVES);
