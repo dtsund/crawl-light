@@ -211,6 +211,13 @@ static bool _swap_monsters(monster* mover, monster* moved)
 
 static bool _do_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 {
+    // Intelligent monster never, ever cast spells when a comandment is active.
+    if (mons_intel(mons) >= I_NORMAL &&
+        is_commandment_active(COMMANDMENT_NO_SPELLCASTING))
+    {
+        return false;
+    }
+
     //Attempting to sidestep?  Overwrite the target!
     if(sidestep_attempt)
     {

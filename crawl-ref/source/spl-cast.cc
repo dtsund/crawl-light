@@ -711,6 +711,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
         if (key_is_escape(keyin))
         {
             canned_msg(MSG_OK);
+            crawl_state.zero_turns_taken();
             return (false);
         }
         else if (keyin == '.' || keyin == CK_ENTER)
@@ -739,6 +740,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
     if (spell_mana(spell) > you.magic_points)
     {
         mpr("You don't have enough magic to cast that spell.");
+        crawl_state.zero_turns_taken();
         return (false);
     }
     
@@ -747,7 +749,38 @@ bool cast_a_spell(bool check_range, spell_type spell)
     if(!contamination_warning_prompt(adjusted_spell_glow(spell)))
     {
         canned_msg(MSG_OK);
+        crawl_state.zero_turns_taken();
         return false;
+    }
+
+    bool broke_edict = false;
+    bool broke_commandment = false;
+    if (is_commandment_active(COMMANDMENT_NO_SPELLCASTING))
+    {
+        if (!yesno("<lightred>Using magic now will cause instant "
+                   "excommunication!</lightred>  Cast anyway?", false, 'n'))
+        {
+            canned_msg(MSG_OK);
+            crawl_state.zero_turns_taken();
+            return false;
+        }
+        else
+        {
+            broke_commandment = true;
+        }
+    }
+    else if (spell_violates_edict(spell) != EDICT_NONE)
+    {
+        if (!yesno("Really violate Zin's edict?", false, 'n'))
+        {
+            canned_msg(MSG_OK);
+            crawl_state.zero_turns_taken();
+            return false;
+        }
+        else
+        {
+            broke_edict = true;
+        }
     }
 
     if (check_range && spell_no_hostile_in_range(spell, minRange))
@@ -810,6 +843,15 @@ bool cast_a_spell(bool check_range, spell_type spell)
     dec_mp(spell_mana(spell));
 
     contaminate_player(spell_glow(spell), true);
+
+    if (broke_commandment)
+    {
+        did_god_conduct(DID_VIOLATE_COMMANDMENT, 1);
+    }
+    if (broke_edict)
+    {
+        did_god_conduct(DID_VIOLATE_EDICT, 1);
+    }
 
     you.turn_is_over = true;
     alert_nearby_monsters();
