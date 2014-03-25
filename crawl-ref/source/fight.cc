@@ -620,6 +620,7 @@ bool melee_attack::attack()
                 return (false);
             }
         }
+    }
     if (is_illegal_melee_attack(wpn_skill, damage_brand))
     {
         if (attacker->atype() == ACT_PLAYER)

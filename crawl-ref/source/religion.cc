@@ -3949,7 +3949,7 @@ bool is_edict_active(edict_type edict)
 //issue duration is nonzero and input was the issued commandment.
 bool is_commandment_active(commandment_type command)
 {
-    if (you.religion != GOD_ZIN || you.penance[GOD_ZIN)
+    if (you.religion != GOD_ZIN || you.penance[GOD_ZIN])
     {
         return false;
     }
