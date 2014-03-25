@@ -1415,8 +1415,11 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
                 continue;
 
             // Don't swap to a non-signature weapon.
-            if (!_is_signature_weapon(this, item) && !dual_wielding)
+            if (!_is_signature_weapon(this, item) &&
+                _is_signature_weapon(this, *weap) && !dual_wielding)
+            {
                 return (false);
+            }
 
             // If we get here, the weapon is a melee weapon.
             // If the new weapon is better than the current one,
