@@ -594,26 +594,27 @@ bool melee_attack::attack()
 
         check_autoberserk();
     }
-	// Check attack edicts/commandments here.
-	bool broke_edict = false;
-	if (is_commandment_active(COMMANDMENT_NO_FIGHTING))
-	{
-	    if (attacker->atype() == ACT_PLAYER)
-	    {
-	        if (!yesno("Really violate Zin's commandment?", false, 'n'))
-	        {
-	            cancel_attack = true;
-	            return false;
-	        }
-	        else
-	        {
-	            did_god_conduct(DID_VIOLATE_COMMANDMENT, 1);
-	        }
-	    }
-	    else
-	    {
-	        if (mons_intel(attacker->as_monster()) >= I_NORMAL)
-	        {
+    // Check attack edicts/commandments here.
+    bool broke_edict = false;
+    if (is_commandment_active(COMMANDMENT_NO_FIGHTING))
+    {
+        if (attacker->atype() == ACT_PLAYER)
+        {
+            if (!yesno("<lightred>Using magic now will cause instant "
+                       "excommunication!</lightred>  Cast anyway?", false, 'n'))
+            {
+                cancel_attack = true;
+                return false;
+            }
+            else
+            {
+                did_god_conduct(DID_VIOLATE_COMMANDMENT, 1);
+            }
+        }
+        else
+        {
+            if (mons_intel(attacker->as_monster()) >= I_NORMAL)
+            {
                 mprf("%s thinks better of attacking.",
                     attacker->name(DESC_CAP_THE).c_str());
                 attacker->lose_energy(EUT_ATTACK);
