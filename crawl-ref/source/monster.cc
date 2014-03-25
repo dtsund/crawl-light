@@ -1424,7 +1424,11 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
             const int old_wpn_dam = mons_weapon_damage_rating(*weap)
                                     + _ego_damage_bonus(*weap);
 
-            bool new_wpn_better = (new_wpn_dam > old_wpn_dam);
+            // Automatically consider the new weapon better if there's an
+            // edict against the old one.  If there's also an edict against
+            // the new one, pickup() will fail later on.
+            bool new_wpn_better = (new_wpn_dam > old_wpn_dam ||
+                                   is_edicted_item(*weap));
             if (new_wpn_dam == old_wpn_dam)
             {
                 // Use shopping value as a crude estimate of resistances etc.
@@ -1539,6 +1543,12 @@ bool monster::wants_weapon(const item_def &weap) const
     // to a single two-handed one, however strong.
     if (mons_wields_two_weapons(this)
         && hands_reqd(weap, body_size()) == HANDS_TWO)
+    {
+        return (false);
+    }
+
+    // Don't pick up edicted weapons.
+    if (is_edicted_item(weap))
     {
         return (false);
     }
@@ -1967,7 +1977,15 @@ bool monster::pickup_item(item_def &item, int near, bool force)
                 // While occupied, hostile monsters won't pick up items
                 // dropped or thrown by you. (You might have done that to
                 // distract them.)
-                if (!friendly()
+                // Exception: They will pick up new weapons if their current
+                // weapons are edicted.
+                if (itype == OBJ_WEAPONS && 
+                    is_edicted_item(
+                        *mslot_item(static_cast<mon_inv_type>(MSLOT_WEAPON))))
+                {
+                    //do nothing
+                }
+                else if (!friendly() 
                     && (testbits(item.flags, ISFLAG_DROPPED)
                         || testbits(item.flags, ISFLAG_THROWN)))
                 {
