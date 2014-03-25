@@ -3944,6 +3944,20 @@ bool is_edict_active(edict_type edict)
             you.edicts[2] == edict);
 }
 
+//is_commandment_active: checks whether commandment is active.
+//Returns true if the player is a Zin follower not under penance AND commandment
+//issue duration is nonzero and input was the issued commandment.
+bool is_commandment_active(commandment_type command)
+{
+    if (you.religion != GOD_ZIN || you.penance[GOD_ZIN)
+    {
+        return false;
+    }
+
+    return (you.duration[DUR_ISSUING_COMMANDMENT] &&
+            you.commandment == command);
+}
+
 void zin_punish_monster(monster* mons)
 {
     //Never punish unintelligent monsters.

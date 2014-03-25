@@ -594,36 +594,60 @@ bool melee_attack::attack()
 
         check_autoberserk();
     }
-	// Check weapon edicts here.
+	// Check attack edicts/commandments here.
 	bool broke_edict = false;
-	if (is_illegal_melee_attack(wpn_skill, damage_brand))
+	if (is_commandment_active(COMMANDMENT_NO_FIGHTING))
 	{
-		if (attacker->atype() == ACT_PLAYER)
-		{
-			// You'll get a warning if your attack will violate an edict
-			if (!yesno("Really violate Zin's edict?", false, 'n'))
-			{
-				cancel_attack = true;
-				return (false);
-			}
-			broke_edict = true;
-		}
-		else
-		{
-			// Monsters make an HD check
-			if (!attacker->as_monster()->should_break_edict())
-			{
-				mprf("%s thinks better of attacking.",
-					attacker->name(DESC_CAP_THE).c_str());
-				attacker->lose_energy(EUT_ATTACK);
-				return (false);
-			}
-			else if (mons_intel(attacker->as_monster()) >= I_NORMAL)
-			{
-			    broke_edict = true;
-			}
-		}
-	}
+	    if (attacker->atype() == ACT_PLAYER)
+	    {
+	        if (!yesno("Really violate Zin's commandment?", false, 'n'))
+	        {
+	            cancel_attack = true;
+	            return false;
+	        }
+	        else
+	        {
+	            did_god_conduct(DID_VIOLATE_COMMANDMENT, 1);
+	        }
+	    }
+	    else
+	    {
+	        if (mons_intel(attacker->as_monster()) >= I_NORMAL)
+	        {
+                mprf("%s thinks better of attacking.",
+                    attacker->name(DESC_CAP_THE).c_str());
+                attacker->lose_energy(EUT_ATTACK);
+                return (false);
+            }
+        }
+    if (is_illegal_melee_attack(wpn_skill, damage_brand))
+    {
+        if (attacker->atype() == ACT_PLAYER)
+        {
+            // You'll get a warning if your attack will violate an edict
+            if (!yesno("Really violate Zin's edict?", false, 'n'))
+            {
+                cancel_attack = true;
+                return (false);
+            }
+            broke_edict = true;
+        }
+        else
+        {
+            // Monsters make an HD check
+            if (!attacker->as_monster()->should_break_edict())
+            {
+                mprf("%s thinks better of attacking.",
+                    attacker->name(DESC_CAP_THE).c_str());
+                attacker->lose_energy(EUT_ATTACK);
+                return (false);
+            }
+            else if (mons_intel(attacker->as_monster()) >= I_NORMAL)
+            {
+                broke_edict = true;
+            }
+        }
+    }
 
     // Xom thinks fumbles are funny...
     if (attacker->fumbles_attack())
