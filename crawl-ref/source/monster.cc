@@ -1927,7 +1927,7 @@ bool monster::pickup_item(item_def &item, int near, bool force)
 
         // Weak(ened) monsters won't stop to pick up things as long as they
         // feel unsafe.
-        if (!wandering && (hit_points * 10 < max_hit_points || hit_points < 10)
+        if (!wandering && (hit_points * 10 < max_hit_points)
             && mon_enemies_around(this))
         {
             return (false);
