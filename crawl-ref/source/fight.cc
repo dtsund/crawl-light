@@ -600,8 +600,8 @@ bool melee_attack::attack()
     {
         if (attacker->atype() == ACT_PLAYER)
         {
-            if (!yesno("<lightred>Using magic now will cause instant "
-                       "excommunication!</lightred>  Cast anyway?", false, 'n'))
+            if (!yesno("<lightred>Fighting now will cause instant "
+                       "excommunication!</lightred>  Attack anyway?", false, 'n'))
             {
                 cancel_attack = true;
                 return false;
