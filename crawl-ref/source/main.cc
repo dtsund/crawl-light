@@ -3972,9 +3972,32 @@ static void _move_player(coord_def move)
         return;
     }
 
+    // We need to make the commandment check twice: once in the you.confused
+    // block (because moving while confused will always be a violation), and
+    // once when we know we're actually moving and not attacking or walking
+    // into a wall.  But we don't want to make the player respond to two
+    // prompts.
+    bool broke_commandment = false;
+    bool checked_commandment = false;
+
     // When confused, sometimes make a random move
     if (you.confused())
     {
+        if (is_commandment_active(COMMANDMENT_NO_MOVEMENT))
+        {
+            if (!yesno("<lightred>Moving now will cause instant "
+                       "excommunication!</lightred>  Take a step anyway?", false, 'n'))
+            {
+                canned_msg(MSG_OK);
+                return;
+            }
+            else
+            {
+                broke_commandment = true;
+            }
+        }
+        checked_commandment = true;
+
         dungeon_feature_type dangerous = DNGN_FLOOR;
         for (adjacent_iterator ai(you.pos(), false); ai; ++ai)
         {
@@ -4122,6 +4145,20 @@ static void _move_player(coord_def move)
 
     if (!attacking && targ_pass && moving && !beholder && !fmonger)
     {
+        if (is_commandment_active(COMMANDMENT_NO_MOVEMENT) &&
+            !checked_commandment)
+        {
+            if (!yesno("<lightred>Moving now will cause instant "
+                       "excommunication!</lightred>  Take a step anyway?", false, 'n'))
+            {
+                canned_msg(MSG_OK);
+                return;
+            }
+            else
+            {
+                broke_commandment = true;
+            }
+        }
         if (crawl_state.game_is_zotdef() && you.pos() == orb_position())
         {
             // Are you standing on the Orb? If so, are the critters near?
@@ -4183,6 +4220,10 @@ static void _move_player(coord_def move)
         you.prev_move = move;
         move.reset();
         you.turn_is_over = true;
+        if (broke_commandment)
+        {
+            did_god_conduct(DID_VIOLATE_COMMANDMENT, 1);
+        }
         request_autopickup();
     }
 

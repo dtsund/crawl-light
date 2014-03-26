@@ -538,6 +538,14 @@ static void _handle_movement(monster* mons)
     if (!in_bounds_y(s.y))
         mmov.y = 0;
 
+    // Intelligent monsters never move if there's a commandment forbidding it.
+    if (mons_intel(mons) >= I_NORMAL && 
+        is_commandment_active(COMMANDMENT_NO_MOVEMENT))
+    {
+        mmov.x = 0;
+        mmov.y = 0;
+    }
+
     if (delta.rdist() > 3)
     {
         // Reproduced here is some semi-legacy code that makes monsters
