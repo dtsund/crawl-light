@@ -25,6 +25,7 @@
 #include "fprop.h"
 #include "fight.h"
 #include "fineff.h"
+#include "goditem.h"
 #include "godpassive.h"
 #include "godprayer.h"
 #include "itemname.h"
@@ -761,6 +762,20 @@ static bool _handle_potion(monster* mons, bolt & beem)
     if (mitm[mons->inv[MSLOT_POTION]].base_type != OBJ_POTIONS)
         return (false);
 
+    // Edict check.
+    bool broke_edict = false;
+    if (is_edicted_item(mitm[mons->inv[MSLOT_POTION]]))
+    {
+        if (!mons->should_break_edict())
+        {
+            return (false);
+        }
+        else if (mons_intel(mons) >= I_NORMAL)
+        {
+            broke_edict = true;
+        }
+    }
+
     bool rc = false;
 
     const int potion_idx = mons->inv[MSLOT_POTION];
@@ -781,6 +796,12 @@ static bool _handle_potion(monster* mons, bolt & beem)
         // Remove it from inventory.
         if (dec_mitm_item_quantity(potion_idx, 1))
             mons->inv[MSLOT_POTION] = NON_ITEM;
+
+        // Punish, if an edict was broken.
+        if (broke_edict)
+        {
+            zin_punish_monster(mons);
+        }
 
         mons->lose_energy(EUT_ITEM);
         rc = true;
@@ -861,12 +882,26 @@ static bool _handle_scroll(monster* mons)
     bool                    read        = false;
     item_type_id_state_type ident       = ID_UNKNOWN_TYPE;
     bool                    was_visible = you.can_see(mons);
+    bool                    broke_edict = false;
 
     // Notice how few cases are actually accounted for here {dlb}:
     const int scroll_type = mitm[mons->inv[MSLOT_SCROLL]].sub_type;
+
+    // Edict check.
+    if (is_edicted_item(mitm[mons->inv[MSLOT_SCROLL]]))
+    {
+        if (!mons->should_break_edict())
+        {
+            return (false);
+        }
+        else if (mons_intel(mons) >= I_NORMAL)
+        {
+            broke_edict = true;
+        }
+    }
+
     switch (scroll_type)
     {
-    case SCR_TELEPORTATION:
         if (!mons->has_ench(ENCH_TP))
         {
             if (mons->caught() || mons_is_fleeing(mons)
@@ -928,6 +963,11 @@ static bool _handle_scroll(monster* mons)
             set_ident_type(OBJ_SCROLLS, scroll_type, ident);
 
         mons->lose_energy(EUT_ITEM);
+    }
+
+    if (broke_edict)
+    {
+        zin_punish_monster(mons);
     }
 
     return read;
