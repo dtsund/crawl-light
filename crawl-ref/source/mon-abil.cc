@@ -817,7 +817,7 @@ static bool _orange_statue_effects(monster* mons)
     return (false);
 }
 
-static void _orc_battle_cry(monster* chief)
+static int _orc_battle_cry(monster* chief)
 {
     const actor *foe = chief->get_foe();
     int affected = 0;
@@ -914,6 +914,8 @@ static void _orc_battle_cry(monster* chief)
             }
         }
     }
+
+    return affected;
 }
 
 static void _cherub_hymn(monster* chief)
@@ -2070,6 +2072,60 @@ void move_kraken_tentacles(monster* kraken)
     }
 }
 
+bool is_edicted_ability(monster* mons, mons_ability_type ability)
+{
+    switch (ability)
+    {
+    case MABIL_ORC_BATTLE_CRY:
+    case MABIL_HYMN:
+    case MABIL_INCITE:
+    case MABIL_BERSERK:
+        return is_edict_active(EDICT_NO_ENCHANTMENT);
+    case MABIL_TOGGLE_INVIS:
+        return (is_edict_active(EDICT_NO_ENCHANTMENT) ||
+                is_edict_active(EDICT_NO_INVISIBILITY));
+    case MABIL_HURL_SPINES:
+        return is_edict_active(EDICT_NO_PROJECTILES);
+    case MABIL_SPIT_LAVA:
+    case MABIL_FIRE_BREATH:
+    case MABIL_THROW_FLAME:
+        return is_edict_active(EDICT_NO_FIRE);
+    case MABIL_COLD_BREATH:
+        return is_edict_active(EDICT_NO_COLD);
+    case MABIL_DRACONIAN_BREATH:
+    {
+        // Ugh.
+        if (mons_genus(mons->type) == MONS_DRACONIAN)
+        {
+            switch (draco_subspecies(mons))
+            {
+            case MONS_MOTTLED_DRACONIAN:
+            case MONS_RED_DRACONIAN:
+                return is_edict_active(EDICT_NO_FIRE);
+            case MONS_WHITE_DRACONIAN:
+                return is_edict_active(EDICT_NO_COLD);
+            case MONS_GREEN_DRACONIAN:
+                return is_edict_active(EDICT_NO_POISON);
+            default:
+                return false;
+            }
+        }
+        // I think anything else is a player ghost, and draining breath
+        // currently doesn't have any edicts against it.
+        return false;
+    }
+    case MABIL_BLINK:
+    case MABIL_GOLDEN_EYE:
+        //MABIL_GOLDEN_EYE technically also covers confusion, but no
+        //case in mon_nearby_ability presently needs to check for an edict.
+        return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+    case MABIL_SUMMON_DEMONS:
+        return is_edict_active(EDICT_NO_SUMMONING);
+    default:
+        return false;
+    }
+}
+
 //---------------------------------------------------------------
 //
 // mon_special_ability
@@ -2124,6 +2180,19 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
     }
 
+    bool broke_edict = false;
+    if (is_edicted_ability(mons, ability))
+    {
+        if (!mons->should_break_edict())
+        {
+            return (false);
+        }
+        else if (mons_intel(mons) >= I_NORMAL)
+        {
+            broke_edict = true;
+        }
+    }
+
     circle_def c;
     switch (ability)
     {
@@ -2146,12 +2215,21 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         if (is_sanctuary(mons->pos()))
             break;
 
-        _orc_battle_cry(mons);
         // Doesn't cost a turn.
+        // Need to put the edict check here because used isn't set.
+        if (_orc_battle_cry(mons) && broke_edict)
+        {
+            zin_punish_monster(mons);
+        }
         break;
 
     case MABIL_HYMN:
         _cherub_hymn(mons);
+        // Need to put the edict check here because used isn't set.
+        if (broke_edict)
+        {
+            zin_punish_monster(mons);
+        }
         break;
 
     case MABIL_INFLICT_DIV_MISCAST:
@@ -2353,7 +2431,14 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             break;
 
         if (one_chance_in(5))
+        {
             mons->go_berserk(true);
+            // Used isn't set, so put the check here.
+            if (broke_edict)
+            {
+                zin_punish_monster(mons);
+            }
+        }
         break;
 
     case MABIL_BLINK:
@@ -2373,7 +2458,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             }
             // Otherwise, go invisible.
             else
+            {
                 enchant_monster_invisible(mons, "flickers out of sight");
+                if (broke_edict)
+                {
+                    zin_punish_monster(mons);
+                }
+            }
         }
         break;
 
@@ -2614,7 +2705,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
     }
 
     if (used)
+    {
         mons->lose_energy(EUT_SPECIAL);
+        if (broke_edict)
+        {
+            zin_punish_monster(mons);
+        }
+    }
 
     // XXX: Unless monster dragons get abilities that are not a breath
     // weapon...
@@ -2623,7 +2720,9 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         setup_breath_timeout(mons);
     }
 
-    return (used);
+    // Check whether the monster's alive; if it killed itself, continuing
+    // monster behavior could crash the game.
+    return (!mons->alive() || used);
 }
 
 // Combines code for eyeball-type monsters, etc. to reduce clutter.
