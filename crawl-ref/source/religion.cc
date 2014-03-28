@@ -3992,7 +3992,7 @@ void zin_punish_monster(monster* mons)
     {
         simple_monster_message(mons, " is blasted by the fury of Zin!");
         // This will hurt a lot, may need to be toned down
-        mons->hurt(&you, 7 + (bestroll(2, punishment_product) / 15));
+        mons->hurt(&you, 7 + (bestroll(punishment_product, 2) / 15));
     }
     else if(punishment_product < 351)
     {
@@ -4002,13 +4002,13 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, " is drained of magical energy by Zin!");
             mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 1, &you, 
-                           bestroll(2, 8) * BASELINE_DELAY));
+                           bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(6))
         {
             simple_monster_message(mons, " is bewildered by Zin's retribution!");
             mons->add_ench(mon_enchant(ENCH_CONFUSION, 1, &you, 
-                           bestroll(2, 4) * BASELINE_DELAY));
+                           bestroll(4, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(5))
         {
@@ -4020,13 +4020,13 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, " is dazed by Zin's retribution!");
             mons->add_ench(mon_enchant(ENCH_DAZED, 1, &you, 
-                           bestroll(2, 3) * BASELINE_DELAY));
+                           bestroll(3, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(3))
         {
             simple_monster_message(mons, " is driven mad by Zin's retribution!");
             mons->add_ench(mon_enchant(ENCH_MAD, 1, &you, 
-                           bestroll(2, 3) * BASELINE_DELAY));
+                           bestroll(3, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(2))
         {
@@ -4051,7 +4051,7 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, " falters and slows in the face of Zin's rage.");
             mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you, 
-                           bestroll(2, 4) * BASELINE_DELAY));
+                           bestroll(4, 2) * BASELINE_DELAY));
         }
     }
     else
@@ -4063,7 +4063,7 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, " is frozen in place by Zin!");
             mons->add_ench(mon_enchant(ENCH_PARALYSIS, 2, &you, 
-                           bestroll(2, 4) * BASELINE_DELAY));
+                           bestroll(4, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(6))
         {
@@ -4087,19 +4087,19 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, "'s magic is powerless in the face of Zin's fury!");
             mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 3, &you, 
-                           bestroll(2, 20) * BASELINE_DELAY));
+                           bestroll(20, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(4))
         {
             simple_monster_message(mons, " is driven hopelessly mad by Zin's retribution!");
             mons->add_ench(mon_enchant(ENCH_MAD, 2, &you, 
-                           bestroll(2, 8) * BASELINE_DELAY));
+                           bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(3))
         {
             simple_monster_message(mons, " is hopelessly dazed by Zin's retribution!");
             mons->add_ench(mon_enchant(ENCH_DAZED, 2, &you, 
-                           bestroll(2, 8) * BASELINE_DELAY));
+                           bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(2))
         {
@@ -4112,7 +4112,7 @@ void zin_punish_monster(monster* mons)
         {
             simple_monster_message(mons, " is slowed dramatically by Zin's wrath!");
             mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you,
-                           bestroll(2, 12) * BASELINE_DELAY));
+                           bestroll(12, 2) * BASELINE_DELAY));
         }
     }
 }
