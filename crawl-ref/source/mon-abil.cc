@@ -2107,18 +2107,34 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
 
     spell_type spell = SPELL_NO_SPELL;
 
-    circle_def c;
-    switch (mclass)
+    mons_ability_type ability = mons_ability(mons->type);
+
+    // Hack to give player ghosts of draconian characters breath
+    if (mclass == MONS_PLAYER_GHOST)
     {
-    case MONS_UGLY_THING:
-    case MONS_VERY_UGLY_THING:
+        const ghost_demon &ghost = *(mons->ghost);
+
+        if (ghost.species >= SP_RED_DRACONIAN
+            && ghost.species != SP_GREY_DRACONIAN
+            && ghost.species < SP_BASE_DRACONIAN
+            && ghost.xl >= 7
+            && !one_chance_in(ghost.xl - 5))
+        {
+            ability = MABIL_DRACONIAN_BREATH;
+        }
+    }
+
+    circle_def c;
+    switch (ability)
+    {
+    case MABIL_UGLY_THING_MUTATE:
         // A (very) ugly thing's proximity to you if you're glowing, or
         // to others of its kind, can mutate it into a different (very)
         // ugly thing.
         used = ugly_thing_mutate(mons, true);
         break;
 
-    case MONS_SLIME_CREATURE:
+    case MABIL_SLIME_SPLIT_MERGE:
         // Slime creatures may split or merge depending on the
         // situation.
         used = _slime_split_merge(mons);
@@ -2126,9 +2142,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             return (true);
         break;
 
-    case MONS_ORC_KNIGHT:
-    case MONS_ORC_WARLORD:
-    case MONS_SAINT_ROKA:
+    case MABIL_ORC_BATTLE_CRY:
         if (is_sanctuary(mons->pos()))
             break;
 
@@ -2136,25 +2150,25 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         // Doesn't cost a turn.
         break;
 
-    case MONS_CHERUB:
+    case MABIL_HYMN:
         _cherub_hymn(mons);
         break;
 
-    case MONS_ORANGE_STATUE:
+    case MABIL_INFLICT_DIV_MISCAST:
         if (player_or_mon_in_sanct(mons))
             break;
 
         used = _orange_statue_effects(mons);
         break;
 
-    case MONS_SILVER_STATUE:
+    case MABIL_SUMMON_DEMONS:
         if (player_or_mon_in_sanct(mons))
             break;
 
         used = _silver_statue_effects(mons);
         break;
 
-    case MONS_BALL_LIGHTNING:
+    case MABIL_LIGHTNING_DETONATE:
         if (is_sanctuary(mons->pos()))
             break;
 
@@ -2181,7 +2195,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_LAVA_SNAKE:
+    case MABIL_SPIT_LAVA:
         if (mons->has_ench(ENCH_CONFUSION))
             break;
 
@@ -2218,7 +2232,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_ELECTRIC_EEL:
+    case MABIL_LIGHTNING_BOLT:
         if (mons->has_ench(ENCH_CONFUSION))
             break;
 
@@ -2257,10 +2271,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_ACID_BLOB:
-    case MONS_OKLOB_PLANT:
-    case MONS_OKLOB_SAPLING:
-    case MONS_YELLOW_DRACONIAN:
+    case MABIL_SPIT_ACID:
     {
         if (mons->has_ench(ENCH_CONFUSION))
             break;
@@ -2294,7 +2305,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         break;
     }
 
-    case MONS_BURNING_BUSH:
+    case MABIL_THROW_FLAME:
     {
         if (mons->has_ench(ENCH_CONFUSION))
             break;
@@ -2321,12 +2332,12 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         break;
     }
 
-    case MONS_MOTH_OF_WRATH:
+    case MABIL_INCITE:
         if (one_chance_in(3))
             used = _moth_incite_monsters(mons);
         break;
 
-    case MONS_SNORG:
+    case MABIL_BERSERK:
         if (mons->has_ench(ENCH_CONFUSION))
             break;
 
@@ -2345,20 +2356,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             mons->go_berserk(true);
         break;
 
-    case MONS_CRIMSON_IMP:
-    case MONS_PHANTOM:
-    case MONS_INSUBSTANTIAL_WISP:
-    case MONS_BLINK_FROG:
-    case MONS_KILLER_KLOWN:
-    case MONS_PRINCE_RIBBIT:
-    case MONS_MARA:
-    case MONS_MARA_FAKE:
-    case MONS_GOLDEN_EYE:
+    case MABIL_BLINK:
+    case MABIL_GOLDEN_EYE:
         if (one_chance_in(7) || mons->caught() && one_chance_in(3))
             used = monster_blink(mons);
         break;
 
-    case MONS_SKY_BEAST:
+    case MABIL_TOGGLE_INVIS:
         if (one_chance_in(8))
         {
             // If we're invisible, become visible.
@@ -2373,7 +2377,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_BOG_MUMMY:
+    case MABIL_ROT:
         if (one_chance_in(8))
         {
             // A hacky way of making these rot regularly.
@@ -2388,9 +2392,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_AGATE_SNAIL:
-    case MONS_SNAPPING_TURTLE:
-    case MONS_ALLIGATOR_SNAPPING_TURTLE:
+    case MABIL_WITHDRAW:
         // Use the same calculations as for low-HP casting
         if (mons->hit_points < mons->max_hit_points / 4 && !one_chance_in(4)
             && !mons->has_ench(ENCH_WITHDRAWN))
@@ -2404,7 +2406,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_MANTICORE:
+    case MABIL_HURL_SPINES:
         if (mons->has_ench(ENCH_CONFUSION))
             break;
 
@@ -2449,38 +2451,17 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_PLAYER_GHOST:
-    {
-        const ghost_demon &ghost = *(mons->ghost);
-
-        if (ghost.species < SP_RED_DRACONIAN
-            || ghost.species == SP_GREY_DRACONIAN
-            || ghost.species >= SP_BASE_DRACONIAN
-            || ghost.xl < 7
-            || one_chance_in(ghost.xl - 5))
-        {
-            break;
-        }
-    }
-    // Intentional fallthrough
-
-    case MONS_WHITE_DRACONIAN:
-    case MONS_RED_DRACONIAN:
+    case MABIL_DRACONIAN_BREATH:
         spell = SPELL_DRACONIAN_BREATH;
     // Intentional fallthrough
 
-    case MONS_ICE_DRAGON:
+    case MABIL_COLD_BREATH:
         if (spell == SPELL_NO_SPELL)
             spell = SPELL_COLD_BREATH;
     // Intentional fallthrough
 
     // Dragon breath weapons:
-    case MONS_DRAGON:
-    case MONS_HELL_HOUND:
-    case MONS_LINDWURM:
-    case MONS_FIRE_DRAKE:
-    case MONS_XTAHUA:
-    case MONS_FIRE_CRAB:
+    case MABIL_FIRE_BREATH:
         if (spell == SPELL_NO_SPELL)
             spell = SPELL_FIRE_BREATH;
 
@@ -2520,8 +2501,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         }
         break;
 
-    case MONS_MERMAID:
-    case MONS_SIREN:
+    case MABIL_ENTRANCE:
     {
         // Don't behold observer in the arena.
         if (crawl_state.game_is_arena())

@@ -970,6 +970,12 @@ int mons_weight(int mc)
     return (smc->weight);
 }
 
+mons_ability_type mons_ability(int mc)
+{
+    ASSERT(smc);
+    return (smc->mon_ability);
+}
+
 corpse_effect_type mons_corpse_effect(int mc)
 {
     ASSERT(smc);
@@ -2931,24 +2937,19 @@ static bool _ms_ranged_spell(spell_type monspell, bool attack_only = false,
 // affect the target.
 bool mons_has_los_ability(monster_type mon_type)
 {
-    // These eyes only need LOS, as well.  (The other eyes use spells.)
-    if (mon_type == MONS_GIANT_EYEBALL
-        || mon_type == MONS_EYE_OF_DRAINING
-        || mon_type == MONS_GOLDEN_EYE
-        || mon_type == MONS_MOTH_OF_WRATH)
+    switch (mons_ability(mon_type))
     {
-        return (true);
+    case MABIL_INFLICT_DIV_MISCAST:
+    case MABIL_SUMMON_DEMONS:
+    case MABIL_PARALYSIS_GAZE:
+    case MABIL_GOLDEN_EYE:
+    case MABIL_ENTRANCE:
+    case MABIL_INCITE:
+    case MABIL_DRAIN_MP_GAZE:
+        return true;
+    default:
+        return false;
     }
-
-    // Although not using spells, these are exceedingly dangerous.
-    if (mon_type == MONS_SILVER_STATUE || mon_type == MONS_ORANGE_STATUE)
-        return (true);
-
-    // Beholding just needs LOS.
-    if (mons_genus(mon_type) == MONS_MERMAID)
-        return (true);
-
-    return (false);
 }
 
 bool mons_has_los_attack(const monster* mon)
@@ -2987,23 +2988,16 @@ bool mons_has_ranged_spell(const monster* mon, bool attack_only,
 bool mons_has_ranged_ability(const monster* mon)
 {
     // [ds] FIXME: Get rid of special abilities and remove this.
-    switch (mon->type)
+    switch (mons_ability(mon->type))
     {
-    case MONS_ACID_BLOB:
-    case MONS_BURNING_BUSH:
-    case MONS_DRACONIAN:
-    case MONS_DRAGON:
-    case MONS_ICE_DRAGON:
-    case MONS_HELL_HOUND:
-    case MONS_LINDWURM:
-    case MONS_FIRE_DRAKE:
-    case MONS_XTAHUA:
-    case MONS_FIRE_CRAB:
-    case MONS_ELECTRIC_EEL:
-    case MONS_LAVA_SNAKE:
-    case MONS_MANTICORE:
-    case MONS_OKLOB_PLANT:
-    case MONS_OKLOB_SAPLING:
+    case MABIL_SPIT_ACID:
+    case MABIL_THROW_FLAME:
+    case MABIL_DRACONIAN_BREATH:
+    case MABIL_FIRE_BREATH:
+    case MABIL_COLD_BREATH:
+    case MABIL_LIGHTNING_BOLT:
+    case MABIL_SPIT_LAVA:
+    case MABIL_HURL_SPINES:
         return true;
     default:
         return false;

@@ -146,6 +146,7 @@ struct monsterentry
     int8_t AC; // armour class
     int8_t ev; // evasion
     int sec;   // spellbook
+    mons_ability_type  mon_ability;
     corpse_effect_type corpse_thingy;
     zombie_size_type   zombie_size;
     shout_type         shouts;
@@ -221,6 +222,8 @@ std::string resist_margin_phrase(int margin);
 
 int mons_damage(int mc, int rt);
 mon_attack_def mons_attack_spec(const monster* mon, int attk_number);
+
+mons_ability_type mons_ability(int mc);
 
 corpse_effect_type mons_corpse_effect(int mc);
 

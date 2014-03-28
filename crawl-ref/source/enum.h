@@ -1854,6 +1854,41 @@ enum map_marker_type
     MAT_ANY,
 };
 
+// Monster innate abilities.
+enum mons_ability_type
+{
+    MABIL_NONE,
+    MABIL_UGLY_THING_MUTATE,   // [very] ugly things
+    MABIL_SLIME_SPLIT_MERGE,   // Slime creatures
+    MABIL_ORC_BATTLE_CRY,      // Orc knights/warlords/Roka
+    MABIL_HYMN,                // Cherub
+    MABIL_INFLICT_DIV_MISCAST, // Orange crystal statue
+    MABIL_SUMMON_DEMONS,       // Silver statue
+    MABIL_LIGHTNING_DETONATE,  // Ball lightning
+    MABIL_SPIT_LAVA,           // Lava snake
+    MABIL_LIGHTNING_BOLT,      // Electric eel
+    MABIL_SPIT_ACID,           // Oklobs, yellow dracs, acid blobs
+    MABIL_THROW_FLAME,         // Burning bush
+    MABIL_INCITE,              // Moth of wrath
+    MABIL_BERSERK,             // Snorg
+    MABIL_BLINK,               // Various
+    MABIL_TOGGLE_INVIS,        // Sky beast
+    MABIL_ROT,                 // Bog mummy
+    MABIL_WITHDRAW,            // Snails, turtles
+    MABIL_HURL_SPINES,         // Manticore
+    MABIL_DRACONIAN_BREATH,    // White/red draconians, drac ghosts
+                               // Maybe split this nonsense
+    MABIL_FIRE_BREATH,         // Dragons, hell hounds, etc.
+    MABIL_COLD_BREATH,         // Ice dragons
+    MABIL_ENTRANCE,            // Mermaids, sirens
+    MABIL_CHANGE_COLOUR,       // Klowns, spatial vortices
+    MABIL_PARALYSIS_GAZE,      // Giant eyeballs
+    MABIL_GOLDEN_EYE,          // Golden eyeballs - UGH
+                               // They have both confusion gaze and blink
+                               // TODO: make one or both of these a pseudo-spell
+    MABIL_DRAIN_MP_GAZE,       // Eye of draining, ghost moth
+};
+
 enum map_feature
 {
     MF_UNSEEN,
