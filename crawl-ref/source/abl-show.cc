@@ -1701,6 +1701,70 @@ static int _calc_breath_ability_range(ability_type ability)
     return (-2);
 }
 
+static bool _is_edicted_ability(ability_type ability)
+{
+    // There's no need to check for invocations; Zin won't ban his own things,
+    // and you can't have edicts active while following another god.
+    switch (ability)
+    {
+    case ABIL_SPIT_POISON:
+    case ABIL_BREATHE_POISON:
+    case ABIL_BREATHE_MEPHITIC:
+    case ABIL_MAKE_NEEDLE_TRAP:
+        return is_edict_active(EDICT_NO_POISON);
+    case ABIL_BREATHE_FIRE:
+    case ABIL_BREATHE_STICKY_FLAME:
+    case ABIL_DELAYED_FIREBALL:
+    case ABIL_THROW_FLAME:
+    case ABIL_HELLFIRE:
+        return is_edict_active(EDICT_NO_FIRE);
+    case ABIL_MAKE_BURNING_BUSH:
+        return (is_edict_active(EDICT_NO_FIRE) ||
+                is_edict_active(EDICT_NO_SUMMONING));
+    case ABIL_BREATHE_FROST:
+    case ABIL_THROW_FROST:
+        return is_edict_active(EDICT_NO_COLD);
+    case ABIL_TELEPORTATION:
+    case ABIL_BLINK:
+    case ABIL_EVOKE_TELEPORTATION:
+    case ABIL_EVOKE_BLINK:
+    case ABIL_MAKE_TELEPORT:
+    case ABIL_MAKE_TELEPORT_TRAP:
+        return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+    case ABIL_EVOKE_BERSERK:
+    case ABIL_EVOKE_LEVITATE:
+        return is_edict_active(EDICT_NO_ENCHANTMENT);
+    case ABIL_EVOKE_TURN_INVISIBLE:
+        return (is_edict_active(EDICT_NO_ENCHANTMENT) ||
+                is_edict_active(EDICT_NO_INVISIBILITY));
+    case ABIL_MAKE_FUNGUS:
+    case ABIL_MAKE_PLANT:
+    case ABIL_MAKE_OKLOB_SAPLING:
+    case ABIL_MAKE_ICE_STATUE:
+    case ABIL_MAKE_OCS:
+    case ABIL_MAKE_SILVER_STATUE:
+    case ABIL_MAKE_CURSE_SKULL:
+    case ABIL_MAKE_OKLOB_CIRCLE:
+    case ABIL_MAKE_ELECTRIC_EEL:
+    case ABIL_MAKE_GRENADES:
+    case ABIL_MAKE_OKLOB_PLANT:
+        return is_edict_active(EDICT_NO_SUMMONING);
+    case ABIL_MAKE_DART_TRAP:
+    case ABIL_MAKE_ARROW_TRAP:
+    case ABIL_MAKE_BOLT_TRAP:
+    case ABIL_MAKE_NET_TRAP:
+        return is_edict_active(EDICT_NO_PROJECTILES);
+    case ABIL_MAKE_SPEAR_TRAP:
+        return is_edict_active(EDICT_NO_POLEARMS);
+    case ABIL_MAKE_AXE_TRAP:
+        return is_edict_active(EDICT_NO_AXES);
+    case ABIL_MAKE_BLADE_TRAP:
+        return is_edict_active(EDICT_NO_LONG_BLADES);
+    default:
+        return false;
+    }
+}
+
 static bool _do_ability(const ability_def& abil)
 {
     int power;
@@ -1722,6 +1786,18 @@ static bool _do_ability(const ability_def& abil)
     {
         canned_msg(MSG_OK);
         return false;
+    }
+
+    // Also abort if the player refuses to break an edict.
+    // At present, no ability breaks a commandment.
+    bool broke_edict = false;
+    if (_is_edicted_ability(abil.ability))
+    {
+        if (!yesno("Really violate Zin's edict?", false, 'n'))
+        {
+            return false;
+        }
+        broke_edict = true;
     }
 
     // Note: the costs will not be applied until after this switch
@@ -2540,6 +2616,11 @@ static bool _do_ability(const ability_def& abil)
 
     default:
         die("invalid ability");
+    }
+
+    if (broke_edict)
+    {
+        did_god_conduct(DID_VIOLATE_EDICT, 1);
     }
 
     return (true);
