@@ -264,7 +264,8 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
 }
 
 static bool _is_illegal_melee_attack(const skill_type wpn_skill,
-                                     const int damage_brand)
+                                     const int damage_brand,
+                                     const mon_attack_flavour flavour)
 {
     switch(wpn_skill)
     {
@@ -305,7 +306,61 @@ static bool _is_illegal_melee_attack(const skill_type wpn_skill,
             }
             break;
         default:
+            // Unarmed combat.
             break;
+            
+    }
+    switch (flavour)
+    {
+    case AF_BLINK:
+    case AF_DISTORT:
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS))
+        {
+            return true;
+        }
+        break;
+    case AF_COLD:
+        if (is_edict_active(EDICT_NO_COLD))
+        {
+            return true;
+        }
+        break;
+    case AF_FIRE:
+    case AF_NAPALM:
+        if (is_edict_active(EDICT_NO_FIRE))
+        {
+            return true;
+        }
+        break;
+    case AF_POISON:
+    case AF_POISON_NASTY:
+    case AF_POISON_MEDIUM:
+    case AF_POISON_STRONG:
+    case AF_POISON_STR:
+    case AF_POISON_INT:
+    case AF_POISON_DEX:
+    case AF_POISON_STAT:
+        if (is_edict_active(EDICT_NO_POISON))
+        {
+            return true;
+        }
+        break;
+    case AF_RAGE:
+        if (is_edict_active(EDICT_NO_ENCHANTMENT))
+        {
+            return true;
+        }
+    case AF_KLOWN:
+    case AF_CHAOS:
+        if (is_edict_active(EDICT_NO_FIRE) ||
+            is_edict_active(EDICT_NO_COLD) ||
+            is_edict_active(EDICT_NO_POISON) ||
+            is_edict_active(EDICT_NO_TRANSLOCATIONS))
+        {
+            return true;
+        }
+    default:
+        break;
     }
     switch (damage_brand)
     {
@@ -640,7 +695,20 @@ bool melee_attack::attack()
             }
         }
     }
-    if (_is_illegal_melee_attack(wpn_skill, damage_brand))
+
+    // This ugly check here is necessary because some monsters have multiple
+    // attacks with different attack types.  We need to check all of them.
+    bool is_illegal = false;
+    for (int i = 0; i < 4; i++)
+    {
+        if (_is_illegal_melee_attack(wpn_skill, damage_brand,
+            attacker->atype() == ACT_PLAYER ? AF_PLAIN :
+            mons_attack_spec(attacker->as_monster(), i).flavour))
+        {
+            is_illegal = true;
+        }
+    }
+    if (is_illegal)
     {
         if (attacker->atype() == ACT_PLAYER)
         {
