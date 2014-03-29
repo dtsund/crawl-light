@@ -143,7 +143,7 @@ Temporarily imprison a monster surrounded by empty space in walls of silver. The
 %%%%
 Issue Edict
 
-Declare a law to be followed by all intelligent beings, including yourself.  Some opponents, particularly powerful ones, may choose to flout this law, but will suffer retribution from Zin for doing so.  Up to three edicts may be active at once.  Unintelligent beings will not suffer direct consequences for violating an edict, but Zin may interfere with their attempts to do so.
+Declare a law to be followed by all intelligent beings, including yourself. Some opponents, particularly powerful ones, may choose to flout such laws, but will suffer retribution from Zin for doing so. Unintelligent beasts will not suffer direct consequences for violating an edict, but Zin will weaken their attempts to do so to serve as an example for those more enlightened. Up to three edicts may be active at once.
 
 Zin's laws are strict; using an ability or item that might violate an edict is considered every bit as bad as a direct violation.
 %%%%
