@@ -1431,14 +1431,6 @@ mon_attack_def mons_attack_spec(const monster* mon, int attk_number)
         attk.type = static_cast<mon_attack_type>(random_range(AT_HIT,
                                                               AT_GORE));
 
-    if (attk.flavour == AF_KLOWN)
-    {
-        mon_attack_flavour flavours[] =
-            {AF_POISON_NASTY, AF_ROT, AF_DRAIN_XP, AF_FIRE, AF_COLD, AF_BLINK};
-
-        attk.flavour = RANDOM_ELEMENT(flavours);
-    }
-
     if (attk.flavour == AF_POISON_STAT)
     {
         mon_attack_flavour flavours[] =

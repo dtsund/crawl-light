@@ -3188,6 +3188,13 @@ mon_attack_flavour melee_attack::random_chaos_attack_flavour()
     return (RANDOM_ELEMENT(flavours));
 }
 
+static mon_attack_flavour _random_klown_attack_flavour()
+{
+    mon_attack_flavour flavours[] =
+        {AF_POISON_NASTY, AF_ROT, AF_DRAIN_XP, AF_FIRE, AF_COLD, AF_BLINK};
+    return (RANDOM_ELEMENT(flavours));
+}
+
 bool melee_attack::apply_damage_brand()
 {
     bool ret = false;
@@ -4955,6 +4962,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
     mon_attack_flavour flavour = attk.flavour;
     if (flavour == AF_CHAOS)
         flavour = random_chaos_attack_flavour();
+    if (flavour == AF_KLOWN)
+        flavour = _random_klown_attack_flavour();
 
     switch (flavour)
     {
