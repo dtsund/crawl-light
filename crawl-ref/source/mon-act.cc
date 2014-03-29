@@ -902,6 +902,7 @@ static bool _handle_scroll(monster* mons)
 
     switch (scroll_type)
     {
+    case SCR_TELEPORTATION:
         if (!mons->has_ench(ENCH_TP))
         {
             if (mons->caught() || mons_is_fleeing(mons)
