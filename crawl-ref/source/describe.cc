@@ -4020,8 +4020,6 @@ const char* _name_commandment(commandment_type commandment)
         return "No Spellcasting";
     case COMMANDMENT_NO_MOVEMENT:
         return "No Movement";
-    case COMMANDMENT_NO_TORMENT:
-        return "No Torment";
     default:
         return "No Bugs";
     }

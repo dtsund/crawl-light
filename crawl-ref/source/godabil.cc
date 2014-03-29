@@ -1405,8 +1405,6 @@ const char* _describe_commandment(commandment_type commandment)
         return "Commandment forbidding spellcasting";
     case COMMANDMENT_NO_MOVEMENT:
         return "Commandment forbidding movement";
-    case COMMANDMENT_NO_TORMENT:
-        return "Commandment forbidding torment";
     default:
         return "Commandment forbidding bugginess";
     }
