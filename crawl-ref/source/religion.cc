@@ -3984,47 +3984,54 @@ void zin_punish_monster(monster* mons)
     //351+: Major status ailment
     if(punishment_product < 200)
     {
-        simple_monster_message(mons, " is smitten by the wrath of Zin.");
+        simple_monster_message(mons, " is smitten by the wrath of Zin.",
+                               MSGCH_GOD, GOD_ZIN);
         // Based on code in cast_smiting() and recite_to_single_monster().
         mons->hurt(&you, 7 + (random2(punishment_product) / 15));
     }
     else if(punishment_product < 276)
     {
-        simple_monster_message(mons, " is blasted by the fury of Zin!");
+        simple_monster_message(mons, " is blasted by the fury of Zin!",
+                               MSGCH_GOD, GOD_ZIN);
         // This will hurt a lot, may need to be toned down
         mons->hurt(&you, 7 + (bestroll(punishment_product, 2) / 15));
     }
     else if(punishment_product < 351)
     {
-        //Possible effects: antimagic (small), confusion (brief), bleed, daze (brief),
-        //mad (brief), saltify (serious HD check), slow (brief)
+        //Possible effects: antimagic (small), confusion (brief), bleed,
+        //daze (brief), mad (brief), saltify (serious HD check), slow (brief)
         if(one_chance_in(7))
         {
-            simple_monster_message(mons, " is drained of magical energy by Zin!");
+            simple_monster_message(mons, " is drained of magical energy by "
+                                   "Zin!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 1, &you, 
                            bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(6))
         {
-            simple_monster_message(mons, " is bewildered by Zin's retribution!");
+            simple_monster_message(mons, " is bewildered by Zin's "
+                                   "retribution!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_CONFUSION, 1, &you, 
                            bestroll(4, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(5))
         {
-            simple_monster_message(mons, " bleeds from the eyes and ears!");
+            simple_monster_message(mons, " bleeds from the eyes and ears!", 
+                                   MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_BLEED, 1, &you, 
                            10 + random2(5) * BASELINE_DELAY));
         }
         else if(one_chance_in(4))
         {
-            simple_monster_message(mons, " is dazed by Zin's retribution!");
+            simple_monster_message(mons, " is dazed by Zin's retribution!",
+                                   MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_DAZED, 1, &you, 
                            bestroll(3, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(3))
         {
-            simple_monster_message(mons, " is driven mad by Zin's retribution!");
+            simple_monster_message(mons, " is driven mad by Zin's retribution!",
+                                   MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_MAD, 1, &you, 
                            bestroll(3, 2) * BASELINE_DELAY));
         }
@@ -4037,19 +4044,22 @@ void zin_punish_monster(monster* mons)
                                         || one_chance_in(mons->hit_dice - 9)))
             {
                 simple_monster_message(mons, " is turned into a pillar "
-                                       "of salt by the wrath of Zin!");
+                                       "of salt by the wrath of Zin!",
+                                       MSGCH_GOD, GOD_ZIN);
                 zin_saltify(mons);
             }
             else
             {
-                simple_monster_message(mons, " is blasted terribly by Zin!");
+                simple_monster_message(mons, " is blasted terribly by Zin!",
+                                       MSGCH_GOD, GOD_ZIN);
                 //Ouch.
                 mons->hurt(&you, 30 + random2(30));
             }
         }
         else
         {
-            simple_monster_message(mons, " falters and slows in the face of Zin's rage.");
+            simple_monster_message(mons, " falters and slows in the face of "
+                                   "Zin's rage.", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you, 
                            bestroll(4, 2) * BASELINE_DELAY));
         }
@@ -4061,7 +4071,8 @@ void zin_punish_monster(monster* mons)
         //slow (lengthy)
         if(one_chance_in(7))
         {
-            simple_monster_message(mons, " is frozen in place by Zin!");
+            simple_monster_message(mons, " is frozen in place by Zin!",
+                                   MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_PARALYSIS, 2, &you, 
                            bestroll(4, 2) * BASELINE_DELAY));
         }
@@ -4073,44 +4084,51 @@ void zin_punish_monster(monster* mons)
             if(mons->hit_dice <= 10 || one_chance_in(mons->hit_dice - 9))
             {
                 simple_monster_message(mons, " is turned into a pillar "
-                                       "of salt by the wrath of Zin!");
+                                       "of salt by the wrath of Zin!",
+                                       MSGCH_GOD, GOD_ZIN);
                 zin_saltify(mons);
             }
             else
             {
-                simple_monster_message(mons, " writhes under the force of Zin's wrath!");
+                simple_monster_message(mons, " writhes under the force of Zin's"
+                                       " wrath!", MSGCH_GOD, GOD_ZIN);
                 //Very ouch.
                 mons->hurt(&you, 70 + random2(50));
             }
         }
         else if(one_chance_in(5))
         {
-            simple_monster_message(mons, "'s magic is powerless in the face of Zin's fury!");
+            simple_monster_message(mons, "'s magic is powerless in the face of "
+                                   "Zin's fury!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_ANTIMAGIC, 3, &you, 
                            bestroll(20, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(4))
         {
-            simple_monster_message(mons, " is driven hopelessly mad by Zin's retribution!");
+            simple_monster_message(mons, " is driven hopelessly mad by Zin's "
+                                   "retribution!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_MAD, 2, &you, 
                            bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(3))
         {
-            simple_monster_message(mons, " is hopelessly dazed by Zin's retribution!");
+            simple_monster_message(mons, " is hopelessly dazed by Zin's "
+                                   "retribution!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_DAZED, 2, &you, 
                            bestroll(8, 2) * BASELINE_DELAY));
         }
         else if(one_chance_in(2))
         {
             //This may not seem like many turns, but Bleed 3 hurts a *lot*.
-            simple_monster_message(mons, " hemmorhages from the eyes and ears!");
+            simple_monster_message(mons, " hemmorhages from the eyes and ears!",
+                                   MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_BLEED, 3, &you, 
                            3 + random2(2) * BASELINE_DELAY));
         }
         else
         {
-            simple_monster_message(mons, " is slowed dramatically by Zin's wrath!");
+            simple_monster_message(mons, " is slowed dramatically by Zin's "
+                                   "wrath!", MSGCH_GOD, GOD_ZIN);
             mons->add_ench(mon_enchant(ENCH_SLOW, 2, &you,
                            bestroll(12, 2) * BASELINE_DELAY));
         }
