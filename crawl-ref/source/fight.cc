@@ -266,58 +266,74 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
 static bool _is_illegal_melee_attack(const skill_type wpn_skill,
                                      const int damage_brand)
 {
-	switch(wpn_skill)
-	{
-		case SK_SHORT_BLADES:
-			return is_edict_active(EDICT_NO_SHORT_BLADES);
-			break;
-		case SK_LONG_BLADES:
-			return is_edict_active(EDICT_NO_LONG_BLADES);
-			break;
-		case SK_AXES:
-			return is_edict_active(EDICT_NO_AXES);
-			break;
-		case SK_MACES_FLAILS:
-			return is_edict_active(EDICT_NO_MACES_FLAILS);
-			break;
-		case SK_POLEARMS:
-			return is_edict_active(EDICT_NO_POLEARMS);
-			break;
-		case SK_STAVES:
-			return is_edict_active(EDICT_NO_STAVES);
-			break;
-		default:
-			// WHOOPS CAN'T FORGET BRANDED WEAPONS
-			switch (damage_brand)
-			{
-				case SPWPN_FLAMING:
-				case SPWPN_FLAME:
-					return is_edict_active(EDICT_NO_FIRE);
-					break;
-				case SPWPN_FREEZING:
-				case SPWPN_FROST:
-					return is_edict_active(EDICT_NO_COLD);
-					break;
-				case SPWPN_VENOM:
-					return is_edict_active(EDICT_NO_POISON);
-					break;
-				case SPWPN_DISTORTION:  // returning is fine
-					return is_edict_active(EDICT_NO_TRANSLOCATIONS);
-					break;
-				case SPWPN_CHAOS:
-					// too many damn cases for this
-					return (is_edict_active(EDICT_NO_FIRE) ||
-							is_edict_active(EDICT_NO_COLD) ||
-							is_edict_active(EDICT_NO_POISON) ||
-							is_edict_active(EDICT_NO_TRANSLOCATIONS) ||
-							is_edict_active(EDICT_NO_SUMMONING));
-					break;
-				default:
-					return false;
-					break;
-			}
-			break;
-	}
+    switch(wpn_skill)
+    {
+        case SK_SHORT_BLADES:
+            if (is_edict_active(EDICT_NO_SHORT_BLADES))
+            {
+                return true;
+            }
+            break;
+        case SK_LONG_BLADES:
+            if (is_edict_active(EDICT_NO_LONG_BLADES))
+            {
+                return true;
+            }
+            break;
+        case SK_AXES:
+            if (is_edict_active(EDICT_NO_AXES))
+            {
+                return true;
+            }
+            break;
+        case SK_MACES_FLAILS:
+            if (is_edict_active(EDICT_NO_MACES_FLAILS))
+            {
+                return true;
+            }
+            break;
+        case SK_POLEARMS:
+            if (is_edict_active(EDICT_NO_POLEARMS))
+            {
+                return true;
+            }
+            break;
+        case SK_STAVES:
+            if (is_edict_active(EDICT_NO_STAVES))
+            {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    switch (damage_brand)
+    {
+    case SPWPN_FLAMING:
+    case SPWPN_FLAME:
+        return is_edict_active(EDICT_NO_FIRE);
+        break;
+    case SPWPN_FREEZING:
+    case SPWPN_FROST:
+        return is_edict_active(EDICT_NO_COLD);
+        break;
+    case SPWPN_VENOM:
+        return is_edict_active(EDICT_NO_POISON);
+        break;
+    case SPWPN_DISTORTION:  // returning is fine
+        return is_edict_active(EDICT_NO_TRANSLOCATIONS);
+        break;
+    case SPWPN_CHAOS:
+        // too many damn cases for this
+        return (is_edict_active(EDICT_NO_FIRE) ||
+                is_edict_active(EDICT_NO_COLD) ||
+                is_edict_active(EDICT_NO_POISON) ||
+                is_edict_active(EDICT_NO_TRANSLOCATIONS) ||
+                is_edict_active(EDICT_NO_SUMMONING));
+        break;
+    default:
+        return false;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -582,11 +598,11 @@ bool melee_attack::attack()
         }
     }
 
-	if (attacker->atype() == ACT_PLAYER && you.duration[DUR_ATROPHY] > 0) {
-		mpr("Your arms are too weak to strike!");
-		cancel_attack = true;
-		return (false);
-	}
+    if (attacker->atype() == ACT_PLAYER && you.duration[DUR_ATROPHY] > 0) {
+        mpr("Your arms are too weak to strike!");
+        cancel_attack = true;
+        return (false);
+    }
 
     if (attacker != defender)
     {
