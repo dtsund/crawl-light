@@ -3722,6 +3722,7 @@ edict_type spell_violates_edict(spell_type spell)
         case SPELL_BLINK_CLOSE:
         case SPELL_BLINK_RANGE:
         case SPELL_BLINK_AWAY:
+        case SPELL_BLINK:
         case SPELL_MALIGN_GATEWAY:
             return EDICT_NO_TRANSLOCATIONS;
         default:
