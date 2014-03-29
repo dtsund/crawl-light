@@ -3613,6 +3613,7 @@ int get_expiration_threshold(duration_type dur)
     case DUR_DEATH_CHANNEL:
     case DUR_SEE_INVISIBLE:
     case DUR_ISSUING_COMMANDMENT:
+    case DUR_TOXIC_SHIELD:
         return (6 * BASELINE_DELAY);
 
     case DUR_LEVITATION:

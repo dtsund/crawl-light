@@ -22,5 +22,6 @@ int cast_selective_amnesia(std::string *pre_msg = NULL);
 void cast_see_invisible(int pow);
 void cast_silence(int pow);
 void cast_liquefaction(int pow);
+void cast_toxic_shield(int pow);
 
 #endif

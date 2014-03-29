@@ -332,3 +332,9 @@ void cast_liquefaction(int pow)
     you.increase_duration(DUR_LIQUEFYING, 10 + random2avg(pow, 2), 100);
     invalidate_agrid(true);
 }
+
+void cast_toxic_shield(int pow)
+{
+    you.increase_duration(DUR_TOXIC_SHIELD, 20 + random2(pow), 100,
+                          "Your skin turns a faint green.");
+}

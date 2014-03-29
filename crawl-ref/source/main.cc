@@ -2797,6 +2797,10 @@ static void _decrement_durations()
     int num_spawns = ((old_duration - 1) / 10) - ((you.duration[DUR_SPAWNING_ILLUSIONS] - 1) / 10);
     for (int i = 0; i < num_spawns; i++)
         create_player_illusions();
+
+    _decrement_a_duration(DUR_TOXIC_SHIELD, delay,
+                          "Your skin returns to its normal hue.",
+                          0, "Your toxic shield starts to wane...");
 }
 
 static void _check_banished()

@@ -136,6 +136,7 @@ spider_form SPIDER_FORM
 sting STING
 venom_bolt VENOM_BOLT
 illude ILLUDE
+toxic_shield TOXIC_SHIELD
 
 %sdir gui/spells/summoning
 abjuration ABJURATION

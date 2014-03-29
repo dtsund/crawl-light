@@ -151,6 +151,9 @@ static duration_def duration_data[] =
 	  RED, "Atrophy", "atrophied", "Your arms are unnaturally weak."},
 	{ DUR_ISSUING_COMMANDMENT, true,
 	  LIGHTBLUE, "Command", "commandment", "You are issuing a commandment." },
+	{ DUR_TOXIC_SHIELD, true,
+	  LIGHTBLUE, "ToxShld", "toxic shield",
+	  "You are shielded from poisoned foes" },
 };
 
 static int duration_index[NUM_DURATIONS];

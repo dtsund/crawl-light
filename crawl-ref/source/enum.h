@@ -1413,6 +1413,7 @@ enum duration_type
 //  DUR_BLIND,                  // sight goes away
     DUR_ATROPHY,                // lyle is a weakling and cannot wield melee cubes
     DUR_ISSUING_COMMANDMENT,    // Using the Issue Commandment invocation
+    DUR_TOXIC_SHIELD,
     NUM_DURATIONS
 };
 
@@ -3274,6 +3275,7 @@ enum spell_type
     SPELL_ILLUDE,
     SPELL_MASS_HASTE,
     SPELL_RANDOM_STATUS,
+    SPELL_TOXIC_SHIELD,
 
     NUM_SPELLS
 };

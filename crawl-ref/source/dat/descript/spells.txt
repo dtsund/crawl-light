@@ -604,6 +604,10 @@ The spell's effectiveness is greatly diminished in closed areas. Maintaining the
 
 As a side effect, this spell may be used to cross lava, but beware of its short duration.
 %%%%
+Toxic Shield
+
+This spell grants the caster a degree of protection against melee attacks made by poisoned enemies, reducing their damage and accuracy.
+%%%%
 Tukima's Dance
 
 This spell causes a weapon held in the caster's hand to dance into the air and strike the caster's enemies. It will not function on certain wilful artefacts; any abilities that require evocation skill won't be used either.

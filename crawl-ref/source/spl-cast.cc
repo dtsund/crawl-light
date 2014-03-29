@@ -2047,6 +2047,10 @@ static spret_type _do_cast(spell_type spell, int powc,
         cast_illude(powc);
         break;
 
+    case SPELL_TOXIC_SHIELD:
+        cast_toxic_shield(powc);
+        break;
+
     default:
         return (SPRET_NONE);
     }

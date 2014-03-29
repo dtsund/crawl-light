@@ -4297,6 +4297,7 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_POISON_ARROW:             return TILEG_POISON_ARROW;
     case SPELL_POISONOUS_CLOUD:          return TILEG_POISONOUS_CLOUD;
     case SPELL_ILLUDE:                   return TILEG_ILLUDE;
+    case SPELL_TOXIC_SHIELD:             return TILEG_TOXIC_SHIELD;
 
     // Enchantment
     case SPELL_CONFUSING_TOUCH:          return TILEG_CONFUSING_TOUCH;

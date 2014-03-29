@@ -4517,7 +4517,15 @@ int melee_attack::mons_calc_damage(const mon_attack_def &attk)
 
 int melee_attack::mons_apply_defender_ac(int damage, int damage_max)
 {
-    const int ac = defender->armour_class();
+    int ac = defender->armour_class();
+    // Increase defender's effective AC if attacker is poisoned and attacking
+    // a player with Toxic Shield.
+    mon_enchant ench = attacker->as_monster()->get_ench(ENCH_POISON);
+    if (ench.ench != ENCH_NONE && defender->atype() == ACT_PLAYER &&
+        you.duration[DUR_TOXIC_SHIELD])
+    {
+        ac += 4 * ench.degree;
+    }
     if (ac > 0)
     {
         int damage_reduction = random2(ac + 1);
@@ -5943,6 +5951,14 @@ int melee_attack::mons_to_hit()
 
     if (attacker->confused())
         mhit -= 5;
+
+    // Reduce accuracy if poisoned and attacking someone with Toxic Shield.
+    mon_enchant ench = attacker->as_monster()->get_ench(ENCH_POISON);
+    if (ench.ench != ENCH_NONE && defender->atype() == ACT_PLAYER &&
+        you.duration[DUR_TOXIC_SHIELD])
+    {
+        mhit -= 2 * ench.degree;
+    }
 
     // Invisible defender is hard to hit if you can't see invis. Note
     // that this applies only to monsters vs monster and monster vs
