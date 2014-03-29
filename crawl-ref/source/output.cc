@@ -665,11 +665,6 @@ static void _get_status_lights(std::vector<status_light>& out)
         snprintf(static_pos_buf, sizeof(static_pos_buf),
                  "%2d,%2d", you.pos().x, you.pos().y);
         out.push_back(status_light(LIGHTGREY, static_pos_buf));
-
-        static char static_hunger_buf[80];
-        snprintf(static_hunger_buf, sizeof(static_hunger_buf),
-                 "(%d:%d)", you.hunger - you.old_hunger, you.hunger);
-        out.push_back(status_light(LIGHTGREY, static_hunger_buf));
     }
 #endif
 

@@ -3173,12 +3173,6 @@ static command_type _get_next_cmd()
     check_messages();
 #endif
 
-#ifdef DEBUG_DIAGNOSTICS
-    // Save hunger at start of round for use with hunger "delta-meter"
-    // in output.cc.
-    you.old_hunger = you.hunger;
-#endif
-
 #ifdef DEBUG_ITEM_SCAN
     debug_item_scan();
 #endif
