@@ -226,7 +226,7 @@ static bool _set_allied_target(monster* caster, bolt & pbolt)
 }
 
 bolt mons_spells(monster* mons, spell_type spell_cast, int power,
-                  bool check_validity)
+                  bool check_validity, bool rebuke)
 {
     ASSERT(power > 0);
 
@@ -954,6 +954,14 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
         }
     }
 
+    // If Zin's rebuking a monster for casting a forbidden spell, lower its
+    // power.
+    if (rebuke)
+    {
+        beam.damage.size = (beam.damage.size * 2) / 3;
+        beam.ench_power = (beam.ench_power * 2) / 3;
+    }
+
     return (beam);
 }
 
@@ -974,7 +982,7 @@ static bool _los_free_spell(spell_type spell_cast)
 
 // Set up bolt structure for monster spell casting.
 bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
-                     bool check_validity)
+                     bool check_validity, bool rebuke)
 {
     // always set these -- used by things other than fire_beam()
 
@@ -1097,7 +1105,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     default:
         if (check_validity)
         {
-            bolt beam = mons_spells(mons, spell_cast, 1, true);
+            bolt beam = mons_spells(mons, spell_cast, 1, true, rebuke);
             return (beam.flavour != NUM_BEAMS);
         }
         break;
@@ -1106,7 +1114,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     // Need to correct this for power of spellcaster
     int power = 12 * mons->hit_dice;
 
-    bolt theBeam         = mons_spells(mons, spell_cast, power);
+    bolt theBeam         = mons_spells(mons, spell_cast, power, false, rebuke);
 
     // [ds] remind me again why we're doing this piecemeal copying?
     pbolt.origin_spell   = theBeam.origin_spell;
@@ -1705,6 +1713,8 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
 
         bool was_drac_breath = false;
 
+        const int drac_type = (mons_genus(mons->type) == MONS_DRACONIAN)
+                                ? draco_subspecies(mons) : mons->type;
         // If there's otherwise no ranged attack use the breath weapon.
         // The breath weapon is also occasionally used.
         if (draco_breath != SPELL_NO_SPELL
@@ -1724,6 +1734,17 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
         if (spell_cast == SPELL_NO_SPELL || spell_cast == SPELL_MELEE)
             return (false);
 
+        //If an unintelligent monster casts an edicted spell, Zin intervenes
+        //and weakens or nullifies it.
+        bool zin_rebuke = false;
+        if(mons_intel(mons) < I_NORMAL && 
+           (spell_violates_edict(spell_cast) || 
+            spell_cast == SPELL_DRACONIAN_BREATH && 
+            spell_violates_edict(_draco_type_to_breath(drac_type))))
+        {
+            zin_rebuke = true;
+        }
+
         // Friendly monsters don't use polymorph other, for fear of harming
         // the player.
         if (spell_cast == SPELL_POLYMORPH_OTHER && mons->friendly())
@@ -1739,8 +1760,8 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
         // and it also wipes the name for beamless spells, allowing this check to
         // actually work.  Sometimes, beem still has a residual name from the
         // spell selection process.
-        
-        setup_mons_cast(mons, beem, spell_cast);
+
+        setup_mons_cast(mons, beem, spell_cast, false, zin_rebuke);
         
         if(!strcmp("", beem.name.c_str()) && sidestep_attempt)
         {
@@ -1808,7 +1829,17 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
         }
 
         // FINALLY! determine primary spell effects {dlb}:
-        if (spell_cast == SPELL_BLINK || spell_cast == SPELL_CONTROLLED_BLINK)
+        if ((spell_cast == SPELL_BLINK || spell_cast == SPELL_CONTROLLED_BLINK ||
+            spell_cast == SPELL_BLINK_RANGE ||
+            spell_cast == SPELL_BLINK_RANGE ||
+            spell_cast == SPELL_BLINK_RANGE) && zin_rebuke)
+        {
+            simple_monster_message(mons, " is gently rebuked by Zin for"
+                                   " its attempted translocation.",
+                                   MSGCH_GOD, GOD_ZIN);
+            mons->lose_energy(EUT_SPELL);
+        }
+        else if (spell_cast == SPELL_BLINK || spell_cast == SPELL_CONTROLLED_BLINK)
         {
             // Why only cast blink if nearby? {dlb}
             if (monsterNearby)
@@ -1841,16 +1872,24 @@ bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt)
             if (spell_needs_foe(spell_cast))
                 make_mons_stop_fleeing(mons);
 
-            mons_cast(mons, beem, spell_cast);
+            mons_cast(mons, beem, spell_cast, true, false, zin_rebuke);
+            if (zin_rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin for"
+                                       " its transgression.",
+                                       MSGCH_GOD, GOD_ZIN);
+            }
             //Print whether the player sidestepped, if appropriate.
-            if(spell_needs_tracer(spell_cast) && sidestep_attempt && !beem.hits_player)
+            if(spell_needs_tracer(spell_cast) && sidestep_attempt &&
+               !beem.hits_player)
+            {
                 mprf("You sidestep the %s!", beem.name.c_str());
+            }
             mons->lose_energy(EUT_SPELL);
         }
 
-        const int drac_type = (mons_genus(mons->type) == MONS_DRACONIAN)
-                                ? draco_subspecies(mons) : mons->type;
-        //If the monster is intelligent and just cast a forbidden spell, punish it!
+        //If the monster is intelligent and just cast a forbidden spell, punish
+        //it!
         if(mons_intel(mons) >= I_NORMAL && 
            (spell_violates_edict(spell_cast) || 
             spell_cast == SPELL_DRACONIAN_BREATH && 
@@ -2570,11 +2609,11 @@ static void _clone_monster(monster* mons, monster_type clone_type,
 }
 
 void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
-               bool do_noise, bool special_ability)
+               bool do_noise, bool special_ability, bool rebuke)
 {
     // Always do setup.  It might be done already, but it doesn't hurt
     // to do it again (cheap).
-    setup_mons_cast(mons, pbolt, spell_cast);
+    setup_mons_cast(mons, pbolt, spell_cast, false, rebuke);
 
     // single calculation permissible {dlb}
     bool monsterNearby = mons_near(mons);

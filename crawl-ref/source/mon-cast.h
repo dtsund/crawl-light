@@ -17,13 +17,14 @@ bool is_valid_mon_spell(spell_type spell);
 bool handle_mon_spell(monster* mons, bolt &beem, bool sidestep_attempt);
 
 bolt mons_spells(monster* mons, spell_type spell_cast, int power,
-                 bool check_validity = false);
+                 bool check_validity = false, bool rebuke = false);
 void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
-               bool do_noise = true, bool special_ability = false);
+               bool do_noise = true, bool special_ability = false,
+               bool rebuke = false);
 void mons_cast_noise(monster* mons, const bolt &pbolt,
                      spell_type spell_cast, bool special_ability = false);
 bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
-                     bool check_validity = false);
+                     bool check_validity = false, bool rebuke = false);
 
 void mons_cast_haunt(monster* mons);
 void mons_cast_mislead(monster* mons);

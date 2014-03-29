@@ -668,7 +668,7 @@ bool melee_attack::attack()
     }
     // Check attack edicts/commandments here.
     bool broke_edict = false;
-    bool rebuked = false;
+    bool rebuke = false;
     if (is_commandment_active(COMMANDMENT_NO_FIGHTING))
     {
         if (attacker->atype() == ACT_PLAYER)
@@ -722,7 +722,7 @@ bool melee_attack::attack()
         }
         else
         {
-            // Monsters make an HD check
+            // Monsters make an HD check if intelligent, always try if not.
             if (!attacker->as_monster()->should_break_edict())
             {
                 mprf("%s thinks better of attacking.",
@@ -733,6 +733,10 @@ bool melee_attack::attack()
             else if (mons_intel(attacker->as_monster()) >= I_NORMAL)
             {
                 broke_edict = true;
+            }
+            else
+            {
+                rebuke = true;
             }
         }
     }
@@ -824,8 +828,8 @@ bool melee_attack::attack()
     // Trying to stay general beyond this point is a recipe for insanity.
     // Maybe when Stone Soup hits 1.0... :-)
     bool retval = ((attacker->atype() == ACT_PLAYER) ? player_attack() :
-                   (defender->atype() == ACT_PLAYER) ? mons_attack_you()
-                                                     : mons_attack_mons());
+                   (defender->atype() == ACT_PLAYER) ? mons_attack_you(rebuke)
+                                                     : mons_attack_mons(rebuke));
     identify_mimic(defender);
 
     if (env.sanctuary_time > 0 && retval && !cancel_attack
@@ -4275,7 +4279,7 @@ int melee_attack::player_calc_base_weapon_damage()
 
 ///////////////////////////////////////////////////////////////////////////
 
-bool melee_attack::mons_attack_mons()
+bool melee_attack::mons_attack_mons(bool rebuke)
 {
     const coord_def atk_pos = attacker->pos();
     const coord_def def_pos = defender->pos();
@@ -4314,7 +4318,7 @@ bool melee_attack::mons_attack_mons()
         }
     }
 
-    mons_perform_attack();
+    mons_perform_attack(rebuke);
 
     // If a hydra was attacking it may have switched targets and started
     // hitting the player. -cao
@@ -4955,11 +4959,19 @@ static void _steal_item_from_player(monster* mon)
     dec_inv_item_quantity(steal_what, new_item.quantity);
 }
 
-void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
+void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk,
+                                             bool rebuke)
 {
     // Most of this is from BWR 4.1.2.
 
     mon_attack_flavour flavour = attk.flavour;
+    // Check if the attack flavour is to be rebuked.
+    if (rebuke && _is_illegal_melee_attack(SK_NONE, SPWPN_NORMAL, flavour))
+    {
+        flavour = AF_PLAIN;
+        mprf(MSGCH_GOD, "%s is gently rebuked by Zin.", 
+             atk_name(DESC_CAP_THE).c_str());
+    }
     if (flavour == AF_CHAOS)
         flavour = random_chaos_attack_flavour();
     if (flavour == AF_KLOWN)
@@ -5415,7 +5427,7 @@ bool melee_attack::do_trample()
     return false;
 }
 
-void melee_attack::mons_perform_attack_rounds()
+void melee_attack::mons_perform_attack_rounds(bool rebuke)
 {
     const int nrounds = attacker->as_monster()->has_hydra_multi_attack() ?
         attacker->as_monster()->number : 4;
@@ -5756,7 +5768,7 @@ void melee_attack::mons_perform_attack_rounds()
             // The message sequences look too weird.  Also, stealing
             // attacks aren't handled until after the damage msg.
             if (attacker != defender && attk.flavour != AF_STEAL)
-                mons_apply_attack_flavour(attk);
+                mons_apply_attack_flavour(attk, rebuke);
 
             if (needs_message && !special_damage_message.empty())
                 mprf("%s", special_damage_message.c_str());
@@ -5840,7 +5852,7 @@ void melee_attack::mons_perform_attack_rounds()
                 break;
 
             if (attk.flavour == AF_STEAL)
-                mons_apply_attack_flavour(attk);
+                mons_apply_attack_flavour(attk, rebuke);
         }
     }
 
@@ -5866,7 +5878,7 @@ void melee_attack::mons_perform_attack_rounds()
     }
 }
 
-bool melee_attack::mons_perform_attack()
+bool melee_attack::mons_perform_attack(bool rebuke)
 {
     if (attacker != defender && mons_self_destructs())
         return (did_hit = perceived_attack = true);
@@ -5880,7 +5892,7 @@ bool melee_attack::mons_perform_attack()
         return (false);
     }
 
-    mons_perform_attack_rounds();
+    mons_perform_attack_rounds(rebuke);
 
     return (did_hit);
 }
@@ -5902,9 +5914,9 @@ void melee_attack::mons_check_attack_perceived()
     }
 }
 
-bool melee_attack::mons_attack_you()
+bool melee_attack::mons_attack_you(bool rebuke)
 {
-    mons_perform_attack();
+    mons_perform_attack(rebuke);
     mons_check_attack_perceived();
     return (did_hit);
 }

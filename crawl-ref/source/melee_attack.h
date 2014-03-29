@@ -154,18 +154,18 @@ private:
 
 private:
     // Monster-attack specific stuff
-    bool mons_attack_you();
-    bool mons_attack_mons();
+    bool mons_attack_you(bool rebuke);
+    bool mons_attack_mons(bool rebuke);
     int  mons_to_hit();
     bool mons_self_destructs();
     bool mons_attack_warded_off();
     int mons_attk_delay();
     int mons_calc_damage(const mon_attack_def &attk);
     bool do_trample();
-    void mons_apply_attack_flavour(const mon_attack_def &attk);
+    void mons_apply_attack_flavour(const mon_attack_def &attk, bool rebuke);
     int mons_apply_defender_ac(int damage, int damage_max);
-    bool mons_perform_attack();
-    void mons_perform_attack_rounds();
+    bool mons_perform_attack(bool rebuke);
+    void mons_perform_attack_rounds(bool rebuke);
     void mons_check_attack_perceived();
     std::string mons_attack_verb(const mon_attack_def &attk);
     std::string mons_attack_desc(const mon_attack_def &attk);

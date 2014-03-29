@@ -1044,7 +1044,7 @@ static bool _make_monster_angry(const monster* mon, monster* targ)
     return (true);
 }
 
-static bool _moth_incite_monsters(const monster* mon)
+static bool _moth_incite_monsters(const monster* mon, bool rebuked)
 {
     if (is_sanctuary(you.pos()) || is_sanctuary(mon->pos()))
         return false;
@@ -1071,9 +1071,9 @@ static bool _moth_incite_monsters(const monster* mon)
 }
 
 static inline void _mons_cast_abil(monster* mons, bolt &pbolt,
-                                   spell_type spell_cast)
+                                   spell_type spell_cast, bool rebuke)
 {
-    mons_cast(mons, pbolt, spell_cast, true, true);
+    mons_cast(mons, pbolt, spell_cast, true, true, rebuke);
 }
 
 static void _establish_connection(int tentacle,
@@ -2181,6 +2181,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
     }
 
     bool broke_edict = false;
+    bool rebuke = false;
     if (is_edicted_ability(mons, ability))
     {
         if (!mons->should_break_edict())
@@ -2190,6 +2191,10 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         else if (mons_intel(mons) >= I_NORMAL)
         {
             broke_edict = true;
+        }
+        else
+        {
+            rebuke = true;
         }
     }
 
@@ -2287,7 +2292,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         beem.name        = "glob of lava";
         beem.aux_source  = "glob of lava";
         beem.range       = 6;
-        beem.damage      = dice_def(3, 10);
+        beem.damage      = rebuke ? dice_def(3, 6) : dice_def(3, 10);
         beem.hit         = 20;
         beem.colour      = RED;
         beem.glyph       = dchar_glyph(DCHAR_FIRED_ZAP);
@@ -2303,6 +2308,12 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         {
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons, " spits lava!");
+            if (rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin for"
+                                       " its transgression.",
+                                       MSGCH_GOD, GOD_ZIN);
+            }
             beem.fire();
             if(sidestep_attempt && !beem.hits_player)
                 mpr("You sidestep!");
@@ -2324,7 +2335,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         beem.name        = "bolt of electricity";
         beem.aux_source  = "bolt of electricity";
         beem.range       = 8;
-        beem.damage      = dice_def(3, 6);
+        beem.damage      = rebuke ? dice_def(3, 4) : dice_def(3, 6);
         beem.hit         = 35;
         beem.colour      = LIGHTCYAN;
         beem.glyph       = dchar_glyph(DCHAR_FIRED_ZAP);
@@ -2342,6 +2353,12 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons,
                                    " shoots out a bolt of electricity!");
+            if (rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin for"
+                                       " its transgression.",
+                                       MSGCH_GOD, GOD_ZIN);
+            }
             beem.fire();
             if(sidestep_attempt && !beem.hits_player)
                 mpr("You sidestep!");
@@ -2376,7 +2393,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             if (mons_should_fire(beem))
             {
                 make_mons_stop_fleeing(mons);
-                _mons_cast_abil(mons, beem, spell);
+                _mons_cast_abil(mons, beem, spell, rebuke);
+                if (rebuke)
+                {
+                    simple_monster_message(mons, " is gently rebuked by Zin for"
+                                           " its transgression.",
+                                           MSGCH_GOD, GOD_ZIN);
+                }
                 used = true;
             }
         }
@@ -2403,7 +2426,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             if (mons_should_fire(beem))
             {
                 make_mons_stop_fleeing(mons);
-                _mons_cast_abil(mons, beem, spell);
+                _mons_cast_abil(mons, beem, spell, rebuke);
+                if (rebuke)
+                {
+                    simple_monster_message(mons, " is gently rebuked by Zin for"
+                                           " its transgression.",
+                                           MSGCH_GOD, GOD_ZIN);
+                }
                 used = true;
             }
         }
@@ -2412,7 +2441,12 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
 
     case MABIL_INCITE:
         if (one_chance_in(3))
-            used = _moth_incite_monsters(mons);
+            used = _moth_incite_monsters(mons, rebuke);
+            if (rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin.",
+                                       MSGCH_GOD, GOD_ZIN);
+            }
         break;
 
     case MABIL_BERSERK:
@@ -2423,6 +2457,14 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             || mons->foe == MHITYOU && mons->friendly())
         {
             break;
+        }
+
+        // 3/4 chance of preventing berserk in unintelligent foes if an
+        // appropriate edict is active.
+        if (rebuke && !one_chance_in(4))
+        {
+            simple_monster_message(mons, "'s rage is prevented by Zin.",
+                                   MSGCH_GOD, GOD_ZIN);
         }
 
         // There's a 5% chance of Snorg spontaneously going berserk that
@@ -2444,7 +2486,18 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
     case MABIL_BLINK:
     case MABIL_GOLDEN_EYE:
         if (one_chance_in(7) || mons->caught() && one_chance_in(3))
-            used = monster_blink(mons);
+        {
+            if (rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin.",
+                                       MSGCH_GOD, GOD_ZIN);
+                used = true;
+            }
+            else
+            {
+                used = monster_blink(mons);
+            }
+        }
         break;
 
     case MABIL_TOGGLE_INVIS:
@@ -2517,7 +2570,7 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
         beem.aux_source  = "volley of spikes";
         beem.range       = 6;
         beem.hit         = 14;
-        beem.damage      = dice_def(2, 10);
+        beem.damage      = rebuke ? dice_def(2, 6) : dice_def(2, 10);
         beem.beam_source = mons->mindex();
         beem.glyph       = dchar_glyph(DCHAR_FIRED_MISSILE);
         beem.colour      = LIGHTGREY;
@@ -2534,6 +2587,12 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons, " flicks its tail!");
             beem.fire();
+            if (rebuke)
+            {
+                simple_monster_message(mons, " is gently rebuked by Zin "
+                                       "for its transgression.",
+                                       MSGCH_GOD, GOD_ZIN);
+            }
             if(sidestep_attempt && !beem.hits_player)
                 mpr("You sidestep!");
             used = true;
@@ -2586,7 +2645,13 @@ bool mon_special_ability(monster* mons, bolt & beem, bool sidestep_attempt)
             if (mons_should_fire(beem))
             {
                 make_mons_stop_fleeing(mons);
-                _mons_cast_abil(mons, beem, spell);
+                _mons_cast_abil(mons, beem, spell, rebuke);
+                if (rebuke)
+                {
+                    simple_monster_message(mons, " is gently rebuked by Zin "
+                                           "for its transgression.",
+                                           MSGCH_GOD, GOD_ZIN);
+                }
                 used = true;
             }
         }
