@@ -269,46 +269,45 @@ static bool _is_illegal_melee_attack(const skill_type wpn_skill,
 {
     switch(wpn_skill)
     {
-        case SK_SHORT_BLADES:
-            if (is_edict_active(EDICT_NO_SHORT_BLADES))
-            {
-                return true;
-            }
-            break;
-        case SK_LONG_BLADES:
-            if (is_edict_active(EDICT_NO_LONG_BLADES))
-            {
-                return true;
-            }
-            break;
-        case SK_AXES:
-            if (is_edict_active(EDICT_NO_AXES))
-            {
-                return true;
-            }
-            break;
-        case SK_MACES_FLAILS:
-            if (is_edict_active(EDICT_NO_MACES_FLAILS))
-            {
-                return true;
-            }
-            break;
-        case SK_POLEARMS:
-            if (is_edict_active(EDICT_NO_POLEARMS))
-            {
-                return true;
-            }
-            break;
-        case SK_STAVES:
-            if (is_edict_active(EDICT_NO_STAVES))
-            {
-                return true;
-            }
-            break;
-        default:
-            // Unarmed combat.
-            break;
-            
+    case SK_SHORT_BLADES:
+        if (is_edict_active(EDICT_NO_SHORT_BLADES))
+        {
+            return true;
+        }
+        break;
+    case SK_LONG_BLADES:
+        if (is_edict_active(EDICT_NO_LONG_BLADES))
+        {
+            return true;
+        }
+        break;
+    case SK_AXES:
+        if (is_edict_active(EDICT_NO_AXES))
+        {
+            return true;
+        }
+        break;
+    case SK_MACES_FLAILS:
+        if (is_edict_active(EDICT_NO_MACES_FLAILS))
+        {
+            return true;
+        }
+        break;
+    case SK_POLEARMS:
+        if (is_edict_active(EDICT_NO_POLEARMS))
+        {
+            return true;
+        }
+        break;
+    case SK_STAVES:
+        if (is_edict_active(EDICT_NO_STAVES))
+        {
+            return true;
+        }
+        break;
+    default:
+        // Unarmed combat.
+        break;
     }
     switch (flavour)
     {
