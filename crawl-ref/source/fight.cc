@@ -263,7 +263,8 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
     return (unchivalric);
 }
 
-bool is_illegal_melee_attack(const skill_type wpn_skill, const int damage_brand)
+static bool _is_illegal_melee_attack(const skill_type wpn_skill,
+                                     const int damage_brand)
 {
 	switch(wpn_skill)
 	{
@@ -596,6 +597,7 @@ bool melee_attack::attack()
     }
     // Check attack edicts/commandments here.
     bool broke_edict = false;
+    bool rebuked = false;
     if (is_commandment_active(COMMANDMENT_NO_FIGHTING))
     {
         if (attacker->atype() == ACT_PLAYER)
@@ -622,7 +624,7 @@ bool melee_attack::attack()
             }
         }
     }
-    if (is_illegal_melee_attack(wpn_skill, damage_brand))
+    if (_is_illegal_melee_attack(wpn_skill, damage_brand))
     {
         if (attacker->atype() == ACT_PLAYER)
         {
