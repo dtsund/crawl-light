@@ -1489,12 +1489,12 @@ bool zin_issue_edict()
     case EDICT_NO_LONG_BLADES:
         // Source: Kalir
         mpr("\"On the festival of Saint Arctus, the sword is not to be used "
-            "even in defense; better to kneel before Zin and ask His "
+            "even in defense; better to kneel before Zin and beg "
             "forgiveness at your life's end.\"");
         break;
     case EDICT_NO_AXES:
         mpr("\"When the last tree fell, Zin's wrath came upon those who had "
-            "defiled His sacred grove; their flesh was scarred, and their axes "
+            "defiled the sacred grove; their flesh was scarred, and their axes "
             "twisted and dulled.\"");
         break;
     case EDICT_NO_MACES_FLAILS:
@@ -1532,9 +1532,9 @@ bool zin_issue_edict()
             "afraid.\"");
         break;
     case EDICT_NO_COLD:
-        mpr("\"All those who follow Zin will feel His blessings.  No darkness "
-            "may assail those with the light of Zin; no bitter cold may assail "
-            "those with His warmth.\"");
+        mpr("\"All those who follow Zin will feel Zin's blessings.  No darkness"
+            " may assail those with the light of Zin; no bitter cold may assail"
+            " those with Zin's warmth.\"");
         break;
     case EDICT_NO_INVISIBILITY:
         // Source: Kalir
