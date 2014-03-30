@@ -3833,7 +3833,6 @@ item_info get_item_info(const item_def& item)
             ii.props["rod_enchantment"] = item.props["rod_enchantment"];
         ii.plus = item.plus;
         ii.plus2 = item.plus2;
-        ii.sub_type = item_is_rod(item) ? STAFF_FIRST_ROD : 0;
         ii.special = item.special; // appearance
         break;
     case OBJ_MISCELLANY:
