@@ -1629,9 +1629,25 @@ bool zin_issue_commandment()
 
     //Activate the chosen commandment.
     you.commandment = chosen_commandment;
+
+    switch (chosen_commandment)
+    {
+    case COMMANDMENT_NO_FIGHTING:
+        simple_god_message(" declares all melee combat to be forbidden!");
+        break;
+    case COMMANDMENT_NO_SPELLCASTING:
+        simple_god_message(" declares all spellcasting to be forbidden!");
+        break;
+    case COMMANDMENT_NO_MOVEMENT:
+        simple_god_message(" declares all locomotion to be forbidden!");
+        break;
+    default:
+        simple_god_message(" demands that all bugs be fixed!");
+        break;
+    }
+
     //TODO: Make this something other than 20 turns, possibly
     //dependent on Invocations skill.
-    //Also TODO: Flavor message.
     you.set_duration(DUR_ISSUING_COMMANDMENT, 20);
 
     return true;
