@@ -312,9 +312,9 @@ static const ability_def Ability_List[] =
     { ABIL_ZIN_SANCTUARY, "Sanctuary", 7, 0, 0, 15, ABFLAG_NONE },
     { ABIL_ZIN_CURE_ALL_MUTATIONS, "Cure All Mutations",
       0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_ZIN_ISSUE_EDICT, "Issue Edict", 0, 0, 0, 6, ABFLAG_NONE },
+    { ABIL_ZIN_ISSUE_EDICT, "Issue Edict", 0, 0, 0, 15, ABFLAG_NONE },
     { ABIL_ZIN_ABSOLUTION, "Absolution", 0, 0, 0, 6, ABFLAG_NONE },
-    { ABIL_ZIN_ISSUE_COMMANDMENT, "Issue Commandment", 12, 0, 0, 10, ABFLAG_NONE },
+    { ABIL_ZIN_ISSUE_COMMANDMENT, "Issue Commandment", 12, 0, 0, 15, ABFLAG_NONE },
 
     // The Shining One
     { ABIL_TSO_DIVINE_SHIELD, "Divine Shield", 3, 0, 1, 2, ABFLAG_NONE },
