@@ -9,7 +9,7 @@
 # fall-back in case a keyword can't be found
 Xom general effect
 
-Xom snickers.
+Pinkie Pie giggles.
 
 "How about this?"
 
@@ -23,19 +23,19 @@ w:1
 ##############################
 Xom general gift
 
-Xom grants you a gift!
+Pinkie Pie grants you a gift!
 
 "Here."
 
-Xom's generous nature manifests itself.
+Pinkie Pie's generous nature manifests itself.
 
-Xom grants you an implement of some kind.
+Pinkie Pie grants you an implement of some kind.
 
 "Take this instrument of something!"
 
 "Take this token of my esteem."
 
-Xom smiles on you.
+Pinkie Pie smiles on you.
 %%%%
 # Xom will give you a ring or amulet you can't currently use, due to
 # cursed equipment.
@@ -97,7 +97,7 @@ Xom single summon
 
 "Serve the toy, my child!"
 
-Xom opens a gate.
+Pinkie Pie opens a gate.
 %%%%
 Xom single holy summon
 
@@ -105,87 +105,87 @@ Xom single holy summon
 
 "Serve the toy, my child of exile!"
 
-Xom calls in a curious servant of another god.
+Pinkie Pie calls in a curious servant of another god.
 
-Xom lures something onto this plane.
+Pinkie Pie lures something onto this plane.
 
 "A toy for the toy!"
 
 "I wonder which toy lasts longer."
 
-Xom opens a gate.
+Pinkie Pie opens a gate.
 %%%%
 # higher demonic being
 Xom single major demon summon
 
-Xom grants you a demonic assistant.
+Pinkie Pie grants you a demonic assistant.
 
-Xom grants you a demonic servitor.
+Pinkie Pie grants you a demonic servitor.
 
-Xom opens a gate.
+Pinkie Pie opens a gate.
 %%%%
 Xom single major holy summon
 
-Xom grants you an assistant from another god.
+Pinkie Pie grants you an assistant from another god.
 
-Xom beguiles another god's servant into helping you.
+Pinkie Pie beguiles another god's servant into helping you.
 
 "Where'd that come from? Oh, well."
 
-You wonder where Xom got that toy from.
+You wonder where Pinkie Pie got that toy from.
 
-Xom seems to have successfully tricked another god.
+Pinkie Pie seems to have successfully tricked another god.
 
-Xom opens a gate.
+Pinkie Pie opens a gate.
 %%%%
 # several demons
 Xom multiple summons
 
 "Serve the mortal, my children!"
 
-Xom grants you some temporary aid.
+Pinkie Pie grants you some temporary aid.
 
-Xom momentarily opens a gate.
+Pinkie Pie momentarily opens a gate.
 %%%%
 # holy beings and demons at the same time
 Xom multiple mixed summons
 
-Xom calls in some mixed company.
+Pinkie Pie calls in some mixed company.
 
 "Serve the toy, my motley children!"
 
-Xom sends help from the ranks of the outcast.
+Pinkie Pie sends help from the ranks of the outcast.
 
 "Oh, what a happy playground."
 
-Xom manages to trick several beings into existence.
+Pinkie Pie manages to trick several beings into existence.
 
-Xom snickers at the variety.
+Pinkie Pie giggles at the variety.
 
-Xom momentarily opens several gates.
+Pinkie Pie momentarily opens several gates.
 %%%%
 Xom multiple holy summons
 
-Xom stirs up dislodged servants of other gods.
+Pinkie Pie stirs up dislodged servants of other gods.
 
-Xom summons wayward servants of other gods.
+Pinkie Pie summons wayward servants of other gods.
 
-Xom tricks other gods for their servants.
+Pinkie Pie tricks other gods for their servants.
 
 "Different god, different toy."
 
-Xom momentarily opens a gate.
+Pinkie Pie momentarily opens a gate.
 %%%%
 # changing the scenery
 Xom scenery
 
-Xom briefly touches your surroundings.
+Pinkie Pie briefly touches your surroundings.
 
-Xom adds some personal touches to your environment.
+Pinkie Pie adds some personal touches to your environment.
 
-Xom complains about the scenery.
+Pinkie Pie complains about the scenery.
 
-Xom alters the dungeon around you.
+Pinkie Pie alters the dungeon around you.
 
 "There, this looks better."
 
@@ -197,24 +197,24 @@ Xom alters the dungeon around you.
 # miscast strength 0, mostly harmless
 Xom zero miscast effect
 
-Xom almost notices you.
+Pinkie Pie almost notices you.
 
-Xom's attention almost turns to you for a moment.
+Pinkie Pie's attention almost turns to you for a moment.
 
-Xom's power almost touches on you for a moment.
+Pinkie Pie's power almost touches on you for a moment.
 
-You almost hear Xom's maniacal laughter.
+You almost hear Pinkie Pie's maniacal laughter.
 %%%%
 # miscast strength random2(2), harmless/annoying
 Xom minor miscast effect
 
-Xom notices you.
+Pinkie Pie notices you.
 
-Xom's attention turns to you for a moment.
+Pinkie Pie's attention turns to you for a moment.
 
-Xom's power touches on you for a moment.
+Pinkie Pie's power touches on you for a moment.
 
-You hear Xom's maniacal laughter.
+You hear Pinkie Pie's maniacal laughter.
 %%%%
 # miscast strength random2(3), mostly annoying
 Xom medium miscast effect
@@ -226,11 +226,11 @@ Xom major miscast effect
 
 "Try this."
 
-Xom's attention turns to you.
+Pinkie Pie's attention turns to you.
 
-Xom's power touches on you.
+Pinkie Pie's power touches on you.
 
-Xom giggles.
+Pinkie Pie giggles.
 
 w:1
 "Running a series of toy crash tests now."
@@ -239,15 +239,15 @@ Xom lose stats
 
 "Suffer!"
 
-Xom's malign attention turns to you for a moment.
+Pinkie Pie's malign attention turns to you for a moment.
 
-Xom's power touches on you for a moment.
+Pinkie Pie's power touches on you for a moment.
 
-You hear Xom's maniacal laughter.
+You hear Pinkie Pie's maniacal laughter.
 %%%%
 Xom rearrange the pieces
 
-Xom decides to rearrange the pieces.
+Pinkie Pie decides to rearrange the pieces.
 
 "First here, now there."
 
@@ -265,15 +265,15 @@ Xom teleportation journey
 
 "Where it stops, nobody knows!"
 
-Xom twists space around you.
+Pinkie Pie twists space around you.
 %%%%
 Xom confusion
 
 "Heh heh heh..."
 
-Xom's power touches on your mind for a moment.
+Pinkie Pie's power touches on your mind for a moment.
 
-Xom titters.
+Pinkie Pie titters.
 %%%%
 # 25% chance of draining, else torment
 Xom draining or torment
@@ -282,9 +282,9 @@ Xom draining or torment
 
 "You have grown too confident for your meagre worth."
 
-Xom's power touches on you for a moment.
+Pinkie Pie's power touches on you for a moment.
 
-You hear Xom's maniacal laughter.
+You hear Pinkie Pie's maniacal laughter.
 %%%%
 # 25% chance dancing weapon, else summon hostile monster
 Xom hostile monster
@@ -295,7 +295,7 @@ Xom hostile monster
 
 "Let's see if it's strong enough to survive yet."
 
-You hear Xom's maniacal laughter.
+You hear Pinkie Pie's maniacal laughter.
 %%%%
 Xom animate monster weapon
 
@@ -305,9 +305,9 @@ Xom banishment
 
 "You have grown too comfortable in your little world, mortal!"
 
-Xom casts you into the Abyss!
+Pinkie Pie casts you into the Abyss!
 
-The world seems to spin as Xom's maniacal laughter rings in your ears.
+The world seems to spin as Pinkie Pie's maniacal laughter rings in your ears.
 %%%%
 Xom revert banishment
 
@@ -318,16 +318,16 @@ w:30
 
 "No, I've changed my mind."
 
-Xom pulls you back into the comparable quietude of the dungeon.
+Pinkie Pie pulls you back into the comparable quietude of the dungeon.
 %%%%
 # Xom upgrades a nearby hostile monster's weapon to a chaos brand
 Xom chaos upgrade
 
-Xom's power touches on a nearby weapon.
+Pinkie Pie's power touches on a nearby weapon.
 
 "Have a taste of chaos, mortal."
 
-Xom chortles.
+Pinkie Pie chortles.
 %%%%
 #####################
 # other effects
@@ -338,18 +338,18 @@ Xom potion effect
 
 "Go forth and cause havoc, mortal!"
 
-Xom grants you a minor favour.
+Pinkie Pie grants you a minor favour.
 
-Xom smiles on you.
+Pinkie Pie smiles on you.
 %%%%
 # cast a random spell
 Xom spell effect
 
-Xom's power flows through you!
+Pinkie Pie's power flows through you!
 
-Xom plays with reality for a moment.
+Pinkie Pie plays with reality for a moment.
 
-Xom guffaws.
+Pinkie Pie guffaws.
 %%%%
 # multicoloured smoke trail
 Xom colour smoke trail
@@ -367,7 +367,7 @@ Everything around seems to assume a strange transparency.
 
 The walls suddenly lose part of their structure.
 
-Xom alters the dungeon around you.
+Pinkie Pie alters the dungeon around you.
 %%%%
 # strengthens friendlies, weakens hostiles
 Xom good monster polymorph
@@ -376,9 +376,9 @@ Xom good monster polymorph
 
 "Hum-dee-hum-dee-hum..."
 
-Xom's power touches on a nearby monster.
+Pinkie Pie's power touches on a nearby monster.
 
-You hear Xom's avuncular chuckle.
+You hear Pinkie Pie's amused chuckle.
 %%%%
 # weakens friendlies, strengthens hostiles
 Xom bad monster polymorph
@@ -391,9 +391,9 @@ Xom good mutations
 
 "Let me alter your pitiful body."
 
-Xom's power touches on you for a moment.
+Pinkie Pie's power touches on you for a moment.
 
-You hear Xom's maniacal cackling.
+You hear Pinkie Pie's maniacal cackling.
 %%%%
 Xom random mutations
 
@@ -401,19 +401,19 @@ Xom random mutations
 
 "Let me alter your body."
 
-Xom's power brushes against you for a moment.
+Pinkie Pie's power brushes against you for a moment.
 
-You hear Xom's avuncular chuckle.
+You hear Pinkie Pie's avuncular chuckle.
 %%%%
 Xom snakes to sticks
 
-Xom transforms those around you.
+Pinkie Pie transforms those around you.
 
 "I like them better like this."
 
 "Never liked these squiggly things."
 
-Xom touches your surroundings.
+Pinkie Pie touches your surroundings.
 
 @Xom good monster polymorph@
 %%%%
@@ -429,25 +429,25 @@ Xom resurrection
 
 "Let me repair your body."
 
-Xom tricks Death into leaving you alone.
+Pinkie Pie tricks Death into leaving you alone.
 
-Xom's maniacal laughter scares Death away.
+Pinkie Pie's maniacal laughter scares Death away.
 
-Xom's power revives you.
+Pinkie Pie's power revives you.
 
-Xom brings you back to life.
+Pinkie Pie brings you back to life.
 
-Xom smiles on you.
+Pinkie Pie smiles on you.
 %%%%
 Xom repel stairs
 
-Xom changes the scenery.
+Pinkie Pie changes the scenery.
 
-Xom pokes at a nearby @staircase@.
+Pinkie Pie pokes at a nearby @staircase@.
 
 "Tag, you're it!"
 
-Xom alters the dungeon around you.
+Pinkie Pie alters the dungeon around you.
 %%%%
 Xom life saving general
 
@@ -459,7 +459,7 @@ Xom life saving general
 
 "Not here, not now."
 
-Xom is feeling generous.
+Pinkie Pie is feeling generous.
 %%%%
 Xom life saving actor
 
@@ -476,7 +476,7 @@ w:20
 %%%%
 Xom boring death
 
-Xom yawns loudly!
+Pinkie Pie yawns loudly!
 
 "Boring in life, boring in death..."
 
@@ -490,31 +490,29 @@ Xom yawns loudly!
 # (Currently only used post-game in response to "You die...")
 Xom laughter
 
-Xom guffaws!
+Pinkie Pie guffaws!
 
-Xom roars with laughter!
+Pinkie Pie roars with laughter!
 
-Xom thinks this is hilarious!
+Pinkie Pie thinks this is hilarious!
 
-Xom is highly amused!
+Pinkie Pie is highly amused!
 
-Xom cackles wildly!
+Pinkie Pie cackles wildly!
 
-Xom snickers!
+Pinkie Pie laughs nastily!
 
-Xom laughs nastily!
+Pinkie Pie howls with laughter!
 
-Xom howls with laughter!
+Pinkie Pie bursts into laughter!
 
-Xom bursts into laughter!
+Pinkie Pie giggles madly!
 
-Xom giggles madly!
+Pinkie Pie titters!
 
-Xom titters!
+Pinkie Pie chuckles heartily!
 
-Xom chuckles heartily!
-
-Xom chortles!
+Pinkie Pie chortles!
 %%%%
 ############################################
 # Beogh rants on destroying an orcish idol #
@@ -791,11 +789,11 @@ recite_closure
 ##########################
 Xom prayer
 
-Xom slaps you with a @_trout_species_@ trout!
+Pinkie Pie slaps you with a @_trout_species_@ trout!
 
-Xom toots happily.
+Pinkie Pie toots happily.
 
-Xom says: I'm watching you, my @_xom_child_@ child.
+Pinkie Pie says: I'm watching you, my @_xom_child_@ child.
 
 You hear crickets chirping.
 
@@ -803,7 +801,7 @@ w:1
 You feel someone pinching you. As you turn, you see no one.
 
 w:1
-Xom says: Amen!
+Pinkie Pie says: Amen!
 %%%%
 _trout_species_
 
@@ -962,7 +960,7 @@ Vehumet says: Let it end in hellfire!
 %%%%
 Xom bored
 
-Xom yawns.
+Pinkie Pie yawns.
 
 "I wonder what else is on..."
 
@@ -970,13 +968,13 @@ Xom yawns.
 %%%%
 Xom newgame
 
-Xom says: A new plaything!
+Pinkie Pie says: A new plaything!
 %%%%
 Xom generic
 
-Xom snickers.
+Pinkie Pie giggles.
 
-Xom titters.
+Pinkie Pie titters.
 %%%%
 Yredelemnul penance
 
