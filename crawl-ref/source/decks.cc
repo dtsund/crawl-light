@@ -2913,11 +2913,11 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
         {
             // Being a self-centered deity, Xom *always* finds this
             // maximally hilarious.
-            god_speaks(GOD_XOM, "Pinkie Pie roars with laughter!");
+            god_speaks(GOD_XOM, "Pinkie Pie exclaims \"Hey, look!  A picture of me!\"");
             you.gift_timeout = 200;
         }
         else if (you.penance[GOD_XOM])
-            god_speaks(GOD_XOM, "Pinkie Pie laughs nastily.");
+            god_speaks(GOD_XOM, "Pinkie Pie giggles forebodingly.");
     }
 
     switch (which_card)
