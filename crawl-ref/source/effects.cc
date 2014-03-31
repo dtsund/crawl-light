@@ -2189,7 +2189,20 @@ void handle_time()
         place_transiting_monsters(you.time_taken);
         check_relatively_safe(false);
     }
-    
+
+    // Every 20 turns, a variety of other effects.
+    if (! (_div(base_time, 200) > _div(old_time, 200)))
+        return;
+
+    int time_delta = 200;
+
+    // Update all of the corpses, food chunks, and potions of blood on
+    // the floor.
+    update_corpses(time_delta);
+
+    if (crawl_state.game_is_arena())
+        return;
+
     const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC);
     // Every 10 turns, decrement glow if the player isn't under glow-causing
     // effects.
@@ -2210,19 +2223,6 @@ void handle_time()
         if(you.zin_anger < 0)
             you.zin_anger = 0;
     }
-
-    // Every 20 turns, a variety of other effects.
-    if (! (_div(base_time, 200) > _div(old_time, 200)))
-        return;
-
-    int time_delta = 200;
-
-    // Update all of the corpses, food chunks, and potions of blood on
-    // the floor.
-    update_corpses(time_delta);
-
-    if (crawl_state.game_is_arena())
-        return;
 
     // Nasty things happen to people who spend too long in Hell.
     if (player_in_hell() && coinflip())
