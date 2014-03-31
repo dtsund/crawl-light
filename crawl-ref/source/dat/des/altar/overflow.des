@@ -847,9 +847,9 @@ ENDMAP
 
 ### Xom overflow altars #######################################################
 
-NAME:   tgw_xom
+NAME:   tgw_pinkie_pie
 DEPTH:  !D:1
-TAGS:   no_item_gen no_monster gen temple_overflow_xom uniq_altar_xom
+TAGS:   no_item_gen no_monster gen temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 KFEAT:  _ = altar_xom
 MONS:   orc; club ego:chaos / orc; dagger ego:chaos / orc; spear ego:chaos
 MONS:   gnoll; club ego:chaos / gnoll; dagger ego:chaos / gnoll; spear ego:chaos
@@ -874,8 +874,8 @@ xx'.............'xx
    xxxxxxxxxxxxx
 ENDMAP
 
-NAME:    xom_teletrap_fun
-TAGS:    temple_overflow_xom uniq_altar_xom
+NAME:    pinkie_pie_teletrap_fun
+TAGS:    temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 KFEAT:   _ = altar_xom
 NSUBST:  T = . / T
 KFEAT:   T = teleport trap
@@ -887,9 +887,9 @@ MAP
 .....
 ENDMAP
 
-NAME:    xom_obstacle_run
+NAME:    pinkie_pie_obstacle_run
 DEPTH:   !D:1
-TAGS:    temple_overflow_xom uniq_altar_xom
+TAGS:    temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 KFEAT:   _ = altar_xom
 SHUFFLE: ABCDEFG
 KFEAT:   A = net trap
@@ -906,8 +906,8 @@ xxxxxxxxxxx
 xxxxxxxxxxx
 ENDMAP
 
-NAME:    xom_butterflies
-TAGS:    temple_overflow_xom
+NAME:    pinkie_pie_butterflies
+TAGS:    temple_overflow_pinkie_pie
 KFEAT:   _ = altar_xom
 KITEM:   _ = wand of random effects w:40 / any wand
 COLOUR:  . = random
@@ -919,8 +919,8 @@ MAP
 ...
 ENDMAP
 
-NAME:    xom_shifter_show
-TAGS:    temple_overflow_xom uniq_altar_xom
+NAME:    pinkie_pie_shifter_show
+TAGS:    temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 DEPTH:   D:4-13
 KFEAT:   _ = altar_xom
 FTILE:   ._ = floor_pebble
@@ -940,8 +940,8 @@ MAP
  xxxxxxx
 ENDMAP
 
-NAME:    xom_confusion_cloud
-TAGS:    temple_overflow_xom uniq_altar_xom
+NAME:    pinkie_pie_confusion_cloud
+TAGS:    temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 KFEAT:   _ = altar_xom
 MARKER:  _ = lua:fog_machine { cloud_type = "noxious fumes", \
                pow_min = 6, pow_max = 8, delay_min = 35, delay_max = 55, \
@@ -959,8 +959,8 @@ MAP
   wwwww
 ENDMAP
 
-NAME:    xom_redecorated
-TAGS:    temple_overflow_xom uniq_altar_xom
+NAME:    pinkie_pie_redecorated
+TAGS:    temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 SUBST:   x = ccbbbv
 NSUBST:  . = 2:T / .
 SUBST:   . = lWwtma_~......
@@ -988,8 +988,8 @@ ENDMAP
 #           faulty with identification being possible without having the item in
 #           your inventory).
 #
-NAME:   xom_gifts_altar
-TAGS:   temple_overflow_xom uniq_altar_xom
+NAME:   pinkie_pie_gifts_altar
+TAGS:   temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 CHANCE: 3
 KFEAT:  _ = altar_xom
 KPROP:  _ = bloody
@@ -1006,8 +1006,8 @@ XX,o.o,XX
  XXX@XXX
 ENDMAP
 
-NAME:    xom_monty_hall
-TAGS:    no_item_gen no_monster_gen temple_overflow_xom uniq_altar_xom
+NAME:    pinkie_pie_monty_hall
+TAGS:    no_item_gen no_monster_gen temple_overflow_pinkie_pie uniq_altar_pinkie_pie
 DEPTH:   D:2-5
 WEIGHT:  1
 SHUFFLE: DE,FG
