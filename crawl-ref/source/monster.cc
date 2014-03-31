@@ -1982,7 +1982,8 @@ bool monster::pickup_item(item_def &item, int near, bool force)
                 // distract them.)
                 // Exception: They will pick up new weapons if their current
                 // weapons are edicted.
-                if (itype == OBJ_WEAPONS && 
+                if (itype == OBJ_WEAPONS &&
+                    mslot_item(static_cast<mon_inv_type>(MSLOT_WEAPON)) &&
                     is_edicted_item(
                         *mslot_item(static_cast<mon_inv_type>(MSLOT_WEAPON))))
                 {
