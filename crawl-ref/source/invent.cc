@@ -1239,7 +1239,7 @@ unsigned char invent_select(const char *title,
                              Menu::selitem_tfn selitemfn,
                              const std::vector<SelItem> *pre_select)
 {
-    InvMenu menu(flags);
+    InvMenu menu(flags | MF_ALLOW_FORMATTING);
 
     menu.set_preselect(pre_select);
     menu.set_title_annotator(titlefn);
