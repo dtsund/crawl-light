@@ -443,7 +443,7 @@ deck of punishment
 
 A deck of magical cards which wreak havoc on the user.
 
-It may contain the following cards: Wrath, the Wraith, the Curse, Xom, Famine, Wild Magic, the Portal, the Tomb, Damnation, the Minefield.
+It may contain the following cards: Wrath, the Wraith, the Curse, Pinkie Pie, Famine, Wild Magic, the Portal, the Tomb, Damnation, the Minefield.
 %%%%
 deck of summonings
 

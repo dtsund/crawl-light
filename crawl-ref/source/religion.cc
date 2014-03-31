@@ -2297,7 +2297,7 @@ std::string god_name(god_type which_god, bool long_name)
     }
     case GOD_FEDHAS:        return "Fedhas";
     case GOD_CHEIBRIADOS: return "Cheibriados";
-    case GOD_XOM: return "Xom";
+    case GOD_XOM: return "Pinkie Pie";
     case NUM_GODS: return "Buggy";
     }
     return ("");

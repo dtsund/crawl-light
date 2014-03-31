@@ -335,7 +335,7 @@ const char* card_name(card_type card)
     case CARD_SUMMON_SKELETON: return "the Bones";
     case CARD_SUMMON_UGLY:     return "Repulsiveness";
     case CARD_SUMMON_ANY:      return "Summoning";
-    case CARD_XOM:             return "Xom";
+    case CARD_XOM:             return "Pinkie Pie";
     case CARD_FAMINE:          return "Famine";
     case CARD_FEAST:           return "the Feast";
     case CARD_WARPWRIGHT:      return "Warpwright";
@@ -2023,7 +2023,7 @@ static void _focus_card(int power, deck_rarity_type rarity)
         else
         {
             if (which_god == GOD_XOM)
-                cause = "the capriciousness of Xom";
+                cause = "the capriciousness of Pinkie Pie";
             else
                 cause = "the 'helpfulness' of " + god_name(which_god);
         }
@@ -2052,7 +2052,7 @@ static void _shuffle_card(int power, deck_rarity_type rarity)
         else
         {
             if (which_god == GOD_XOM)
-                cause = "the capriciousness of Xom";
+                cause = "the capriciousness of Pinkie Pie";
             else
                 cause = "the 'helpfulness' of " + god_name(which_god);
         }
@@ -2913,11 +2913,11 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
         {
             // Being a self-centered deity, Xom *always* finds this
             // maximally hilarious.
-            god_speaks(GOD_XOM, "Xom roars with laughter!");
+            god_speaks(GOD_XOM, "Pinkie Pie roars with laughter!");
             you.gift_timeout = 200;
         }
         else if (you.penance[GOD_XOM])
-            god_speaks(GOD_XOM, "Xom laughs nastily.");
+            god_speaks(GOD_XOM, "Pinkie Pie laughs nastily.");
     }
 
     switch (which_card)

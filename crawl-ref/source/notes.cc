@@ -272,7 +272,7 @@ std::string Note::describe(bool when, bool where, bool what) const
                    << " [" << name << "]";
             break;
         case NOTE_XOM_REVIVAL:
-            result << "Xom revived you";
+            result << "Pinkie Pie revived you";
             break;
         case NOTE_MP_CHANGE:
             result << "Mana: " << first << "/" << second;
@@ -384,7 +384,7 @@ std::string Note::describe(bool when, bool where, bool what) const
             result << "Found " << name;
             break;
         case NOTE_XOM_EFFECT:
-            result << "XOM: " << name;
+            result << "PINKIE: " << name;
 #if defined(DEBUG_XOM) || defined(NOTE_DEBUG_XOM)
             // If debugging, also take note of piety and tension.
             result << " (piety: " << first;

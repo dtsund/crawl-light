@@ -3171,7 +3171,7 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_ALTAR_YREDELEMNUL:
         return ("basalt altar of Yredelemnul");
     case DNGN_ALTAR_XOM:
-        return ("shimmering altar of Xom");
+        return ("shimmering altar of Pinkie Pie");
     case DNGN_ALTAR_VEHUMET:
         return ("radiant altar of Vehumet");
     case DNGN_ALTAR_OKAWARU:

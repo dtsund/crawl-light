@@ -287,7 +287,7 @@ int torment_player(int pow, int caster)
 
         case TORMENT_XOM:
             type = KILLED_BY_XOM;
-            aux = "Xom's torment";
+            aux = "Pinkie Pie's torment";
             break;
 
         case TORMENT_KIKUBAAQUDGHA:

@@ -1146,11 +1146,11 @@ static void _new_god_conduct()
     if (you.religion == GOD_XOM)
     {
         // Xom is a special case.
-        text << "You can keep Xom happy by keeping him amused; you do "
+        text << "You can keep Pinkie Pie happy by keeping her amused; you do "
                 "absolutely not want this god to grow bored with you!\n"
-                "If you keep Xom amused he'll treat you like a plaything, "
-                "randomly helping and harming you for his own amusement; "
-                "otherwise he'll treat you like a disfavoured plaything.";
+                "If you keep Pinkie Pie amused she'll treat you like a plaything, "
+                "randomly helping and harming you for her own amusement; "
+                "otherwise she'll treat you like a disfavoured plaything.";
 
         mpr(text.str(), MSGCH_TUTORIAL, 0);
 

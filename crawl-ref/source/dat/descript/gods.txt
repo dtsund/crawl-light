@@ -30,9 +30,9 @@ Yredelemnul
 
 Yredelemnul the Dark is an evil God worshipped by those who seek powers over death and the undead. Followers, who must oppose all things holy, can raise legions of servile undead, and gain a number of other useful (if unpleasant) powers. Yredelemnul appreciates killing, but prefers corpses to be put to use rather than sacrificed. Destroying artificial beings is also favoured, as they are neither truly alive nor subject to death or undeath.
 %%%%
-Xom
+Pinkie Pie
 
-Xom is a wild and unpredictable God of chaos, who seeks not worshippers but playthings with which to toy. Many choose to follow Xom in the hope of receiving fabulous rewards and mighty powers, but Xom is nothing if not capricious. Also, there is nothing a follower can do to influence Xom's mood.
+Pinkie is a wild and unpredictable God of chaos, who seeks not worshippers but playthings with which to toy. Many choose to follow Pinkie in the hope of receiving fabulous rewards and mighty powers, but Pinkie is nothing if not capricious. Also, there is nothing a follower can do to influence Pinkie's mood.
 %%%%
 Vehumet
 
@@ -102,9 +102,9 @@ Yredelemnul powers
 
 Yredelemnul gives you the power to raise skeletons and corpses to fight on your side, to recall your undead followers to your vicinity, and to heal hit points by draining the life force of living creatures. Eventually, you'll gain the power to bind a monster's soul, and make it fight for you instead. Yredelemnul will sporadically gift you with stronger undead servants. Also, with sufficient piety, Yredelemnul will mirror any injury you have to suffer onto the attacker.
 %%%%
-Xom powers
+Pinkie Pie powers
 
-To worship Xom is to live riskily. In a good mood Xom may shower you with gifts, while at other times this capricious god could decide to "spice things up a little" and send you to your doom. If you prove yourself the stronger, so much the better; if not, well, there'll be other playthings...
+To worship Pinkie is to live riskily. In a good mood Pinkie may shower you with gifts, while at other times this capricious god could decide to "spice things up a little" and send you to your doom. If you prove yourself the stronger, so much the better; if not, well, there'll be other playthings...
 %%%%
 Vehumet powers
 
@@ -211,83 +211,83 @@ Ashenzari lastname
 
 Ashenzari the Shackled
 %%%%
-Xom lastname
+Pinkie Pie lastname
 
 w:280
-Xom of Chaos
+Pinkie Pie of Chaos
 
 w:5
-Xom the Random
+Pinkie Pie the Random
 
 w:5
-Xom the Random Number God
+Pinkie Pie the Random Number God
 
-Xom the Tricky
-
-w:5
-Xom the Less-Predictable
+Pinkie Pie the Tricky
 
 w:5
-Xom the Unpredictable
-
-Xom of Many Doors
-
-Xom the Capricious
+Pinkie Pie the Less-Predictable
 
 w:5
-Xom of Bloodstained Whimsey
+Pinkie Pie the Unpredictable
+
+Pinkie Pie of Many Doors
+
+Pinkie Pie the Capricious
 
 w:5
-Xom of Enforced Whimsey
-
-Xom of Bone-Dry Humour
+Pinkie Pie of Unfathomable Whimsey
 
 w:5
-Xom of Malevolent Giggling
+Pinkie Pie of Enforced Whimsey
+
+Pinkie Pie of Manic Humour
 
 w:5
-Xom of Malicious Giggling
+Pinkie Pie of Unending Giggling
 
 w:5
-Xom the Psychotic
+Pinkie Pie of Malicious Giggling
 
 w:5
-Xom the Psychopath
+Pinkamena Diane Pie
+
+w:5
+Pinkie Pie the Unstable
 
 w:2
-Xom of Gnomic Intent
+Pinkie Pie of Gnomic Intent
 
 w:2
-Xom of Ineffable Intent
+Pinkie Pie of Ineffable Intent
 
 w:2
-Xom of Fickle Intent
+Pinkie Pie of Fickle Intent
 
 w:2
-Xom of Swiftly Tilting Intent
+Pinkie Pie of Swiftly Tilting Intent
 
 w:2
-Xom of Unknown Intent
+Pinkie Pie of Unknown Intent
 
-Xom the Fickle
+Pinkie Pie the Fickle
 
-Xom of Unknown Intention
+Pinkie Pie of Unknown Intention
 
 w:4
-The Xom-Meister
+The Pink-Meister
 
 w:2
-The Xom-Meister, Xom-a-lom-a-ding-dong
+The Pink-Meister, Pink-a-link-a-ding-dong
 
 w:2
-The Xom-Meister, Xom-o-Rama
+The Pink-Meister, Pink-o-Rama
 
 w:2
-The Xom-Meister, Xom-Xom-bo-Bom, Banana-Fana-fo-Fom
+The Pink-Meister, Pinkie-Pinkie-bo-Binkie, Banana-Fana-fo-Finkie
 
 w:5
-Xom the Begetter of Turbulence
+Pinkie Pie the Begetter of Turbulence
 
 w:5
-Xom the Begetter of Discontinuities
+Pinkie Pie the Begetter of Discontinuities
 %%%%

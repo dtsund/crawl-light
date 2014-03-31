@@ -2781,7 +2781,7 @@ int list_wizard_commands(bool do_redraw_screen)
 #endif
                        "<w>h</w>/<w>H</w>    : heal yourself (super-Heal)\n"
                        "<w>Ctrl-H</w> : set hunger state\n"
-                       "<w>X</w>      : make Xom do something now\n"
+                       "<w>X</w>      : make Pinkie Pie do something now\n"
                        "<w>z</w>      : cast spell by number/name\n"
                        "<w>W</w>      : god wrath\n"
                        "<w>w</w>      : god mollification\n"
@@ -2814,7 +2814,7 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>Ctrl-I</w> : item generation stats\n"
                        "<w>O</w>      : measure exploration time\n"
                        "<w>Ctrl-t</w> : enter in-game Lua interpreter\n"
-                       "<w>Ctrl-X</w> : Xom effect stats\n"
+                       "<w>Ctrl-X</w> : Pinkie Pie effect stats\n"
                        "\n"
                        "<yellow>Wizard targeting commands</yellow>\n"
                        "(not prefixed with <w>&</w>!)\n"

@@ -2421,7 +2421,7 @@ bool make_book_theme_randart(item_def &book,
     else
     {
         // Sometimes use a completely random title.
-        if (owner == "Xom" && !one_chance_in(20))
+        if (owner == "Pinkie Pie" && !one_chance_in(20))
             bookname = getRandNameString("Xom_book_title");
         else if (one_chance_in(20) && (owner.empty() || one_chance_in(3)))
             bookname = getRandNameString("random_book_title");

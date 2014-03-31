@@ -3178,7 +3178,7 @@ static const char* _challenge_description(challenge_type t)
               //80-character visual aid
               //---------+---------+---------+---------+---------+---------+---------+---------+
     case CHALLENGE_XOM:
-        return "In a previous life, you angered Xom; now you suffer the capricious god's "
+        return "In a previous life, you angered Pinkie Pie; now you suffer the capricious god's "
                "unending wrath!";
     case CHALLENGE_NEMELEX:
         return "Nemelex thought your life was too orderly, and so the gambler tempted you with "

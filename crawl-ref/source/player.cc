@@ -7230,7 +7230,7 @@ const char* challenge_type_to_string(challenge_type t)
     switch (t)
     {
     case CHALLENGE_XOM:
-        return "Wrath of Xom";
+        return "Wrath of Pinkie Pie";
     case CHALLENGE_NEMELEX:
         return "Wrath of Nemelex Xobeh";
     case CHALLENGE_CHEIBRIADOS:
@@ -7256,7 +7256,7 @@ const char* challenge_type_to_string_short(challenge_type t)
     switch (t)
     {
     case CHALLENGE_XOM:
-        return "WoX";
+        return "WoPP";
     case CHALLENGE_NEMELEX:
         return "WoNX";
     case CHALLENGE_CHEIBRIADOS:

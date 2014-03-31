@@ -423,7 +423,7 @@ static const char *kill_method_names[] =
     "mon", "pois", "cloud", "beam", "lava", "water",
     "stupidity", "weakness", "clumsiness", "trap", "leaving", "winning",
     "quitting", "draining", "starvation", "freezing", "burning",
-    "wild_magic", "xom", "rotting", "targeting", "spore",
+    "wild_magic", "pinkie", "rotting", "targeting", "spore",
     "tso_smiting", "petrification", "something",
     "falling_down_stairs", "acid", "curare",
     "beogh_smiting", "divine_wrath", "bounce", "reflect", "self_aimed",
@@ -1318,7 +1318,7 @@ std::string scorefile_entry::challenge_description(death_desc_verbosity verbosit
 		switch (you.challenge)
 		{
 		case CHALLENGE_XOM:
-			line += "Xom.";
+			line += "Pinkie Pie.";
 			break;
 		case CHALLENGE_NEMELEX:
 			line += "Nemelex Xobeh.";
@@ -1568,7 +1568,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
         {
             if (god == GOD_XOM)
             {
-                snprintf(scratch, INFO_SIZE, "Was a %sPlaything of Xom.",
+                snprintf(scratch, INFO_SIZE, "Was a %sPlaything of Pinkie Pie.",
                                    (lvl >= 20) ? "Favourite " : "");
 
                 desc += scratch;
@@ -1902,9 +1902,9 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
 
     case KILLED_BY_XOM:
         if (terse)
-            desc += "xom";
+            desc += "pinkie";
         else
-            desc += auxkilldata.empty() ? "Killed for Xom's enjoyment"
+            desc += auxkilldata.empty() ? "Killed for Pinkie Pie's enjoyment"
                                         : auxkilldata;
         needs_damage = true;
         break;

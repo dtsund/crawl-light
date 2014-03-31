@@ -118,41 +118,41 @@ static const char *_xom_message_arrays[NUM_XOM_MESSAGE_TYPES][6] =
 {
     // XM_NORMAL
     {
-        "Xom is interested.",
-        "Xom is mildly amused.",
-        "Xom is amused.",
-        "Xom is highly amused!",
-        "Xom thinks this is hilarious!",
-        "Xom roars with laughter!"
+        "Pinkie Pie is interested.",
+        "Pinkie Pie is mildly amused.",
+        "Pinkie Pie is amused.",
+        "Pinkie Pie is highly amused!",
+        "Pinkie Pie thinks this is hilarious!",
+        "Pinkie Pie roars with laughter!"
     },
 
     // XM_INTRIGUED
     {
-        "Xom is interested.",
-        "Xom is very interested.",
-        "Xom is extremely interested.",
-        "Xom is intrigued!",
-        "Xom is very intrigued!",
-        "Xom is fascinated!"
+        "Pinkie Pie is interested.",
+        "Pinkie Pie is very interested.",
+        "Pinkie Pie is extremely interested.",
+        "Pinkie Pie is intrigued!",
+        "Pinkie Pie is very intrigued!",
+        "Pinkie Pie is fascinated!"
     }
 };
 
 static const char *describe_xom_mood()
 {
-    return (you.piety > 180) ? "Xom's teddy bear." :
-           (you.piety > 150) ? "a beloved toy of Xom." :
-           (you.piety > 120) ? "a favourite toy of Xom." :
-           (you.piety >  80) ? "a toy of Xom." :
-           (you.piety >  50) ? "a plaything of Xom." :
-           (you.piety >  20) ? "a special plaything of Xom."
-                             : "a very special plaything of Xom.";
+    return (you.piety > 180) ? "Pinkie Pie's teddy bear." :
+           (you.piety > 150) ? "a beloved toy of Pinkie Pie." :
+           (you.piety > 120) ? "a favourite toy of Pinkie Pie." :
+           (you.piety >  80) ? "a toy of Pinkie Pie." :
+           (you.piety >  50) ? "a plaything of Pinkie Pie." :
+           (you.piety >  20) ? "a special plaything of Pinkie Pie."
+                             : "a very special plaything of Pinkie Pie.";
 }
 
 const std::string describe_xom_favour(bool upper)
 {
     std::string favour;
     if (you.religion != GOD_XOM)
-        favour = "a very buggy toy of Xom.";
+        favour = "a very buggy toy of Pinkie Pie.";
     else if (you.gift_timeout < 1)
         favour = "a BORING thing.";
     else
@@ -214,7 +214,7 @@ bool xom_is_nice(int tension)
 
 #ifdef DEBUG_XOM
         mprf(MSGCH_DIAGNOSTICS,
-             "Xom: tension: %d, piety: %d -> tension bonus = %d, eff. piety: %d",
+             "Pinkie Pie: tension: %d, piety: %d -> tension bonus = %d, eff. piety: %d",
              tension, you.piety, tension_bonus, effective_piety);
 #endif
 
@@ -242,7 +242,7 @@ static void _xom_is_stimulated(int maxinterestingness,
 
 #if defined(DEBUG_RELIGION) || defined(DEBUG_GIFTS) || defined(DEBUG_XOM)
     mprf(MSGCH_DIAGNOSTICS,
-         "Xom: gift_timeout: %d, maxinterestingness = %d, interestingness = %d",
+         "Pinkie Pie: gift_timeout: %d, maxinterestingness = %d, interestingness = %d",
          you.gift_timeout, maxinterestingness, interestingness);
 #endif
 
@@ -678,7 +678,7 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
     if (feat_destroys_item(grd(you.pos()), mitm[thing_created],
                            !truly_silenced(you.pos())))
     {
-        simple_god_message(" snickers.", GOD_XOM);
+        simple_god_message(" giggles.", GOD_XOM);
         destroy_item(thing_created, true);
         thing_created = NON_ITEM;
     }
@@ -1211,7 +1211,7 @@ static int _xom_send_allies(int sever, bool debug = false)
 
         // Even though the friendlies are charged to you for accounting,
         // they should still show as Xom's fault if one of them kills you.
-        mg.non_actor_summoner = "Xom";
+        mg.non_actor_summoner = "Pinkie Pie";
 
         summons[i] = create_monster(mg);
 
@@ -1317,7 +1317,7 @@ static int _xom_send_one_ally(int sever, bool debug = false)
     mgen_data mg(mon_type, beha, (beha == BEH_FRIENDLY) ? &you : 0, 6,
                  MON_SUMM_AID, you.pos(), MHITYOU, MG_FORCE_BEH, GOD_XOM);
 
-    mg.non_actor_summoner = "Xom";
+    mg.non_actor_summoner = "Pinkie Pie";
 
     const int summons = create_monster(mg);
 
@@ -1819,7 +1819,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
                  SPELL_TUKIMAS_DANCE, mon->pos(), mon->mindex(),
                  0, GOD_XOM);
 
-    mg.non_actor_summoner = "Xom";
+    mg.non_actor_summoner = "Pinkie Pie";
 
     const int mons = create_monster(mg);
 
@@ -1911,7 +1911,7 @@ static int _xom_send_major_ally(int sever, bool debug = false)
                  (beha == BEH_FRIENDLY) ? &you : 0,
                  0, 0, you.pos(), MHITYOU, MG_FORCE_BEH, GOD_XOM);
 
-    mg.non_actor_summoner = "Xom";
+    mg.non_actor_summoner = "Pinkie Pie";
 
     const int summons = create_monster(mg);
 
@@ -1988,7 +1988,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
     beam.colour       = LIGHTCYAN;
     beam.thrower      = KILL_MISC;
     beam.beam_source  = NON_MONSTER;
-    beam.aux_source   = "Xom's lightning strike";
+    beam.aux_source   = "Pinkie Pie's lightning strike";
     beam.ex_size      = 2;
     beam.is_explosion = true;
 
@@ -2002,7 +2002,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
 
     // Don't accidentally kill the player when doing a good act.
     if (you.escaped_death_cause == KILLED_BY_WILD_MAGIC
-        && you.escaped_death_aux == "Xom's lightning strike")
+        && you.escaped_death_aux == "Pinkie Pie's lightning strike")
     {
         you.hp = 1;
         you.reset_escaped_death();
@@ -2781,10 +2781,10 @@ static int _xom_miscast(const int max_level, const bool nasty,
     };
 
     const char* causes[4] = {
-        "the mischief of Xom",
-        "the capriciousness of Xom",
-        "the capriciousness of Xom",
-        "the severe capriciousness of Xom"
+        "the mischief of Pinkie Pie",
+        "the capriciousness of Pinkie Pie",
+        "the capriciousness of Pinkie Pie",
+        "the severe capriciousness of Pinkie Pie"
     };
 
     const char* speech_str = speeches[max_level];
@@ -2874,7 +2874,7 @@ static int _xom_lose_stats(bool debug = false)
 
     god_speaks(GOD_XOM, _get_xom_speech("lose stats").c_str());
     const int loss = 1 + random2(max);
-    lose_stat(stat, loss, true, "the vengeance of Xom");
+    lose_stat(stat, loss, true, "the vengeance of Pinkie Pie");
 
     // Take a note.
     const char* sstr[3] = { "Str", "Int", "Dex" };
@@ -3352,7 +3352,7 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
         {
             if (create_monster(
                     mgen_data::hostile_at(
-                        _xom_random_demon(sever), "Xom",
+                        _xom_random_demon(sever), "Pinkie Pie",
                         true, 4, MON_SUMM_WRATH, you.pos(), 0,
                         GOD_XOM)) != -1)
             {
@@ -3451,7 +3451,7 @@ static int _xom_do_banishment(bool debug = false)
     god_speaks(GOD_XOM, _get_xom_speech("banishment").c_str());
 
     // Handles note taking.
-    banished(DNGN_ENTER_ABYSS, "Xom");
+    banished(DNGN_ENTER_ABYSS, "Pinkie Pie");
     const int result = _xom_maybe_reverts_banishment(debug);
 
     return (result);
@@ -3748,12 +3748,12 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         ASSERT(you.wizard && !you.did_escape_death());
         if (is_feat_dangerous(grd(you.pos())))
         {
-            mpr("Player is standing in deadly terrain, skipping Xom act.",
+            mpr("Player is standing in deadly terrain, skipping Pinkie Pie act.",
                 MSGCH_DIAGNOSTICS);
         }
         else
         {
-            mpr("Player is already dead, skipping Xom act.",
+            mpr("Player is already dead, skipping Pinkie Pie act.",
                 MSGCH_DIAGNOSTICS);
         }
         return (XOM_PLAYER_DEAD);
@@ -3776,13 +3776,13 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         if (crawl_state.is_god_retribution())
         {
             niceness = false;
-            simple_god_message(" asks Xom for help in punishing you, and "
-                               "Xom happily agrees.", which_god);
+            simple_god_message(" asks Pinkie Pie for help in punishing you, and "
+                               "Pinkie Pie happily agrees.", which_god);
         }
         else
         {
             niceness = true;
-            simple_god_message(" calls in a favour from Xom.", which_god);
+            simple_god_message(" calls in a favour from Pinkie Pie.", which_god);
         }
     }
 
@@ -3793,7 +3793,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
     // No message during heavy-duty wizmode testing:
     // Instead all results are written into xom_debug.stat.
     if (!debug)
-        mprf(MSGCH_DIAGNOSTICS, "Xom tension: %d", tension);
+        mprf(MSGCH_DIAGNOSTICS, "Pinkie Pie tension: %d", tension);
 #endif
 
     const int  orig_hp       = you.hp;
@@ -3909,12 +3909,12 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
 void xom_check_lost_item(const item_def& item)
 {
     if (item.base_type == OBJ_ORBS)
-        xom_is_stimulated(200, "Xom laughs nastily.", true);
+        xom_is_stimulated(200, "Pinkie Pie gasps!", true);
     else if (is_special_unrandom_artefact(item))
-        xom_is_stimulated(100, "Xom snickers.", true);
+        xom_is_stimulated(100, "Pinkie Pie giggles.", true);
     // you can't be made lose unique runes anymore, it was voluntary -- not so funny
     else if (item_is_rune(item) && item_is_unique_rune(item))
-        xom_is_stimulated(50, "Xom snickers loudly.", true);
+        xom_is_stimulated(50, "Pinkie Pie giggles loudly.", true);
 }
 
 void xom_check_destroyed_item(const item_def& item, int cause)
@@ -3923,11 +3923,11 @@ void xom_check_destroyed_item(const item_def& item, int cause)
 
     if (item.base_type == OBJ_ORBS)
     {
-        xom_is_stimulated(200, "Xom laughs nastily.", true);
+        xom_is_stimulated(200, "Pinkie Pie gasps!", true);
         return;
     }
     else if (is_special_unrandom_artefact(item))
-        xom_is_stimulated(100, "Xom snickers.", true);
+        xom_is_stimulated(100, "Pinkie Pie giggles.", true);
     else if (item_is_rune(item))
     {
         if (item_is_unique_rune(item) || item.plus == RUNE_ABYSSAL)
@@ -3937,9 +3937,9 @@ void xom_check_destroyed_item(const item_def& item, int cause)
     }
 
     xom_is_stimulated(amusement,
-                      (amusement > 100) ? "Xom snickers loudly." :
-                      (amusement > 50)  ? "Xom snickers."
-                                        : "Xom snickers softly.",
+                      (amusement > 100) ? "Pinkie Pie giggles loudly." :
+                      (amusement > 50)  ? "Pinkie Pie giggles."
+                                        : "Pinkie Pie giggles softly.",
                       true);
 }
 
@@ -4096,7 +4096,7 @@ bool xom_saves_your_life(const int dam, const int death_source,
         you.stat_zero[s] = 0;
     }
 
-    god_speaks(GOD_XOM, "Xom revives you!");
+    god_speaks(GOD_XOM, "Pinkie Pie revives you!");
 
     // Ideally, this should contain the death cause but that is too much
     // trouble for now.
@@ -4218,9 +4218,9 @@ void debug_xom_effects()
     fprintf(ostat, " --> Tension: %d\n", tension);
 
     if (you.penance[GOD_XOM])
-        fprintf(ostat, "You are under Xom's penance!\n");
+        fprintf(ostat, "You are under Pinkie Pie's penance!\n");
     else if (_xom_is_bored())
-        fprintf(ostat, "Xom is BORED.\n");
+        fprintf(ostat, "Pinkie Pie is BORED.\n");
     fprintf(ostat, "\nRunning %d times through entire mood cycle.\n", N);
     fprintf(ostat, "---- OUTPUT EFFECT PERCENTAGES ----\n");
 

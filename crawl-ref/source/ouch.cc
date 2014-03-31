@@ -1204,9 +1204,9 @@ void ouch(int dam, int death_source, kill_method_type death_type,
         if (aux == NULL || !*aux)
         {
             if (death_type != KILLED_BY_XOM)
-                aux = "Xom";
+                aux = "Pinkie Pie";
         }
-        else if (strstr(aux, "Xom") == NULL)
+        else if (strstr(aux, "Pinkie Pie") == NULL)
             death_type = KILLED_BY_XOM;
     }
     // Xom may still try to save your life.
