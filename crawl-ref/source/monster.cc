@@ -4154,14 +4154,12 @@ bool monster::should_break_edict()
     if (friendly())
         return false;
 
-    //For now, monsters with HD <= 8 always keep edicts.
-    //Monsters with HD >= 16 don't care and just eat Zin's
-    //wrath.  Scale linearly between the two.
-    if(hit_dice <= 8)
+    // For now, monsters with HD <= 6 always keep edicts.
+    // Monsters with HD == 12 break edicts about half the time.
+    // High-level monsters usually break edicts, but occasionally respect them.
+    if(hit_dice <= 6)
         return false;
-    if(hit_dice >= 16)
-        return true;
-    return(x_chance_in_y(hit_dice - 8, 8));
+    return(x_chance_in_y(hit_dice - 6, hit_dice));
 }
 
 int monster::foe_distance() const
