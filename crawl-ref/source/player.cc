@@ -7189,6 +7189,10 @@ bool contamination_warning_prompt(int cost)
 //Also call print_stats_level to possibly update the color of "Place:".
 void check_relatively_safe(bool maybe_print_message)
 {
+    // Never relatively safe in the Arena; later checks can crash the game.
+    if (crawl_state.game_is_arena())
+        return;
+
     //Never relatively safe where/when monsters can respawn.
     if(monsters_can_respawn())
     {

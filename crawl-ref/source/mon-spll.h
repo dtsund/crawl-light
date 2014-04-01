@@ -7,6 +7,7 @@
 
     Template Format:
 
+    {    mon_spellbook_type type
         {
              bolt spell,
              enchantment,
@@ -15,6 +16,7 @@
              misc(2) spell,             // SPELL_DIG must be here to work!
              emergency spell            // only when fleeing
         }
+    }
 
 ********************************************************************* */
 

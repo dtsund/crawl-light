@@ -5066,12 +5066,12 @@ void read_scroll(int slot)
         break;
 
     case SCR_FORBIDDEN_KNOWLEDGE:
-        mpr("The words before you appear to be the work of a mad sorcerer who "
-            "intended to breach the gates of Hell. Most of it is "
-            "unintelligible, but from what you can tell, he was constructing "
-            "a portal to lead to the key to that dread place. However, there "
-            "was not enough ambient evil for it to work, and the door shielding "
-            "it from Zot's energies was beginning to fail.");
+        mpr("The key to Hell was lost long ago, cast into the darkest reaches "
+            "of the Abyss by The Shining One. The sorcerer working here "
+            "intended to retrieve it with a homing portal of his own "
+            "construction - a portal that requires much ambient evil to work, "
+            "and which will collapse instantly if exposed to the Zot energy "
+            "found deeper in the dungeon.");
         you.turn_is_over = true;
         return;
 
