@@ -15,6 +15,7 @@
 #include "mon_resist_def.h"
 #include "player.h"
 #include "monster.h"
+#include "mon-mst.h"
 
 struct bolt;
 
@@ -107,6 +108,19 @@ private:
     }
 };
 
+std::vector<mon_spellbook_type> get_spellbook_list(monster* mon);
+
+struct mon_spellbook
+{
+    mon_spellbook_type type;
+    spell_type spells[NUM_MONSTER_SPELL_SLOTS];
+};
+
+static const mon_spellbook mspell_list[] =
+{
+#include "mon-spll.h"
+};
+
 struct monsterentry
 {
     short mc;            // monster number
@@ -145,7 +159,7 @@ struct monsterentry
 
     int8_t AC; // armour class
     int8_t ev; // evasion
-    int sec;   // spellbook
+    mon_spellbook_type sec;   // spellbook
     mons_ability_type  mon_ability;
     corpse_effect_type corpse_thingy;
     zombie_size_type   zombie_size;
