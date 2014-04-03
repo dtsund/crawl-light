@@ -35,6 +35,18 @@
 #include "viewchar.h"
 #include "shout.h"
 
+static void _burn_tree(coord_def pos)
+{
+    bolt beam;
+    beam.origin_spell = SPELL_CONJURE_FLAME;
+    beam.range = 1;
+    beam.flavour = BEAM_FIRE;
+    beam.name = "fireball"; // yay doing this by name
+    beam.source = beam.target = pos;
+    beam.set_agent(&you);
+    beam.fire();
+}
+
 // Returns whether the spell was actually cast.
 bool conjure_flame(int pow, const coord_def& where)
 {
@@ -68,8 +80,8 @@ bool conjure_flame(int pow, const coord_def& where)
             break;
         case DNGN_TREE:
         case DNGN_SWAMP_TREE:
-            mpr("The flames aren't hot enough to burn down trees!");
-            break;
+            _burn_tree(where);
+            return true;
         default:
             mpr("You can't ignite solid rock!");
             break;
