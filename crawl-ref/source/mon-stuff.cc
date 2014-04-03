@@ -2008,8 +2008,14 @@ int monster_die(monster* mons, killer_type killer,
             {
                 if (you.magic_points < you.max_magic_points)
                 {
-                    mpr("You feel your power returning.");
-                    inc_mp(1 + random2(mons->hit_dice / 2), false);
+                    int mana = (you.religion == GOD_VEHUMET) ?
+                            1 + random2(mons->hit_dice / 2) :
+                            random2(2 + mons->hit_dice / 3);
+                    if (mana > 0)
+                    {
+                        mpr("You feel your power returning.");
+                        inc_mp(mana);
+                    }
                 }
             }
 
