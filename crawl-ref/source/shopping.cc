@@ -1545,7 +1545,7 @@ unsigned int item_value(item_def item, bool ident)
             valued += 25;
             break;
 
-        case POT_HEALING:
+        case POT_CURING:
         case POT_DECAY:
         case POT_DEGENERATION:
         case POT_STRONG_POISON:

@@ -818,7 +818,7 @@ potion of heal wounds
 
 A magical healing elixir which causes wounds to close and heal almost instantly. If it is used when one is at or near full health, it can also repair permanent injuries.
 %%%%
-potion of healing
+potion of curing
 
 A blessed fluid which heals some wounds, clears the mind and cures diseases. If it is used when one is at or near full health, it can also slightly repair permanent injuries.
 %%%%

@@ -1987,7 +1987,7 @@ void beogh_share_potion(potion_type potion)
     //TODO: Make the potion of resistance affect your followers.
     switch(potion)
     {
-    case POT_HEALING:
+    case POT_CURING:
     case POT_HEAL_WOUNDS:
     case POT_SPEED:
     case POT_MIGHT:
@@ -2017,7 +2017,7 @@ void beogh_share_potion(potion_type potion)
         {
             switch(potion)
             {
-            case POT_HEALING:
+            case POT_CURING:
             {
                 //Minor health restoration and clearing of status ailments.
                 mon->heal(5 + random2(7));
@@ -2099,7 +2099,7 @@ void beogh_share_potion(potion_type potion)
     {
         switch(potion)
         {
-        case POT_HEALING:
+        case POT_CURING:
         case POT_HEAL_WOUNDS:
             mprf("%s is healed.", mon_affected->full_name(DESC_CAP_YOUR).c_str());
             break;
@@ -2125,7 +2125,7 @@ void beogh_share_potion(potion_type potion)
     {
         switch(potion)
         {
-        case POT_HEALING:
+        case POT_CURING:
         case POT_HEAL_WOUNDS:
             mprf("Your nearby followers are healed.");
             break;

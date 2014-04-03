@@ -701,7 +701,7 @@ static void _give_items_skills(const newgame_def& ng)
         you.equip[EQ_WEAPON] = -1;
 
         newgame_make_item(0, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE, -1, 1, 1);
-        newgame_make_item(1, EQ_NONE, OBJ_POTIONS, POT_HEALING);
+        newgame_make_item(1, EQ_NONE, OBJ_POTIONS, POT_CURING);
         newgame_make_item(2, EQ_NONE, OBJ_POTIONS, POT_HEAL_WOUNDS);
 
         you.skills[SK_FIGHTING]       = 2;
@@ -1162,9 +1162,9 @@ static void _give_items_skills(const newgame_def& ng)
     if (you.species == SP_DEEP_DWARF)
         newgame_make_item(-1, EQ_NONE, OBJ_WANDS, WAND_HEAL_WOUNDS, -1, 1, 5);
 
-    // Zotdef: everyone gets a bonus two potions of healing
+    // Zotdef: everyone gets a bonus two potions of curing
     if (crawl_state.game_is_zotdef())
-        newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_HEALING, -1, 2);
+        newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_CURING, -1, 2);
 
     if (weap_skill)
     {

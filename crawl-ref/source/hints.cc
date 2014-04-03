@@ -681,7 +681,7 @@ static bool _advise_use_healing_potion()
         if (obj.base_type != OBJ_POTIONS)
             continue;
 
-        if (obj.sub_type == POT_HEALING
+        if (obj.sub_type == POT_CURING
             || obj.sub_type == POT_HEAL_WOUNDS)
         {
             return (true);
@@ -2220,7 +2220,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         }
         text << "Poison will slowly reduce your HP. You can try to wait it out "
                 "with <w>%</w>, but if you're low on hit points it's usually safer "
-                "to quaff a potion of healing.";
+                "to quaff a potion of curing.";
         cmd.push_back(CMD_REST);
         break;
 
@@ -2237,9 +2237,9 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "parentheses).\n"
                 "While you can wait it out, you'll probably want to stop "
                 "rotting as soon as possible by <w>%</w>uaffing a potion of "
-                "healing, since the longer you wait the more your maximum HP "
+                "curing, since the longer you wait the more your maximum HP "
                 "will be reduced. Once you've stopped rotting you can restore "
-                "your maximum HP to normal by drinking potions of healing and "
+                "your maximum HP to normal by drinking potions of curing and "
                 "heal wounds while fully healed.";
         cmd.push_back(CMD_QUAFF);
         break;
@@ -2494,7 +2494,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
 
     case HINT_HEALING_POTIONS:
         text << "Your hit points are getting dangerously low. Retreat and/or "
-                "quaffing a potion of heal wounds or healing might be a good idea.";
+                "quaffing a potion of heal wounds or curing might be a good idea.";
         break;
 
     case HINT_NEED_HEALING:
@@ -2515,9 +2515,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     case HINT_NEED_POISON_HEALING:
         text << "Your poisoning could easily kill you, so now would be a "
                 "good time to <w>%</w>uaff a potion of heal wounds or, "
-                "better yet, a potion of healing. If you have seen neither "
-                "of these so far, try unknown ones in your inventory. Good "
-                "luck!";
+                "better yet, a potion of curing.";
         cmd.push_back(CMD_QUAFF);
         break;
 

@@ -279,7 +279,7 @@ ITEM:    amulet of faith / \
          any jewellery / any weapon ego:holy_wrath / any weapon / \
          potion of experience w:1 / any potion / \
          scroll of holy word / scroll of torment / any scroll
-ITEM:    potion of healing
+ITEM:    potion of curing
 : dhfh.colors(_G)
 MAP
         xxxxxxxxxxxxxxxxxxxx
@@ -448,7 +448,7 @@ SUBVAULT: Z : fruiting_plant
 SUBVAULT: Y : fruiting_plant
 SUBVAULT: X : fruiting_plant
 SUBVAULT: W : fruiting_plant
-KITEM:    p = potion of healing / potion of heal wounds / \
+KITEM:    p = potion of curing / potion of heal wounds / \
               potion of restore abilities w:1 / potion of poison w:3 / \
               potion of strong poison w:1 / potion of confusion w:1 / nothing
 KMONS:    1 = deep dwarf artificer
@@ -560,13 +560,13 @@ SUBST:   1 = d f:5 g:2 j:1
 KMONS:   d = deep dwarf / deep dwarf scion
 KMONS:   f = deep dwarf necromancer
 KMONS:   g = deep dwarf berserker
-KMONS:   h = deep dwarf ; potion of healing
-KMONS:   j = deep dwarf necromancer ; potion of healing
+KMONS:   h = deep dwarf ; potion of curing
+KMONS:   j = deep dwarf necromancer ; potion of curing
 SUBST:   2 = l m:5 p:2 r:1
 KMONS:   l = patrolling deep dwarf necromancer
 KMONS:   m = patrolling deep dwarf berserker
-KMONS:   p = patrolling deep dwarf ; potion of healing
-KMONS:   r = patrolling deep dwarf necromancer ; potion of healing
+KMONS:   p = patrolling deep dwarf ; potion of curing
+KMONS:   r = patrolling deep dwarf necromancer ; potion of curing
 KMONS:   3 = generate_awake wight w:20 / generate_awake troll / \
              generate_awake orange rat
 KMONS:   5 = mermaid
@@ -574,7 +574,7 @@ KFEAT:   5 = shallow_water
 SUBST:   F = T:40 V:40 U:20
 SUBST:   W = W .
 SUBST:   P = %:25 $ *:2 P:3 R:1 D:1 M:1
-KITEM:   P = potion of healing
+KITEM:   P = potion of curing
 KITEM:   D = deck of changes / deck of war / deck of defence / \
 deck of destruction w:1 / deck of dungeons w:1 / deck of wonders w:5
 KITEM:   R = any potion / potion of poison w:3 / \
@@ -623,20 +623,20 @@ SUBST:   1 = d f:5 g:2 j:1
 KMONS:   d = deep dwarf / deep dwarf scion
 KMONS:   f = deep dwarf necromancer
 KMONS:   g = deep dwarf berserker
-KMONS:   h = deep dwarf ; potion of healing
-KMONS:   j = deep dwarf necromancer ; potion of healing
+KMONS:   h = deep dwarf ; potion of curing
+KMONS:   j = deep dwarf necromancer ; potion of curing
 SUBST:   2 = l m:5 p:2 r:1
 KMONS:   l = patrolling deep dwarf necromancer
 KMONS:   m = patrolling deep dwarf berserker
-KMONS:   p = patrolling deep dwarf ; potion of healing
-KMONS:   r = patrolling deep dwarf necromancer ; potion of healing
+KMONS:   p = patrolling deep dwarf ; potion of curing
+KMONS:   r = patrolling deep dwarf necromancer ; potion of curing
 KMONS:   3 = generate_awake wight w:20 / generate_awake troll / \
              generate_awake orange rat
 NSUBST:  s = 1:= / *:c
 SUBST:   F = T:40 V:40 U:20
 SUBST:   W = W .
 SUBST:   P = %:25 $ *:2 P:3 R:1 D:1 M:1
-KITEM:   P = potion of healing
+KITEM:   P = potion of curing
 KITEM:   D = deck of changes / deck of war / deck of defence / \
              deck of destruction w:1 / deck of dungeons w:1 / deck of wonders w:5
 KITEM:   R = any potion / potion of poison w:3 / \
