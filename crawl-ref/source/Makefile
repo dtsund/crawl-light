@@ -1152,6 +1152,9 @@ $(OBJECTS): $(OBJECTS:%.o=%.d) $(YACC_OBJECTS:%.o=%.d)
 
 %.d: %.cc .cflags $(GENERATED_HEADERS)
 	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
+else
+%.d: %.cc .cflags $(GENERATED_HEADERS)
+	@$(RM) $@
 endif
 
 # Precompiled headers
