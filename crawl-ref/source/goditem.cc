@@ -410,249 +410,247 @@ bool is_edicted_item(const item_def& item)
 {
     switch (item.base_type)
     {
-        case OBJ_WEAPONS:
-            {
-            const int wpn_skill = weapon_skill(item);
-            if (is_edict_active(EDICT_NO_SHORT_BLADES) &&
-                wpn_skill == SK_SHORT_BLADES)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_LONG_BLADES) &&
-                wpn_skill == SK_LONG_BLADES)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_AXES) &&
-                wpn_skill == SK_AXES)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_MACES_FLAILS) &&
-                wpn_skill == SK_MACES_FLAILS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_POLEARMS) &&
-                wpn_skill == SK_POLEARMS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_STAVES) &&
-                wpn_skill == SK_STAVES)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_PROJECTILES) &&
-                wpn_skill != SK_THROWING)
-            {
-                return (true);
-            }
-            const int item_brand = get_weapon_brand(item);
-            if (is_edict_active(EDICT_NO_POISON) &&
-                item_brand == SPWPN_VENOM || item_brand == SPWPN_CHAOS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                item_brand == SPWPN_FLAMING || item_brand == SPWPN_FLAME ||
-                item_brand == SPWPN_CHAOS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_COLD) &&
-                item_brand == SPWPN_FREEZING || item_brand == SPWPN_FROST ||
-                item_brand == SPWPN_CHAOS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                item_brand == SPWPN_FLAMING || item_brand == SPWPN_CHAOS)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
-                item_brand == SPWPN_DISTORTION)
-            {
-                return (true);
-            }
-            }
-        case OBJ_MISSILES:
-            {
-            if (is_edict_active(EDICT_NO_PROJECTILES))
-            {
-                return (true);
-            }
-            const int item_brand = get_ammo_brand(item);
-            //XXX: Perhaps sickness, slowness, and so forth belong in this.
-            if (is_edict_active(EDICT_NO_POISON) && 
-                (item_brand == SPMSL_POISONED || item_brand == SPMSL_CURARE))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
-                item_brand == SPMSL_DISPERSAL)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) && item_brand == SPMSL_FLAME)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_COLD) && item_brand == SPMSL_FROST)
-            {
-                return (true);
-            }
-            }
-        case OBJ_WANDS:
-            {
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                (item.sub_type == WAND_FLAME || item.sub_type == WAND_FIRE ||
-                 item.sub_type == WAND_RANDOM_EFFECTS))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_COLD) &&
-                (item.sub_type == WAND_FROST || item.sub_type == WAND_COLD ||
-                 item.sub_type == WAND_RANDOM_EFFECTS))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_INVISIBILITY) &&
-                (item.sub_type == WAND_INVISIBILITY ||
-                 item.sub_type == WAND_RANDOM_EFFECTS))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_ENCHANTMENT) &&
-                (item.sub_type == WAND_HASTING || WAND_INVISIBILITY ||
-                 item.sub_type == WAND_RANDOM_EFFECTS))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
-                (item.sub_type == WAND_TELEPORTATION ||
-                 item.sub_type == WAND_RANDOM_EFFECTS))
-            {
-                return (true);
-            }
-            }
-        case OBJ_POTIONS:
-            {
-            if (is_edict_active(EDICT_NO_ENCHANTMENT) &&
-                (item.sub_type == POT_SPEED || item.sub_type == POT_MIGHT ||
-                 item.sub_type == POT_BRILLIANCE ||
-                 item.sub_type == POT_AGILITY ||
-                 item.sub_type == POT_LEVITATION ||
-                 item.sub_type == POT_INVISIBILITY ||
-                 item.sub_type == POT_BERSERK_RAGE ||
-                 item.sub_type == POT_RESISTANCE))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_INVISIBILITY) &&
-                item.sub_type == POT_INVISIBILITY)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_POISON) &&
-                (item.sub_type == POT_POISON ||
-                 item.sub_type == POT_STRONG_POISON))
-            {
-                return (true);
-            }
-            }
-        case OBJ_SCROLLS:
-            {
-            if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
-                (item.sub_type == SCR_TELEPORTATION ||
-                 item.sub_type == SCR_BLINKING))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_SUMMONING) &&
-                item.sub_type == SCR_SUMMONING)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                item.sub_type == SCR_IMMOLATION)
-            {
-                return (true);
-            }
-            }
-        case OBJ_BOOKS:
-            {
-            if (is_edicted_spellbook(item))
-                return (true);
-            }
-        case OBJ_STAVES:
-            {
-            if (is_edicted_rod(item))
-                return (true);
-            // Don't make rods fall under the other cases.
-            if (item_is_rod(item))
-                return (false);
-            if (is_edict_active(EDICT_NO_STAVES))
-                return (true);
+    case OBJ_WEAPONS:
+    {
+        const int wpn_skill = weapon_skill(item);
+        if (is_edict_active(EDICT_NO_SHORT_BLADES) &&
+            wpn_skill == SK_SHORT_BLADES)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_LONG_BLADES) &&
+            wpn_skill == SK_LONG_BLADES)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_AXES) &&
+            wpn_skill == SK_AXES)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_MACES_FLAILS) &&
+            wpn_skill == SK_MACES_FLAILS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_POLEARMS) &&
+            wpn_skill == SK_POLEARMS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_STAVES) &&
+            wpn_skill == SK_STAVES)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_PROJECTILES) &&
+            wpn_skill != SK_THROWING)
+        {
+            return (true);
+        }
+        const int item_brand = get_weapon_brand(item);
+        if (is_edict_active(EDICT_NO_POISON) &&
+            item_brand == SPWPN_VENOM || item_brand == SPWPN_CHAOS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            item_brand == SPWPN_FLAMING || item_brand == SPWPN_FLAME ||
+            item_brand == SPWPN_CHAOS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_COLD) &&
+            item_brand == SPWPN_FREEZING || item_brand == SPWPN_FROST ||
+            item_brand == SPWPN_CHAOS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            item_brand == SPWPN_FLAMING || item_brand == SPWPN_CHAOS)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
+            item_brand == SPWPN_DISTORTION)
+        {
+            return (true);
+        }
+        break;
+    }
+    case OBJ_MISSILES:
+    {
+        if (is_edict_active(EDICT_NO_PROJECTILES))
+        {
+            return (true);
+        }
+        const int item_brand = get_ammo_brand(item);
+        //XXX: Perhaps sickness, slowness, and so forth belong in this.
+        if (is_edict_active(EDICT_NO_POISON) && 
+            (item_brand == SPMSL_POISONED || item_brand == SPMSL_CURARE))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
+            item_brand == SPMSL_DISPERSAL)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) && item_brand == SPMSL_FLAME)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_COLD) && item_brand == SPMSL_FROST)
+        {
+            return (true);
+        }
+        break;
+    }
+    case OBJ_WANDS:
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            (item.sub_type == WAND_FLAME || item.sub_type == WAND_FIRE ||
+             item.sub_type == WAND_RANDOM_EFFECTS))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_COLD) &&
+            (item.sub_type == WAND_FROST || item.sub_type == WAND_COLD ||
+             item.sub_type == WAND_RANDOM_EFFECTS))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_INVISIBILITY) &&
+            (item.sub_type == WAND_INVISIBILITY ||
+             item.sub_type == WAND_RANDOM_EFFECTS))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_ENCHANTMENT) &&
+            (item.sub_type == WAND_HASTING || WAND_INVISIBILITY ||
+             item.sub_type == WAND_RANDOM_EFFECTS))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
+            (item.sub_type == WAND_TELEPORTATION ||
+             item.sub_type == WAND_RANDOM_EFFECTS))
+        {
+            return (true);
+        }
+        break;
+    case OBJ_POTIONS:
+        if (is_edict_active(EDICT_NO_ENCHANTMENT) &&
+            (item.sub_type == POT_SPEED || item.sub_type == POT_MIGHT ||
+             item.sub_type == POT_BRILLIANCE ||
+             item.sub_type == POT_AGILITY ||
+             item.sub_type == POT_LEVITATION ||
+             item.sub_type == POT_INVISIBILITY ||
+             item.sub_type == POT_BERSERK_RAGE ||
+             item.sub_type == POT_RESISTANCE))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_INVISIBILITY) &&
+            item.sub_type == POT_INVISIBILITY)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_POISON) &&
+            (item.sub_type == POT_POISON ||
+             item.sub_type == POT_STRONG_POISON))
+        {
+            return (true);
+        }
+        break;
+    case OBJ_SCROLLS:
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
+            (item.sub_type == SCR_TELEPORTATION ||
+             item.sub_type == SCR_BLINKING))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_SUMMONING) &&
+            item.sub_type == SCR_SUMMONING)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            item.sub_type == SCR_IMMOLATION)
+        {
+            return (true);
+        }
+        break;
+    case OBJ_BOOKS:
+        if (is_edicted_spellbook(item))
+            return (true);
+        break;
+    case OBJ_STAVES:
+        if (is_edicted_rod(item))
+            return (true);
+        // Don't make rods fall under the other cases.
+        if (item_is_rod(item))
+            return (false);
+        if (is_edict_active(EDICT_NO_STAVES))
+            return (true);
 
-            if (is_edict_active(EDICT_NO_POISON) &&
-                item.sub_type == STAFF_POISON)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                item.sub_type == STAFF_FIRE)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_COLD) &&
-                item.sub_type == STAFF_COLD)
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_SUMMONING) &&
-                item.sub_type == STAFF_SUMMONING)
-            {
-                return (true);
-            }
-            }
-        case OBJ_MISCELLANY:
-            {
-            if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
-                (item.sub_type == MISC_DECK_OF_ESCAPE ||
-                 item.sub_type == MISC_DECK_OF_WAR ||
-                 item.sub_type == MISC_DECK_OF_CHANGES))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_FIRE) &&
-                (item.sub_type == MISC_BOTTLED_EFREET ||
-                 item.sub_type == MISC_LAMP_OF_FIRE ||
-                 item.sub_type == MISC_DECK_OF_DESTRUCTION ||
-                 item.sub_type == MISC_DECK_OF_WAR))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_COLD) &&
-                (item.sub_type == MISC_DECK_OF_DESTRUCTION ||
-                 item.sub_type == MISC_DECK_OF_WAR))
-            {
-                return (true);
-            }
-            if (is_edict_active(EDICT_NO_SUMMONING) &&
-                (item.sub_type == MISC_BOTTLED_EFREET ||
-                 item.sub_type == MISC_AIR_ELEMENTAL_FAN ||
-                 item.sub_type == MISC_LAMP_OF_FIRE ||
-                 item.sub_type == MISC_STONE_OF_EARTH_ELEMENTALS ||
-                 item.sub_type == MISC_HORN_OF_GERYON ||
-                 item.sub_type == MISC_BOX_OF_BEASTS ||
-                 item.sub_type == MISC_DECK_OF_SUMMONING ||
-                 item.sub_type == MISC_DECK_OF_WAR))
-            {
-                return (true);
-            }
-            }
+        if (is_edict_active(EDICT_NO_POISON) &&
+            item.sub_type == STAFF_POISON)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            item.sub_type == STAFF_FIRE)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_COLD) &&
+            item.sub_type == STAFF_COLD)
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_SUMMONING) &&
+            item.sub_type == STAFF_SUMMONING)
+        {
+            return (true);
+        }
+        break;
+    case OBJ_MISCELLANY:
+        if (is_edict_active(EDICT_NO_TRANSLOCATIONS) &&
+            (item.sub_type == MISC_DECK_OF_ESCAPE ||
+             item.sub_type == MISC_DECK_OF_WAR ||
+             item.sub_type == MISC_DECK_OF_CHANGES))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_FIRE) &&
+            (item.sub_type == MISC_BOTTLED_EFREET ||
+             item.sub_type == MISC_LAMP_OF_FIRE ||
+             item.sub_type == MISC_DECK_OF_DESTRUCTION ||
+             item.sub_type == MISC_DECK_OF_WAR))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_COLD) &&
+            (item.sub_type == MISC_DECK_OF_DESTRUCTION ||
+             item.sub_type == MISC_DECK_OF_WAR))
+        {
+            return (true);
+        }
+        if (is_edict_active(EDICT_NO_SUMMONING) &&
+            (item.sub_type == MISC_BOTTLED_EFREET ||
+             item.sub_type == MISC_AIR_ELEMENTAL_FAN ||
+             item.sub_type == MISC_LAMP_OF_FIRE ||
+             item.sub_type == MISC_STONE_OF_EARTH_ELEMENTALS ||
+             item.sub_type == MISC_HORN_OF_GERYON ||
+             item.sub_type == MISC_BOX_OF_BEASTS ||
+             item.sub_type == MISC_DECK_OF_SUMMONING ||
+             item.sub_type == MISC_DECK_OF_WAR))
+        {
+            return (true);
+        }
+        break;
+    default:
+        break;
     }
     return (false);
 }          
