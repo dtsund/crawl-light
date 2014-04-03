@@ -17,6 +17,7 @@
 #include "directn.h"
 #include "env.h"
 #include "food.h"
+#include "fprop.h"
 #include "godconduct.h"
 #include "itemprop.h"
 #include "items.h"

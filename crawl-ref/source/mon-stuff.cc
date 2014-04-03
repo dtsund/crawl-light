@@ -1990,7 +1990,7 @@ int monster_die(monster* mons, killer_type killer,
                                 random2(1 + 2 * mons->hit_dice);
                     if (heal > 0)
                         mprf("You feel a little better.");
-                    inc_hp(heal);
+                    inc_hp(heal, false);
                 }
                 else if (you.hp < you.hp_max)
                 {
@@ -2014,7 +2014,7 @@ int monster_die(monster* mons, killer_type killer,
                     if (mana > 0)
                     {
                         mpr("You feel your power returning.");
-                        inc_mp(mana);
+                        inc_mp(mana, false);
                     }
                 }
             }
