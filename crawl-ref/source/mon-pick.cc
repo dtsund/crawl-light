@@ -3239,7 +3239,7 @@ int mons_dis_level(int mcls)
 
     case MONS_ANCIENT_LICH:
     case MONS_BONE_DRAGON:
-    case MONS_FIEND:
+    case MONS_BRIMSTONE_FIEND:
     case MONS_IRON_DRAGON:
         mlev += 4;
         break;
@@ -3332,7 +3332,7 @@ int mons_dis_rare(int mcls, bool force_normal)
         return 5;
 
     case MONS_ANCIENT_LICH:
-    case MONS_FIEND:
+    case MONS_BRIMSTONE_FIEND:
         return 3;
 
     default:
@@ -3392,7 +3392,7 @@ int mons_gehenna_level(int mcls)
 
     case MONS_ANCIENT_LICH:
     case MONS_BONE_DRAGON:
-    case MONS_FIEND:
+    case MONS_BRIMSTONE_FIEND:
     case MONS_LICH:
     case MONS_PHANTASMAL_WARRIOR:
     case MONS_PIT_FIEND:
@@ -3482,7 +3482,7 @@ int mons_gehenna_rare(int mcls, bool force_normal)
         return 7;
 
     case MONS_EFREET:
-    case MONS_FIEND:
+    case MONS_BRIMSTONE_FIEND:
     case MONS_IRON_GOLEM:
     case MONS_SOUL_EATER:
     case MONS_FIRE_CRAB:
