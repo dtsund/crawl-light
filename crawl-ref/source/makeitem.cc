@@ -2577,7 +2577,7 @@ static int _random_wand_subtype()
     int hardmode_factor = 1;
     if(player_in_hard_mode())
         hardmode_factor = 2;
-    int subtype = random_choose_weighted(3 / hardmode_factor,  WAND_HEALING,
+    int subtype = random_choose_weighted(3 / hardmode_factor,  WAND_HEAL_WOUNDS,
                                          3 / hardmode_factor,  WAND_HASTING,
                                          6,  WAND_INVISIBILITY,
                                          9 / hardmode_factor,  WAND_TELEPORTATION,
@@ -2607,7 +2607,7 @@ static int _wand_max_initial_charges(int subtype)
 {
     switch (subtype)
     {
-    case WAND_HEALING: case WAND_HASTING: case WAND_INVISIBILITY:
+    case WAND_HEAL_WOUNDS: case WAND_HASTING: case WAND_INVISIBILITY:
         return 8;
 
     case WAND_FLAME: case WAND_FROST: case WAND_MAGIC_DARTS:

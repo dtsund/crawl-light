@@ -1234,7 +1234,7 @@ int wand_charge_value(int type)
     case WAND_INVISIBILITY:
     case WAND_FIREBALL:
     case WAND_TELEPORTATION:
-    case WAND_HEALING:
+    case WAND_HEAL_WOUNDS:
     case WAND_HASTING:
         return 3;
 

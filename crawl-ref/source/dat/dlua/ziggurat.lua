@@ -529,7 +529,7 @@ local function ziggurat_create_loot_at(c)
   local good_loot = dgn.item_spec("* w:7000 / " .. dgn.good_scrolls)
   local super_loot = dgn.item_spec("| w:7000 / potion of experience w:200 /" ..
                                    "potion of cure mutation w:200 /" ..
-                                   "wand of healing w:10 / " ..
+                                   "wand of heal wounds w:10 / " ..
                                    "wand of hasting w:10 / " ..
                                    dgn.good_scrolls)
 
