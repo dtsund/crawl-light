@@ -6274,6 +6274,8 @@ void vault_placement::apply_grid()
 {
     if (!size.zero())
     {
+        bool clear = !map.has_tag("can_overwrite");
+
         // NOTE: assumes *no* previous item (I think) or monster (definitely)
         // placement.
         for (rectangle_iterator ri(pos, pos + size - 1); ri; ++ri)
@@ -6287,6 +6289,16 @@ void vault_placement::apply_grid()
                 continue;
 
             const dungeon_feature_type oldgrid = grd(*ri);
+
+            if (clear)
+            {
+                env.grid_colours(*ri) = 0;
+                env.pgrid(*ri) = 0;
+                // what about heightmap?
+#ifdef USE_TILE
+                tile_clear_flavour(*ri);
+#endif
+            }
 
             keyed_mapspec *mapsp = map.mapspec_at(dp);
             _vault_grid(*this, feat, *ri, mapsp);
