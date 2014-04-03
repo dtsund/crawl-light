@@ -2567,7 +2567,7 @@ static monster_type _choose_random_monster_corpse()
 static int _random_wand_subtype()
 {
     // Adjusted distribution (dtsund):
-    // hasting, healing (1/60 each)
+    // hasting, heal wounds (1/60 each)
     // invis (1/30)
     // teleportation, fireball (1/20 each)
     // everything else (1/18 each)
