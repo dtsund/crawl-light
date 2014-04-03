@@ -427,6 +427,7 @@ public:
     bool is_icy() const;
     bool is_fiery() const;
     bool is_skeletal() const;
+    bool are_currently_undead() const;
 
     bool light_flight() const;
     bool travelling_light() const;
@@ -553,7 +554,7 @@ public:
     void god_conduct(conduct_type thing_done, int level);
 
     void make_hungry(int nutrition, bool silent = true);
-    void poison(actor *agent, int amount = 1, bool force = false);
+    bool poison(actor *agent, int amount = 1, bool force = false);
     bool sicken(int amount, bool allow_hint = true);
     void paralyse(actor *, int str);
 	void random_status(actor *, int str);
