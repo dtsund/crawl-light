@@ -858,7 +858,7 @@ Beogh says: Drown the unbelievers in a sea of blood!
 %%%%
 Cheibriados penance
 
-@Cheibriados welcome@
+Cheibriados says: Don't be so hasty! Slow down!
 %%%%
 Cheibriados welcome
 
@@ -874,7 +874,7 @@ Elyvilon says: Go forth and aid the weak!
 %%%%
 Fedhas penance
 
-@Fedhas welcome@
+Fedhas protests your encroachment upon nature.
 %%%%
 Fedhas welcome
 
