@@ -961,7 +961,7 @@ enum delay_type
     DELAY_MEMORISE,
     DELAY_BUTCHER,
     DELAY_BOTTLE_BLOOD,
-    DELAY_WEAPON_SWAP,                 // for easy_butcher
+    DELAY_WEAPON_SWAP,
     DELAY_PASSWALL,
     DELAY_DROP_ITEM,
     DELAY_MULTIDROP,
