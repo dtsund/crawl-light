@@ -1610,7 +1610,6 @@ int player_res_torment(bool, bool temp)
                  > random2(100))));
 }
 
-// Funny that no races are susceptible to poisons. {dlb}
 // If temp is set to false, temporary sources or resistance won't be counted.
 int player_res_poison(bool calc_unid, bool temp, bool items)
 {
@@ -1663,7 +1662,17 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
         }
     }
 
-    return (rp > 0 ? 1 : 0);
+    // Give vulnerability for Spider Form, and only let one level of rP to make
+    // up for it (never be poison resistant in Spider Form).
+    rp = (rp > 0 ? 1 : 0);
+ 
+    if (temp)
+    {
+        if (you.form == TRAN_SPIDER)
+            rp--;
+    }
+
+    return (rp);
 }
 
 int _maybe_reduce_poison(int amount)
@@ -4743,6 +4752,9 @@ bool poison_player(int amount, std::string source, std::string source_aux,
         mpr("Your divine stamina protects you from poison!");
         return (false);
     }
+
+    if (player_res_poison() < 0)
+        amount *= 2;
 
     const int old_value = you.duration[DUR_POISONING];
     you.duration[DUR_POISONING] += amount;
