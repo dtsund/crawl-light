@@ -139,7 +139,7 @@ Branch branches[] = {
       DNGN_ENTER_TOMB, DNGN_RETURN_FROM_TOMB,
       "Tomb", "the Tomb of the Ancients", "Tomb",
       NULL,
-      true, YELLOW, BROWN,
+      true, BROWN, BROWN,
       mons_tomb_rare, mons_tomb_level,
       NULL, NULL, NULL, NULL,
       'W', false, true, -10 },
