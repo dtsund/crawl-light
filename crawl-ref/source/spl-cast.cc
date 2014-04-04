@@ -1145,9 +1145,6 @@ spret_type your_spells(spell_type spell, int powc,
         if (testbits(flags, SPFLAG_NEUTRAL))
             targ = TARG_ANY;
 
-        if (spell == SPELL_DISPEL_UNDEAD)
-            targ = TARG_HOSTILE_UNDEAD;
-
         if (spell == SPELL_FRAGMENTATION)
             targ = TARG_ANY;
 
