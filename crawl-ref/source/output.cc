@@ -273,8 +273,7 @@ static void _print_stats_mp(int x, int y)
     for (int i = 11-col; i > 0; i--)
         cprintf(" ");
 
-    if (!Options.classic_hud)
-        MP_Bar.draw(19, y, you.magic_points, you.max_magic_points);
+    MP_Bar.draw(19, y, you.magic_points, you.max_magic_points);
 }
 
 static void _print_stats_hp(int x, int y)
@@ -318,8 +317,7 @@ static void _print_stats_hp(int x, int y)
     for (int i = 18-col; i > 0; i--)
         cprintf(" ");
 
-    if (!Options.classic_hud)
-        HP_Bar.draw(19, y, you.hp, you.hp_max);
+    HP_Bar.draw(19, y, you.hp, you.hp_max);
 }
 
 static void _print_stats_glow(int x, int y)
@@ -350,8 +348,7 @@ static void _print_stats_glow(int x, int y)
     //Sanity!  The bar drawing function gags if you give it an overfull bar.
     int bar_fullness = (you.magic_contamination > you.max_magic_contamination) ? you.max_magic_contamination : you.magic_contamination;
 
-    if (!Options.classic_hud)
-        Glow_Bar.draw(19, y, bar_fullness, you.max_magic_contamination);
+    Glow_Bar.draw(19, y, bar_fullness, you.max_magic_contamination);
 }
 
 static short _get_stat_colour(stat_type stat)

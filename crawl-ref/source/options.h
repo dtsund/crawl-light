@@ -67,7 +67,6 @@ public:
     bool        mlist_allow_alternate_layout;
     bool        messages_at_top;
     bool        mlist_targeting;
-    bool        classic_hud;
     bool        msg_condense_repeats;
     bool        msg_condense_short;
 
@@ -214,7 +213,6 @@ public:
 
     bool        show_waypoints;
 
-    bool        classic_item_colours;   // Use old-style item colours
     bool        item_colour;    // Colour items on level map
 
     unsigned    evil_colour; // Colour for things player's god dissapproves

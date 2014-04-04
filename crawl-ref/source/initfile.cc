@@ -722,7 +722,6 @@ void game_options::reset_options()
     mlist_allow_alternate_layout = false;
     messages_at_top  = false;
     mlist_targeting = false;
-    classic_hud = false;
     msg_condense_repeats = true;
     msg_condense_short = true;
     show_no_ctele = true;
@@ -829,8 +828,6 @@ void game_options::reset_options()
     detected_item_colour   = GREEN;
     detected_monster_colour= LIGHTRED;
     status_caption_colour  = BROWN;
-
-    classic_item_colours   = false;
 
     easy_exit_menu         = false;
 #ifdef TARGET_OS_DOS
@@ -2509,7 +2506,6 @@ void game_options::read_option_line(const std::string &str, bool runscript)
 #ifndef USE_TILE
     else BOOL_OPTION(mlist_targeting);
 #endif
-    else BOOL_OPTION(classic_hud);
     else BOOL_OPTION(msg_condense_repeats);
     else BOOL_OPTION(msg_condense_short);
     else BOOL_OPTION(view_lock_x);
@@ -2900,7 +2896,6 @@ void game_options::read_option_line(const std::string &str, bool runscript)
         tc_disconnected = str_to_colour(field, tc_disconnected);
     else if (key == "auto_exclude")
         append_vector(auto_exclude, split_string(",", field));
-    else BOOL_OPTION(classic_item_colours);
     else BOOL_OPTION(item_colour);
     else BOOL_OPTION_NAMED("item_color", item_colour);
     else BOOL_OPTION(easy_exit_menu);
