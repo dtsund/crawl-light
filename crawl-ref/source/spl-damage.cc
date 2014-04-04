@@ -914,10 +914,10 @@ bool cast_shatter(int pow)
 
     int rad = 2 + (you.skill(SK_EARTH_MAGIC) / 5);
 
-    apply_area_within_radius(_shatter_items, you.pos(), pow, rad, 0);
-    apply_area_within_radius(_shatter_monsters, you.pos(), pow, rad, 0);
+    apply_area_within_radius(_shatter_items, you.pos(), pow, rad, 0, &you);
+    apply_area_within_radius(_shatter_monsters, you.pos(), pow, rad, 0, &you);
     int dest = apply_area_within_radius(_shatter_walls, you.pos(),
-                                        pow, rad, 0);
+                                        pow, rad, 0, &you);
 
     if (dest && !silence)
         mpr("Ka-crash!", MSGCH_SOUND);
