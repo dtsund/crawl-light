@@ -434,7 +434,7 @@ TAGS:       no_dump
 LFLAGS:     no_tele_control
 LFLOORCOL:  magenta
 LROCKCOL:   lightmagenta
-LFLOORTILE: floor_tomb
+LFLOORTILE: floor_rough_magenta
 LROCKTILE:  wall_zot_magenta
 
 #traps
@@ -464,6 +464,8 @@ SUBST:    L = 4 5:30 8 9
 SUBST:    M = 4 5 8:30 9
 
 SUBVAULT:   Y : orb_chamber
+COLOUR:     c = magenta
+TILE:       c = dngn_stone_wall_magenta
 
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -618,7 +620,7 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  lightgrey
 LROCKCOL:   white
-LFLOORTILE: floor_tomb
+LFLOORTILE: floor_rough_lightgray
 LROCKTILE:  wall_zot_white
 MAP
 .
@@ -630,7 +632,7 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  white
 LROCKCOL:   blue
-LFLOORTILE: floor_tomb
+LFLOORTILE: floor_rough_white
 LROCKTILE:  wall_zot_blue
 MAP
 .
@@ -642,8 +644,8 @@ ENDMAP
 #ORIENT:     float
 #LFLOORCOL:  blue
 #LROCKCOL:   lightblue
-#LFLOORTILE: floor_tomb
-#LROCKTILE:  wall_zot_cyan
+#LFLOORTILE: floor_rough_blue
+#LROCKTILE:  wall_zot_lightblue
 #MAP
 #.
 #ENDMAP
@@ -654,8 +656,8 @@ ENDMAP
 #ORIENT:     float
 #LFLOORCOL:  lightblue
 #LROCKCOL:   magenta
-#LFLOORTILE: floor_tomb
-#LROCKTILE:  wall_zot_blue
+#LFLOORTILE: floor_rough_lightblue
+#LROCKTILE:  wall_zot_green
 #MAP
 #.
 #ENDMAP
