@@ -5819,10 +5819,10 @@ coord_def dgn_find_nearby_stair(dungeon_feature_type stair_to_find,
                 result = *ri;
         }
     }
+    if (found)
+        return result;
 
-    // FAIL
-    ASSERT(found);
-    return result;
+    die("Can't find any place to put the player on.");
 }
 
 void dgn_set_lt_callback(std::string level_type_tag,
