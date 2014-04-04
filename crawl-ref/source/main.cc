@@ -262,7 +262,8 @@ int main(int argc, char *argv[])
     // Init monsters up front - needed to handle the mon_glyph option right.
     init_monsters();
 
-    // Init name cache so that we can parse stash_filter by item name.
+    // Init name cache. Currently unused, but item_glyph will need these
+    // once implemented.
     init_properties();
     init_item_name_cache();
 
