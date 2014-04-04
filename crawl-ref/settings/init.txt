@@ -105,7 +105,6 @@ drop_filter = useless_item
 # default_autopickup = false
 # autopickup_no_burden = false
 # pickup_thrown = false
-# pickup_dropped = true
 # chunks_autopickup = false
 # assign_item_slot = (forward | backward)
 #
@@ -250,7 +249,6 @@ sort_menus = inv: true : equipped, freshness, charged
 # show_inventory_weights     = true
 # item_stack_summary_minimum = 5
 # list_rotten                = false
-# show_beam                  = false
 # msg_condense_repeats   = false
 # msg_condense_short     = false
 # show_no_ctele          = false

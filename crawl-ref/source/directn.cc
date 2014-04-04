@@ -516,7 +516,7 @@ direction_chooser::direction_chooser(dist& moves_,
     behaviour->just_looking = just_looking;
     behaviour->get_desc_func = args.get_desc_func;
 
-    show_beam = Options.show_beam && !just_looking && needs_path;
+    show_beam = !just_looking && needs_path;
     need_beam_redraw = show_beam;
     have_beam = false;
 

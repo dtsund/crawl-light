@@ -95,7 +95,6 @@ public:
 
     bool        show_gold_turns; // Show gold and turns in HUD.
     bool        show_game_turns; // Show game turns instead of player turns.
-    bool        show_beam;       // Show targeting beam by default.
     bool        show_no_ctele;   // Show -cTele in the status light area.
 
     uint32_t    autopickups;     // items to autopickup
@@ -191,7 +190,6 @@ public:
     bool        autoinscribe_cursed; // Auto-inscribe previosly cursed items.
 
     bool        pickup_thrown;  // Pickup thrown missiles
-    bool        pickup_dropped; // Pickup dropped objects
     int         travel_delay;   // How long to pause between travel moves
     int         explore_delay;  // How long to pause between explore moves
 
