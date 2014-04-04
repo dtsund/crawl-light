@@ -1669,6 +1669,9 @@ static int _place_monster_aux(const mgen_data &mg,
     // Silent disciples follow Zin too.
     else if (mg.cls == MONS_SILENT_DISCIPLE)
         mon->god = GOD_ZIN;
+    // Yiuf is a faithful Xommite.
+    else if (mg.cls == MONS_CRAZY_YIUF)
+        mon->god = GOD_XOM;
     // Ignacio belongs to Makhleb.
     else if (mg.cls == MONS_IGNACIO)
         mon->god = GOD_MAKHLEB;
