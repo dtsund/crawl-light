@@ -1639,7 +1639,7 @@ bool monster::pickup_armour(item_def &item, int near, bool force)
     if (eq == EQ_BODY_ARMOUR && mons_genus(type) == MONS_DRACONIAN)
         return false;
 
-    if (eq != EQ_HELMET && (type == MONS_OCTOPODE || type == MONS_GASTRONOK))
+    if (eq != EQ_HELMET && (type == MONS_GASTRONOK))
         return false;
 
     // HACK to allow nagas/centaurs to wear bardings. (jpeg)
