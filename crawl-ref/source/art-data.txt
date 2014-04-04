@@ -1173,12 +1173,12 @@ TILE_EQ:  lightning_scales
 COLOUR:   ETC_ELECTRICITY
 BRAND:    SPARM_RUNNING
 BOOL:     elec
-DESC:     This naga barding is made of some very metallic dragon hide, to
-          the point of initially confusing you at the first glance into
-          thinking it is actually made of metal.
+DESC:     This naga barding is made of some very metallic dragon hide; the
+          illusion is convincing enough that many initially perceive it as
+          being metal.
 DESC_ID:  These scales have been fashioned into armour for a naga's lower
           body. Faintly crackling with electricity, they have been enchanted
-          to allow its wearer to slither at almost a human's pace.
+          to allow their wearer to slither at almost a human's pace.
 
 ENUM:     BLACK_KNIGHT_HORSE
 NAME:     Black Knight's horse barding
@@ -1191,13 +1191,13 @@ COLOUR:   ETC_UNHOLY
 BRAND:    SPARM_PONDEROUSNESS
 BOOL:     life
 DESC:     You feel sorry for the horse that has to wear this mass of metal.
-DESC_ID:  This gear used to be worn by personal horse of the Black Knight
+DESC_ID:  This gear used to be worn by the personal horse of the Black Knight
           during his reign of terror. Pitch-black, it appears to be made not
           only of some strange black steel, but also of entire plates of
-          black diamond as well! Naturally, such a weight of metal and stone
-          cannot be good for the mount's speed. However, it offers not only
-          mundane protection against blows: the adamant bears an enchantment
-          that makes creature wearing it partially undead.
+          black diamond! Naturally, such a weight of metal and stone cannot
+          be good for the mount's speed. However, it offers not only mundane
+          protection against blows; the adamant bears an enchantment that
+          makes its wearer partially undead.
 
 NAME:     ring of Vitality
 APPEAR:   amethyst ring with an ankh
