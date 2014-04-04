@@ -4,6 +4,8 @@
 
 {{
   function zotdef_setup(e)
+    e.lfloortile("floor_rough_magenta")
+    e.lrocktile("wall_zot_magenta")
     e.marker("Y = feat:stone_stairs_up_i")
     e.kfeat("Y = .")
     e.kitem("Z = Orb of Zot")
