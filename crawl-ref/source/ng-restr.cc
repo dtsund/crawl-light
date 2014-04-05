@@ -846,11 +846,6 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
             default:
                 return (CC_UNRESTRICTED);
             }
-
-        case WPN_ANKUS:
-            if (species_genus(ng.species) == GENPC_OGREISH
-                && ng.job != JOB_MONK)
-                return (CC_UNRESTRICTED);
             // intentional fall-through
         default:
             return (CC_BANNED);

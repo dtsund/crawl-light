@@ -1694,10 +1694,6 @@ static std::vector<weapon_choice> _get_weapons(const newgame_def* ng)
                 wp.first = WPN_TRIDENT;
             }
             break;
-        case WPN_MACE:
-            if (ng->species == SP_OGRE)
-                wp.first = WPN_ANKUS;
-            break;
         default:
             break;
         }
