@@ -722,7 +722,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         case WPN_MACE:
             if (ng.job == JOB_MONK)
                 return (CC_BANNED);
-            if (ng.species == SP_TROLL)
+            if (ng.species == SP_TROLL || ng.species == SP_OGRE)
                 return (CC_UNRESTRICTED);
             if (ng.species == SP_VAMPIRE)
                 return (CC_RESTRICTED);
