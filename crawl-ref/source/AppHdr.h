@@ -97,7 +97,9 @@
     //
     // #define DGAMELAUNCH
 
+#ifndef TARGET_COMPILER_MINGW
     #define USE_UNIX_SIGNALS
+#endif
 
     // If this is defined, Crawl will attempt to save and exit when it
     // receives a hangup signal.
@@ -167,10 +169,6 @@
     #endif
 
 #elif defined(TARGET_OS_WINDOWS)
-    #if defined(TARGET_COMPILER_MINGW)
-        #define USE_UNIX_SIGNALS
-    #endif
-
     #if !defined(USE_TILE)
         #include "libw32c.h"
     #endif

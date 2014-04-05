@@ -2079,7 +2079,7 @@ void process_command(command_type cmd)
         // because we want to have CTRL-Y available...
         // and unfortunately they tend to be stuck together.
         clrscr();
-#if !defined(USE_TILE) && !defined(TARGET_OS_WINDOWS)
+#ifndef USE_TILE
         unixcurses_shutdown();
         kill(0, SIGTSTP);
         unixcurses_startup();
