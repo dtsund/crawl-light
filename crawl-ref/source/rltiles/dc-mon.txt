@@ -473,15 +473,6 @@ killer_klown_red
 killer_klown_yellow
 slave MONS_SLAVE
 human_slave
-<<<<<<< HEAD
-=======
-## From a Lair ending
-%rim 0
-vault/hell_wizard_50 MONS_HELL_WIZARD
-vault/hell_wizard_75
-vault/hell_wizard_100
-%rim 1
->>>>>>> da166e7... Fix automatic bordering for several tiles, broken in af4fe25.
 ## From the Wucad Mu wizlab
 human_monk_ghost MONS_HUMAN_MONK
 ## From the Cigotuvi wizlab
