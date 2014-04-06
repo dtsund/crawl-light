@@ -565,6 +565,12 @@ sigil_sharp_E_NE SIGIL_SHARP_E_NE
 sigil_sharp_W_SW SIGIL_SHARP_W_SW
 sigil_straight_E_NE_SW SIGIL_STRAIGHT_E_NE_SW
 
+%weight 10
+labyrinth0 FLOOR_LABYRINTH
+labyrinth1
+labyrinth2
+labyrinth3
+
 crypt0 FLOOR_CRYPT
 crypt1
 crypt2

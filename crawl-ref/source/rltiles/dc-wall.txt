@@ -529,6 +529,28 @@ church3
 #%weight 1
 #church4
 
+lab-rock0 WALL_LAB_ROCK
+lab-rock1
+lab-rock2
+lab-rock3
+
+lab-stone0 WALL_LAB_STONE
+lab-stone1
+lab-stone2
+lab-stone3
+lab-stone4
+lab-stone5
+
+lab-metal0 WALL_LAB_METAL
+%weight 2
+lab-metal1
+lab-metal2
+lab-metal3
+lab-metal4
+%weight 10
+lab-metal5
+lab-metal6
+
 crypt0 WALL_CRYPT
 crypt1
 crypt2
@@ -823,6 +845,16 @@ dngn_green_crystal_wall DNGN_GREEN_CRYSTAL_WALL DNGN_CRYSTAL DNGN_CRYSTAL_GREEN
 %desat 120
 %repeat DNGN_CRYSTAL DNGN_CRYSTAL_WHITE
 %resetcol
+
+%sdir dc-dngn/wall
+emerald1 WALL_EMERALD
+emerald2
+emerald3
+emerald4
+emerald5
+emerald6
+emerald7
+emerald8
 
 %sdir dc-dngn/wall
 shadow_w DNGN_WALL_SHADOW_W
