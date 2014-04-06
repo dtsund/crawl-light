@@ -1251,7 +1251,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
         dprf("stair_taken = <yellow>%s</yellow>", dungeon_feature_name(stair_taken));
         ASSERT(old_level.depth != -1); // what's this for?
 
-        _grab_followers();
+        _grab_followers(old_level);
 
         if (old_level.level_type == LEVEL_DUNGEON
             || stair_taken == DNGN_ENTER_PORTAL_VAULT
@@ -1906,11 +1906,10 @@ bool is_existing_level(const level_id &level)
 void delete_level(const level_id &level)
 {
     env.level_state |= LSTATE_DELETED;
-    erase_level_info(level);
+    travel_cache.erase_level_info(level);
     StashTrack.remove_level(level);
     if (you.save)
         you.save->delete_chunk(level.describe());
-    _do_lost_monsters();
     _do_lost_items();
 }
 
