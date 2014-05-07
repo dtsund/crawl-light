@@ -64,65 +64,14 @@ void tile_new_level(bool first_time, bool init_unseen)
 
 void tile_init_default_flavour()
 {
-    tile_default_flv(you.level_type, you.where_are_you, env.tile_default);
+    tile_default_flv(you.where_are_you, env.tile_default);
 }
 
-void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
+void tile_default_flv(branch_type br, tile_flavour &flv)
 {
     flv.wall    = TILE_WALL_NORMAL;
     flv.floor   = TILE_FLOOR_NORMAL;
     flv.special = 0;
-
-    if (lev == LEVEL_PANDEMONIUM)
-    {
-        flv.floor = TILE_FLOOR_TOMB;
-        switch (random2(7))
-        {
-        default:
-        case 0: flv.wall = TILE_WALL_ZOT_BLUE; break;
-        case 1: flv.wall = TILE_WALL_ZOT_RED; break;
-        case 2: flv.wall = TILE_WALL_ZOT_MAGENTA; break;
-        case 3: flv.wall = TILE_WALL_ZOT_GREEN; break;
-        case 4: flv.wall = TILE_WALL_ZOT_CYAN; break;
-        case 5: flv.wall = TILE_WALL_ZOT_YELLOW; break;
-        case 6: flv.wall = TILE_WALL_ZOT_WHITE; break;
-        }
-
-        if (one_chance_in(3))
-            flv.wall = TILE_WALL_FLESH;
-        if (one_chance_in(3))
-            flv.floor = TILE_FLOOR_NERVES;
-
-        return;
-    }
-    else if (lev == LEVEL_ABYSS)
-    {
-        flv.floor = TILE_FLOOR_NERVES;
-        switch (random2(6))
-        {
-        default:
-        case 0: flv.wall = TILE_WALL_HIVE; break;
-        case 1: flv.wall = TILE_WALL_PEBBLE_RED; break;
-        case 2: flv.wall = TILE_WALL_SLIME; break;
-        case 3: flv.wall = TILE_WALL_ICE; break;
-        case 4: flv.wall = TILE_WALL_HALL; break;
-        case 5: flv.wall = TILE_WALL_UNDEAD; break;
-        }
-        return;
-    }
-    else if (lev == LEVEL_LABYRINTH)
-    {
-        flv.wall  = TILE_WALL_UNDEAD;
-        flv.floor = TILE_FLOOR_TOMB;
-        return;
-    }
-    else if (lev == LEVEL_PORTAL_VAULT)
-    {
-        // These should be handled in the respective lua files.
-        flv.wall  = TILE_WALL_NORMAL;
-        flv.floor = TILE_FLOOR_NORMAL;
-        return;
-    }
 
     switch (br)
     {
@@ -1050,8 +999,7 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
             orig = TILE_WALL_NORMAL;
     }
     
-    if (you.level_type == LEVEL_DUNGEON && you.where_are_you == BRANCH_CRYPT
-        && orig == TILE_DNGN_METAL_WALL)
+    if (you.where_are_you == BRANCH_CRYPT && orig == TILE_DNGN_METAL_WALL)
     {
         orig = TILE_WALL_CRYPT_METAL;
     }

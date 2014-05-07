@@ -486,6 +486,7 @@ enum branch_type                // you.where_are_you
     BRANCH_ICE_CAVE,
     BRANCH_VOLCANO,
     BRANCH_WIZLAB,
+    BRANCH_PANDOORA,
     NUM_BRANCHES
 };
 
@@ -1829,16 +1830,18 @@ enum flight_type
     FL_FLY                             // wings, etc... paralysis == fall
 };
 
-enum level_area_type                   // you.level_type
+#if TAG_MAJOR_VERSION == 32
+enum old_level_area_type               // you.level_type
 {
-    LEVEL_DUNGEON,
-    LEVEL_LABYRINTH,
-    LEVEL_ABYSS,
-    LEVEL_PANDEMONIUM,
-    LEVEL_PORTAL_VAULT,
+    OLD_LEVEL_DUNGEON,
+    OLD_LEVEL_LABYRINTH,
+    OLD_LEVEL_ABYSS,
+    OLD_LEVEL_PANDEMONIUM,
+    OLD_LEVEL_PORTAL_VAULT,
 
     NUM_LEVEL_AREA_TYPES
 };
+#endif
 
 // Reasons for entering the Abyss.
 enum entry_cause_type

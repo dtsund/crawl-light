@@ -69,6 +69,7 @@ static std::string _get_portals();
 static std::string _get_notes();
 static std::string _print_altars_for_gods(const std::vector<god_type>& gods,
                                           bool print_unseen, bool display);
+static const std::string _get_coloured_level_annotation(level_id li);
 
 void overview_clear()
 {
@@ -88,7 +89,7 @@ void overview_clear()
 void seen_notable_thing(dungeon_feature_type which_thing, const coord_def& pos)
 {
     // Don't record in temporary terrain
-    if (you.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch())
         return;
 
     // Or mimics. This could provide mimic information leak, but is safer
@@ -436,7 +437,7 @@ static std::string _get_unseen_branches()
         if (seen_lair_branches >= 2 && is_random_lair_subbranch(branch))
             continue;
 
-        if (i == BRANCH_VESTIBULE_OF_HELL)
+        if (i == BRANCH_VESTIBULE_OF_HELL || !is_connected_branch(branch))
             continue;
 
         if (i == BRANCH_FOREST || i == BRANCH_SPIDER_NEST
@@ -670,63 +671,18 @@ static std::string _get_portals()
 static std::string _get_notes()
 {
     std::string disp;
-    char depth_str[3];
-    bool notes_exist = false;
-    bool has_notes[NUM_BRANCHES];
 
-    for (int i = 0; i < NUM_BRANCHES; ++i)
-    {
-        Branch branch = branches[i];
-
-        has_notes[i] = false;
-        for (int depth = 1; depth <= branch.depth; depth++)
+    for (int br = 0 ; br < NUM_BRANCHES; ++br)
+        for (int d = 1; d <= branches[br].depth; ++d)
         {
-            const level_id li(branch.id, depth);
-
-            if (!get_level_annotation(li).empty())
-            {
-                notes_exist  = true;
-                has_notes[i] = true;
-                break;
-            }
+            level_id i(static_cast<branch_type>(br), d);
+            if (!get_level_annotation(i).empty())
+                disp += _get_coloured_level_annotation(i) + "\n";
         }
-    }
 
-    if (notes_exist)
-    {
-        disp += "\n<green>Annotations</green>\n" ;
-
-        for (int i = 0; i < NUM_BRANCHES; ++i)
-        {
-            if (!has_notes[i])
-                continue;
-
-            Branch branch = branches[i];
-
-            for (int depth = 1; depth <= branch.depth; depth++)
-            {
-                const level_id li(branch.id, depth);
-
-                if (!get_level_annotation(li).empty())
-                {
-                    sprintf(depth_str, "%d", depth);
-
-                    disp += "<yellow>";
-                    disp += branch.abbrevname;
-                    disp += "</yellow>:";
-                    disp += depth_str;
-                    disp += " ";
-                    if (level_annotation_has("!", li))
-                        disp += get_coloured_level_annotation(LIGHTRED, li);
-                    else
-                        disp += get_coloured_level_annotation(LIGHTMAGENTA, li);
-                    disp += "\n";
-                }
-            }
-        }
-    }
-
-    return disp;
+    if (disp.empty())
+        return disp;
+    return "\n<green>Annotations</green>\n" + disp;
 }
 
 template <typename Z, typename Key>
@@ -823,7 +779,7 @@ static void _seen_staircase(dungeon_feature_type which_staircase,
 static void _seen_altar(god_type god, const coord_def& pos)
 {
     // Can't record in Abyss or Pan.
-    if (you.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch())
         return;
 
     level_pos where(level_id::current(), pos);
@@ -949,7 +905,8 @@ static void _update_unique_annotation(level_id level)
 void set_unique_annotation(monster* mons)
 {
     // Abyss persists its denizens.
-    if (you.level_type != LEVEL_DUNGEON && you.level_type != LEVEL_ABYSS)
+    if (!is_connected_branch(you.where_are_you) &&
+        you.where_are_you != BRANCH_ABYSS)
         return;
     if (!mons_is_unique(mons->type) && mons->type != MONS_PLAYER_GHOST)
         return;
@@ -1064,6 +1021,16 @@ std::string get_coloured_level_annotation(int col, level_id li, bool skip_excl)
     return get_level_annotation(li, false, false, true, col);
 }
 
+static const std::string _get_coloured_level_annotation(level_id li)
+{
+    std::string place = "<yellow>" + li.describe();
+    place = replace_all(place, ":", "</yellow>:");
+    if (place.find("</yellow>") == std::string::npos)
+        place += "</yellow>";
+    int col = level_annotation_has("!", li) ? LIGHTRED : MAGENTA;
+    return place + " " + get_level_annotation(li, false, false, true, col);
+}
+
 bool level_annotation_has(std::string find, level_id li)
 {
     std::string str = get_level_annotation(li);
@@ -1080,17 +1047,17 @@ void annotate_level()
     {
         li2 = level_id::get_next_level_id(you.pos());
 
-        if (li2.level_type != LEVEL_DUNGEON || li2.depth <= 0)
+        if (!is_connected_branch(li2) || li2.depth <= 0)
             li2 = level_id::current();
     }
 
-    if (you.level_type != LEVEL_DUNGEON && li2.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch() && !is_connected_branch(li2))
     {
         mpr("You can't annotate this level.");
         return;
     }
 
-    if (you.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch())
         li = li2;
     else if (li2 != level_id::current())
     {

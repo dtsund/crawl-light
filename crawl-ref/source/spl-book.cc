@@ -1458,7 +1458,7 @@ int staff_spell(int staff)
     const int flags = get_spell_flags(spell);
 
     // Labyrinths block divinations.
-    if (you.level_type == LEVEL_LABYRINTH
+    if (player_in_branch(BRANCH_LABYRINTH)
         && testbits(flags, SPFLAG_MAPPING))
     {
         mpr("Something interferes with your magic!");

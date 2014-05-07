@@ -1589,7 +1589,7 @@ int monster_die(monster* mons, killer_type killer,
 
     // If a monster was banished to the Abyss and then killed there,
     // then its death wasn't a banishment.
-    if (you.level_type == LEVEL_ABYSS)
+    if (you.where_are_you == BRANCH_ABYSS)
         mons->flags &= ~MF_BANISHED;
 
     if (!silent && !fake
@@ -2354,7 +2354,7 @@ int monster_die(monster* mons, killer_type killer,
 
             // Monster goes to the Abyss.
             mons->flags |= MF_BANISHED;
-            mons->set_transit(level_id(LEVEL_ABYSS));
+            mons->set_transit(level_id(BRANCH_ABYSS));
             in_transit = true;
             drop_items = false;
             mons->firing_pos.reset();
@@ -2782,7 +2782,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     // Don't attempt to polymorph a monster that is busy using the stairs.
     if (mons->flags & MF_TAKING_STAIRS)
         return (false);
-    ASSERT(!(mons->flags & MF_BANISHED) || you.level_type == LEVEL_ABYSS);
+    ASSERT(!(mons->flags & MF_BANISHED) || you.where_are_you == BRANCH_ABYSS);
 
     std::string str_polymon;
     int source_power, target_power, relax;

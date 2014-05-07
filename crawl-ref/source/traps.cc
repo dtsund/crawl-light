@@ -1566,7 +1566,7 @@ bool is_valid_shaft_level(const level_id &place)
         return (false);
     }
 
-    if (place.level_type != LEVEL_DUNGEON)
+    if (!is_connected_branch(place))
         return (false);
 
     // Shafts are now allowed on the first two levels, as they have a
@@ -1617,7 +1617,7 @@ level_id generic_shaft_dest(level_pos lpos, bool known = false)
 {
     level_id  lid   = lpos.id;
 
-    if (lid.level_type != LEVEL_DUNGEON)
+    if (!is_connected_branch(lid))
         return lid;
 
     int      curr_depth = lid.depth;
@@ -1726,6 +1726,8 @@ static int _num_traps_default(int level_number, const level_id &place)
 
 int num_traps_for_place(int level_number, const level_id &place)
 {
+/*
+    SCREW IT, TRAPS NEED TO DIE ANYWAY
     if (level_number == -1)
         level_number = place.absdepth();
 
@@ -1746,7 +1748,7 @@ int num_traps_for_place(int level_number, const level_id &place)
     default:
         return 0;
     }
-
+*/
     return 0;
 }
 
@@ -1817,7 +1819,7 @@ trap_type random_trap_for_place(int level_number, const level_id &place)
     if (level_number == -1)
         level_number = place.absdepth();
 
-    if (place.level_type == LEVEL_DUNGEON)
+    if (is_connected_branch(place.branch))
         if (branches[place.branch].rand_trap_function != NULL)
             return branches[place.branch].rand_trap_function(level_number);
 

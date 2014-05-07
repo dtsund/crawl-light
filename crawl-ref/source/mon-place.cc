@@ -294,7 +294,7 @@ bool monster_can_submerge(const monster* mon, dungeon_feature_type feat)
 
 bool is_spawn_scaled_area(const level_id &here)
 {
-    return (here.level_type == LEVEL_DUNGEON
+    return (is_connected_branch(here.branch)
             && !is_hell_subbranch(here.branch)
             && here.branch != BRANCH_HALL_OF_ZOT);
 }
@@ -400,7 +400,7 @@ void spawn_random_monsters()
 
     if (crawl_state.game_is_arena()
         || (crawl_state.game_is_sprint()
-            && you.level_type == LEVEL_DUNGEON
+            && player_in_connected_branch()
             && you.char_direction == GDT_DESCENDING))
     {
         return;
@@ -423,7 +423,7 @@ void spawn_random_monsters()
         return;
     }
 
-    const int rate = (you.char_direction == GDT_DESCENDING) ?
+    int rate = (you.char_direction == GDT_DESCENDING) ?
         _scale_spawn_parameter(env.spawn_random_rate,
                                6 * env.spawn_random_rate,
                                0)
@@ -436,8 +436,26 @@ void spawn_random_monsters()
         return;
     }
 
+    // No random monsters in the Labyrinth.
+    if (player_in_branch(BRANCH_LABYRINTH))
+        return;
+
+    if (player_in_branch(BRANCH_ABYSS))
+    {
+        // In Abyss, monsters spawn regularly every 5 turns which might look
+        // a bit strange for a place as chaotic as the Abyss.  Then again,
+        // the player is unlikely to meet all of them and notice this.
+        if (you.char_direction != GDT_GAME_START)
+            rate = 5;
+        if (you.religion == GOD_CHEIBRIADOS)
+            rate *= 2;
+    }
+
+    if (!x_chance_in_y(5, rate))
+        return;
+
     // Place normal dungeon monsters, but not in player LOS.
-    if (you.level_type == LEVEL_DUNGEON && x_chance_in_y(5, rate))
+    if (player_in_connected_branch())
     {
         dprf("Placing monster, rate: %d, turns here: %d",
              rate, env.turns_on_level);
@@ -456,21 +474,8 @@ void spawn_random_monsters()
         return;
     }
 
-    // Place Abyss monsters. (Now happens regularly every 5 turns which might
-    // look a bit strange for a place as chaotic as the Abyss. Then again,
-    // the player is unlikely to meet all of them and notice this.)
-    if (you.level_type == LEVEL_ABYSS
-        && (you.char_direction != GDT_GAME_START
-            || x_chance_in_y(5, rate))
-        && (you.religion != GOD_CHEIBRIADOS || coinflip()))
-    {
-        mons_place(mgen_data(WANDERING_MONSTER));
-        viewwindow();
-        return;
-    }
-
-    // Place Pandemonium monsters.
-    if (you.level_type == LEVEL_PANDEMONIUM && x_chance_in_y(5, rate))
+    // Pandemonium doesn't yet use the standard way.
+    if (player_in_branch(BRANCH_PANDEMONIUM))
     {
         pandemonium_mons();
         viewwindow();
@@ -479,13 +484,11 @@ void spawn_random_monsters()
 
     // A portal vault *might* decide to turn on random monster spawning,
     // but it's off by default.
-    if (you.level_type == LEVEL_PORTAL_VAULT && x_chance_in_y(5, rate))
+    if (x_chance_in_y(5, rate))
     {
         mons_place(mgen_data(WANDERING_MONSTER));
         viewwindow();
     }
-
-    // No random monsters in the Labyrinth.
 }
 
 // Caller must use !invalid_monster_type to check if the return value
@@ -493,11 +496,7 @@ void spawn_random_monsters()
 monster_type pick_random_monster(const level_id &place,
                                  bool *chose_ood_monster)
 {
-    int level;
-    if (place.level_type == LEVEL_PORTAL_VAULT)
-        level = you.absdepth0;
-    else
-        level = place.absdepth();
+    int level = place.absdepth();
     return pick_random_monster(place, level, level, chose_ood_monster);
 }
 
@@ -576,13 +575,13 @@ monster_type pick_random_monster(const level_id &place, int power,
             return (type);
     }
 
-    if (place.level_type == LEVEL_LABYRINTH)
+    if (place == BRANCH_LABYRINTH)
         return (MONS_PROGRAM_BUG);
 
     if (place == BRANCH_ECUMENICAL_TEMPLE)
         return (MONS_PROGRAM_BUG);
 
-    if (place.level_type == LEVEL_PORTAL_VAULT)
+    if (is_portal_vault(place.branch))
     {
         monster_type      base_type = (monster_type) 0;
         coord_def         dummy1;
@@ -614,7 +613,7 @@ monster_type pick_random_monster(const level_id &place, int power,
 
     // OODs do not apply to the Abyss, Pan, etc.
     // They also don't apply for players at the easiest level.
-    if (you.level_type == LEVEL_DUNGEON && lev_mons <= 18 && 
+    if (is_connected_branch(place) && lev_mons <= 18 && 
         (you.difficulty_level != 0 || force_normal))
     {
         // Apply moderate OOD fuzz where appropriate.
@@ -634,8 +633,8 @@ monster_type pick_random_monster(const level_id &place, int power,
     // Abyss or Pandemonium. Almost never called from Pan; probably only
     // if a random demon gets summon anything spell.
     if (lev_mons == DEPTH_ABYSS
-        || place.level_type == LEVEL_PANDEMONIUM
-        || place.level_type == LEVEL_ABYSS)
+        || place == BRANCH_PANDEMONIUM
+        || place == BRANCH_ABYSS)
     {
         do
         {
@@ -923,11 +922,11 @@ static monster_type _resolve_monster_type(monster_type mon_type,
                 return (mon_type);
             }
         }
-        else if (you.level_type == LEVEL_PORTAL_VAULT)
+        else if (is_portal_vault(you.where_are_you))
         {
             // XXX: We don't have a random monster list here, so pick one
             // from where we were.
-            place.level_type = LEVEL_DUNGEON;
+            place.branch = BRANCH_MAIN_DUNGEON;
             *lev_mons = place.absdepth();
         }
 
@@ -1687,16 +1686,24 @@ static int _place_monster_aux(const mgen_data &mg,
     // 7 in the Abyss are adopted by Xom.
     else if (mons_class_holiness(mg.cls) == MH_HOLY)
     {
-        if (mg.level_type != LEVEL_ABYSS || !one_chance_in(7))
+        if (mg.place != BRANCH_ABYSS || !one_chance_in(7))
             mon->god = GOD_SHINING_ONE;
         else
             mon->god = GOD_XOM;
     }
-    // 6 out of 7 demons in the Abyss belong to Lugonu.
+    // 6 out of 7 demons in the Abyss belong to Lugonu, and 6 out of 7 in Hell
+    // belong to Makhleb.
     else if (mons_class_holiness(mg.cls) == MH_DEMONIC)
     {
-        if (mg.level_type == LEVEL_ABYSS && !one_chance_in(7))
+        if (mg.place == BRANCH_ABYSS && !one_chance_in(7))
+        {
             mon->god = GOD_LUGONU;
+        }
+        else if ((mg.place == BRANCH_VESTIBULE_OF_HELL || player_in_hell())
+                 && !one_chance_in(7))
+        {
+            mon->god = GOD_MAKHLEB;
+        }
     }
 
     // Holy monsters need their halo!
@@ -2269,7 +2276,7 @@ monster_type pick_local_zombifiable_monster(int power, bool hack_hd,
         // where this is a problem are hell levels and the crypt.
         // we have to watch for summoned zombies on other levels, too,
         // such as the Temple, HoB, and Slime Pits.
-        if (you.level_type != LEVEL_DUNGEON
+        if (!player_in_connected_branch()
             || player_in_hell()
             || player_in_branch(BRANCH_HALL_OF_ZOT)
             || player_in_branch(BRANCH_VESTIBULE_OF_HELL)
@@ -2294,7 +2301,7 @@ monster_type pick_local_zombifiable_monster(int power, bool hack_hd,
 
         // Hack -- non-dungeon zombies are always made out of nastier
         // monsters.
-        if (hack_hd && you.level_type != LEVEL_DUNGEON && mons_power(base) > 8)
+        if (hack_hd && !player_in_connected_branch() && mons_power(base) > 8)
             return (base);
 
         // Check for rarity.. and OOD - identical to mons_place()
@@ -2780,7 +2787,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_GREEN_DRACONIAN:
     case MONS_GREY_DRACONIAN:
     case MONS_PALE_DRACONIAN:
-        if (power > 12 && one_chance_in(3) && you.level_type == LEVEL_DUNGEON)
+        if (power > 12 && one_chance_in(3) && player_in_connected_branch())
         {
             band = BAND_DRACONIAN;
             band_size = random_range(2, 4);
@@ -2794,7 +2801,7 @@ static band_type _choose_band(int mon_type, int power, int &band_size,
     case MONS_DRACONIAN_ANNIHILATOR:
     case MONS_DRACONIAN_ZEALOT:
     case MONS_DRACONIAN_SHIFTER:
-        if ((power > 14 && you.level_type == LEVEL_DUNGEON) || player_in_hard_mode())
+        if ((power > 14 && player_in_connected_branch()) || player_in_hard_mode())
         {
             band = BAND_DRACONIAN;
             band_size = random_range(3, 6);
@@ -3291,7 +3298,6 @@ void mark_interesting_monst(monster* mons, beh_type behaviour)
     else if (mons->type == MONS_JELLY && you.religion == GOD_JIYVA)
         interesting = false;
     else if (you.where_are_you == BRANCH_MAIN_DUNGEON
-             && you.level_type == LEVEL_DUNGEON
              && mons_level(mons->type) >= you.absdepth0 + _ood_limit()
              && mons_level(mons->type) < 99
              && !(mons->type >= MONS_EARTH_ELEMENTAL
@@ -3300,8 +3306,7 @@ void mark_interesting_monst(monster* mons, beh_type behaviour)
     {
         interesting = true;
     }
-    else if ((you.level_type == LEVEL_DUNGEON
-                || you.level_type == LEVEL_ABYSS)
+    else if (player_in_connected_branch() || player_in_branch(BRANCH_ABYSS)
              && mons_rarity(mons->type) <= Options.rare_interesting
              && mons->hit_dice > 2 // Don't note the really low-hd monsters.
              && !mons_class_flag(mons->type, M_NO_EXP_GAIN)
@@ -3391,7 +3396,7 @@ int mons_place(mgen_data mg, bool force_normal)
     // This gives a slight challenge to the player as they ascend the
     // dungeon with the Orb.
     if (you.char_direction == GDT_ASCENDING && _is_random_monster(mg.cls)
-        && you.level_type == LEVEL_DUNGEON && !mg.summoned())
+        && player_in_connected_branch() && !mg.summoned())
     {
 #ifdef DEBUG_MON_CREATION
         mpr("Call _pick_zot_exit_defender()", MSGCH_DIAGNOSTICS);
@@ -3402,23 +3407,12 @@ int mons_place(mgen_data mg, bool force_normal)
     else if (_is_random_monster(mg.cls))
         mg.flags |= MG_PERMIT_BANDS;
 
-    // Translate level_type.
-    switch (mg.level_type)
-    {
-    case LEVEL_PANDEMONIUM:
-    case LEVEL_ABYSS:
-        mg.power = level_id(mg.level_type).absdepth();
-        break;
-    case LEVEL_DUNGEON:
-    default:
-        if (mg.cls == MONS_DANCING_WEAPON && mg.summoner)
-            ; // It's an animated weapon, don't touch the power
-        else if (crawl_state.game_is_zotdef())
-            mg.power =  you.num_turns / (CYCLE_LENGTH * 3);
-        else
-            mg.power = you.absdepth0;
-        break;
-    }
+    if (mg.cls == MONS_DANCING_WEAPON && mg.summoner)
+        ; // It's an animated weapon, don't touch the power
+    else if (crawl_state.game_is_zotdef())
+        mg.power =  you.num_turns / (CYCLE_LENGTH * 3);
+    else
+        mg.power = you.absdepth0;
 
     if (mg.behaviour == BEH_COPY)
     {
@@ -3976,8 +3970,7 @@ void set_vault_mon_list(const std::vector<mons_spec> &list)
 
         if (spec.place.is_valid())
         {
-            ASSERT(spec.place.level_type != LEVEL_LABYRINTH
-                   && spec.place.level_type != LEVEL_PORTAL_VAULT);
+            ASSERT(branch_has_monsters(spec.place.branch));
             type_vec[i] = -1;
             base_vec[i] = spec.place.packed_place();
         }
@@ -4025,8 +4018,7 @@ void get_vault_mon_list(std::vector<mons_spec> &list)
         {
             spec.place = level_id::from_packed_place(base);
             ASSERT(spec.place.is_valid());
-            ASSERT(spec.place.level_type != LEVEL_LABYRINTH
-                   && spec.place.level_type != LEVEL_PORTAL_VAULT);
+            ASSERT(branch_has_monsters(spec.place.branch));
         }
         else
         {

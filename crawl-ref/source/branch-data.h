@@ -225,7 +225,8 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'K', false, false, 0 },
 
-    { BRANCH_ABYSS, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_ABYSS, NUM_BRANCHES, DEPTH_ABYSS, DEPTH_ABYSS, 1, -1,
+          BFLAG_NO_XLEV_TRAVEL, LFLAG_NO_TELE_CONTROL | LFLAG_NOT_MAPPABLE,
       DNGN_ENTER_ABYSS, DNGN_EXIT_ABYSS,
       "Abyss", "the Abyss", "Abyss",
       NULL,
@@ -234,7 +235,8 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'J', false, false, 0 },
 
-    { BRANCH_PANDEMONIUM, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_PANDEMONIUM, NUM_BRANCHES, DEPTH_PAN, DEPTH_PAN, 1, -1,
+          BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PANDEMONIUM, DNGN_EXIT_PANDEMONIUM,
       "Pandemonium", "Pandemonium", "Pan",
       NULL,
@@ -243,7 +245,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'R', false, false, 0 },
 
-    { BRANCH_ZIGGURAT, NUM_BRANCHES, -1, -1, 27, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_ZIGGURAT, NUM_BRANCHES, 18, 18, 27, 18, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ziggurat", "a ziggurat", "Zig",
       NULL,
@@ -252,7 +254,8 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       'Q', false, false /* maybe, but Zig:26 is almost as bad */, 0 },
 
-    { BRANCH_LABYRINTH, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_LABYRINTH, NUM_BRANCHES, 7, 14, 1, 8, BFLAG_NO_XLEV_TRAVEL, 
+          LFLAG_NO_TELE_CONTROL | LFLAG_NOT_MAPPABLE,
       DNGN_ENTER_LABYRINTH, DNGN_ESCAPE_HATCH_UP,
       "Labyrinth", "a Labyrinth", "Lab",
       NULL,
@@ -261,7 +264,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '0', false, false, 0 },
 
-    { BRANCH_BAZAAR, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_BAZAAR, NUM_BRANCHES, 7, 18, 1, 10, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Bazaar", "a bazaar", "Bazaar",
       NULL,
@@ -270,7 +273,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '1', false, false, 0 },
 
-    { BRANCH_TROVE, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_TROVE, NUM_BRANCHES, 7, 18, 1, 14, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Trove", "a treasure trove", "Trove",
       NULL,
@@ -279,7 +282,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '2', false, false, 0 },
 
-    { BRANCH_SEWER, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_SEWER, NUM_BRANCHES, 2, 4, 1, 3, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Sewer", "the sewers", "Sewer",
       NULL,
@@ -288,7 +291,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '3', false, false, 0 },
 
-    { BRANCH_OSSUARY, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_OSSUARY, NUM_BRANCHES, 3, 5, 1, 4, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ossuary", "a tomb", "Ossuary",
       NULL,
@@ -297,7 +300,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '4', false, false, 0 },
 
-    { BRANCH_BAILEY, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_BAILEY, NUM_BRANCHES, 7, 10, 1, 8, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Bailey", "the bailey", "Bailey",
       NULL,
@@ -306,7 +309,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '5', false, false, 0 },
 
-    { BRANCH_ICE_CAVE, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_ICE_CAVE, NUM_BRANCHES, 8, 13, 1, 10, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ice Cave", "an ice cave", "IceCv",
       NULL,
@@ -315,7 +318,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '6', false, false, 0 },
 
-    { BRANCH_VOLCANO, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_VOLCANO, NUM_BRANCHES, 5, 14, 1, 8, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Volcano", "a volcano", "Volcano",
       NULL,
@@ -324,7 +327,7 @@ Branch branches[] = {
       NULL, NULL, NULL, NULL,
       '7', false, false, 0 },
 
-    { BRANCH_WIZLAB, NUM_BRANCHES, -1, -1, 1, -1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_WIZLAB, NUM_BRANCHES, 14, 18, 1, 16, BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Wizlab", "a Wizard's Laboratory", "WizLab",
       NULL,
@@ -332,6 +335,16 @@ Branch branches[] = {
       mons_null_rare, mons_null_level,
       NULL, NULL, NULL, NULL,
       '8', false, false, 0 },
+
+    { BRANCH_PANDOORA, NUM_BRANCHES, EASY_CHECKPOINT, EASY_CHECKPOINT, 1,
+          EASY_CHECKPOINT, BFLAG_NO_XLEV_TRAVEL, 0,
+      DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
+      "Pandoora", "the Pandoora's hall", "Pandoora",
+      NULL,
+      false, WHITE, LIGHTGREY,
+      mons_null_rare, mons_null_level,
+      NULL, NULL, NULL, NULL,
+      '9', false, false, 0 },
 };
 
 #endif

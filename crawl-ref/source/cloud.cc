@@ -1515,9 +1515,9 @@ int num_fogs_for_place(int level_number, const level_id &place)
     if (level_number == -1)
         level_number = place.absdepth();
 
-    switch (place.level_type)
+    switch (place.branch)
     {
-    case LEVEL_DUNGEON:
+    default:
     {
         Branch &branch = branches[place.branch];
         ASSERT((branch.num_fogs_function == NULL
@@ -1530,14 +1530,12 @@ int num_fogs_for_place(int level_number, const level_id &place)
 
         return branch.num_fogs_function(level_number);
     }
-    case LEVEL_ABYSS:
+    case BRANCH_ABYSS:
         return fogs_abyss_number(level_number);
-    case LEVEL_PANDEMONIUM:
+    case BRANCH_PANDEMONIUM:
         return fogs_pan_number(level_number);
-    case LEVEL_LABYRINTH:
+    case BRANCH_LABYRINTH:
         return fogs_lab_number(level_number);
-    default:
-        return 0;
     }
 
     return 0;
@@ -1550,9 +1548,9 @@ fog_machine_data random_fog_for_place(int level_number, const level_id &place)
     if (level_number == -1)
         level_number = place.absdepth();
 
-    switch (place.level_type)
+    switch (place.branch)
     {
-    case LEVEL_DUNGEON:
+    default:
     {
         Branch &branch = branches[place.branch];
         ASSERT(branch.num_fogs_function != NULL
@@ -1560,14 +1558,12 @@ fog_machine_data random_fog_for_place(int level_number, const level_id &place)
         branch.rand_fog_function(level_number, data);
         return data;
     }
-    case LEVEL_ABYSS:
+    case BRANCH_ABYSS:
         return fogs_abyss_type(level_number);
-    case LEVEL_PANDEMONIUM:
+    case BRANCH_PANDEMONIUM:
         return fogs_pan_type(level_number);
-    case LEVEL_LABYRINTH:
+    case BRANCH_LABYRINTH:
         return fogs_lab_type(level_number);
-    default:
-        die("fog type not assigned");
     }
 }
 

@@ -491,11 +491,17 @@ static bool _ball_of_seeing(void)
         set_mp(0, false);
         // if you're out of mana, the switch chain falls through to confusion
     }
-    else if (use < 10 || you.level_type == LEVEL_LABYRINTH)
+    else if (use < 10 || player_in_branch(BRANCH_LABYRINTH))
     {
-        if (you.level_type == LEVEL_LABYRINTH)
+        if (player_in_branch(BRANCH_LABYRINTH))
+        {
+            // Don't confuse the player here; spoilery in a small way.
             mpr("You see a maze of twisty little passages, all alike.");
-        confuse_player(10 + random2(10));
+        }
+        else
+        {
+            confuse_player(10 + random2(10));
+        }
     }
     else if (use < 15 || coinflip())
         mpr("You see nothing.");

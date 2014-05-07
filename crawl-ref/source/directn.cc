@@ -1928,7 +1928,7 @@ bool direction_chooser::do_main_loop()
         if (!just_looking)
             break;
 
-        if (you.level_type == LEVEL_LABYRINTH
+        if (player_in_branch(BRANCH_LABYRINTH)
             || !player_in_mappable_area())
         {
             mpr("You cannot set exclusions on this level.");
@@ -2997,7 +2997,7 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return ("stone wall");
     case DNGN_ROCK_WALL:
     case DNGN_SECRET_DOOR:
-        if (you.level_type == LEVEL_PANDEMONIUM)
+        if (player_in_branch(BRANCH_PANDEMONIUM))
             return ("wall of the weird stuff which makes up Pandemonium");
         else
             return ("rock wall");

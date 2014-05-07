@@ -87,27 +87,25 @@
 #endif
 
 #define YOU_DUNGEON_VAULTS_KEY    "you_dungeon_vaults_key"
-#define YOU_PORTAL_VAULT_MAPS_KEY "you_portal_vault_maps_key"
 
 // DUNGEON BUILDERS
-static bool _build_level_vetoable(int level_number, level_area_type level_type,
+static bool _build_level_vetoable(int level_number, branch_type branch,
                                   bool enable_random_maps);
-static void _build_dungeon_level(int level_number, level_area_type level_type);
-static bool _valid_dungeon_level(int level_number, level_area_type level_type);
+static void _build_dungeon_level(int level_number, branch_type branch);
+static bool _valid_dungeon_level(int level_number, branch_type branch);
 
-static bool _builder_by_type(int level_number, level_area_type level_type);
+static bool _builder_by_type(int level_number, branch_type branch);
 static void _builder_normal(int level_number);
 static void _builder_items(int level_number, int items_wanted);
-static void _builder_monsters(int level_number, level_area_type level_type,
-                              int mon_wanted);
+static void _builder_monsters(int level_number, int mon_wanted);
 static void _place_specific_stair(dungeon_feature_type stair,
                                   const std::string &tag = "",
                                   int dl = 0);
-static void _place_branch_entrances(int dlevel, level_area_type level_type);
+static void _place_branch_entrances(int dlevel, branch_type branch);
 static void _place_extra_vaults();
 static void _place_chance_vaults();
 static void _place_minivaults(void);
-static int _place_uniques(int level_number, level_area_type level_type);
+static int _place_uniques(int level_number, branch_type branch);
 static void _place_traps(int level_number);
 static void _place_fog_machines(int level_number);
 static void _prepare_water(int level_number);
@@ -202,7 +200,6 @@ static bool dgn_check_connectivity = false;
 static int  dgn_zones = 0;
 
 static CrawlHashTable _you_vault_list;
-static std::string    _portal_vault_map_name;
 
 class dgn_veto_exception : public std::exception
 {
@@ -251,7 +248,7 @@ static callback_map level_type_post_callbacks;
 /**********************************************************************
  * builder() - kickoff for the dungeon generator.
  *********************************************************************/
-bool builder(int level_number, level_area_type level_type, bool enable_random_maps)
+bool builder(int level_number, bool enable_random_maps)
 {
     const std::set<std::string> uniq_tags  = you.uniq_map_tags;
     const std::set<std::string> uniq_names = you.uniq_map_names;
@@ -274,7 +271,7 @@ bool builder(int level_number, level_area_type level_type, bool enable_random_ma
 
         try
         {
-            if (_build_level_vetoable(level_number, level_type,
+            if (_build_level_vetoable(level_number, you.where_are_you,
                                       enable_random_maps))
                 return (true);
         }
@@ -309,7 +306,7 @@ bool builder(int level_number, level_area_type level_type, bool enable_random_ma
     return (false);
 }
 
-static bool _build_level_vetoable(int level_number, level_area_type level_type,
+static bool _build_level_vetoable(int level_number, branch_type branch,
                                   bool enable_random_maps)
 {
 #ifdef DEBUG_DIAGNOSTICS
@@ -323,7 +320,7 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
 
     try
     {
-        _build_dungeon_level(level_number, level_type);
+        _build_dungeon_level(level_number, branch);
     }
     catch (dgn_veto_exception& e)
     {
@@ -337,7 +334,7 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
     _dgn_set_floor_colours();
 
     if (!crawl_state.game_standard_levelgen()
-        || _valid_dungeon_level(level_number, level_type))
+        || _valid_dungeon_level(level_number, branch))
     {
 #ifdef DEBUG_MONS_SCAN
         // If debug_mons_scan() finds a problem while Generating_Level is
@@ -357,7 +354,7 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
             env.level_layout_types.end(), ", ");
 
         // Save information in the level's properties hash table
-        // so we can inlcude it in crash reports.
+        // so we can include it in crash reports.
         env.properties[BUILD_METHOD_KEY] = env.level_build_method;
         env.properties[LAYOUT_TYPE_KEY]  = level_layout_type;
         env.properties[LEVEL_ID_KEY]     = level_id::current().describe();
@@ -372,21 +369,6 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
 
             CrawlHashTable &this_level = all_vaults[lev].get_table();
             this_level = _you_vault_list;
-        }
-        else if (!_portal_vault_map_name.empty())
-        {
-            CrawlVector &vault_maps =
-                you.props[YOU_PORTAL_VAULT_MAPS_KEY].get_vector();
-            if (vault_maps.size() < vault_maps.get_max_size())
-                vault_maps.push_back(_portal_vault_map_name);
-        }
-
-        if (you.level_type == LEVEL_PORTAL_VAULT)
-        {
-            CrawlVector &vault_names =
-                you.props[YOU_PORTAL_VAULT_NAMES_KEY].get_vector();
-            if (vault_names.size() < vault_names.get_max_size())
-                vault_names.push_back(you.level_type_name);
         }
 
         _dgn_postprocess_level();
@@ -1126,9 +1108,9 @@ static bool _is_level_stair_connected()
     return (false);
 }
 
-static bool _valid_dungeon_level(int level_number, level_area_type level_type)
+static bool _valid_dungeon_level(int level_number, branch_type branch)
 {
-    if (level_number == 0 && level_type == LEVEL_DUNGEON)
+    if (level_number == 0 && is_connected_branch(branch))
         return _is_level_stair_connected();
 
     return (true);
@@ -1142,7 +1124,6 @@ void dgn_reset_level(bool enable_random_maps)
     you.unique_creatures = temp_unique_creatures;
     you.unique_items = temp_unique_items;
 
-    _portal_vault_map_name.clear();
     _you_vault_list.clear();
     env.level_build_method.clear();
     env.level_layout_types.clear();
@@ -1209,35 +1190,22 @@ void dgn_reset_level(bool enable_random_maps)
     dungeon_events.clear();
 
     // Set default level flags.
-    if (player_in_level_area(LEVEL_DUNGEON))
-        env.level_flags = branches[you.where_are_you].default_level_flags;
-    else if (player_in_level_area(LEVEL_LABYRINTH)
-             || player_in_level_area(LEVEL_ABYSS))
-    {
-        env.level_flags = LFLAG_NO_TELE_CONTROL | LFLAG_NO_MAGIC_MAP;
-
-        // Labyrinths are now mappable, but come with heavy map rot. (jpeg)
-        if (player_in_level_area(LEVEL_ABYSS))
-            env.level_flags |= LFLAG_NOT_MAPPABLE;
-    }
-    else
-        env.level_flags = 0;
+    env.level_flags = branches[you.where_are_you].default_level_flags;
 
     // Set default random monster generation rate (smaller is more often,
     // except that 0 == no random monsters).
-    if (you.level_type == LEVEL_DUNGEON)
+    if (you.where_are_you == BRANCH_ECUMENICAL_TEMPLE
+        || crawl_state.game_is_tutorial())
     {
-        if (you.where_are_you == BRANCH_ECUMENICAL_TEMPLE
-            || crawl_state.game_is_tutorial())
-        {
-            // No random monsters in tutorial or ecu temple
-            env.spawn_random_rate = 0;
-        }
-        else
-            env.spawn_random_rate = 240;
+        // No random monsters in tutorial or ecu temple
+        env.spawn_random_rate = 0;
     }
-    else if (player_in_level_area(LEVEL_ABYSS)
-             || player_in_level_area(LEVEL_PANDEMONIUM))
+    else if (player_in_connected_branch())
+    {
+        env.spawn_random_rate = 240;
+    }
+    else if (player_in_branch(BRANCH_ABYSS)
+             || player_in_branch(BRANCH_PANDEMONIUM))
     {
         // Abyss spawn rate is set for those characters that start out in the
         // Abyss; otherwise the number is ignored in the Abyss.
@@ -1262,9 +1230,9 @@ void dgn_reset_level(bool enable_random_maps)
 #endif
 }
 
-static void _build_layout_skeleton(int level_number, level_area_type level_type)
+static void _build_layout_skeleton(int level_number, branch_type branch)
 {
-    if (_builder_by_type(level_number, level_type))
+    if (_builder_by_type(level_number, branch))
         _builder_normal(level_number);
 
     if (player_in_branch(BRANCH_SLIME_PITS))
@@ -1305,13 +1273,16 @@ static int _num_items_wanted(int level_number)
     return num_items;
 }
 
-static int _num_mons_wanted(level_area_type level_type)
+static int _num_mons_wanted(branch_type branch)
 {
-    if (level_type == LEVEL_ABYSS
-        || player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
+    if (branch == BRANCH_ABYSS
+        || branch == BRANCH_ECUMENICAL_TEMPLE)
     {
         return 0;
     }
+
+    if (branch == BRANCH_PANDEMONIUM)
+        return random2avg(28, 3);
 
     int mon_wanted = roll_dice(3, 10);
 
@@ -1336,7 +1307,7 @@ static void _fixup_walls()
 
     dungeon_feature_type wall_type = DNGN_ROCK_WALL;
 
-    if (you.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch())
         return;
 
     switch (you.where_are_you)
@@ -1416,7 +1387,7 @@ static void _fixup_branch_stairs()
     // dungeon or wherever:
     if (your_branch().exit_stairs != NUM_FEATURES
         && player_branch_depth() == 1
-        && you.level_type == LEVEL_DUNGEON)
+        && player_in_connected_branch())
     {
         const dungeon_feature_type exit = your_branch().exit_stairs;
         for (rectangle_iterator ri(1); ri; ++ri)
@@ -1730,7 +1701,7 @@ static bool _add_connecting_escape_hatches()
     if (branches[you.where_are_you].branch_flags & BFLAG_ISLANDED)
         return (true);
 
-    if (you.level_type != LEVEL_DUNGEON)
+    if (!player_in_connected_branch())
         return (true);
 
     if (at_branch_bottom())
@@ -1794,7 +1765,7 @@ static void _dgn_verify_connectivity(unsigned nvaults)
     }
 
     // Also check for isolated regions that have no stairs.
-    if (you.level_type == LEVEL_DUNGEON
+    if (player_in_connected_branch()
         && !(branches[you.where_are_you].branch_flags & BFLAG_ISLANDED)
         && dgn_count_disconnected_zones(true) > 0)
     {
@@ -2031,12 +2002,12 @@ static void _ruin_level(Iterator ri,
     }
 }
 
-static void _build_dungeon_level(int level_number, level_area_type level_type)
+static void _build_dungeon_level(int level_number, branch_type branch)
 {
-    _build_layout_skeleton(level_number, level_type);
+    _build_layout_skeleton(level_number, branch);
 
-    if (you.level_type == LEVEL_LABYRINTH
-        || you.level_type == LEVEL_PORTAL_VAULT)
+    if (branch == BRANCH_LABYRINTH
+        || is_portal_vault(branch))
     {
         return;
     }
@@ -2079,12 +2050,12 @@ static void _build_dungeon_level(int level_number, level_area_type level_type)
     {
         _place_chance_vaults();
         _place_minivaults();
-        _place_branch_entrances(level_number, level_type);
+        _place_branch_entrances(level_number, branch);
         _place_extra_vaults();
 
         // XXX: Moved this here from builder_monsters so that
         //      connectivity can be ensured
-        _place_uniques(level_number, level_type);
+        _place_uniques(level_number, branch);
 
         // Any vault-placement activity must happen before this check.
         _dgn_verify_connectivity(nvaults);
@@ -2098,8 +2069,7 @@ static void _build_dungeon_level(int level_number, level_area_type level_type)
 
         // Place monsters.
         if (!crawl_state.game_is_zotdef())
-            _builder_monsters(level_number, level_type,
-                              _num_mons_wanted(level_type));
+            _builder_monsters(level_number, _num_mons_wanted(branch));
 
         _fixup_walls();
         _fixup_branch_stairs();
@@ -2117,7 +2087,7 @@ static void _build_dungeon_level(int level_number, level_area_type level_type)
     }
 
     // Translate stairs for pandemonium levels.
-    if (level_type == LEVEL_PANDEMONIUM)
+    if (branch == BRANCH_PANDEMONIUM)
         _fixup_pandemonium_stairs();
 
     if (player_in_hell())
@@ -2175,16 +2145,12 @@ static void _dgn_set_floor_colours()
     uint8_t old_floor_colour = env.floor_colour;
     uint8_t old_rock_colour  = env.rock_colour;
 
-    if (you.level_type == LEVEL_PANDEMONIUM || you.level_type == LEVEL_ABYSS)
+    const int youbranch = you.where_are_you;
+    env.floor_colour    = branches[youbranch].floor_colour;
+    env.rock_colour     = branches[youbranch].rock_colour;
+
+    if (player_in_branch(BRANCH_PANDEMONIUM) || player_in_branch(BRANCH_ABYSS))
         dgn_set_colours_from_monsters();
-    else if (you.level_type == LEVEL_DUNGEON)
-    {
-        // level_type == LEVEL_DUNGEON
-        // Hall of Zot colours handled in dat/zot.des
-        const int youbranch = you.where_are_you;
-        env.floor_colour    = branches[youbranch].floor_colour;
-        env.rock_colour     = branches[youbranch].rock_colour;
-    }
 
     if (old_floor_colour != BLACK)
         env.floor_colour = old_floor_colour;
@@ -2340,15 +2306,15 @@ static void _pan_level(int level_number)
 
 // Take care of labyrinth, abyss, pandemonium. Returns false if we should skip
 // further generation, and true otherwise.
-static bool _builder_by_type(int level_number, level_area_type level_type)
+static bool _builder_by_type(int level_number, branch_type branch)
 {
-    if (level_type == LEVEL_PORTAL_VAULT)
-        _portal_vault_level(level_number);
-    else if (level_type == LEVEL_LABYRINTH)
+    if (is_portal_vault(branch))
+        /*_portal_vault_level(level_number)*/;
+    else if (branch == BRANCH_LABYRINTH)
         dgn_build_labyrinth_level(level_number);
-    else if (level_type == LEVEL_ABYSS)
+    else if (branch == BRANCH_ABYSS)
         generate_abyss();
-    else if (level_type == LEVEL_PANDEMONIUM)
+    else if (branch == BRANCH_PANDEMONIUM)
         _pan_level(level_number);
     else
         return true;
@@ -2356,6 +2322,7 @@ static bool _builder_by_type(int level_number, level_area_type level_type)
     return false;
 }
 
+#if 0
 static void _portal_vault_level(int level_number)
 {
     env.level_build_method += " portal_vault_level";
@@ -2439,6 +2406,7 @@ static void _portal_vault_level(int level_number)
     if (i != level_type_post_callbacks.end())
         dlua.callfn(i->second.c_str(), 0, 0);
 }
+#endif
 
 static const map_def *_dgn_random_map_for_place(bool minivault)
 {
@@ -3190,11 +3158,8 @@ static void _place_specific_stair(dungeon_feature_type stair,
         _place_specific_feature(stair);
 }
 
-static void _place_branch_entrances(int dlevel, level_area_type level_type)
+static void _place_branch_entrances(int dlevel, branch_type branch)
 {
-    if (level_type != LEVEL_DUNGEON)
-        return;
-
     // Place actual branch entrances.
     for (int i = 0; i < NUM_BRANCHES; ++i)
     {
@@ -3242,14 +3207,11 @@ static void _place_extra_vaults()
 // There is a hidden dependency on the player's actual
 // location (through your_branch()).
 // Return the number of uniques placed.
-static int _place_uniques(int level_number, level_area_type level_type)
+static int _place_uniques(int level_number, branch_type branch)
 {
     // Unique beasties:
-    if (level_number <= 0 || level_type != LEVEL_DUNGEON
-        || !your_branch().has_uniques)
-    {
+    if (level_number <= 0 || !your_branch().has_uniques)
         return 0;
-    }
 
 #ifdef DEBUG_UNIQUE_PLACEMENT
     FILE *ostat = fopen("unique_placement.log", "a");
@@ -3355,7 +3317,7 @@ static int _place_monster_vector(std::vector<monster_type> montypes,
 }
 
 
-static void _place_aquatic_monsters(int level_number, level_area_type level_type)
+static void _place_aquatic_monsters(int level_number)
 {
     int lava_spaces = 0, water_spaces = 0;
     std::vector<monster_type> swimming_things(4u, MONS_NO_MONSTER);
@@ -3490,9 +3452,9 @@ coord_def _fuzz_coords(coord_def c)
     return c;
 }
 
-static void _builder_monsters(int level_number, level_area_type level_type, int mon_wanted)
+static void _builder_monsters(int level_number, int mon_wanted)
 {
-    if (level_type == LEVEL_PANDEMONIUM
+    if (player_in_branch(BRANCH_PANDEMONIUM)
         || player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
     {
         return;
@@ -3554,7 +3516,7 @@ static void _builder_monsters(int level_number, level_area_type level_type, int 
     }
 
     if (!player_in_branch(BRANCH_CRYPT)) // No water creatures in the Crypt.
-        _place_aquatic_monsters(level_number, level_type);
+        _place_aquatic_monsters(level_number);
 }
 
 static void _builder_items(int level_number, int items_wanted)
@@ -4952,12 +4914,12 @@ static dungeon_feature_type _pick_an_altar()
     int temp_rand;              // probability determination {dlb}
 
     if (player_in_branch(BRANCH_ECUMENICAL_TEMPLE)
-        || you.level_type == LEVEL_LABYRINTH)
+        || player_in_branch(BRANCH_LABYRINTH))
     {
         // No extra altars in Temple, none at all in Labyrinth.
         altar_type = DNGN_FLOOR;
     }
-    else if (you.level_type == LEVEL_DUNGEON && !one_chance_in(5))
+    else if (player_in_connected_branch() && !one_chance_in(5))
     {
         switch (you.where_are_you)
         {
@@ -5116,7 +5078,7 @@ void place_spec_shop(int level_number,
         env.shop[i].greed = 15 + random2avg(19, 2) + random2(level_number);
 
     // Allow bargains in bazaars, prices randomly between 60% and 95%.
-    if (you.level_type == LEVEL_PORTAL_VAULT && you.level_type_tag == "bazaar")
+    if (player_in_branch(BRANCH_BAZAAR))
     {
         // Need to calculate with factor as greed (uint8_t)
         // is capped at 255.
@@ -5178,8 +5140,7 @@ void place_spec_shop(int level_number,
         }
 
         // Make bazaar items more valuable (up to double value).
-        if (you.level_type == LEVEL_PORTAL_VAULT
-            && you.level_type_tag == "bazaar")
+        if (player_in_branch(BRANCH_BAZAAR))
         {
             int help = random2(item_level) + 1;
             item_level += help;
@@ -5800,11 +5761,8 @@ coord_def dgn_find_nearby_stair(dungeon_feature_type stair_to_find,
 
     // Still hosed? If we're in a portal vault, convert to a search for
     // any stone arch.
-    if (you.level_type == LEVEL_PORTAL_VAULT
-        && stair_to_find != DNGN_STONE_ARCH)
-    {
+    if (is_portal_vault(you.where_are_you) && stair_to_find != DNGN_STONE_ARCH)
         return dgn_find_nearby_stair(DNGN_STONE_ARCH, base_pos, find_closest);
-    }
 
     // Look for any clear terrain and abandon the idea of looking
     // nearby now. This is used when taking transit Pandemonium gates,
@@ -5989,7 +5947,7 @@ static bool _fixup_interlevel_connectivity()
     //      is updated, so we rely on the level not being vetoed after
     //      this check.
 
-    if (you.level_type != LEVEL_DUNGEON || your_branch().depth == -1)
+    if (!player_in_connected_branch() || your_branch().depth == -1)
         return (true);
     if (branches[you.where_are_you].branch_flags & BFLAG_ISLANDED)
         return (true);
@@ -6358,8 +6316,7 @@ void remember_vault_placement(std::string key, const vault_placement &place)
     // Second we setup some info to be saved in the player's properties
     // hash table, so the information can be included in the character
     // dump when the player dies/quits/wins.
-    if (you.level_type == LEVEL_DUNGEON
-        && !place.map.is_overwritable_layout()
+    if (!place.map.is_overwritable_layout()
         && !place.map.has_tag_suffix("dummy")
         && !place.map.has_tag("no_dump"))
     {
@@ -6367,12 +6324,6 @@ void remember_vault_placement(std::string key, const vault_placement &place)
             ? "extra" : "normal";
 
         _you_vault_list[type].get_vector().push_back(place.map.name);
-    }
-    else if (you.level_type == LEVEL_PORTAL_VAULT
-             && place.map.orient == MAP_ENCOMPASS
-             && !place.map.has_tag("no_dump"))
-    {
-        _portal_vault_map_name = place.map.name;
     }
 }
 
@@ -6417,24 +6368,6 @@ std::string dump_vault_maps()
             out += "\n";
         }
         out += "\n";
-    }
-    CrawlVector &portals = you.props[YOU_PORTAL_VAULT_MAPS_KEY].get_vector();
-
-    if (!portals.empty())
-    {
-        out += "\n";
-
-        out += "Portal vault maps: ";
-
-        for (unsigned int i = 0, size = portals.size(); i < size; i++)
-        {
-            out += portals[i].get_string();
-
-            if (i < (size - 1))
-                out += ", ";
-        }
-
-        out += "\n\n";
     }
     return (out);
 }

@@ -171,8 +171,7 @@ int store_tilename_get_index(const std::string tilename)
 //
 
 level_range::level_range(branch_type br, int s, int d)
-    : level_type(LEVEL_DUNGEON), branch(br), shallowest(),
-      deepest(), deny(false)
+    : branch(br), shallowest(), deepest(), deny(false)
 {
     set(s, d);
 }
@@ -185,7 +184,6 @@ level_range::level_range(const raw_range &r)
 
 void level_range::write(writer& outf) const
 {
-    marshallShort(outf, level_type);
     marshallShort(outf, branch);
     marshallShort(outf, shallowest);
     marshallShort(outf, deepest);
@@ -194,11 +192,33 @@ void level_range::write(writer& outf) const
 
 void level_range::read(reader& inf)
 {
-    level_type = static_cast<level_area_type>(unmarshallShort(inf));
+#if TAG_MAJOR_VERSION == 32
+    if (inf.getMinorVersion() < TAG_MINOR_NO_LEVEL_TYPE)
+    {
+        unsigned short lt = unmarshallShort(inf);
+        branch     = static_cast<branch_type>(unmarshallShort(inf));
+        shallowest = unmarshallShort(inf);
+        deepest    = unmarshallShort(inf);
+        deny       = unmarshallByte(inf);
+        if (lt)
+        {
+            // buggy if the place was a portal vault, but the information
+            // is already gone (and no new bug is introduced)
+            branch     = place_branch(upgrade_packed_place(lt | 0xFF00));
+            shallowest = 1;
+            deepest    = branches[branch].depth;
+        }
+    }
+    else
+    {
+#endif
     branch     = static_cast<branch_type>(unmarshallShort(inf));
     shallowest = unmarshallShort(inf);
     deepest    = unmarshallShort(inf);
     deny       = unmarshallByte(inf);
+#if TAG_MAJOR_VERSION == 32
+    }
+#endif
 }
 
 std::string level_range::str_depth_range() const
@@ -239,8 +259,7 @@ void level_range::set(const std::string &br, int s, int d)
 {
     if (br == "any" || br == "Any")
         branch = NUM_BRANCHES;
-    else if ((branch = str_to_branch(br)) == NUM_BRANCHES
-             && (level_type = str_to_level_area_type(br)) == LEVEL_DUNGEON)
+    else if ((branch = str_to_branch(br)) == NUM_BRANCHES)
         throw make_stringf("Unknown branch: '%s'", br.c_str());
 
     shallowest = s;
@@ -346,18 +365,11 @@ void level_range::set(int s, int d)
 void level_range::reset()
 {
     deepest = shallowest = -1;
-    level_type = LEVEL_DUNGEON;
+    branch = NUM_BRANCHES;
 }
 
 bool level_range::matches(const level_id &lid) const
 {
-    // Level types must always match.
-    if (lid.level_type != level_type)
-        return (false);
-
-    if (lid.level_type != LEVEL_DUNGEON)
-        return (true);
-
     if (branch == NUM_BRANCHES)
         return (matches(absdungeon_depth(lid.branch, lid.depth)));
     else
@@ -374,11 +386,10 @@ bool level_range::matches(int x) const
 
 bool level_range::operator == (const level_range &lr) const
 {
-    return (deny == lr.deny && level_type == lr.level_type
-            && (level_type != LEVEL_DUNGEON
-                || (shallowest == lr.shallowest
-                    && deepest == lr.deepest
-                    && branch == lr.branch)));
+    return (deny == lr.deny
+            && (shallowest == lr.shallowest
+                && deepest == lr.deepest
+                && branch == lr.branch));
 }
 
 bool level_range::valid() const
@@ -2718,8 +2729,7 @@ std::string map_def::validate_map_def(const depth_ranges &default_depths)
     if (!has_depth() && !lc_default_depths.empty())
         depths.add_depths(lc_default_depths);
 
-    if ((place.branch == BRANCH_ECUMENICAL_TEMPLE
-         && place.level_type == LEVEL_DUNGEON)
+    if (place.branch == BRANCH_ECUMENICAL_TEMPLE
         || has_tag_prefix("temple_overflow_"))
     {
         err = validate_temple_map();

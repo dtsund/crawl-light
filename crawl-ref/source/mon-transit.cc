@@ -10,6 +10,7 @@
 #include "mon-transit.h"
 
 #include "artefact.h"
+#include "branch.h"
 #include "coord.h"
 #include "coordit.h"
 #include "dungeon.h"
@@ -150,7 +151,7 @@ void add_monster_to_transit(const level_id &lid, level_id &origin, const monster
     //We'll never revisit non-dungeon areas anyway, so let's make sure that
     //a) We don't clobber monsters we shouldn't, and
     //b) We don't accumulate a monstrously huge the_doomed_ones list.
-    if(origin.level_type == LEVEL_DUNGEON)
+    if(is_connected_branch(origin.branch))
         to_push.add_to_doomed = true;
     else
         to_push.add_to_doomed = false;
@@ -290,7 +291,7 @@ static void level_place_lost_monsters(m_transit_list &m, int time_taken)
 
         // Monsters transiting to the Abyss have a 50% chance of being
         // placed, otherwise a 100% chance.
-        if (you.level_type == LEVEL_ABYSS && coinflip())
+        if (you.where_are_you == BRANCH_ABYSS && coinflip())
             continue;
 
         // Monster hasn't yet reached the staircase!            
@@ -407,28 +408,10 @@ bool follower::place(bool near_player)
             continue;
         m = mons;
 
-        bool placed = false;
+        // Shafts no longer retain the position, if anything else would
+        // want to request a specific one, it should do so here if !near_player
 
-        // In certain instances (currently, falling through a shaft)
-        // try to place monster as close as possible to its previous
-        // <x,y> coordinates.
-        if (!near_player && you.level_type == LEVEL_DUNGEON
-            && in_bounds(m.pos()))
-        {
-            const coord_def where_to_go =
-                dgn_find_nearby_stair(DNGN_ESCAPE_HATCH_DOWN,
-                                      m.pos(), true);
-
-            if (where_to_go == you.pos())
-                near_player = true;
-            else if (m.find_home_near_place(where_to_go))
-                placed = true;
-        }
-
-        if (!placed)
-            placed = m.find_place_to_live(near_player);
-
-        if (placed)
+        if (m.find_place_to_live(near_player))
         {
 #ifdef DEBUG_DIAGNOSTICS
             mprf(MSGCH_DIAGNOSTICS, "Placed follower: %s",
@@ -440,7 +423,7 @@ bool follower::place(bool near_player)
             
             m.target.reset();
 
-            m.flags &= ~MF_TAKING_STAIRS;
+            m.flags &= ~MF_TAKING_STAIRS & ~MF_BANISHED;
 
             restore_mons_items(m);
             return (true);

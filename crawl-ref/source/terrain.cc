@@ -846,9 +846,7 @@ void dgn_move_entities_at(coord_def src, coord_def dst,
     if (!in_bounds(dst) || !in_bounds(src) || src == dst)
         return;
 
-    // Move terrain.
-    if (you.level_type == LEVEL_DUNGEON)
-        move_notable_thing(src, dst);
+    move_notable_thing(src, dst);
 
     dungeon_feature_type dfeat = grd(src);
     if (dfeat == DNGN_ENTER_SHOP)

@@ -553,78 +553,23 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
                        "escaped from the Abyss!" + _who_banished(who));
     }
 
-    std::string cast_into;
-
     switch (gate_type)
     {
     case DNGN_ENTER_ABYSS:
-        if (you.level_type == LEVEL_ABYSS)
+        if (player_in_branch(BRANCH_ABYSS))
         {
             mpr("You feel trapped.");
             return;
         }
-        cast_into = "the Abyss";
-        you.props["abyss_return_name"] = you.level_type_name;
-        you.props["abyss_return_abbrev"] = you.level_type_name_abbrev;
-        you.props["abyss_return_origin"] = you.level_type_origin;
-        you.props["abyss_return_tag"] = you.level_type_tag;
-        you.props["abyss_return_ext"] = you.level_type_ext;
-        you.props["abyss_return_desc"] = level_id::current().describe();
+        // TODO:LEVEL_STACK
         break;
 
     case DNGN_EXIT_ABYSS:
-        if (you.level_type != LEVEL_ABYSS)
+        if (you.where_are_you != BRANCH_ABYSS)
         {
             mpr("You feel dizzy for a moment.");
             return;
         }
-        break;
-
-    case DNGN_ENTER_PANDEMONIUM:
-        if (you.level_type == LEVEL_PANDEMONIUM)
-        {
-            mpr("You feel trapped.");
-            return;
-        }
-        cast_into = "Pandemonium";
-        break;
-
-    case DNGN_TRANSIT_PANDEMONIUM:
-        if (you.level_type != LEVEL_PANDEMONIUM)
-        {
-            banished(DNGN_ENTER_PANDEMONIUM, who);
-            return;
-        }
-        break;
-
-    case DNGN_EXIT_PANDEMONIUM:
-        if (you.level_type != LEVEL_PANDEMONIUM)
-        {
-            mpr("You feel dizzy for a moment.");
-            return;
-        }
-        break;
-
-    case DNGN_ENTER_LABYRINTH:
-        if (you.level_type == LEVEL_LABYRINTH)
-        {
-            mpr("You feel trapped.");
-            return;
-        }
-        cast_into = "a Labyrinth";
-        break;
-
-    case DNGN_ENTER_HELL:
-    case DNGN_ENTER_DIS:
-    case DNGN_ENTER_GEHENNA:
-    case DNGN_ENTER_COCYTUS:
-    case DNGN_ENTER_TARTARUS:
-        if (player_in_hell() || player_in_branch(BRANCH_VESTIBULE_OF_HELL))
-        {
-            mpr("You feel dizzy for a moment.");
-            return;
-        }
-        cast_into = "Hell";
         break;
 
     default:
@@ -676,9 +621,9 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     if (!crawl_state.is_god_acting())
         you.entry_cause_god = GOD_NO_GOD;
 
-    if (!cast_into.empty() && you.entry_cause != EC_SELF_EXPLICIT)
+    if (gate_type == DNGN_ENTER_ABYSS && you.entry_cause != EC_SELF_EXPLICIT)
     {
-        const std::string what = "Cast into " + cast_into + _who_banished(who);
+        const std::string what = "Cast into the Abyss" + _who_banished(who);
         take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
     }
 
@@ -2160,8 +2105,8 @@ static int _div(int num, int denom)
 bool monsters_can_respawn()
 {
     return(!crawl_state.game_is_zotdef()
-        && (you.level_type == LEVEL_ABYSS
-        ||  you.level_type == LEVEL_PANDEMONIUM
+        && (player_in_branch(BRANCH_ABYSS)
+        ||  player_in_branch(BRANCH_PANDEMONIUM)
         || (you.where_are_you >= BRANCH_FIRST_HELL && you.where_are_you <= BRANCH_LAST_HELL))
         || you.char_direction == GDT_ASCENDING);
 }
@@ -2229,7 +2174,7 @@ void handle_time()
         _hell_effects();
     
     // In particular, Tartarus slowly drains your experience...
-    if(you.where_are_you == BRANCH_TARTARUS && you.level_type != LEVEL_ABYSS)
+    if(you.where_are_you == BRANCH_TARTARUS)
     {
         you.experience = you.experience * 49 / 50;
         level_change();
@@ -2366,11 +2311,11 @@ void handle_time()
     // Exercise armour *xor* stealth skill: {dlb}
     practise(EX_WAIT);
 
-    if (you.level_type == LEVEL_LABYRINTH)
+    if (player_in_branch(BRANCH_LABYRINTH))
     {
         // Now that the labyrinth can be automapped, apply map rot as
         // a counter-measure. (Those mazes sure are easy to forget.)
-        forget_map(you.species == SP_MINOTAUR ? 25 : 45);
+        forget_map(45);
 
         // From time to time change a section of the labyrinth.
         if (one_chance_in(10))

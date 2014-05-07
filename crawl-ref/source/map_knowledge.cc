@@ -136,7 +136,7 @@ void set_terrain_seen(int x, int y)
         const bool boring = !is_notable_terrain(feat)
             // A portal deeper into the Ziggurat is boring.
             || (feat == DNGN_ENTER_PORTAL_VAULT
-                && you.level_type == LEVEL_PORTAL_VAULT)
+                && player_in_branch(BRANCH_ZIGGURAT))
             // Altars in the temple are boring.
             || (feat_is_altar(feat)
                 && player_in_branch(BRANCH_ECUMENICAL_TEMPLE))

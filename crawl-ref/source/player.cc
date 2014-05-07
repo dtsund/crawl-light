@@ -494,20 +494,14 @@ bool player_in_mappable_area(void)
             && !testbits(get_branch_flags(), BFLAG_NOT_MAPPABLE));
 }
 
-bool player_in_branch(int branch)
-{
-    return (you.level_type == LEVEL_DUNGEON && you.where_are_you == branch);
-}
-
-bool player_in_level_area(level_area_type area)
-{
-    return (you.level_type == area);
-}
-
 bool player_in_hell(void)
 {
-    return (you.level_type == LEVEL_DUNGEON
-            && is_hell_subbranch(you.where_are_you));
+    return (is_hell_subbranch(you.where_are_you));
+}
+
+bool player_in_connected_branch(void)
+{
+    return is_connected_branch(you.where_are_you);
 }
 
 // Returns whether we should consider the game to be hard mode
@@ -518,16 +512,16 @@ bool player_in_hard_mode(void)
 {
     // This is one heck of a return statement.
     return (you.difficulty_level == 2 &&
-               (player_in_branch(BRANCH_VAULTS) ||
-               player_in_branch(BRANCH_CRYPT) ||
-               player_in_branch(BRANCH_TOMB) ||
-               player_in_branch(BRANCH_HALL_OF_BLADES) ||
-               player_in_branch(BRANCH_VESTIBULE_OF_HELL) ||
-               player_in_branch(BRANCH_HALL_OF_ZOT) ||
-               (player_in_branch(BRANCH_MAIN_DUNGEON) &&
-                   you.absdepth0 >= HARD_CHECKPOINT - 1) ||
-               you.level_type == LEVEL_ABYSS ||
-               you.level_type == LEVEL_PANDEMONIUM));
+            (player_in_branch(BRANCH_VAULTS) ||
+             player_in_branch(BRANCH_CRYPT) ||
+             player_in_branch(BRANCH_TOMB) ||
+             player_in_branch(BRANCH_HALL_OF_BLADES) ||
+             player_in_branch(BRANCH_VESTIBULE_OF_HELL) ||
+             player_in_branch(BRANCH_HALL_OF_ZOT) ||
+             (player_in_branch(BRANCH_MAIN_DUNGEON) &&
+              you.absdepth0 >= HARD_CHECKPOINT - 1) ||
+             player_in_branch(BRANCH_ABYSS) ||
+             player_in_branch(BRANCH_PANDEMONIUM)));
 }
              
 
@@ -2595,7 +2589,7 @@ void forget_map(int chance_forgotten, bool force)
         return;
 
     // The radius is only used in labyrinths.
-    const bool use_lab_check = (!force && you.level_type == LEVEL_LABYRINTH
+    const bool use_lab_check = (!force && player_in_branch(BRANCH_LABYRINTH)
                                 && chance_forgotten < 100);
     const int radius = (use_lab_check && you.species == SP_MINOTAUR) ? 40*40
                                                                      : 25*25;
@@ -2622,7 +2616,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
 {
     if (crawl_state.game_is_arena())
         return;
-    if (crawl_state.game_is_sprint() && you.level_type == LEVEL_ABYSS)
+    if (crawl_state.game_is_sprint() && player_in_branch(BRANCH_ABYSS))
         return;
 
     const unsigned int  old_exp   = you.experience;
@@ -5308,12 +5302,9 @@ void player::init()
         delete kills;
     kills = new KillMaster();
 
-    level_type       = LEVEL_DUNGEON;
-    level_type_name.clear();
-    level_type_ext.clear();
-    level_type_name_abbrev.clear();
-    level_type_origin.clear();
-    level_type_tag.clear();
+#if TAG_MAJOR_VERSION == 32
+    old_level_type_name_abbrev.clear();
+#endif
 
     where_are_you    = BRANCH_MAIN_DUNGEON;
 
@@ -5458,16 +5449,8 @@ void player::init()
     // Protected fields:
     for (int i = 0; i < NUM_BRANCHES; i++)
     {
-        branch_info[i].level_type = LEVEL_DUNGEON;
-        branch_info[i].branch     = i;
+        branch_info[i].branch = (branch_type)i;
         branch_info[i].assert_validity();
-    }
-
-    for (int i = 0; i < (NUM_LEVEL_AREA_TYPES - 1); i++)
-    {
-        non_branch_info[i].level_type = i + 1;
-        non_branch_info[i].branch     = -1;
-        non_branch_info[i].assert_validity();
     }
 }
 
@@ -7015,10 +6998,8 @@ void player::set_place_info(PlaceInfo place_info)
 
     if (place_info.is_global())
         global_info = place_info;
-    else if (place_info.level_type == LEVEL_DUNGEON)
-        branch_info[place_info.branch] = place_info;
     else
-        non_branch_info[place_info.level_type - 1] = place_info;
+        branch_info[place_info.branch] = place_info;
 }
 
 std::vector<PlaceInfo> player::get_all_place_info(bool visited_only,
@@ -7029,21 +7010,11 @@ std::vector<PlaceInfo> player::get_all_place_info(bool visited_only,
     for (int i = 0; i < NUM_BRANCHES; i++)
     {
         if (visited_only && branch_info[i].num_visits == 0
-            || dungeon_only && branch_info[i].level_type != LEVEL_DUNGEON)
+            || dungeon_only && !is_connected_branch((branch_type)i))
         {
             continue;
         }
         list.push_back(branch_info[i]);
-    }
-
-    for (int i = 0; i < (NUM_LEVEL_AREA_TYPES - 1); i++)
-    {
-        if (visited_only && non_branch_info[i].num_visits == 0
-            || dungeon_only && non_branch_info[i].level_type != LEVEL_DUNGEON)
-        {
-            continue;
-        }
-        list.push_back(non_branch_info[i]);
     }
 
     return list;
@@ -7142,12 +7113,8 @@ void player::set_duration(duration_type dur, int turns,
 
 void player::goto_place(const level_id &lid)
 {
-    level_type = lid.level_type;
-    if (level_type == LEVEL_DUNGEON)
-    {
-        where_are_you = static_cast<branch_type>(lid.branch);
-        absdepth0 = absdungeon_depth(lid.branch, lid.depth);
-    }
+    where_are_you = static_cast<branch_type>(lid.branch);
+    absdepth0 = absdungeon_depth(lid.branch, lid.depth);
 }
 
 /*

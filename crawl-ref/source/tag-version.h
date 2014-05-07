@@ -28,6 +28,7 @@ enum tag_minor_version
 	                               // so that it can be displayed in file select
     TAG_MINOR_ZIN_REFORM,          // Zin overhaul with edicts and commandments
     TAG_MINOR_NO_GEN_LEVELS,       // No incomplete tracking of non-deleted levels.
+    TAG_MINOR_NO_LEVEL_TYPE,       // Coalesce distinct level type handling.
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
 };

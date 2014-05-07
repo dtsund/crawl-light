@@ -24,8 +24,6 @@
 #define LEVEL_EXTRAS_KEY "level_extras_key"
 #define LEVEL_ID_KEY     "level_id_key"
 
-#define YOU_PORTAL_VAULT_NAMES_KEY  "you_portal_vault_names_key"
-
 // See _build_overflow_temples() in dungeon.cc for details on overflow
 // temples.
 #define TEMPLE_GODS_KEY      "temple_gods_key"
@@ -195,8 +193,7 @@ void init_level_connectivity();
 void read_level_connectivity(reader &th);
 void write_level_connectivity(writer &th);
 
-bool builder(int level_number, level_area_type level_type,
-             bool enable_random_maps = true);
+bool builder(int level_number, bool enable_random_maps = true);
 void dgn_veto_level();
 
 void dgn_clear_vault_placements(vault_placement_refv &vps);
