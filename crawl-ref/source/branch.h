@@ -13,12 +13,8 @@ struct fog_machine_data;
 enum branch_flag_type
 {
     BFLAG_NONE = 0,
-
-    BFLAG_NOT_MAPPABLE    = (1 << 1), // Branch levels not mappable.
-    BFLAG_NO_MAGIC_MAP    = (1 << 2), // Branch levels can't be magic mapped.
-
-    BFLAG_ISLANDED        = (1 << 4), // May have isolated zones with no stairs.
-    BFLAG_NO_XLEV_TRAVEL  = (1 << 5), // Can't cross-level travel to or from it.
+    BFLAG_ISLANDED        = (1 << 1), // May have isolated zones with no stairs.
+    BFLAG_NO_XLEV_TRAVEL  = (1 << 2), // Can't cross-level travel to or from it.
 };
 
 struct Branch
