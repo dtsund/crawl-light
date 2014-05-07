@@ -430,9 +430,7 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
     if (!in_bounds(pos))
         pos = you.pos();
 
-    if (!force
-        && (testbits(env.level_flags, LFLAG_NO_MAGIC_MAP)
-            || testbits(get_branch_flags(), BFLAG_NO_MAGIC_MAP)))
+    if (!force && (testbits(env.level_flags, LFLAG_NO_MAGIC_MAP)))
     {
         if (!suppress_msg)
             mpr("You feel momentarily disoriented.");
