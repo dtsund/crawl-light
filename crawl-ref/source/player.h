@@ -309,9 +309,6 @@ public:
 
   int shield_blocks;         // number of shield blocks since last action
 
-  entry_cause_type entry_cause;
-  god_type         entry_cause_god;
-
   // Set when the character is going to a new level, to guard against levgen
   // failures
   dungeon_feature_type transit_stair;

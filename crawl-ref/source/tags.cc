@@ -1038,8 +1038,6 @@ static void tag_construct_you(writer &th)
     marshallByte(th, you.berserk_penalty);
     marshallShort(th, you.sage_bonus_skill);
     marshallInt(th, you.sage_bonus_degree);
-    marshallByte(th, you.entry_cause);
-    marshallByte(th, you.entry_cause_god);
 
     marshallInt(th, you.disease);
     marshallShort(th, you.dead ? 0 : you.hp);
@@ -1720,8 +1718,6 @@ static void tag_read_you(reader &th)
     you.sage_bonus_skill  = static_cast<skill_type>(unmarshallShort(th));
     you.sage_bonus_degree = unmarshallInt(th);
 
-    you.entry_cause     = static_cast<entry_cause_type>(unmarshallByte(th));
-    you.entry_cause_god = static_cast<god_type>(unmarshallByte(th));
     you.disease         = unmarshallInt(th);
 
     you.hp              = unmarshallShort(th);
