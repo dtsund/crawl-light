@@ -135,7 +135,7 @@ Branch branches[] = {
       'C', false, false, -20 },
 
     { BRANCH_TOMB, BRANCH_CRYPT, 2, 2, 3, 5,
-      BFLAG_ISLANDED | BFLAG_NO_TELE_CONTROL, 0,
+      BFLAG_ISLANDED, 0,
       DNGN_ENTER_TOMB, DNGN_RETURN_FROM_TOMB,
       "Tomb", "the Tomb of the Ancients", "Tomb",
       NULL,

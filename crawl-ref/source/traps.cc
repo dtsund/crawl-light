@@ -1579,7 +1579,7 @@ bool is_valid_shaft_level(const level_id &place)
     // reaching stairs, and also keeps player from getting stuck
     // on lower levels with the innability to use teleport control to
     // get back up.
-    if (testbits(get_branch_flags(place.branch), BFLAG_NO_TELE_CONTROL))
+    if (testbits(env.level_flags, LFLAG_NO_TELE_CONTROL))
         return (false);
     
     // Don't generate shafts that will let the player bypass difficulty-change

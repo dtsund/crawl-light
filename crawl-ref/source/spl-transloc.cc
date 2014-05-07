@@ -255,8 +255,7 @@ void random_blink(bool allow_partial_control, bool override_abyss)
 // here.
 bool allow_control_teleport(bool quiet)
 {
-    bool retval = !(testbits(env.level_flags, LFLAG_NO_TELE_CONTROL)
-                    || testbits(get_branch_flags(), BFLAG_NO_TELE_CONTROL));
+    bool retval = !(testbits(env.level_flags, LFLAG_NO_TELE_CONTROL));
 
     // Tell the player why if they have teleport control.
     if (!quiet && !retval && player_control_teleport())
