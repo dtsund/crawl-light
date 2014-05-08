@@ -287,7 +287,7 @@ const Branch branches[NUM_BRANCHES] = {
       "Sewer", "the sewers", "Sewer",
       NULL,
       false, LIGHTGREY, DARKGREY,
-      mons_null_rare, mons_null_level,
+      mons_sewer_rare, mons_sewer_level,
       NULL, NULL, NULL, NULL,
       '3', false, false, 0 },
 
