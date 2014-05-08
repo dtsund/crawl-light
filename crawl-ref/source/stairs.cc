@@ -654,7 +654,7 @@ void down_stairs(dungeon_feature_type force_stair)
     {
         if (stair_find == DNGN_ENTER_HELL && player_in_hell())
         {
-            up_stairs(force_stair, entry_cause);
+            up_stairs(force_stair);
             return;
         }
     }
