@@ -188,7 +188,7 @@ const Branch branches[NUM_BRANCHES] = {
       'X', true, true, 0 },
 
     { BRANCH_TARTARUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5,
-          BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_TARTARUS, NUM_FEATURES, // sentinel
       "Tartarus", "Tartarus", "Tar",
       NULL,
