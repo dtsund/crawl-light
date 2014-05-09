@@ -1236,15 +1236,8 @@ static void _build_layout_skeleton(int level_number, branch_type branch)
 
 static int _num_items_wanted(int level_number)
 {
-    if (player_in_branch(BRANCH_VESTIBULE_OF_HELL)
-     || player_in_hell()
-     || player_in_branch(BRANCH_SLIME_PITS)
-     || player_in_branch(BRANCH_HALL_OF_BLADES)
-     || player_in_branch(BRANCH_ECUMENICAL_TEMPLE))
-    {
-        // No random items in hell, the slime pits, the temple, the hall.
+    if (branches[you.where_are_you].branch_flags & BFLAG_NO_ITEMS)
         return 0;
-    }
     
     int num_items = 0;
     

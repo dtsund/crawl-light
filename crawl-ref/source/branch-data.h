@@ -26,7 +26,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'D', false, false, 0 },
 
-    { BRANCH_ECUMENICAL_TEMPLE, BRANCH_MAIN_DUNGEON, 3, 3, 1, 0, 0,
+    { BRANCH_ECUMENICAL_TEMPLE, BRANCH_MAIN_DUNGEON, 3, 3, 1,
+          BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_TEMPLE, DNGN_RETURN_FROM_TEMPLE,
       "Temple", "the Ecumenical Temple", "Temple",
       NULL,
@@ -80,7 +81,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'A', false, true, 3 },
 
-    { BRANCH_SLIME_PITS, BRANCH_LAIR, 4, 4, 4, 0, 0,
+    { BRANCH_SLIME_PITS, BRANCH_LAIR, 4, 4, 4,
+          BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_SLIME_PITS, DNGN_RETURN_FROM_SLIME_PITS,
       "Slime Pits", "the Pits of Slime", "Slime",
       NULL,
@@ -116,7 +118,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'V', false, true, 0 },
 
-    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 3, 3, 1, 0, 0,
+    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 3, 3, 1,
+          BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_HALL_OF_BLADES, DNGN_RETURN_FROM_HALL_OF_BLADES,
       "Hall of Blades", "the Hall of Blades", "Blade",
       NULL,
@@ -144,7 +147,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'W', false, true, -10 },
 
-    { BRANCH_VESTIBULE_OF_HELL, BRANCH_MAIN_DUNGEON, 15, 15, 1, 0, 0,
+    { BRANCH_VESTIBULE_OF_HELL, BRANCH_MAIN_DUNGEON, 15, 15, 1,
+          BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_HELL, DNGN_EXIT_HELL, // sentinel
       "Hell", "the Vestibule of Hell", "Hell",
       NULL,
@@ -153,7 +157,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'U', false, false, 0 },
 
-    { BRANCH_DIS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, BFLAG_ISLANDED, 0,
+    { BRANCH_DIS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5,
+          BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_DIS, NUM_FEATURES, // sentinel
       "Dis", "the Iron City of Dis", "Dis",
       NULL,
@@ -162,7 +167,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'I', true, true, 0 },
 
-    { BRANCH_GEHENNA, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, BFLAG_ISLANDED, 0,
+    { BRANCH_GEHENNA, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5,
+          BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_GEHENNA, NUM_FEATURES, // sentinel
       "Gehenna", "Gehenna", "Geh",
       NULL,
@@ -171,7 +177,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'G', true, true, 0 },
 
-    { BRANCH_COCYTUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, BFLAG_ISLANDED, 0,
+    { BRANCH_COCYTUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5,
+          BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_COCYTUS, NUM_FEATURES, // sentinel
       "Cocytus", "Cocytus", "Coc",
       NULL,
@@ -180,7 +187,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'X', true, true, 0 },
 
-    { BRANCH_TARTARUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5, BFLAG_ISLANDED, 0,
+    { BRANCH_TARTARUS, BRANCH_VESTIBULE_OF_HELL, 1, 1, 5,
+          BFLAG_ISLANDED | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_TARTARUS, NUM_FEATURES, // sentinel
       "Tartarus", "Tartarus", "Tar",
       NULL,
@@ -245,7 +253,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'R', false, false, 0 },
 
-    { BRANCH_ZIGGURAT, NUM_BRANCHES, 18, 18, 27, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_ZIGGURAT, NUM_BRANCHES, 18, 18, 27,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ziggurat", "a ziggurat", "Zig",
       "You land on top of a ziggurat so tall you cannot make out the ground.",
@@ -254,7 +263,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       'Q', false, false /* maybe, but Zig:26 is almost as bad */, 0 },
 
-    { BRANCH_LABYRINTH, NUM_BRANCHES, 7, 14, 1, BFLAG_NO_XLEV_TRAVEL, 
+    { BRANCH_LABYRINTH, NUM_BRANCHES, 7, 14, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS,
           LFLAG_NO_TELE_CONTROL | LFLAG_NOT_MAPPABLE,
       DNGN_ENTER_LABYRINTH, DNGN_ESCAPE_HATCH_UP,
       "Labyrinth", "a Labyrinth", "Lab",
@@ -264,7 +274,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '0', false, false, 0 },
 
-    { BRANCH_BAZAAR, NUM_BRANCHES, 7, 18, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_BAZAAR, NUM_BRANCHES, 7, 18, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Bazaar", "a bazaar", "Bazaar",
       "You enter an inter-dimensional bazaar!",
@@ -273,7 +284,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '1', false, false, 0 },
 
-    { BRANCH_TROVE, NUM_BRANCHES, 7, 18, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_TROVE, NUM_BRANCHES, 7, 18, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Trove", "a treasure trove", "Trove",
       NULL,
@@ -282,7 +294,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '2', false, false, 0 },
 
-    { BRANCH_SEWER, NUM_BRANCHES, 2, 4, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_SEWER, NUM_BRANCHES, 2, 4, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Sewer", "the sewers", "Sewer",
       NULL,
@@ -291,7 +304,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '3', false, false, 0 },
 
-    { BRANCH_OSSUARY, NUM_BRANCHES, 3, 5, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_OSSUARY, NUM_BRANCHES, 3, 5, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ossuary", "a tomb", "Ossuary",
       NULL,
@@ -300,7 +314,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '4', false, false, 0 },
 
-    { BRANCH_BAILEY, NUM_BRANCHES, 7, 10, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_BAILEY, NUM_BRANCHES, 7, 10, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Bailey", "the bailey", "Bailey",
       NULL,
@@ -309,7 +324,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '5', false, false, 0 },
 
-    { BRANCH_ICE_CAVE, NUM_BRANCHES, 8, 13, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_ICE_CAVE, NUM_BRANCHES, 8, 13, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Ice Cave", "an ice cave", "IceCv",
       NULL,
@@ -318,7 +334,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '6', false, false, 0 },
 
-    { BRANCH_VOLCANO, NUM_BRANCHES, 5, 14, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_VOLCANO, NUM_BRANCHES, 5, 14, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Volcano", "a volcano", "Volcano",
       NULL,
@@ -327,7 +344,8 @@ const Branch branches[NUM_BRANCHES] = {
       NULL, NULL, NULL, NULL,
       '7', false, false, 0 },
 
-    { BRANCH_WIZLAB, NUM_BRANCHES, 14, 18, 1, BFLAG_NO_XLEV_TRAVEL, 0,
+    { BRANCH_WIZLAB, NUM_BRANCHES, 14, 18, 1,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Wizlab", "a Wizard's Laboratory", "WizLab",
       NULL,
@@ -337,7 +355,7 @@ const Branch branches[NUM_BRANCHES] = {
       '8', false, false, 0 },
 
     { BRANCH_PANDOORA, NUM_BRANCHES, EASY_CHECKPOINT, EASY_CHECKPOINT, 1,
-          BFLAG_NO_XLEV_TRAVEL, 0,
+          BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
       "Pandoora", "the Pandoora's hall", "Pandoora",
       NULL,
